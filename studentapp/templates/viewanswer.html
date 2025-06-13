@@ -1,0 +1,26 @@
+{% extends "studentparent.html" %}
+{% block body %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 style="text-align:center; color: rgb(6,6,106)">View Answer</h1> 
+            <table class="table table-bordered text-primary" style="width: 100%; margin:auto;">
+                <tr style="color: rgb(6,6,106);">
+                    <th>A#</th>
+                    <th>Answer</th>
+                    <th>Answered By</th>
+                    <th>Posted Date</th>
+                </tr>
+
+                {% for a in ans %}
+                <tr style="color: steelblue;">
+                    <td>{{a.aid}}</td>
+                    <td>{{a.answer}}</td>
+                    <td>{{a.answered}}</td>
+                    <td>{{a.posteddate}}</td>
+                </tr>
+                {% endfor %}
+            </table>  
+              
+        </div>
+    </div>
+{% endblock body %}

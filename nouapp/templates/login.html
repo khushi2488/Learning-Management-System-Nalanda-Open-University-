@@ -1,0 +1,78 @@
+
+{% extends 'parent.html' %}
+{% load static %}
+{% block body %}
+    <!-- Start Of Login Form-->
+    <div class="row mt-2">
+        <div class="col-sm-9" style="min-height: 550px;">
+            <script>
+                function validate()
+                {
+                    var userid=document.getElementById("userid");
+                    var password=document.getElementById("password");
+                    if (userid.value==""|| userid.value==null)
+                    {
+                        alert('Please enter userid');
+                        userid.focus();
+                    }
+                    else if(password.value=="" || password.value==null)
+                    {
+                        alert('Please enter password');
+                        password.focus();
+                    }
+                    else
+                    {
+                        document.getElementById("frmlogin").submit();
+                    }
+                }
+            </script>
+            {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{message}}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+            {% endif %}  
+            <!-- <h1 align="center" style="color: black;"><b><u>Login Form</u></b></h1> -->
+            <form action="{% url 'nouapp:login' %}"  id="frmlogin" onsubmit="event.preventDefault();validate();" method="post">
+            {% csrf_token %}
+            {% comment %} <h1 align="center">Nalanda Open University</h1> {% endcomment %}
+            <div class="div" style="min-height: 200px; border:1px black; background-color: aliceblue; width:400px; height:380px; margin-left:500px; margin-top:100px; box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6); border-radius:5%;">
+                <h1 style=" color: rgb(6,6,106); margin-top:10px; margin-left:135px;font-family:poppins, sans-serif; padding-top: 20px;">
+                    <b>LOG IN</b>
+                </h1><hr>
+                        <tr>
+                        
+                            <td><input type="text" name="userid" placeholder="Enter User Id" id="userid" style="border:0px solid white; box-shadow: 0px 0px 3px gray; margin-top: 20px; border-radius:5px 5px 5px 5px; height:40px; width:300px; margin-left:51px;"/></td>
+                        </tr>
+            
+                        <tr>
+                        
+                            <td><input type="password" name="password" placeholder="Enter Password" id="password" style="border:0px solid white; box-shadow: 0px 0px 3px gray; margin-top: 10px; border-radius:5px 5px 5px 5px; height:40px; width:300px; margin-left:51px;"/></td>
+                        </tr>
+            
+                        <tr>
+                            <td>
+                                <select name="usertype" style="border:0px solid white; box-shadow: 0px 0px 3px gray; margin-top: 10px; border-radius:5px 5px 5px 5px; height:40px; width:300px; margin-left:51px;text-align:center ; color: rgb(6,6,106);" >
+                                    <option selected>--Select User Type--</option>
+                                    <option value="student">Student</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </td>
+                        </tr>
+            
+                        <tr>
+                            <td><button type="submit" class="btn btn-primary" style="margin-top: 10px; width:300px; margin-left:51px;">Login</button></td>
+                        </tr><br><br>
+                        <p align="center">Don't have an account <a href="{% url 'nouapp:registration' %}"><u>Registration here</u></a></p>
+            </div>
+            </form>
+        </div>
+    </div>
+    <!-- End Of Login Form-->
+
+  
+{% endblock body %}
+
+

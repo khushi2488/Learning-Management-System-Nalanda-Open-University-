@@ -1,0 +1,53 @@
+{% extends "studentparent.html" %}
+{% block body %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 style="text-align:center; color:rgb(6,6,106)">Discussion Forum</h1> 
+            <form class="form-group" action="{% url 'studentapp:postquestion' %}" method="post">
+                {% csrf_token %}
+                <table class="table " style="width: 70%; border: solid aliceblue 2px; margin:auto; background-color:rgb(6,6,106); color: aliceblue">
+                    <tr>
+                        <td>Enter Question</td>
+                        <td><textarea name="question" class="form-control" style="background-color:aliceblue; color: rgb(6,6,106);" ></textarea></td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td>
+                            <button type="submit" class="btn btn-info">Post</button>
+                        </td>
+                    </tr>
+                </table>
+            </form>  
+            <br><br>
+            <table class="table table-bordered" style="margin: auto; width:100%;">
+                <tr style="color: rgb(6,6,106);">
+                    <th>Q#</th>
+                    <th>Question</th>
+                    <th>Posted By</th>
+                    <th>Posted Date</th>
+                    <th>Post Answer</th>
+                    <th>View Answer</th>
+                </tr>
+                {% for q in ques %}
+                    <tr>
+                        <td style="color: rgb(12,148,222);">{{q.qid}}</td>
+                        <td style="color: rgb(6,6,106);">{{q.question}}</td>
+                        <td style="color: green">{{q.postedby}}</td>
+                        <td style="color: palevioletred;">{{q.posteddate}}</td>
+                        <td>
+                            <a href="{% url 'studentapp:postanswer' qid=q.qid %}">
+                                <button class="btn btn-success">Post</button>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{% url 'studentapp:viewanswer' qid=q.qid %}">
+                                <button class="btn btn-primary">View</button>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+              
+        </div>
+    </div>
+{% endblock body %}

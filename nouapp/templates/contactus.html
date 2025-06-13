@@ -1,0 +1,144 @@
+
+{% extends 'parent.html' %}
+{% load static %}
+{% block body %}
+<style>
+  /*Header Image*/
+  .home{
+      background-image: url(../static/images/bookslibrary.jpg);
+      width: 100%;
+      height: 35vh;
+      background-size: cover;
+      background-position:center;
+  }
+ /*Header Image*/
+ </style>
+
+<!--Header Image-->
+   <div class="row">
+  <section class="home">
+      <div class="row" style="color: aliceblue;font-weight: bolder; font-family: poppins, sans-serif; padding-top: 22vh; text-align:center;">
+      <h3><b>From Our Content For Distance Learning</b></h3>
+      <p style="font-family: poppins;font-weight: bolder;">NOU-e-Gyan PORTAL, CONCEPT BY NALANDA OPEN UNIVERSITY</p>
+      </div>
+  </section>
+</div>
+<!-- Header Image -->
+
+
+    <!-- Start Of Enquiry Form-->
+    <div class="row mt-5">
+    <div class="col-sm-9" style="background-color: aliceblue; min-height: 500px; margin:0 auto; border-radius:15px; margin-bottom:30px; box-shadow:0 5px 10px rgba(0,0,0,0.8);">
+      <script> 
+        function validate()
+        {
+            var name=document.getElementById("name");
+            var contactno=document.getElementById("contactno");
+            var emailaddress=document.getElementById("emailaddress");
+            var emailexp=/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            if (name.value==""|| name.value==null)
+            {
+                alert('Please enter your name');
+                name.focus();
+            }
+            else if(contactno.value=="" || contactno.value==null)
+            {
+               alert('Please enter contact name');
+               contactno.focus();
+            }
+            else if (isNaN(contactno.value))
+            {
+              alert('Please enter Number only');
+              contactno.focus();
+            }
+            else if (contactno.value.length!=10)
+            {
+              alert('Please enter 10 digit No');
+              contactno.focus();
+            }
+            else if(emailaddress.value=="" || emailaddress.value==null)
+            {
+               alert('Please enter emailaddress');
+               emailaddress.focus();
+            }
+            else if (!emailexp.test(emailaddress.value))
+            {
+              alert('Please enter valid email address');
+              emailaddress.focus();
+            }
+            else
+            {
+                document.getElementById("frmcontactus").submit();
+            }
+        }
+      </script>
+
+      {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{message}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endfor %}
+      {% endif %}
+      <div id="a22">
+        <h1 align="center" style="color: rgb(6,6,106); padding-bottom:10px; padding-top: 30px; font-family: poppins, sans-serif;"><b>ENQUIRY FORM</b></h1><hr>
+        <form  id="frmcontactus" action="{% url 'nouapp:contactus' %}" method="post" onsubmit="event.preventDefault();validate();">
+          {% csrf_token %}
+          
+          <table style="width:80%; margin-left:100px; margin-right:500px;">
+            <tr>
+              <td style="color:rgb(6,6,106);font-family: poppins, sans-serif;">Enter Name:
+                <input type="text" name="name" id="name" pattern="[a-zA-Z\s]+" title="Enter name using alphabet only (a-z)" class="form-control"  placeholder="Enter Name"/>
+              </td>
+            </tr>
+      
+            <tr>
+              <td style="color:rgb(6,6,106);font-family: poppins, sans-serif;">Select Gender:<br/>
+                <input type="radio"   name="gender" values="Male" class="form-check-input"/> Male &nbsp; &nbsp; &nbsp; &nbsp;
+                <input type="radio"   name="gender" values="Female" class="form-check-input"/> Female &nbsp; &nbsp; &nbsp; &nbsp;
+                <input type="radio" name="gender" value="Other" class="form-check-input"/> Other
+              </td>
+            </tr>
+      
+            <tr>
+              <td style="color:rgb(6,6,106);font-family: poppins, sans-serif;">Enter Address:
+                <textarea name="address" class="form-control" placeholder="Enter Address" ></textarea>
+              </td>
+            </tr>
+          
+            <tr>
+              <td style="color:rgb(6,6,106);font-family: poppins, sans-serif;">Enter Contact No:
+                <input type="number"   name="contactno" class="form-control"  id="contactno" placeholder="Enter Contact No."/>
+              </td>
+            </tr>
+      
+            <tr>
+              <td style="color:rgb(6,6,106);font-family: poppins, sans-serif;">Enter Emailaddress:
+                <input type="email"   name="emailaddress" class="form-control"  id="emailaddress" placeholder="example@example.com"/>
+              </td>
+            </tr>
+      
+            <tr>
+              <td style="color:rgb(6,6,106);font-family: poppins, sans-serif;">Enter Enquiry:
+                <textarea name="enquirytext" class="form-control" placeholder="Enter Enquiry" ></textarea>
+              </td>
+            </tr>
+      
+            <tr>
+              <td style="color:rgb(6,6,106); padding:10px;"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  
+                <button type="submit" class="btn btn-primary" style="font-family: poppins, sans-serif;width: 810px;">Submit</button>
+              </td>
+            </tr>
+        
+          </table>
+        </form>
+      </div>
+    </div>
+    <!-- End Of Enquiry Form-->
+    {% endblock body %}
+
+
+ 
+
+

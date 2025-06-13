@@ -1,0 +1,67 @@
+{% extends "adminparent.html" %}
+{% block body %}
+    <div class="row">
+        <h1 style="text-align:center; color: rgb(6,6,106)">Upload Study Material</h1>
+        <form action="{% url 'adminapp:move' %}" method="post" class="form-group" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table class="table table-bordered text-light" style="background-color:rgb(6,6,106); border: 2px aliceblue;">
+                <tr>
+                    <td>Select Program: </td>
+                    <td>
+                        <select name="program" class="form-control " style="background-color: aliceblue; color: rgb(6,6,106);">
+                            <option selected>--Select Program--</option>
+                            {% for p in program %}
+                                <option value="{{p.program}}">{{p.program}}</option>
+                            {% endfor%}
+                        </select>
+                    </td>
+                </tr>
+        
+                <tr>
+                    <td>Select Branch: </td>
+                    <td>
+                        <select name="branch" class="form-control "  style="background-color: aliceblue; color: rgb(6,6,106);">
+                            <option selected>--Select Branch--</option>
+                            {% for b in branch %}
+                                <option value="{{b.branch}}">{{b.branch}}</option>
+                            {% endfor%}
+                        </select>
+                    </td>
+                </tr>
+        
+                <tr>
+                    <td>Select Year: </td>
+                    <td>
+                        <select name="year" class="form-control "  style="background-color: aliceblue; color: rgb(6,6,106); ">
+                            <option selected>--Select Year--</option>
+                            {% for y in year %}
+                                <option value="{{y.year}}">{{y.year}}</option>
+                            {% endfor%}
+        
+                        </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Enter Subject :</td>
+                    <td ><input type="text" name="subject" class="form-control"  style="background-color: aliceblue;color: rgb(6,6,106);"></td>
+                </tr>
+
+                <tr>
+                    <td>Enter File Name :</td>
+                    <td><input type="text" name="file_name" class="form-control text-light" style="background-color: aliceblue; color: rgb(6,6,106);"></td>
+                </tr>
+
+                <tr>
+                    <td>Select File :</td>
+                    <td><input type="file" name="my_file" class="form-control " style="background-color: aliceblue; color: rgb(6,6,106);"></td>
+                </tr>
+
+                <tr>
+                    <td></td>
+                    <td><button type="submit" class="btn btn-success">Upload</button></td>
+                </tr>
+            </table>
+        </form>
+    </div>
+{% endblock body %}

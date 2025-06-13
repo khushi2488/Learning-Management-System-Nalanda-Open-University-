@@ -1,0 +1,45 @@
+{% extends "adminparent.html" %}
+{% block body %}
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 style="text-align:center; color: rgb(6,6,106);">
+                Add News
+            </h1>   
+              <form action="{% url 'adminapp:news' %}" class="form-group" method="post">
+                {% csrf_token %}
+                <table class="table table-bordered" style="width: 70%; margin:auto;background-color: rgb(6,6,106);border: 2px aliceblue;">
+                    <tr>
+                        <td style="color: white;">Enter News :</td>
+                        <td>
+                            <textarea name="newstext" id="" class="form-control " style="color: rgb(6,6,106);background-color: aliceblue;"></textarea>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td></td>
+                        <td>
+                            <button type="submit" class="btn btn-success">Add News</button>
+                        </td>
+                    </tr>
+                </table>
+              </form><br/><br/>
+
+              <table class="table table-bordered" style="width: 70%; margin:auto; color: rgb(6,6,106);">
+                <tr>
+                    <th>News Id :</th>
+                    <th>News :</th>
+                    <th>News Date :</th>
+                </tr>
+
+                {% for n in ns %}
+                <tr style="color: steelblue;">
+                    <td>{{n.nid}}</td>
+                    <td>{{n.newstext}}</td>
+                    <td>{{n.newsdate}}</td>
+                </tr>
+                {% endfor %}
+
+              </table>
+        </div>
+    </div>
+{% endblock body %}

@@ -1,0 +1,36 @@
+{% extends "adminparent.html" %}
+{% block body %}
+    <div class="row">
+        <h1 style="text-align:center; color: rgb(6,6,106)">Complaints</h1>   
+        <div class="col-sm-12" style="overflow-x:scroll">
+            <table class="table table-bordered" style="color: rgb(6,6,106);">
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Program</th>
+                    <th>Branch</th>
+                    <th>Contact No</th>
+                    <th>Email Address</th>
+                    <th>Subject</th>
+                    <th>Complaint</th>
+                    <th>Posted Date</th>
+                </tr>
+
+                {% for c in comp %}
+                <tr style="color: steelblue;">
+                    <td>{{forloop.counter}}</td>
+                    <td>{{c.name}}</td>
+                    <td>{{c.program}}</td>
+                    <td>{{c.branch}}</td>
+                    <td>{{c.contactno}}</td>
+                    <td>{{c.emailaddress}}</td>
+                    <td>{{c.subject}}</td>
+                    <td>{{c.responsetext}}</td>
+                    <td>{{c.responsedate}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+              
+        </div>
+    </div>
+{% endblock body %}
