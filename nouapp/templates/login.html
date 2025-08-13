@@ -148,5 +148,41 @@
   </div>
 </div>
 <!-- End Of Login Form-->
+<!-- Responsive styles -->
+<style>
+  /* For tablets and below */
+  @media (max-width: 768px) {
+    .div {
+      width: 90% !important;
+      max-width: 400px !important;
+      height: auto !important;
+      margin: 50px auto !important;
+      padding: 15px !important;
+    }
+    .div input,
+    .div select,
+    .div button {
+      width: 90% !important;
+      margin-left: auto !important;
+      margin-right: auto !important;
+      display: block;
+    }
+    .div h1 {
+      margin-left: 0 !important;
+      text-align: center !important;
+    }
+  }
+
+  /* For very small phones */
+  @media (max-width: 480px) {
+    .div {
+      margin-top: 20px !important;
+      padding: 10px !important;
+    }
+    .div h1 {
+      font-size: 1.5rem !important;
+    }
+  }
+</style>
 
 {% endblock body %}
