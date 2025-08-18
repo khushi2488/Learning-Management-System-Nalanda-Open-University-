@@ -15,189 +15,795 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.js"></script>
 </head>
 <style>
-   
-   .me-4{
-      text-decoration: none;
-        margin-right: 1rem;
-        transition: transform 0.3s ease, color 0.3s ease;
-   }
-   .me-4 i{
-    color: rgb(6, 6, 106); 
-        font-size: 20px;
-        transition: color 0.3s ease, transform 0.3s ease;
-   }
-   .me-4:hover i{
-    color: #064B89; /* change to your hover color */
-        transform: scale(1.5);
-   }
+    /* Root Variables for Consistent Theming */
+    :root {
+        --primary-color: rgb(6, 6, 106);
+        --primary-hover: #064B89;
+        --accent-color: #4a90e2;
+        --text-white: #ffffff;
+        --bg-light: aliceblue;
+        --transition: all 0.3s ease;
+        --shadow: 0 2px 15px rgba(0,0,0,0.1);
+        --shadow-hover: 0 5px 25px rgba(0,0,0,0.15);
+    }
 
+    body {
+        font-family: 'Poppins', sans-serif;
+        padding-top: 120px; /* Account for sticky header height */
+    }
+
+    /* Enhanced Sticky Navigation */
+    .sticky-navigation {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1050;
+        transition: var(--transition);
+        box-shadow: var(--shadow);
+    }
+
+    /* Contact Bar Styles */
+    .contact-bar {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+        color: var(--text-white);
+        padding: 10px 0;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .contact-bar a {
+        color: var(--text-white);
+        text-decoration: none;
+        transition: var(--transition);
+    }
+
+    .contact-bar a:hover {
+        color: #e3f2fd;
+        transform: translateY(-1px);
+    }
+
+    .contact-bar i {
+        margin-right: 8px;
+        font-size: 16px;
+    }
+
+    /* Enhanced Navbar */
+    .main-navbar {
+        background: var(--bg-light) !important;
+        backdrop-filter: blur(10px);
+        border-bottom: 2px solid rgba(6, 6, 106, 0.1);
+        padding: 15px 0;
+    }
+
+    .navbar-brand img {
+        transition: var(--transition);
+    }
+
+    .navbar-brand:hover img {
+        transform: scale(1.02);
+    }
+
+    /* Enhanced Navigation Links */
+    /* Normalize nav spacing */
+    .navbar-nav {
+        display: flex;
+        align-items: center;
+        gap: 0; /* use explicit margins on items for perfect visual gaps */
+    }
+
+    .navbar-nav > .nav-item { 
+        margin: 0 12px; /* consistent external spacing between items */
+    }
+
+    .navbar-nav .nav-link {
+        color: var(--primary-color) !important;
+        font-family: 'Poppins', sans-serif;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 10px 18px !important; /* add a touch more breathing room */
+        margin: 0; /* spacing is handled by parent gap */
+        border-radius: 25px;
+        transition: color 0.3s ease, background 0.3s ease; /* avoid layout-shifting transitions */
+        position: relative;
+        overflow: hidden;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px; /* icon and label spacing */
+        white-space: nowrap; /* prevent awkward wraps */
+        box-shadow: none; /* normalize */
+    }
+
+    .navbar-nav .nav-link::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        transition: left 0.3s ease;
+        z-index: -1;
+        border-radius: 25px;
+    }
+
+    .navbar-nav .nav-link:hover {
+        color: var(--text-white) !important;
+        transform: none; /* avoid vertical jump on hover */
+        box-shadow: none; /* no hover halo */
+    }
+
+    .navbar-nav .nav-link:hover::before {
+        left: 0;
+    }
+
+    .navbar-nav .nav-link i {
+        margin-right: 0; /* gap handles spacing */
+        transition: var(--transition);
+    }
+
+    .navbar-nav .nav-link:hover i {
+        transform: rotate(360deg);
+    }
+
+    /* Active Link Highlighting */
+    .navbar-nav .nav-link.active {
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        color: var(--text-white) !important;
+        font-weight: 600;
+        box-shadow: none; /* avoid visual overflow into gaps */
+        transform: none; /* keep active item aligned */
+    }
+
+    .navbar-nav .nav-link.active::before {
+        display: none; /* prevent extra glow from extending visually */
+    }
+
+    .navbar-nav .nav-link:focus,
+    .navbar-nav .nav-link:focus-visible,
+    .navbar-nav .nav-link.active:focus,
+    .navbar-nav .nav-link.active:focus-visible {
+        outline: none;
+        box-shadow: none; /* remove focus halo that affects perceived spacing */
+    }
+
+    .navbar-nav .nav-link.active i {
+        animation: none; /* keep width stable for consistent spacing */
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+
+    /* Mobile Navbar Enhancements */
+    @media (max-width: 991px) {
+        body {
+            padding-top: 140px;
+        }
+        
+        .navbar-collapse {
+            background: var(--bg-light);
+            margin-top: 15px;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .navbar-nav {
+            gap: 0; /* use per-link margins in stacked view */
+        }
+
+        .navbar-nav .nav-link {
+            width: 100%;
+            margin: 6px 0; /* vertical rhythm in mobile */
+            text-align: center;
+            justify-content: center;
+        }
+
+        .contact-bar {
+            font-size: 12px;
+            padding: 8px 0;
+        }
+
+        .contact-bar .col-sm-6 {
+            padding: 5px 8px;
+        }
+    }
+
+    /* Enhanced Footer */
+    .main-footer {
+        background: linear-gradient(135deg, var(--bg-light) 0%, #f8f9fa 100%);
+        margin-top: 60px;
+        box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+    }
+
+    .footer-social-section {
+        background: linear-gradient(135deg, rgba(6, 6, 106, 0.05) 0%, rgba(74, 144, 226, 0.05) 100%);
+        border-bottom: 2px solid rgba(6, 6, 106, 0.1);
+        padding: 20px 0;
+    }
+
+    .footer-social-text {
+        color: var(--primary-color);
+        font-family: 'Poppins', sans-serif;
+        font-weight: 600;
+        font-size: 16px;
+    }
+
+    /* Enhanced Social Media Icons */
+    .social-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 45px;
+        height: 45px;
+        margin: 0 8px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        color: var(--text-white);
+        text-decoration: none;
+        transition: var(--transition);
+        box-shadow: 0 3px 10px rgba(6, 6, 106, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .social-icon::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, var(--accent-color), #64b5f6);
+        transition: left 0.3s ease;
+        z-index: -1;
+    }
+
+    .social-icon:hover {
+        color: var(--text-white);
+        transform: translateY(-5px) scale(1.1);
+        box-shadow: var(--shadow-hover);
+    }
+
+    .social-icon:hover::before {
+        left: 0;
+    }
+
+    .social-icon i {
+        font-size: 18px;
+        transition: var(--transition);
+    }
+
+    .social-icon:hover i {
+        transform: rotate(360deg);
+    }
+
+    /* Footer Content Sections */
+    .footer-content {
+        padding: 50px 0 30px 0;
+    }
+
+    .footer-logo {
+        display: block;
+        transition: none;
+        filter: none; /* remove extra drop-shadows */
+        margin: 0; /* align naturally with content */
+    }
+
+    .footer-logo:hover {
+        transform: none;
+        filter: none;
+    }
+
+    .footer-description {
+        color: var(--primary-color);
+        font-family: 'Poppins', sans-serif;
+        line-height: 1.6;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+
+    .footer-section-title {
+        color: var(--primary-color);
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+        font-size: 18px;
+        margin-bottom: 25px;
+        position: relative;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .footer-section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+        border-radius: 2px;
+    }
+
+    /* Enhanced Footer Links */
+    .footer-link {
+        display: block;
+        color: var(--primary-color);
+        text-decoration: none;
+        font-family: 'Poppins', sans-serif;
+        font-size: 15px;
+        padding: 8px 0;
+        transition: var(--transition);
+        position: relative;
+        padding-left: 20px;
+    }
+
+    .footer-link::before {
+        content: '→';
+        position: absolute;
+        left: 0;
+        opacity: 0;
+        transition: var(--transition);
+        color: var(--accent-color);
+        font-weight: bold;
+    }
+
+    .footer-link:hover {
+        color: var(--accent-color);
+        transform: translateX(10px);
+        text-decoration: none;
+    }
+
+    .footer-link:hover::before {
+        opacity: 1;
+        transform: translateX(-5px);
+    }
+
+    /* Contact Info Styling */
+    .contact-item {
+        color: var(--primary-color);
+        font-family: 'Poppins', sans-serif;
+        font-size: 14px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: flex-start;
+        line-height: 1.6;
+    }
+
+    .contact-item i {
+        color: var(--accent-color);
+        margin-right: 12px;
+        margin-top: 2px;
+        font-size: 16px;
+        transition: var(--transition);
+    }
+
+    .contact-item:hover i {
+        transform: scale(1.2);
+        color: var(--primary-hover);
+    }
+
+    /* Copyright Section */
+    .copyright-section {
+        background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
+        color: var(--text-white);
+        font-family: 'Poppins', sans-serif;
+        padding: 20px 0;
+        font-size: 14px;
+    }
+
+    .copyright-link {
+        color: var(--text-white);
+        text-decoration: none;
+        font-weight: 600;
+        transition: var(--transition);
+        border-bottom: 2px solid transparent;
+    }
+
+    .copyright-link:hover {
+        color: #e3f2fd;
+        border-bottom-color: #e3f2fd;
+        transform: translateY(-1px);
+    }
+
+    /* Responsive Design Enhancements */
+    @media (max-width: 768px) {
+        .contact-bar {
+            font-size: 12px;
+            padding: 8px 0;
+        }
+
+        .contact-bar .col-sm-6 {
+            padding: 5px;
+            font-size: 11px;
+        }
+
+        .navbar-brand img {
+            width: 70% !important;
+            height: auto !important;
+        }
+
+        .footer-content {
+            padding: 30px 0 20px 0;
+        }
+
+        .footer-content .row > [class^="col-"] {
+            margin-bottom: 16px; /* clean stacking gaps */
+        }
+
+        .footer-section-title {
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            margin: 0 5px;
+        }
+
+        .social-icon i {
+            font-size: 16px;
+        }
+
+        .footer-social-text {
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        body {
+            padding-top: 130px;
+        }
+
+        .contact-bar .col-sm-6 {
+            text-align: center !important;
+            padding: 8px 5px;
+        }
+
+        .navbar-brand img {
+            width: 60% !important;
+        }
+
+        .footer-link {
+            font-size: 14px;
+            padding: 6px 0;
+        }
+
+        .contact-item {
+            font-size: 13px;
+        }
+
+        .footer-content .row > [class^="col-"] {
+            margin-bottom: 14px;
+        }
+
+        .navbar-nav .nav-link {
+            padding: 12px 14px !important;
+            font-size: 15px;
+        }
+    }
+
+    /* Smooth Scrolling */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Loading Animation for Navbar */
+    .navbar-brand img {
+        animation: slideInDown 0.8s ease-out;
+    }
+
+    .navbar-nav {
+        animation: slideInUp 0.8s ease-out;
+    }
+
+    @keyframes slideInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    @keyframes slideInUp {
+        from {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    /* Enhanced Mobile Menu */
+    .navbar-toggler {
+        border: 2px solid var(--primary-color);
+        border-radius: 8px;
+        padding: 8px 12px;
+        transition: var(--transition);
+    }
+
+    .navbar-toggler:hover {
+        background-color: var(--primary-color);
+        transform: scale(1.05);
+    }
+
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%286, 6, 106, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    }
+
+    /* Footer Animation on Scroll */
+    .main-footer {
+        animation: slideInUp 0.8s ease-out;
+    }
 </style>
+
 <body>
     <div class="container-fluid">
-       
-        <!--Navbar Start-->
-        <div class="row sticky-top naviagation">
-          <div class="col-sm-6" style="background-color: rgb(6, 6, 106); color: white; text-align: center; padding: 8px; font-family: poppins,sans-serif;"><a href="#"><i class="fa-solid fa-phone"></i></a><b> +91 7080102007</b></div>
-            <div class="col-sm-6" style="background-color: rgb(6, 6, 106); color: white; text-align: center; padding: 8px; font-family: poppins,sans-serif;" ><a href="#"><i class="fa-solid fa-envelope"></i></a><b> nouegyanhelp@gmail.com</b></div>
-            <nav class="navbar navbar-expand-lg" style="background-color: aliceblue;">
-                <div class="container-fluid">
-                  <a class="navbar-brand" href="{% url 'nouapp:index' %}">
-                    <img src="{% static 'images/NOU.jpg' %}" width="48%" height="12%">
-                  </a>
-                  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                  </button>
-                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0" style="padding-right: 25px; gap: 6px;">
-                      <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{% url 'nouapp:index' %}" style="color: rgb(6, 6, 106); font-family: poppins,sans-serif; font-size: 18px;"><i class="fa-solid fa-house"></i> Home</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="{% url 'nouapp:aboutus' %}" style="color: rgb(6, 6, 106); font-family: poppins,sans-serif;font-size: 18px;"><i class="fa-solid fa-user"></i> About Us</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="{% url 'nouapp:courses' %}" style="color: rgb(6, 6, 106);font-family: poppins,sans-serif;font-size: 18px;"><i class="fa-solid fa-book"></i> Courses</a>
-                        <li class="nav-item">
-                          <a class="nav-link" href="{% url 'nouapp:services' %}" style="color: rgb(6, 6, 106); font-family: poppins,sans-serif;font-size: 18px;"><i class="fa-solid fa-list"></i> Services</a>
-                        </li>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="{% url 'nouapp:login' %}" style="color: rgb(6, 6, 106);font-family: poppins,sans-serif;font-size: 18px;"><i class="fa-solid fa-key"></i> Login</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="{% url 'nouapp:registration' %}" style="color: rgb(6, 6, 106); font-family: poppins,sans-serif;font-size: 18px;"><i class="fa-solid fa-book"></i> Registration</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="{% url 'nouapp:contactus' %}" style="color: rgb(6, 6, 106); font-family: poppins,sans-serif;font-size: 18px;"><i class="fa-solid fa-phone"></i> Contact Us</a>
-                      </li>
-                    </ul>
-                  </div>
+        <!-- Enhanced Sticky Navigation -->
+        <div class="sticky-navigation">
+            <!-- Contact Bar -->
+            <div class="contact-bar">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-6 text-center text-sm-start">
+                            <a href="tel:+917080102007">
+                                <i class="fa-solid fa-phone"></i>
+                                <span>+91 7080102007</span>
+                            </a>
+                        </div>
+                        <div class="col-sm-6 text-center text-sm-end">
+                            <a href="mailto:nouegyanhelp@gmail.com">
+                                <i class="fa-solid fa-envelope"></i>
+                                <span>nouegyanhelp@gmail.com</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-              </nav>
             </div>
-        <!--banner-->
-        {% block body %}
 
-        {% endblock body %}
-          
-        </body>
+            <!-- Main Navigation -->
+            <nav class="navbar navbar-expand-lg main-navbar">
+                <div class="container">
+                    <a class="navbar-brand" href="{% url 'nouapp:index' %}">
+                        <img src="{% static 'images/NOU.jpg' %}" width="200" height="auto" alt="NOU e-Gyan Portal" class="img-fluid">
+                    </a>
+                    
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}" 
+                                   href="{% url 'nouapp:index' %}">
+                                    <i class="fa-solid fa-house"></i>Home
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.resolver_match.url_name == 'aboutus' %}active{% endif %}" 
+                                   href="{% url 'nouapp:aboutus' %}">
+                                    <i class="fa-solid fa-user"></i>About Us
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.resolver_match.url_name == 'courses' %}active{% endif %}" 
+                                   href="{% url 'nouapp:courses' %}">
+                                    <i class="fa-solid fa-book"></i>Courses
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% endif %}" 
+                                   href="{% url 'nouapp:services' %}">
+                                    <i class="fa-solid fa-list"></i>Services
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.resolver_match.url_name == 'login' %}active{% endif %}" 
+                                   href="{% url 'nouapp:login' %}">
+                                    <i class="fa-solid fa-key"></i>Login
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.resolver_match.url_name == 'registration' %}active{% endif %}" 
+                                   href="{% url 'nouapp:registration' %}">
+                                    <i class="fa-solid fa-user-plus"></i>Registration
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {% if request.resolver_match.url_name == 'contactus' %}active{% endif %}" 
+                                   href="{% url 'nouapp:contactus' %}">
+                                    <i class="fa-solid fa-phone"></i>Contact Us
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+        </div>
 
+        <!-- Main Content Area -->
+        <main>
+            {% block body %}
+            <!-- Your page content goes here -->
+            {% endblock body %}
+        </main>
 
-        <!--footer-->
-        <div class="row">
-      
-          <!-- Footer -->
-           <footer class="text-center text-lg-start text-muted" style="background-color: aliceblue;">
-         <!-- Section: Social media -->
-           <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-         <!-- Left -->
-           <div class="me-5 d-none d-lg-block" style="color: rgb(6, 6, 106); font-family: poppins,sans-serif;">
-           <span>Get connected with us on social networks:</span>
-           </div>
-         <!-- Left -->
-
-         <!-- Right -->
-           <div>
-             <a href="#" class="me-4 text-reset" style="text-decoration: none;">
-             <i class="fab fa-facebook" style="color: rgb(6, 6, 106);"></i>
-             </a>
-             <a href="#" class="me-4 text-reset" style="text-decoration: none;">
-             <i class="fab fa-twitter" style="color: rgb(6, 6, 106);"></i>
-             </a>
-             <a href="#" class="me-4 text-reset" style="text-decoration: none;">
-             <i class="fab fa-google" style="color: rgb(6, 6, 106);"></i>
-             </a>
-             <a href="#" class="me-4 text-reset" style="text-decoration: none;">
-             <i class="fab fa-instagram" style="color: rgb(6, 6, 106);"></i>
-             </a>
-             <a href="#" class="me-4 text-reset" style="text-decoration: none;">
-             <i class="fab fa-linkedin" style="color: rgb(6, 6, 106);"></i>
-             </a>
-
-             </div>
-          <!-- Right -->
+        <!-- Enhanced Footer -->
+        <footer class="main-footer">
+            <!-- Social Media Section -->
+            <section class="footer-social-section">
+                <div class="container">
+                    <div class="d-flex justify-content-center justify-content-lg-between align-items-center flex-wrap">
+                        <div class="footer-social-text mb-3 mb-lg-0">
+                            <span>Get connected with us on social networks:</span>
+                        </div>
+                        <div class="social-icons">
+                            <a href="#" class="social-icon" aria-label="Facebook" title="Follow us on Facebook">
+                                <i class="fab fa-facebook-f"></i>
+                            </a>
+                            <a href="#" class="social-icon" aria-label="Twitter" title="Follow us on Twitter">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            <a href="#" class="social-icon" aria-label="Google" title="Find us on Google">
+                                <i class="fab fa-google"></i>
+                            </a>
+                            <a href="#" class="social-icon" aria-label="Instagram" title="Follow us on Instagram">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                            <a href="#" class="social-icon" aria-label="LinkedIn" title="Connect on LinkedIn">
+                                <i class="fab fa-linkedin-in"></i>
+                            </a>
+                            <a href="#" class="social-icon" aria-label="YouTube" title="Subscribe to our channel">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </section>
-  <!-- Section: Social media -->
 
-  <!-- Section: Links  -->
-  <section class="">
-    <div class="container text-center text-md-start mt-5">
-      <!-- Grid row -->
-      <div class="row mt-3">
-        <!-- Grid column -->
-        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto">
-          <!-- Content -->
-          
-            <a><img src="{% static 'images/NOU.jpg' %}" width="75%" height="23%" style="font-family: poppins,sans-serif;"></a>
-          
-          <p style="color: rgb(6, 6, 106);font-family: poppins,sans-serif;">
-            Nalanda Open University is a State Open University duly established under the Act of Bihar Government and is also recognized by Distance Education Council, IGNOU, Maidan Garhi, New Delhi
-          </p>
-        </div>
-        <!-- Grid column -->
+            <!-- Main Footer Content -->
+            <section class="footer-content">
+                <div class="container">
+                    <div class="row">
+                        <!-- About Section -->
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <a href="{% url 'nouapp:index' %}">
+                                <img src="{% static 'images/NOU.jpg' %}" width="75%" height="auto" alt="NOU Logo" class="footer-logo img-fluid">
+                            </a>
+                            <p class="footer-description">
+                                Nalanda Open University is a State Open University duly established under the Act of Bihar Government and is also recognized by Distance Education Council, IGNOU, Maidan Garhi, New Delhi.
+                            </p>
+                        </div>
 
-        <!-- Grid column -->
+                        <!-- Quick Links Section -->
+                        <div class="col-lg-2 col-md-6 mb-4">
+                            <h6 class="footer-section-title">Quick Links</h6>
+                            <div class="footer-links">
+                                <a href="{% url 'nouapp:index' %}" class="footer-link">Home</a>
+                                <a href="{% url 'nouapp:aboutus' %}" class="footer-link">About Us</a>
+                                <a href="{% url 'nouapp:courses' %}" class="footer-link">Courses</a>
+                                <a href="{% url 'nouapp:services' %}" class="footer-link">Services</a>
+                                <a href="{% url 'nouapp:login' %}" class="footer-link">Login</a>
+                                <a href="{% url 'nouapp:registration' %}" class="footer-link">Registration</a>
+                                <a href="{% url 'nouapp:contactus' %}" class="footer-link">Contact Us</a>
+                            </div>
+                        </div>
 
-        <!-- Grid column -->
+                        <!-- Academic Links -->
+                        <div class="col-lg-2 col-md-6 mb-4">
+                            <h6 class="footer-section-title">Academic</h6>
+                            <div class="footer-links">
+                                <a href="#" class="footer-link">Admissions</a>
+                                <a href="#" class="footer-link">Examination</a>
+                                <a href="#" class="footer-link">Results</a>
+                                <a href="#" class="footer-link">Syllabus</a>
+                                <a href="#" class="footer-link">Study Material</a>
+                                <a href="#" class="footer-link">Student Portal</a>
+                            </div>
+                        </div>
 
-        <!-- Grid column -->
-        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4;" style="font-family: poppins,sans-serif;">
-          <!-- Links -->
-          <h6 class="text-uppercase fw-bold mb-4" style="color: rgb(6, 6, 106);"><u>
-            Useful links</u>
-          </h6>
-          <p style="color: rgb(6, 6, 106);">
-            <a href="{% url 'nouapp:index' %}" class="text-reset" style="text-decoration: none;">Home</a>
-          </p>
-          <p style="color: rgb(6, 6, 106);">
-            <a href="{% url 'nouapp:courses' %}" class="text-reset" style="text-decoration: none;">Courses</a>
-          </p>
-          <p style="color: rgb(6, 6, 106);">
-            <a href="{% url 'nouapp:aboutus' %}" class="text-reset" style="text-decoration: none;">About Us</a>
-          </p>
-          <p style="color: rgb(6, 6, 106);">
-            <a href="{% url 'nouapp:login' %}" class="text-reset" style="text-decoration: none;">Login</a>
-          </p>
-          <p style="color: rgb(6, 6, 106);">
-            <a href="{% url 'nouapp:registration' %}" class="text-reset" style="text-decoration: none;">Registration</a>
-          </p>
-          <p style="color: rgb(6, 6, 106);">
-            <a href="{% url 'nouapp:contactus' %}" class="text-reset" style="text-decoration: none;">Contact Us</a>
-          </p>
-        </div>
-        <!-- Grid column -->
+                        <!-- Contact Information -->
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <h6 class="footer-section-title">Contact Info</h6>
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <span>NOU 2nd/3rd Floor, Biscomaun Bhawan, Gandhi Maidan, Patna 800 001 (BIHAR)</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-envelope"></i>
+                                <span>nouegyanhelp@gmail.com</span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-phone"></i>
+                                <span>+91 7080102007<br><small>Give us a call</small></span>
+                            </div>
+                            <div class="contact-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Mon - Fri: 9:00 AM - 6:00 PM<br><small>Office Hours</small></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-        <!-- Grid column -->
-        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4" style="font-family: poppins,sans-serif;">
-          <!-- Links -->
-          <h6 class="text-uppercase fw-bold mb-4" style="color: rgb(6, 6, 106);"><u>Contact</u></h6>
-          <p style="color: rgb(6, 6, 106);"><i class="fas fa-home me-3" style="color: rgb(6, 6, 106);"></i> NOU
-            2nd/3rd Floor, Biscomaun Bhawan, Gandhi Maidan, Patna 800 001 (BIHAR)</p>
-          <p style="color: rgb(6, 6, 106);">
-            <i class="fas fa-envelope me-3" style="color: rgb(6, 6, 106);"></i>
-            nouegyanhelp@gmail.com
-          </p>
-          <p style="color: rgb(6, 6, 106);"><i class="fas fa-phone me-3" style="color: rgb(6, 6, 106);"></i>+91 7080102007<br>
-            Give us a call</p>
-          
-        <!-- Grid column -->
-      </div>
-      <!-- Grid row -->
+            <!-- Copyright -->
+            <div class="copyright-section text-center">
+                <div class="container">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+                            <span>© Copyright 2024 NOU e-Gyan Portal. All rights reserved.</span>
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <span>Designed & Developed By |
+                                <a class="copyright-link" href="http://www.softproindia.in/" target="_blank">
+                                    Softpro India Computer Technologies (P) Ltd.
+                                </a>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
-  </section>
-  <!-- Section: Links  -->
 
-  <!-- Copyright -->
-  <div class="text-center p-4" style="background-color: rgb(6, 6, 106); color: white; font-family: poppins,sans-serif;">
-    © Copyright 2024 Designed & Developed By |
-    <a class="text-reset fw-bold" href="http://www.softproindia.in/" style="text-decoration: none;">Softpro India Computer Technologies (P) Ltd.</a>
-  </div>
-  <!-- Copyright -->
-          </footer>
-      <!-- Footer -->
-        
-        </div>
-    </div>
+    
 
+    <!-- JavaScript for Enhanced Functionality -->
+    <script>
+        $(document).ready(function() {
+            // Smooth scrolling for anchor links
+            $('a[href^="#"]').on('click', function(event) {
+                var target = $(this.getAttribute('href'));
+                if( target.length ) {
+                    event.preventDefault();
+                    $('html, body').stop().animate({
+                        scrollTop: target.offset().top - 120
+                    }, 1000);
+                }
+            });
+
+            // Mobile menu close on link click
+            $('.navbar-nav .nav-link').on('click', function() {
+                if ($(window).width() < 992) {
+                    $('.navbar-collapse').collapse('hide');
+                }
+            });
+
+            // Add hover effect to navbar brand
+            $('.navbar-brand').hover(
+                function() {
+                    $(this).find('img').css('transform', 'scale(1.05)');
+                },
+                function() {
+                    $(this).find('img').css('transform', 'scale(1)');
+                }
+            );
+        });
+
+        // Navbar background change on scroll
+        $(window).scroll(function() {
+            if ($(this).scrollTop() > 50) {
+                $('.main-navbar').css({
+                    'background': 'rgba(240, 248, 255, 0.95)',
+                    'backdrop-filter': 'blur(15px)'
+                });
+            } else {
+                $('.main-navbar').css({
+                    'background': 'aliceblue',
+                    'backdrop-filter': 'blur(10px)'
+                });
+            }
+        });
+    </script>
 </body>
 </html>
