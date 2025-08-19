@@ -19,16 +19,6 @@
         }
       }
     </script>
-
-    {% if messages %}
-      {% for message in messages %}
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>{{message}}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-      {% endfor %}
-    {% endif %}
-
     <form
       action="{% url 'nouapp:login' %}"
       id="frmlogin"
@@ -51,6 +41,14 @@
           padding: 30px 20px;
         "
       >
+      {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{message}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+    {% endif %}
         <h1
           style="
             color: rgb(6, 6, 106);
