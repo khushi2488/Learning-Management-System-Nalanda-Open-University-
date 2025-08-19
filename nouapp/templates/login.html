@@ -1,7 +1,9 @@
-{% extends 'parent.html' %} {% load static %} {% block body %}
+{% extends 'parent.html' %}
+{% load static %}
+{% block body %}
 <!-- Start Of Login Form-->
 <div class="row mt-2">
-  <div class="col-sm-9" style="min-height: 550px">
+  <div class="col-12 d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 140px);">
     <script>
       function validate() {
         var userid = document.getElementById("userid");
@@ -17,130 +19,110 @@
         }
       }
     </script>
-    {% if messages %} {% for message in messages %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      <strong>{{message}}</strong>
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-      ></button>
-    </div>
-    {% endfor %} {% endif %}
-    <!-- <h1 align="center" style="color: black;"><b><u>Login Form</u></b></h1> -->
+
+    {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{message}}</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      {% endfor %}
+    {% endif %}
+
     <form
       action="{% url 'nouapp:login' %}"
       id="frmlogin"
       onsubmit="event.preventDefault();validate();"
       method="post"
     >
-      {% csrf_token %} {% comment %}
-      <h1 style="text-align: center">Nalanda Open University</h1>
-      {% endcomment %}
+      {% csrf_token %}
       <div
         class="div"
         style="
-          min-height: 200px;
-          border: 1px black;
           background-color: aliceblue;
           width: 400px;
-          height: 380px;
-          margin-left: 400px;
-          margin-top: 100px;
+          max-width: 90%;
           box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);
-          border-radius: 5%;
+          border-radius: 10px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: flex-start;
+          padding: 30px 20px;
         "
       >
         <h1
           style="
             color: rgb(6, 6, 106);
-            margin-top: 10px;
-            margin-left: 135px;
-            font-family: poppins, sans-serif;
-            padding-top: 20px;
+            font-family: Poppins, sans-serif;
+            font-weight: bold;
+            margin-bottom: 20px;
           "
         >
-          <b>LOG IN</b>
+          LOG IN
         </h1>
-        <hr />
-        <tr>
-          <td>
-            <input
-              type="text"
-              name="userid"
-              placeholder="Enter User Id"
-              id="userid"
-              style="
-                border: 0px solid white;
-                box-shadow: 0px 0px 3px gray;
-                margin-top: 20px;
-                border-radius: 5px 5px 5px 5px;
-                height: 40px;
-                width: 300px;
-                margin-left: 51px;
-              "
-            />
-          </td>
-        </tr>
 
-        <tr>
-          <td>
-            <input
-              type="password"
-              name="password"
-              placeholder="Enter Password"
-              id="password"
-              style="
-                border: 0px solid white;
-                box-shadow: 0px 0px 3px gray;
-                margin-top: 10px;
-                border-radius: 5px 5px 5px 5px;
-                height: 40px;
-                width: 300px;
-                margin-left: 51px;
-              "
-            />
-          </td>
-        </tr>
+        <input
+          type="text"
+          name="userid"
+          placeholder="Enter User Id"
+          id="userid"
+          style="
+            box-shadow: 0px 0px 3px gray;
+            border-radius: 5px;
+            height: 40px;
+            width: 100%;
+            margin-bottom: 15px;
+            border: none;
+            padding: 6px 10px;
+          "
+        />
 
-        <tr>
-          <td>
-            <select
-              name="usertype"
-              style="
-                border: 0px solid white;
-                box-shadow: 0px 0px 3px gray;
-                margin-top: 10px;
-                border-radius: 5px 5px 5px 5px;
-                height: 40px;
-                width: 300px;
-                margin-left: 51px;
-                text-align: center;
-                color: rgb(6, 6, 106);
-              "
-            >
-              <option selected>--Select User Type--</option>
-              <option value="student">Student</option>
-              <option value="admin">Admin</option>
-            </select>
-          </td>
-        </tr>
+        <input
+          type="password"
+          name="password"
+          placeholder="Enter Password"
+          id="password"
+          style="
+            box-shadow: 0px 0px 3px gray;
+            border-radius: 5px;
+            height: 40px;
+            width: 100%;
+            margin-bottom: 15px;
+            border: none;
+            padding: 6px 10px;
+          "
+        />
 
-        <tr>
-          <td>
-            <button
-              type="submit"
-              class="btn btn-primary"
-              style="margin-top: 10px; width: 300px; margin-left: 51px"
-            >
-              Login
-            </button>
-          </td>
-        </tr>
-        <br /><br />
-        <p align="center">
-          Don't have an account
+        <select
+          name="usertype"
+          style="
+            box-shadow: 0px 0px 3px gray;
+            border-radius: 5px;
+            height: 40px;
+            width: 100%;
+            margin-bottom: 15px;
+            border: none;
+            text-align: center;
+            color: rgb(6, 6, 106);
+            padding: 6px 10px;
+          "
+        >
+          <option selected>--Select User Type--</option>
+          <option value="student">Student</option>
+          <option value="admin">Admin</option>
+        </select>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          style="width: 100%; height: 40px; margin-bottom: 15px;"
+        >
+          Login
+        </button>
+
+        <p style="font-size: 14px; text-align: center; margin: 0;">
+          Don't have an account?
           <a href="{% url 'nouapp:registration' %}"><u>Registration here</u></a>
         </p>
       </div>
@@ -148,6 +130,7 @@
   </div>
 </div>
 <!-- End Of Login Form-->
+
 <!-- Responsive styles -->
 <style>
   /* For tablets and below */
@@ -162,13 +145,10 @@
     .div input,
     .div select,
     .div button {
-      width: 90% !important;
-      margin-left: auto !important;
-      margin-right: auto !important;
+      width: 100% !important;
       display: block;
     }
     .div h1 {
-      margin-left: 0 !important;
       text-align: center !important;
     }
   }
