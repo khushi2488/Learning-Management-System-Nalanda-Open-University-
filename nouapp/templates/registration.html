@@ -85,13 +85,13 @@
       function validate() {
         var rollno = document.getElementById("rollno");
         var name = document.getElementById("name");
-        var fname = document.getElementById("fname");
-        var mname = document.getElementById("mname");
-        var contactno = document.getElementById("contactno");
-        var emailaddress = document.getElementById("emailaddress");
+        var fname = document.getElementById("fatherName");
+        var mname = document.getElementById("motherName");
+        var contactno = document.getElementById("contactNo");
+        var emailaddress = document.getElementById("emailAddress");
         var emailexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         var password = document.getElementById("password");
-        var confirmpassword = document.getElementById("confirmpassword");
+        var confirmpassword = document.getElementById("confirmPassword");
         if (rollno.value == "" || rollno.value == null) {
           alert("Please enter your rollno");
           rollno.focus();
