@@ -544,6 +544,28 @@
     .main-footer {
         animation: slideInUp 0.8s ease-out;
     }
+    /* Scroll to Top Button Styling */
+    #topBtn {
+        display: none; /* hidden by default */
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 999;
+        border: none;
+        outline: none;
+        background-color: rgb(6, 6, 106); /* match your theme */
+        color: white;
+        cursor: pointer;
+        padding: 12px 16px;
+        border-radius: 50%;
+        font-size: 18px;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+    }
+
+    #topBtn:hover {
+        background-color: #064B89;
+    }
 </style>
 
 <body>
@@ -755,6 +777,10 @@
             </div>
         </footer>
     </div>
+    <!-- Scroll to Top Button -->
+    <button onclick="scrollToTop()" id="topBtn" title="Go to top">
+    <i class="fa-solid fa-arrow-up"></i>
+    </button>
 
     
 
@@ -804,6 +830,22 @@
                 });
             }
         });
+        // Get the button
+        let topBtn = document.getElementById("topBtn");
+
+        // Show button when scrolled 100px
+        window.onscroll = function() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+            topBtn.style.display = "block";
+            } else {
+            topBtn.style.display = "none";
+            }
+        };
+
+        // Scroll to top smoothly
+        function scrollToTop() {
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
     </script>
 </body>
 </html>
