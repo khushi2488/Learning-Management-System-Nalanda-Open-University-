@@ -21,15 +21,15 @@ def registration(request):
     if request.method=="POST":
         rollno=request.POST['rollno']
         name=request.POST['name']
-        fname=request.POST['fname']
-        mname=request.POST['mname']
+        fname=request.POST['fatherName']
+        mname=request.POST['motherName']
         gender=request.POST['gender']
         address=request.POST['address']
         program=request.POST['program']
         branch=request.POST['branch']
         year=request.POST['year']
-        contactno=request.POST['contactno']
-        emailaddress=request.POST['emailaddress']
+        contactno=request.POST['contactNo']
+        emailaddress=request.POST['emailAddress']
         password=request.POST['password']
         regdate=date.today()
         usertype='student'

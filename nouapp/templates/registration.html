@@ -19,6 +19,10 @@
       font-size: small;
     }
   }
+  .required::after {
+    content: " *";
+    color: red;
+  }
   /*Header Image*/
 </style>
 
@@ -81,13 +85,13 @@
       function validate() {
         var rollno = document.getElementById("rollno");
         var name = document.getElementById("name");
-        var fname = document.getElementById("fname");
-        var mname = document.getElementById("mname");
-        var contactno = document.getElementById("contactno");
-        var emailaddress = document.getElementById("emailaddress");
+        var fname = document.getElementById("fatherName");
+        var mname = document.getElementById("motherName");
+        var contactno = document.getElementById("contactNo");
+        var emailaddress = document.getElementById("emailAddress");
         var emailexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         var password = document.getElementById("password");
-        var confirmpassword = document.getElementById("confirmpassword");
+        var confirmpassword = document.getElementById("confirmPassword");
         if (rollno.value == "" || rollno.value == null) {
           alert("Please enter your rollno");
           rollno.focus();
@@ -173,59 +177,75 @@
         {% csrf_token %}
         <!-- Roll No -->
         <div class="row mb-3">
-          <label class="col-sm-3 col-form-label" style="color: rgb(6, 6, 106)"
+          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
             >Enter Roll No :</label
           >
           <div class="col-sm-9">
             <input
               type="text"
+              id="rollno"
+              name="rollno"
               class="form-control"
               placeholder="Enter Roll No"
+              required
             />
           </div>
         </div>
 
         <!-- Name -->
         <div class="row mb-3">
-          <label class="col-sm-3 col-form-label" style="color: rgb(6, 6, 106)"
+          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
             >Enter Name :</label
           >
           <div class="col-sm-9">
-            <input type="text" class="form-control" placeholder="Enter Name" />
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              name="name"
+              placeholder="Enter Name"
+              required
+            />
           </div>
         </div>
 
         <!-- Father Name -->
         <div class="row mb-3">
-          <label class="col-sm-3 col-form-label" style="color: rgb(6, 6, 106)"
+          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
             >Enter Father Name :</label
           >
           <div class="col-sm-9">
             <input
               type="text"
               class="form-control"
+              id="fatherName"
+              name="fatherName"
               placeholder="Enter Father Name"
+              required
             />
           </div>
         </div>
 
         <!-- Mother Name -->
         <div class="row mb-3">
-          <label class="col-sm-3 col-form-label" style="color: rgb(6, 6, 106)"
+          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
             >Enter Mother Name :</label
           >
           <div class="col-sm-9">
             <input
               type="text"
               class="form-control"
+              id="motherName"
+              name="motherName"
               placeholder="Enter Mother Name"
+              required
             />
           </div>
         </div>
 
         <!-- Gender -->
         <div class="row mb-3">
-          <label class="col-sm-3 col-form-label" style="color: rgb(6, 6, 106)"
+          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
             >Select Gender :</label
           >
           <div class="col-sm-9 d-flex align-items-center">
@@ -234,7 +254,9 @@
                 class="form-check-input"
                 type="radio"
                 name="gender"
-                id="male"
+                id="genderMale"
+                value="male"
+                required
               />
               <label class="form-check-label" for="male">Male</label>
             </div>
@@ -243,7 +265,9 @@
                 class="form-check-input"
                 type="radio"
                 name="gender"
-                id="female"
+                id="genderFemale"
+                value="female"
+                required
               />
               <label class="form-check-label" for="female">Female</label>
             </div>
@@ -252,7 +276,9 @@
                 class="form-check-input"
                 type="radio"
                 name="gender"
-                id="other"
+                id="genderOther"
+                value="other"
+                required
               />
               <label class="form-check-label" for="other">Other</label>
             </div>
@@ -261,61 +287,64 @@
 
         <!-- Address -->
         <div class="row mb-3">
-          <label class="col-sm-3 col-form-label" style="color: rgb(6, 6, 106)"
+          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
             >Enter Address :</label
           >
           <div class="col-sm-9">
             <textarea
               class="form-control"
+              id="address"
+              name="address"
               rows="2"
               placeholder="Enter Address"
+              required
             ></textarea>
           </div>
         </div>
 
         <!-- Program -->
         <div class="row mb-3">
-          <label class="col-sm-3 col-form-label" style="color: rgb(6, 6, 106)"
+          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
             >Select Program :</label
           >
           <div class="col-sm-9">
-            <select class="form-select">
-              <option>---Select Program---</option>
-              <option>B.Tech</option>
-              <option>M.Tech</option>
-              <option>MBA</option>
+            <select class="form-select" id="program" name="program" required>
+              <option value="">---Select Program---</option>
+              <option value="btech">B.Tech</option>
+              <option value="mtech">M.Tech</option>
+              <option value="mba">MBA</option>
             </select>
           </div>
         </div>
 
         <!-- Branch -->
         <div class="row mb-3">
-          <label class="col-sm-3 col-form-label" style="color: rgb(6, 6, 106)"
+          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
             >Select Branch :</label
           >
           <div class="col-sm-9">
-            <select class="form-select">
-              <option>---Select Branch---</option>
+            <select class="form-select" id="branch" name="branch" required>
+              <option value="">---Select Branch---</option>
               <option value="Computer Science">Computer Science</option>
               <option value="Information Technology">
-                Information Technology
+                 Information Technology
               </option>
-              <option value=" Electonic">Electronic</option>
+              <option value="Electonic">Electronic</option>
               <option value="Electrical">Electrical</option>
               <option value="Mechanical">Mechanical</option>
-              <option value="Mechanical">Other</option>
+              <option value="Other">Other</option>
             </select>
           </div>
         </div>
 
         <!-- Year -->
         <div class="row mb-3">
-          <label class="col-sm-3 col-form-label" style="color: rgb(6, 6, 106)"
+          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
             >Select Year :</label
           >
           <div class="col-sm-9">
-            <select class="form-select">
-              <option>---Select Year---</option>
+            <select class="form-select" id="year" name="year" required>
+              <option value="">---Select Year---</option>
               <option value="First Year">First Year</option>
               <option value="Second Year">Second Year</option>
               <option value="Third Year">Third Year</option>
@@ -324,50 +353,62 @@
           </div>
         </div>
         <div class="row mb-3">
-          <label class="col-sm-3 col-form-label" style="color: rgb(6, 6, 106)"
+          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
             >Enter Contact No :</label
           >
           <div class="col-sm-9">
             <input
-              type="text"
+              type="tel"
               class="form-control"
-              placeholder="Enter Contact Name"
+              id="contactNo"
+              name="contactNo"
+              placeholder="Enter Contact No"
+              required
             />
           </div>
         </div>
         <div class="row mb-3">
-          <label class="col-sm-3 col-form-label" style="color: rgb(6, 6, 106)"
+          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
             >Enter Email Address :</label
           >
           <div class="col-sm-9">
             <input
-              type="text"
+              type="email"
               class="form-control"
+              id="emailAddress"
+              name="emailAddress"
               placeholder="example@example.com"
+              required
             />
           </div>
         </div>
         <div class="row mb-3">
-          <label class="col-sm-3 col-form-label" style="color: rgb(6, 6, 106)"
+          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
             >Enter Password :</label
           >
           <div class="col-sm-9">
             <input
-              type="text"
+              type="password"
               class="form-control"
+              id="password"
+              name="password"
               placeholder="Enter Password"
+              required
             />
           </div>
         </div>
         <div class="row mb-3">
-          <label class="col-sm-3 col-form-label" style="color: rgb(6, 6, 106)"
+          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
             >Confirm Password:</label
           >
           <div class="col-sm-9">
             <input
-              type="text"
+              type="password"
               class="form-control"
+              id="confirmPassword"
+              name="confirmPassword"
               placeholder="Confirm Password"
+              required
             />
           </div>
         </div>
@@ -383,5 +424,4 @@
   </div>
 </div>
 <!-- End Of Student Registration Form Section -->
-
 {% endblock body %}
