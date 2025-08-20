@@ -12,17 +12,7 @@
         background-size: cover;
     }
    /*Home end*/
-
-
-
-
-    
     /*headline*/
-
-
-
-
-
    /*aboutsection*/
    .about-section .row h3 {
     color: rgb(6,6,106);
@@ -70,9 +60,6 @@
         width:100%;
    }
   }
-  
-
-
    /*gallery*/
    .gallery .row h3 {
     color: rgb(6,6,106);
@@ -118,7 +105,6 @@
     
   }
 }
-
    /*administrative setup*/
    .team .row h3 {
     color: rgb(6,6,106);
@@ -149,11 +135,6 @@
    }
 
   }
-
-
-  
-
-
    /*contact section*/
    .contact-section .row h3 {
     color: rgb(6,6,106);
@@ -214,18 +195,7 @@
    padding-left: 5px;
    }
   }
-
-
-
-
-
-
-
-
 </style>
-
-
-
 <!--Home-->
 <div class="row">
     <section class="home">
@@ -236,7 +206,6 @@
         </div>
     </section>
 </div>
-
 <!--headline-->
 <div class="row" style="background-color: rgb(6,6,106); margin-top: 5px; margin-bottom: 5px;">
     <marquee scrollamount="12" onmousemove="this.stop()" onmouseout="this.start()">
@@ -278,7 +247,9 @@
                 <div class="card" style="border-color: rgb(6,6,106);">
                     <img class="card-img-top"  src="{% static 'images/registration.jpg' %}" alt="Card image cap">
                     <div class="card-body">
-                      <p class="card-text">Login</p>
+                      <p class="card-text">
+                        <a href="{% url 'nouapp:login' %}" style="color: white;">Login</a>
+                      </p>
                     </div>
                   </div>
 
@@ -287,7 +258,9 @@
                 <div class="card" style="border-color: rgb(6,6,106);">
                     <img class="card-img-top" src="{% static 'images/dashboard.jpg' %}" alt="Card image cap">
                     <div class="card-body">
-                      <p class="card-text">Dashboard</p>
+                      <p class="card-text">
+                        <a href="{% url 'studentapp:studenthome' %}" style="color: white;">Dashboard</a>
+                      </p>
                     </div>
                   </div>
 
@@ -296,7 +269,9 @@
                 <div class="card" style="border-color: rgb(6,6,106);">
                     <img class="card-img-top" src="{% static 'images/online-courses.jpg' %}" alt="Card image cap">
                     <div class="card-body">
-                      <p class="card-text">Self Learning Material</p>
+                      <p class="card-text">
+                        <a href="{% url 'studentapp:viewmat' %}" style="color: white;">Self Learning Material</a>
+                      </p>
                     </div>
                   </div>
 
@@ -326,7 +301,9 @@
         <div class="card" style="border-color: rgb(6,6,106);">
             <img class="card-img-top" src="{% static 'images/performance.jpg' %}" alt="Card image cap">
             <div class="card-body">
-              <p class="card-text">Performance</p>
+              <p class="card-text">
+                    <a href="{% url 'studentapp:viewprofile' %}" style="color: white;">Performance</a>
+              </p>
             </div>
           </div>
 
@@ -335,7 +312,9 @@
         <div class="card" style="border-color: rgb(6,6,106);">
             <img class="card-img-top" src="{% static 'images/feedback.jpg' %}" alt="Card image cap">
             <div class="card-body">
-              <p class="card-text">Feedback</p>
+              <p class="card-text">
+                    <a href="{% url 'studentapp:response' %}" style="color: white;">Feedback</a>
+              </p>
             </div>
           </div>
 
@@ -344,7 +323,9 @@
         <div class="card" style="border-color: rgb(6,6,106);">
             <img class="card-img-top" src="{% static 'images/course-catlog.jpg' %}" alt="Card image cap">
             <div class="card-body">
-              <p class="card-text">Course-Catalogue</p>
+              <p class="card-text">
+                    <a href="{% url 'nouapp:courses' %}" style="color: white;">Course-Catalogue</a>
+              </p>
             </div>
           </div>
 
@@ -352,15 +333,7 @@
 </div>        
  </section>
  </div>
-
-
-
-
-
-
-
  <!--administrative setup-->
-
  <div class="row" style="padding-top: 10vh;">
   <div class="container p-5" style="background-color: rgb(44, 151, 193);">
     <section class="team">
@@ -406,10 +379,7 @@
         </div>
     </section>
   </div>
- </div>
-
-
- 
+ </div> 
  <!--contact section-->
  <div class="row" style="padding-top: 10vh;">
   <section class="contact-section">
@@ -429,16 +399,5 @@
     </div>
   </section>
  </div>
-
-
-
-
-
-        
-    
-
-
-
-
 {% endblock %}
 
