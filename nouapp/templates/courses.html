@@ -1,19 +1,21 @@
-{% extends 'parent.html' %} {% load static %} {% block body %}
+{% extends 'parent.html' %} 
+{% load static %} 
+{% block body %}
 <style>
   .container {
     width: 100%;
   }
   .container h1 {
     text-align: center;
-    color: rgb(6, 6, 106);
+    color: var(--heading-color);
     font-weight: bold;
     padding-top: 10vh;
     font-family: poppins, sans-serif;
-    background-color: white;
+    background-color: transparent;
   }
   h4 {
     text-align: left;
-    color: black;
+    color: var(--text-color);
     font-weight: bold;
     padding-top: 5vh;
     padding-left: 5px;
@@ -50,6 +52,25 @@
     background-position: center;
   }
   /*Header Image End*/
+  
+  /* Card styling to use theme variables */
+  .course-card {
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);
+    border-radius: 5%;
+    background-color: var(--card-bg);
+    color: var(--card-text);
+    transition: var(--transition);
+  }
+  
+  .course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.7);
+  }
+  
+  .course-title-text {
+    color: var(--primary-color) !important;
+    font-weight: bold;
+  }
 </style>
 
 <!--Header Image-->
@@ -83,17 +104,14 @@
   <h4 style="padding-top: 5vh">UG COURSES</h4>
   <div class="row">
     <div class="col-sm-3">
-      <div
-        class="card"
-        style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6); border-radius: 5%"
-      >
+      <div class="card course-card">
         <img
           class="card-img-top"
           src="{% static 'images/bba.png' %}"
           alt="Card image cap"
         />
         <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text" style="color: rgb(6, 6, 106)">
+          <p class="card-text course-title-text">
             Bachelor in Business Administrat.
           </p>
           <p class="card-text">Under Graduation Course</p>
@@ -102,17 +120,14 @@
       </div>
     </div>
     <div class="col-sm-3">
-      <div
-        class="card"
-        style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6); border-radius: 5%"
-      >
+      <div class="card course-card">
         <img
           class="card-img-top"
           src="{% static 'images/bca.png' %}"
           alt="Card image cap"
         />
         <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text" style="color: rgb(6, 6, 106)">
+          <p class="card-text course-title-text">
             Bachelor in Computer Application
           </p>
           <p class="card-text">Under Graduation Course</p>
@@ -121,17 +136,14 @@
       </div>
     </div>
     <div class="col-sm-3">
-      <div
-        class="card"
-        style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6); border-radius: 5%"
-      >
+      <div class="card course-card">
         <img
           class="card-img-top"
           src="{% static 'images/bag.png' %}"
           alt="Card image cap"
         />
         <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text" style="color: rgb(6, 6, 106)">
+          <p class="card-text course-title-text">
             Bachelor in Arts(Geography)
           </p>
           <p class="card-text">Under Graduation Course</p>
@@ -140,17 +152,14 @@
       </div>
     </div>
     <div class="col-sm-3">
-      <div
-        class="card"
-        style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6); border-radius: 5%"
-      >
+      <div class="card course-card">
         <img
           class="card-img-top"
           src="{% static 'images/bcom.png' %}"
           alt="Card image cap"
         />
         <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text" style="color: rgb(6, 6, 106)">
+          <p class="card-text course-title-text">
             Bachelor of Commerce
           </p>
           <p class="card-text">Under Graduation Course</p>
@@ -166,17 +175,14 @@
   <h4 style="padding-top: 10vh">PG COURSES</h4>
   <div class="row">
     <div class="col-sm-3">
-      <div
-        class="card"
-        style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6); border-radius: 5%"
-      >
+      <div class="card course-card">
         <img
           class="card-img-top"
           src="{% static 'images/ma(environmental).png' %}"
           alt="Card image cap"
         />
         <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text" style="color: rgb(6, 6, 106)">
+          <p class="card-text course-title-text">
             Master of Arts (Environmental Sci.)
           </p>
           <p class="card-text">Post Graduation Course</p>
@@ -185,17 +191,14 @@
       </div>
     </div>
     <div class="col-sm-3">
-      <div
-        class="card"
-        style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6); border-radius: 5%"
-      >
+      <div class="card course-card">
         <img
           class="card-img-top"
           src="{% static 'images/ma(sanskrit).png' %}"
           alt="Card image cap"
         />
         <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text" style="color: rgb(6, 6, 106)">
+          <p class="card-text course-title-text">
             Master of Arts (Sanskrit)
           </p>
           <p class="card-text">Post Graduation Course</p>
@@ -204,17 +207,14 @@
       </div>
     </div>
     <div class="col-sm-3">
-      <div
-        class="card"
-        style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6); border-radius: 5%"
-      >
+      <div class="card course-card">
         <img
           class="card-img-top"
           src="{% static 'images/mca.png' %}"
           alt="Card image cap"
         />
         <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text" style="color: rgb(6, 6, 106)">
+          <p class="card-text course-title-text">
             Master in Computer Application
           </p>
           <p class="card-text">Post Graduation Course</p>
@@ -223,17 +223,14 @@
       </div>
     </div>
     <div class="col-sm-3">
-      <div
-        class="card"
-        style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6); border-radius: 5%"
-      >
+      <div class="card course-card">
         <img
           class="card-img-top"
           src="{% static 'images/mcom.png' %}"
           alt="Card image cap"
         />
         <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text" style="color: rgb(6, 6, 106)">
+          <p class="card-text course-title-text">
             Master of Commerce
           </p>
           <p class="card-text">Post Graduation Course</p>
@@ -249,17 +246,14 @@
   <h4 style="padding-top: 10vh">DIPLOMA COURSES</h4>
   <div class="row" style="padding-bottom: 25px">
     <div class="col-sm-3">
-      <div
-        class="card"
-        style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6); border-radius: 5%"
-      >
+      <div class="card course-card">
         <img
           class="card-img-top"
           src="{% static 'images/pgdfm.png' %}"
           alt="Card image cap"
         />
         <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text" style="color: rgb(6, 6, 106)">
+          <p class="card-text course-title-text">
             PG Diploma in Financial Management
           </p>
           <p class="card-text">Diploma Course</p>
@@ -268,17 +262,14 @@
       </div>
     </div>
     <div class="col-sm-3">
-      <div
-        class="card"
-        style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6); border-radius: 5%"
-      >
+      <div class="card course-card">
         <img
           class="card-img-top"
           src="{% static 'images/pgdhet.png' %}"
           alt="Card image cap"
         />
         <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text" style="color: rgb(6, 6, 106)">
+          <p class="card-text course-title-text">
             Post Graduation Diploma (Hindi-English Translate)
           </p>
           <p class="card-text">Diploma Course</p>
@@ -287,17 +278,14 @@
       </div>
     </div>
     <div class="col-sm-3">
-      <div
-        class="card"
-        style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6); border-radius: 5%"
-      >
+      <div class="card course-card">
         <img
           class="card-img-top"
           src="{% static 'images/pgdmm.png' %}"
           alt="Card image cap"
         />
         <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text" style="color: rgb(6, 6, 106)">
+          <p class="card-text course-title-text">
             Post Graduation Diploma (Marketing Management)
           </p>
           <p class="card-text">Diploma Course</p>
@@ -306,17 +294,14 @@
       </div>
     </div>
     <div class="col-sm-3">
-      <div
-        class="card"
-        style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6); border-radius: 5%"
-      >
+      <div class="card course-card">
         <img
           class="card-img-top"
           src="{% static 'images/pgdys.png' %}"
           alt="Card image cap"
         />
         <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text" style="color: rgb(6, 6, 106)">
+          <p class="card-text course-title-text">
             Post Graduation Diploma (Yogic Studies)
           </p>
           <p class="card-text">Diploma Course</p>

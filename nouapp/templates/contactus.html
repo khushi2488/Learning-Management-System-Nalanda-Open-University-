@@ -1,4 +1,6 @@
-{% extends 'parent.html' %} {% load static %} {% block body %}
+{% extends 'parent.html' %} 
+{% load static %} 
+{% block body %}
 <style>
   /*Header Image*/
   .home {
@@ -8,6 +10,7 @@
     background-size: cover;
     background-position: center;
   }
+  
   @media (max-width: 530px) and (min-width: 360px) {
     .home h3 {
       text-align: center;
@@ -19,6 +22,24 @@
     }
   }
 
+  /* Form styling for theme compatibility */
+  .enquiry-container {
+    background-color: var(--card-bg);
+    color: var(--card-text);
+    margin: 0 auto;
+    border-radius: 15px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+    padding: 25px;
+  }
+  
+  .form-heading {
+    color: var(--primary-color) !important;
+  }
+  
+  .form-label {
+    color: var(--primary-color) !important;
+  }
+  
   /*Header Image*/
 </style>
 
@@ -45,217 +66,253 @@
 <!-- Header Image -->
 
 <!-- Start Of Enquiry Form-->
-<div class="row mt-5">
-  <div
-    class="col-sm-9"
-    style="
-      background-color: aliceblue;
-      min-height: 500px;
-      margin: 0 auto;
-      border-radius: 15px;
-      margin-bottom: 30px;
-      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
-    "
-  >
-    <script>
-      function validate() {
-        var name = document.getElementById("name");
-        var contactno = document.getElementById("contactno");
-        var emailaddress = document.getElementById("emailaddress");
-        var emailexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        if (name.value == "" || name.value == null) {
-          alert("Please enter your name");
-          name.focus();
-        } else if (contactno.value == "" || contactno.value == null) {
-          alert("Please enter contact name");
-          contactno.focus();
-        } else if (isNaN(contactno.value)) {
-          alert("Please enter Number only");
-          contactno.focus();
-        } else if (contactno.value.length != 10) {
-          alert("Please enter 10 digit No");
-          contactno.focus();
-        } else if (emailaddress.value == "" || emailaddress.value == null) {
-          alert("Please enter emailaddress");
-          emailaddress.focus();
-        } else if (!emailexp.test(emailaddress.value)) {
-          alert("Please enter valid email address");
-          emailaddress.focus();
-        } else {
-          document.getElementById("frmcontactus").submit();
+<div class="row mt-5 mb-5">
+  <div class="col-sm-12 col-md-10 col-lg-8 mx-auto">
+    <div class="enquiry-container">
+      <script>
+        function validate() {
+          var name = document.getElementById("name");
+          var contactno = document.getElementById("contactno");
+          var emailaddress = document.getElementById("emailaddress");
+          var emailexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+          var enquirytext = document.getElementById("enquirytext");
+          
+          if (name.value == "" || name.value == null) {
+            alert("Please enter your name");
+            name.focus();
+            return false;
+          } else if (contactno.value == "" || contactno.value == null) {
+            alert("Please enter contact number");
+            contactno.focus();
+            return false;
+          } else if (isNaN(contactno.value)) {
+            alert("Please enter numbers only");
+            contactno.focus();
+            return false;
+          } else if (contactno.value.length != 10) {
+            alert("Please enter 10 digit number");
+            contactno.focus();
+            return false;
+          } else if (emailaddress.value == "" || emailaddress.value == null) {
+            alert("Please enter email address");
+            emailaddress.focus();
+            return false;
+          } else if (!emailexp.test(emailaddress.value)) {
+            alert("Please enter valid email address");
+            emailaddress.focus();
+            return false;
+          } else if (enquirytext.value == "" || enquirytext.value == null) {
+            alert("Please enter your enquiry");
+            enquirytext.focus();
+            return false;
+          } else {
+            // Check if gender is selected
+            var gender = document.querySelector('input[name="gender"]:checked');
+            if (!gender) {
+              alert("Please select your gender");
+              return false;
+            }
+            
+            document.getElementById("frmcontactus").submit();
+            return true;
+          }
         }
-      }
-    </script>
+      </script>
 
-    {% if messages %} {% for message in messages %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      <strong>{{message}}</strong>
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-      ></button>
-    </div>
-    {% endfor %} {% endif %}
-    <div id="a22" class="container mt-4">
-      <h1
-        class="text-center text-primary mb-3"
-        style="font-family: poppins, sans-serif"
-      >
-        <b style="color: rgb(6, 6, 106)">ENQUIRY FORM</b>
-      </h1>
-      <hr />
-
-      <form
-        id="frmcontactus"
-        action="{% url 'nouapp:contactus' %}"
-        method="post"
-        onsubmit="event.preventDefault();validate();"
-      >
-        {% csrf_token %}
-
-        <!-- Name -->
-        <div class="mb-3">
-          <label
-            for="name"
-            class="form-label"
-            style="color: rgb(6, 6, 106); font-family: poppins, sans-serif"
-            >Enter Name:</label
-          >
-          <input
-            type="text"
-            name="name"
-            id="name"
-            class="form-control"
-            pattern="[a-zA-Z\s]+"
-            title="Enter name using alphabet only (a-z)"
-            placeholder="Enter Name"
-            required
-          />
+      {% if messages %} 
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>{{message}}</strong>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
         </div>
+        {% endfor %} 
+      {% endif %}
+      
+      <div class="container mt-3">
+        <h1 class="text-center mb-4 form-heading">
+          ENQUIRY FORM
+        </h1>
+        <hr style="border-color: var(--primary-color); opacity: 0.3;" />
 
-        <!-- Gender -->
-        <div class="mb-3">
-          <label
-            class="form-label"
-            style="color: rgb(6, 6, 106); font-family: poppins, sans-serif"
-            >Select Gender:</label
-          >
-          <div>
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="gender"
-                value="Male"
-                required
-              />
-              <label class="form-check-label">Male</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="gender"
-                value="Female"
-              />
-              <label class="form-check-label">Female</label>
-            </div>
-            <div class="form-check form-check-inline">
-              <input
-                class="form-check-input"
-                type="radio"
-                name="gender"
-                value="Other"
-              />
-              <label class="form-check-label">Other</label>
+        <form
+          id="frmcontactus"
+          action="{% url 'nouapp:contactus' %}"
+          method="post"
+          onsubmit="event.preventDefault(); return validate();"
+        >
+          {% csrf_token %}
+
+          <!-- Name -->
+          <div class="mb-3">
+            <label for="name" class="form-label">
+              Enter Name:
+            </label>
+            <input
+              type="text"
+              name="name"
+              id="name"
+              class="form-control"
+              pattern="[a-zA-Z\s]+"
+              title="Enter name using alphabet only (a-z)"
+              placeholder="Enter Name"
+              required
+            />
+          </div>
+
+          <!-- Gender -->
+          <div class="mb-3">
+            <label class="form-label">
+              Select Gender:
+            </label>
+            <div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="gender"
+                  id="genderMale"
+                  value="Male"
+                  required
+                />
+                <label class="form-check-label" for="genderMale">Male</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="gender"
+                  id="genderFemale"
+                  value="Female"
+                />
+                <label class="form-check-label" for="genderFemale">Female</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="gender"
+                  id="genderOther"
+                  value="Other"
+                />
+                <label class="form-check-label" for="genderOther">Other</label>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Address -->
-        <div class="mb-3">
-          <label
-            for="address"
-            class="form-label"
-            style="color: rgb(6, 6, 106); font-family: poppins, sans-serif"
-            >Enter Address:</label
-          >
-          <textarea
-            name="address"
-            id="address"
-            class="form-control"
-            placeholder="Enter Address"
-            rows="3"
-          ></textarea>
-        </div>
+          <!-- Address -->
+          <div class="mb-3">
+            <label for="address" class="form-label">
+              Enter Address:
+            </label>
+            <textarea
+              name="address"
+              id="address"
+              class="form-control"
+              placeholder="Enter Address"
+              rows="3"
+            ></textarea>
+          </div>
 
-        <!-- Contact No -->
-        <div class="mb-3">
-          <label
-            for="contactno"
-            class="form-label"
-            style="color: rgb(6, 6, 106); font-family: poppins, sans-serif"
-            >Enter Contact No:</label
-          >
-          <input
-            type="number"
-            name="contactno"
-            id="contactno"
-            class="form-control"
-            placeholder="Enter Contact No."
-          />
-        </div>
+          <!-- Contact No -->
+          <div class="mb-3">
+            <label for="contactno" class="form-label">
+              Enter Contact No:
+            </label>
+            <input
+              type="tel"
+              name="contactno"
+              id="contactno"
+              class="form-control"
+              placeholder="Enter Contact No."
+              required
+            />
+          </div>
 
-        <!-- Email -->
-        <div class="mb-3">
-          <label
-            for="emailaddress"
-            class="form-label"
-            style="color: rgb(6, 6, 106); font-family: poppins, sans-serif"
-            >Enter Email Address:</label
-          >
-          <input
-            type="email"
-            name="emailaddress"
-            id="emailaddress"
-            class="form-control"
-            placeholder="example@example.com"
-          />
-        </div>
+          <!-- Email -->
+          <div class="mb-3">
+            <label for="emailaddress" class="form-label">
+              Enter Email Address:
+            </label>
+            <input
+              type="email"
+              name="emailaddress"
+              id="emailaddress"
+              class="form-control"
+              placeholder="example@example.com"
+              required
+            />
+          </div>
 
-        <!-- Enquiry -->
-        <div class="mb-3">
-          <label
-            for="enquirytext"
-            class="form-label"
-            style="color: rgb(6, 6, 106); font-family: poppins, sans-serif"
-            >Enter Enquiry:</label
-          >
-          <textarea
-            name="enquirytext"
-            id="enquirytext"
-            class="form-control"
-            placeholder="Enter Enquiry"
-            rows="4"
-          ></textarea>
-        </div>
+          <!-- Enquiry -->
+          <div class="mb-3">
+            <label for="enquirytext" class="form-label">
+              Enter Enquiry:
+            </label>
+            <textarea
+              name="enquirytext"
+              id="enquirytext"
+              class="form-control"
+              placeholder="Enter your enquiry details"
+              rows="4"
+              required
+            ></textarea>
+          </div>
 
-        <!-- Submit -->
-        <div class="d-grid">
-          <button
-            type="submit"
-            class="btn btn-primary btn-md"
-            style="color: rgb(245, 245, 245); font-family: poppins, sans-serif"
-          >
-            Submit
-          </button>
-          <br />
-        </div>
-      </form>
+          <!-- Submit -->
+          <div class="d-grid mt-4">
+            <button
+              type="submit"
+              class="btn btn-primary btn-md"
+              style="
+                background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                border: none;
+                padding: 12px;
+                font-weight: bold;
+              "
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
-  <!-- End Of Enquiry Form-->
-  {% endblock body %}
 </div>
+<!-- End Of Enquiry Form-->
+
+<!-- Responsive styles -->
+<style>
+  @media (max-width: 768px) {
+    .enquiry-container {
+      width: 95% !important;
+      margin: 20px auto !important;
+      padding: 20px !important;
+    }
+    
+    .form-check-inline {
+      margin-right: 15px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .enquiry-container {
+      margin-top: 20px !important;
+      padding: 15px !important;
+    }
+    
+    .form-heading {
+      font-size: 1.5rem !important;
+    }
+    
+    .form-check-inline {
+      display: block;
+      margin-bottom: 10px;
+    }
+  }
+</style>
+{% endblock body %}

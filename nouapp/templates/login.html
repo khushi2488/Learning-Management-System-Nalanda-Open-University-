@@ -29,7 +29,7 @@
       <div
         class="div"
         style="
-          background-color: aliceblue;
+          background-color: var(--card-bg);
           width: 400px;
           max-width: 90%;
           box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);
@@ -41,24 +41,27 @@
           padding: 30px 20px;
         "
       >
-      {% if messages %}
-      {% for message in messages %}
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>{{message}}</strong>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-      </div>
-      {% endfor %}
-    {% endif %}
-        <h1
-          style="
-            color: rgb(6, 6, 106);
-            font-family: Poppins, sans-serif;
-            font-weight: bold;
-            margin-bottom: 20px;
-          "
-        >
-          LOG IN
+        {% if messages %}
+          {% for message in messages %}
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>{{message}}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endfor %}
+        {% endif %}
+        
+        <h1 class="form-heading" style="
+          color: var(--primary-color) !important;
+          font-family: Poppins, sans-serif;
+          font-weight: bold;
+          margin-bottom: 20px;
+          text-align: center;
+          width: 100%;
+        ">
+          <b>LOG IN</b>
         </h1>
+        
+        <hr style="width: 100%; border-color: var(--primary-color); opacity: 0.3; margin-bottom: 20px;" />
 
         <input
           type="text"
@@ -66,13 +69,15 @@
           placeholder="Enter User Id"
           id="userid"
           style="
-            box-shadow: 0px 0px 3px gray;
+            box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
             border-radius: 5px;
             height: 40px;
             width: 100%;
             margin-bottom: 15px;
             border: none;
             padding: 6px 10px;
+            background-color: var(--card-bg);
+            color: var(--card-text);
           "
         />
 
@@ -82,28 +87,31 @@
           placeholder="Enter Password"
           id="password"
           style="
-            box-shadow: 0px 0px 3px gray;
+            box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
             border-radius: 5px;
             height: 40px;
             width: 100%;
             margin-bottom: 15px;
             border: none;
             padding: 6px 10px;
+            background-color: var(--card-bg);
+            color: var(--card-text);
           "
         />
 
         <select
           name="usertype"
           style="
-            box-shadow: 0px 0px 3px gray;
+            box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
             border-radius: 5px;
             height: 40px;
             width: 100%;
             margin-bottom: 15px;
             border: none;
             text-align: center;
-            color: rgb(6, 6, 106);
+            color: var(--primary-color);
             padding: 6px 10px;
+            background-color: var(--card-bg);
           "
         >
           <option selected>--Select User Type--</option>
@@ -114,14 +122,22 @@
         <button
           type="submit"
           class="btn btn-primary"
-          style="width: 100%; height: 40px; margin-bottom: 15px;"
+          style="
+            width: 100%; 
+            height: 40px; 
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            border: none;
+          "
         >
           Login
         </button>
 
-        <p style="font-size: 14px; text-align: center; margin: 0;">
+        <p style="font-size: 14px; text-align: center; margin: 0; color: var(--card-text);">
           Don't have an account?
-          <a href="{% url 'nouapp:registration' %}"><u>Registration here</u></a>
+          <a href="{% url 'nouapp:registration' %}" style="color: var(--accent-color);">
+            <u>Registration here</u>
+          </a>
         </p>
       </div>
     </form>
