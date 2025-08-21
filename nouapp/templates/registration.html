@@ -1,4 +1,6 @@
-{% extends 'parent.html' %} {% load static %} {% block body %}
+{% extends 'parent.html' %} 
+{% load static %} 
+{% block body %}
 <style>
   /*Header Image*/
   .home {
@@ -19,14 +21,32 @@
       font-size: small;
     }
   }
+  
   .required::after {
     content: " *";
     color: red;
   }
+  
+  /* Form styling for theme compatibility */
+  .registration-container {
+    background-color: var(--card-bg);
+    color: var(--card-text);
+    margin: 0 auto;
+    border-radius: 15px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
+    padding: 20px;
+  }
+  
+  .form-heading {
+    color: var(--primary-color) !important;
+  }
+  
+  .form-label {
+    color: var(--primary-color) !important;
+  }
+  
   /*Header Image*/
 </style>
-
-<!-- Header Image -->
 
 <!-- Header Image -->
 <div class="row">
@@ -52,376 +72,444 @@
 
 <!-- Start Of Student Registration Form Section -->
 <div class="row mt-5" style="margin-bottom: 50px">
-  {% comment %}
-  <div class="col-sm-3" style="background-color: white; min-height: 600px">
-    <h1 align="center"><u>News</u></h1>
-    <br />
-    <marquee
-      behavior=""
-      direction="down"
-      height="400"
-      onmouseover="stop()"
-      onmouseout="start()"
-    >
-      {% for n in ns %}
-      <p style="text-align: center; color: brown">{{n.newstext}}</p>
-      {% endfor %}
-    </marquee>
-  </div>
-  {% endcomment %}
-  <div
-    class="col-sm-9"
-    style="
-      min-height: 600px;
-      background-color: aliceblue;
-      color: rgb(6, 6, 106);
-      margin: 0 auto;
-      border-radius: 15px;
-      box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.8);
-    "
-    ;
-  >
-    <script>
-      function validate() {
-        var rollno = document.getElementById("rollno");
-        var name = document.getElementById("name");
-        var fname = document.getElementById("fatherName");
-        var mname = document.getElementById("motherName");
-        var contactno = document.getElementById("contactNo");
-        var emailaddress = document.getElementById("emailAddress");
-        var emailexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        var password = document.getElementById("password");
-        var confirmpassword = document.getElementById("confirmPassword");
-        if (rollno.value == "" || rollno.value == null) {
-          alert("Please enter your rollno");
-          rollno.focus();
-        } else if (isNaN(rollno.value)) {
-          alert("Please enter Number only");
-          rollno.focus();
-        } else if (name.value == "" || name.value == null) {
-          alert("Please enter  your name");
-          name.focus();
-        } else if (fname.value == "" || fname.value == null) {
-          alert("Please enter father name");
-          fname.focus();
-        } else if (mname.value == "" || mname.value == null) {
-          alert("Please enter mother name");
-          mname.focus();
-        } else if (contactno.value == "" || contactno.value == null) {
-          alert("Please enter contactno");
-          contactno.focus();
-        } else if (isNaN(contactno.value)) {
-          alert("Please enter Number only");
-          contactno.focus();
-        } else if (contactno.value.length != 10) {
-          alert("Please enter 10 digit No");
-          contactno.focus();
-        } else if (emailaddress.value == "" || emailaddress.value == null) {
-          alert("Please enter emailaddress");
-          emailaddress.focus();
-        } else if (!emailexp.test(emailaddress.value)) {
-          alert("Please enter valid email address");
-          emailaddress.focus();
-        } else if (password.value == "" || password.value == null) {
-          alert("Please enter  your password");
-          password.focus();
-        } else if (password.length < 8) {
-          alert("Please enter atleast 8 digit password");
-          password.focus();
-        } else if (
-          confirmpassword.value == "" ||
-          confirmpassword.value == null
-        ) {
-          alert("Please enter confirm password");
-          confirmpassword.focus();
-        } else if (confirmpassword.value != password.value) {
-          alert("Confirm passwor is not matched");
-          confirmpassword.focus();
-        } else {
-          document.getElementById("frmregistration").submit();
+  <div class="col-sm-12 col-md-10 col-lg-8 mx-auto">
+    <div class="registration-container">
+      <script>
+        function validate() {
+          var rollno = document.getElementById("rollno");
+          var name = document.getElementById("name");
+          var fname = document.getElementById("fatherName");
+          var mname = document.getElementById("motherName");
+          var contactno = document.getElementById("contactNo");
+          var emailaddress = document.getElementById("emailAddress");
+          var emailexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+          var password = document.getElementById("password");
+          var confirmpassword = document.getElementById("confirmPassword");
+          
+          if (rollno.value == "" || rollno.value == null) {
+            alert("Please enter your rollno");
+            rollno.focus();
+            return false;
+          } else if (isNaN(rollno.value)) {
+            alert("Please enter Number only");
+            rollno.focus();
+            return false;
+          } else if (name.value == "" || name.value == null) {
+            alert("Please enter your name");
+            name.focus();
+            return false;
+          } else if (fname.value == "" || fname.value == null) {
+            alert("Please enter father name");
+            fname.focus();
+            return false;
+          } else if (mname.value == "" || mname.value == null) {
+            alert("Please enter mother name");
+            mname.focus();
+            return false;
+          } else if (contactno.value == "" || contactno.value == null) {
+            alert("Please enter contactno");
+            contactno.focus();
+            return false;
+          } else if (isNaN(contactno.value)) {
+            alert("Please enter Number only");
+            contactno.focus();
+            return false;
+          } else if (contactno.value.length != 10) {
+            alert("Please enter 10 digit No");
+            contactno.focus();
+            return false;
+          } else if (emailaddress.value == "" || emailaddress.value == null) {
+            alert("Please enter emailaddress");
+            emailaddress.focus();
+            return false;
+          } else if (!emailexp.test(emailaddress.value)) {
+            alert("Please enter valid email address");
+            emailaddress.focus();
+            return false;
+          } else if (password.value == "" || password.value == null) {
+            alert("Please enter your password");
+            password.focus();
+            return false;
+          } else if (password.value.length < 8) {
+            alert("Please enter atleast 8 digit password");
+            password.focus();
+            return false;
+          } else if (confirmpassword.value == "" || confirmpassword.value == null) {
+            alert("Please enter confirm password");
+            confirmpassword.focus();
+            return false;
+          } else if (confirmpassword.value != password.value) {
+            alert("Confirm password is not matched");
+            confirmpassword.focus();
+            return false;
+          } else {
+            // Check if any required field is empty
+            var program = document.getElementById("program");
+            var branch = document.getElementById("branch");
+            var year = document.getElementById("year");
+            var gender = document.querySelector('input[name="gender"]:checked');
+            
+            if (!gender) {
+              alert("Please select your gender");
+              return false;
+            }
+            if (program.value === "") {
+              alert("Please select a program");
+              program.focus();
+              return false;
+            }
+            if (branch.value === "") {
+              alert("Please select a branch");
+              branch.focus();
+              return false;
+            }
+            if (year.value === "") {
+              alert("Please select a year");
+              year.focus();
+              return false;
+            }
+            
+            document.getElementById("frmregistration").submit();
+            return true;
+          }
         }
-      }
-    </script>
-    {% if messages %} {% for message in messages %}
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-      <strong>{{message}}</strong>
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-      ></button>
-    </div>
-    {% endfor %} {% endif %}
-
-    <!-- {% csrf_token %} -->
-
-    <div class="container mt-5">
-      <h2
-        class="text-center mb-4"
-        style="
-          color: rgb(6, 6, 106);
-          font-weight: bold;
-          font-family: poppins, sans-serif;
-        "
-      >
-        STUDENT REGISTRATION FORM
-      </h2>
-      <hr />
-      <form
-        class="p-4"
-        id="frmregistration"
-        method="post"
-        onsubmit="event.preventDefault();validate();"
-      >
-        {% csrf_token %}
-        <!-- Roll No -->
-        <div class="row mb-3">
-          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
-            >Enter Roll No :</label
-          >
-          <div class="col-sm-9">
-            <input
-              type="text"
-              id="rollno"
-              name="rollno"
-              class="form-control"
-              placeholder="Enter Roll No"
-              required
-            />
-          </div>
+      </script>
+      
+      {% if messages %} 
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          <strong>{{message}}</strong>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
         </div>
+        {% endfor %} 
+      {% endif %}
 
-        <!-- Name -->
-        <div class="row mb-3">
-          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
-            >Enter Name :</label
-          >
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              id="name"
-              name="name"
-              placeholder="Enter Name"
-              required
-            />
-          </div>
-        </div>
-
-        <!-- Father Name -->
-        <div class="row mb-3">
-          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
-            >Enter Father Name :</label
-          >
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              id="fatherName"
-              name="fatherName"
-              placeholder="Enter Father Name"
-              required
-            />
-          </div>
-        </div>
-
-        <!-- Mother Name -->
-        <div class="row mb-3">
-          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
-            >Enter Mother Name :</label
-          >
-          <div class="col-sm-9">
-            <input
-              type="text"
-              class="form-control"
-              id="motherName"
-              name="motherName"
-              placeholder="Enter Mother Name"
-              required
-            />
-          </div>
-        </div>
-
-        <!-- Gender -->
-        <div class="row mb-3">
-          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
-            >Select Gender :</label
-          >
-          <div class="col-sm-9 d-flex align-items-center">
-            <div class="form-check me-3">
+      <div class="container mt-4">
+        <h2 class="text-center mb-4 form-heading">
+          STUDENT REGISTRATION FORM
+        </h2>
+        <hr style="border-color: var(--primary-color); opacity: 0.3;" />
+        
+        <form
+          class="p-3"
+          id="frmregistration"
+          method="post"
+          onsubmit="event.preventDefault(); return validate();"
+        >
+          {% csrf_token %}
+          
+          <!-- Roll No -->
+          <div class="row mb-3">
+            <label class="col-sm-3 col-form-label required form-label">
+              Enter Roll No :
+            </label>
+            <div class="col-sm-9">
               <input
-                class="form-check-input"
-                type="radio"
-                name="gender"
-                id="genderMale"
-                value="male"
+                type="text"
+                id="rollno"
+                name="rollno"
+                class="form-control"
+                placeholder="Enter Roll No"
                 required
               />
-              <label class="form-check-label" for="male">Male</label>
             </div>
-            <div class="form-check me-3">
+          </div>
+
+          <!-- Name -->
+          <div class="row mb-3">
+            <label class="col-sm-3 col-form-label required form-label">
+              Enter Name :
+            </label>
+            <div class="col-sm-9">
               <input
-                class="form-check-input"
-                type="radio"
-                name="gender"
-                id="genderFemale"
-                value="female"
+                type="text"
+                class="form-control"
+                id="name"
+                name="name"
+                placeholder="Enter Name"
                 required
               />
-              <label class="form-check-label" for="female">Female</label>
             </div>
-            <div class="form-check">
+          </div>
+
+          <!-- Father Name -->
+          <div class="row mb-3">
+            <label class="col-sm-3 col-form-label required form-label">
+              Enter Father Name :
+            </label>
+            <div class="col-sm-9">
               <input
-                class="form-check-input"
-                type="radio"
-                name="gender"
-                id="genderOther"
-                value="other"
+                type="text"
+                class="form-control"
+                id="fatherName"
+                name="fatherName"
+                placeholder="Enter Father Name"
                 required
               />
-              <label class="form-check-label" for="other">Other</label>
             </div>
           </div>
-        </div>
 
-        <!-- Address -->
-        <div class="row mb-3">
-          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
-            >Enter Address :</label
-          >
-          <div class="col-sm-9">
-            <textarea
-              class="form-control"
-              id="address"
-              name="address"
-              rows="2"
-              placeholder="Enter Address"
-              required
-            ></textarea>
+          <!-- Mother Name -->
+          <div class="row mb-3">
+            <label class="col-sm-3 col-form-label required form-label">
+              Enter Mother Name :
+            </label>
+            <div class="col-sm-9">
+              <input
+                type="text"
+                class="form-control"
+                id="motherName"
+                name="motherName"
+                placeholder="Enter Mother Name"
+                required
+              />
+            </div>
           </div>
-        </div>
 
-        <!-- Program -->
-        <div class="row mb-3">
-          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
-            >Select Program :</label
-          >
-          <div class="col-sm-9">
-            <select class="form-select" id="program" name="program" required>
-              <option value="">---Select Program---</option>
-              <option value="btech">B.Tech</option>
-              <option value="mtech">M.Tech</option>
-              <option value="mba">MBA</option>
-            </select>
+          <!-- Gender -->
+          <div class="row mb-3">
+            <label class="col-sm-3 col-form-label required form-label">
+              Select Gender :
+            </label>
+            <div class="col-sm-9 d-flex align-items-center">
+              <div class="form-check me-3">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="gender"
+                  id="genderMale"
+                  value="male"
+                  required
+                />
+                <label class="form-check-label" for="genderMale">Male</label>
+              </div>
+              <div class="form-check me-3">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="gender"
+                  id="genderFemale"
+                  value="female"
+                  required
+                />
+                <label class="form-check-label" for="genderFemale">Female</label>
+              </div>
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="radio"
+                  name="gender"
+                  id="genderOther"
+                  value="other"
+                  required
+                />
+                <label class="form-check-label" for="genderOther">Other</label>
+              </div>
+            </div>
           </div>
-        </div>
 
-        <!-- Branch -->
-        <div class="row mb-3">
-          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
-            >Select Branch :</label
-          >
-          <div class="col-sm-9">
-            <select class="form-select" id="branch" name="branch" required>
-              <option value="">---Select Branch---</option>
-              <option value="Computer Science">Computer Science</option>
-              <option value="Information Technology">
-                 Information Technology
-              </option>
-              <option value="Electonic">Electronic</option>
-              <option value="Electrical">Electrical</option>
-              <option value="Mechanical">Mechanical</option>
-              <option value="Other">Other</option>
-            </select>
+          <!-- Address -->
+          <div class="row mb-3">
+            <label class="col-sm-3 col-form-label required form-label">
+              Enter Address :
+            </label>
+            <div class="col-sm-9">
+              <textarea
+                class="form-control"
+                id="address"
+                name="address"
+                rows="2"
+                placeholder="Enter Address"
+                required
+              ></textarea>
+            </div>
           </div>
-        </div>
 
-        <!-- Year -->
-        <div class="row mb-3">
-          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
-            >Select Year :</label
-          >
-          <div class="col-sm-9">
-            <select class="form-select" id="year" name="year" required>
-              <option value="">---Select Year---</option>
-              <option value="First Year">First Year</option>
-              <option value="Second Year">Second Year</option>
-              <option value="Third Year">Third Year</option>
-              <option value="Final Year">Final Year</option>
-            </select>
+          <!-- Program -->
+          <div class="row mb-3">
+            <label class="col-sm-3 col-form-label required form-label">
+              Select Program :
+            </label>
+            <div class="col-sm-9">
+              <select class="form-select" id="program" name="program" required>
+                <option value="">---Select Program---</option>
+                <option value="btech">B.Tech</option>
+                <option value="mtech">M.Tech</option>
+                <option value="mba">MBA</option>
+              </select>
+            </div>
           </div>
-        </div>
-        <div class="row mb-3">
-          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
-            >Enter Contact No :</label
-          >
-          <div class="col-sm-9">
-            <input
-              type="tel"
-              class="form-control"
-              id="contactNo"
-              name="contactNo"
-              placeholder="Enter Contact No"
-              required
-            />
-          </div>
-        </div>
-        <div class="row mb-3">
-          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
-            >Enter Email Address :</label
-          >
-          <div class="col-sm-9">
-            <input
-              type="email"
-              class="form-control"
-              id="emailAddress"
-              name="emailAddress"
-              placeholder="example@example.com"
-              required
-            />
-          </div>
-        </div>
-        <div class="row mb-3">
-          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
-            >Enter Password :</label
-          >
-          <div class="col-sm-9">
-            <input
-              type="password"
-              class="form-control"
-              id="password"
-              name="password"
-              placeholder="Enter Password"
-              required
-            />
-          </div>
-        </div>
-        <div class="row mb-3">
-          <label class="col-sm-3 col-form-label required" style="color: rgb(6, 6, 106)"
-            >Confirm Password:</label
-          >
-          <div class="col-sm-9">
-            <input
-              type="password"
-              class="form-control"
-              id="confirmPassword"
-              name="confirmPassword"
-              placeholder="Confirm Password"
-              required
-            />
-          </div>
-        </div>
 
-        <!-- Submit -->
-        <div class="row">
-          <div class="col-sm-12 text-center">
-            <button type="submit" class="btn btn-primary">Register</button>
+          <!-- Branch -->
+          <div class="row mb-3">
+            <label class="col-sm-3 col-form-label required form-label">
+              Select Branch :
+            </label>
+            <div class="col-sm-9">
+              <select class="form-select" id="branch" name="branch" required>
+                <option value="">---Select Branch---</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Information Technology">Information Technology</option>
+                <option value="Electonic">Electronic</option>
+                <option value="Electrical">Electrical</option>
+                <option value="Mechanical">Mechanical</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
           </div>
-        </div>
-      </form>
+
+          <!-- Year -->
+          <div class="row mb-3">
+            <label class="col-sm-3 col-form-label required form-label">
+              Select Year :
+            </label>
+            <div class="col-sm-9">
+              <select class="form-select" id="year" name="year" required>
+                <option value="">---Select Year---</option>
+                <option value="First Year">First Year</option>
+                <option value="Second Year">Second Year</option>
+                <option value="Third Year">Third Year</option>
+                <option value="Final Year">Final Year</option>
+              </select>
+            </div>
+          </div>
+          
+          <!-- Contact No -->
+          <div class="row mb-3">
+            <label class="col-sm-3 col-form-label required form-label">
+              Enter Contact No :
+            </label>
+            <div class="col-sm-9">
+              <input
+                type="tel"
+                class="form-control"
+                id="contactNo"
+                name="contactNo"
+                placeholder="Enter Contact No"
+                required
+              />
+            </div>
+          </div>
+          
+          <!-- Email Address -->
+          <div class="row mb-3">
+            <label class="col-sm-3 col-form-label required form-label">
+              Enter Email Address :
+            </label>
+            <div class="col-sm-9">
+              <input
+                type="email"
+                class="form-control"
+                id="emailAddress"
+                name="emailAddress"
+                placeholder="example@example.com"
+                required
+              />
+            </div>
+          </div>
+          
+          <!-- Password -->
+          <div class="row mb-3">
+            <label class="col-sm-3 col-form-label required form-label">
+              Enter Password :
+            </label>
+            <div class="col-sm-9">
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                placeholder="Enter Password (min 8 characters)"
+                required
+              />
+            </div>
+          </div>
+          
+          <!-- Confirm Password -->
+          <div class="row mb-3">
+            <label class="col-sm-3 col-form-label required form-label">
+              Confirm Password:
+            </label>
+            <div class="col-sm-9">
+              <input
+                type="password"
+                class="form-control"
+                id="confirmPassword"
+                name="confirmPassword"
+                placeholder="Confirm Password"
+                required
+              />
+            </div>
+          </div>
+
+          <!-- Submit -->
+          <div class="row mt-4">
+            <div class="col-sm-12 text-center">
+              <button 
+                type="submit" 
+                class="btn btn-primary"
+                style="
+                  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                  border: none;
+                  padding: 10px 30px;
+                  font-weight: bold;
+                "
+              >
+                Register
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </div>
 <!-- End Of Student Registration Form Section -->
+
+<!-- Responsive styles -->
+<style>
+  @media (max-width: 768px) {
+    .registration-container {
+      width: 95% !important;
+      margin: 20px auto !important;
+      padding: 15px !important;
+    }
+    
+    .form-label {
+      text-align: left !important;
+      margin-bottom: 5px;
+    }
+    
+    .col-sm-3, .col-sm-9 {
+      width: 100%;
+      max-width: 100%;
+      flex: 0 0 100%;
+    }
+    
+    .d-flex.align-items-center {
+      flex-direction: column;
+      align-items: flex-start !important;
+    }
+    
+    .form-check {
+      margin-bottom: 8px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .registration-container {
+      margin-top: 20px !important;
+      padding: 10px !important;
+    }
+    
+    .form-heading {
+      font-size: 1.5rem !important;
+    }
+  }
+</style>
 {% endblock body %}

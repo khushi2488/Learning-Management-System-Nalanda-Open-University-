@@ -8,6 +8,16 @@ from django.conf import settings
 from . import smssender
 from adminapp.models import News
 
+
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+
+@require_POST
+def set_theme(request):
+    theme = request.POST.get('theme', 'light')
+    request.session['theme'] = theme
+    return JsonResponse({'status': 'ok'})
+
 # Create your views here.
 def index(request):
     ns=News.objects.all()

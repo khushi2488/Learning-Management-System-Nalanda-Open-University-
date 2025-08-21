@@ -7,7 +7,7 @@
     }
     .container h1{
        text-align: center;
-       color: rgb(6,6,106);
+       color: var(--primary-color);
        font-weight: bold;
        padding-top: 10vh;
        font-family: poppins, sans-serif;
@@ -21,15 +21,44 @@
       background-position: center;
   }
  /*Header Image End*/
-            .row .col-sm-6{
-              padding-top:0vh ;
-            }
-          @media (max-width:600px){
-                 .row .col-sm-6{
-                   margin-bottom:4vh ;
-                   padding-top: 5px;
-                  }
+ 
+ .service-card {
+     height: 100%;
+     display: flex;
+     flex-direction: column;
  }
+ 
+ .service-card .card-body {
+     flex-grow: 1;
+     display: flex;
+     flex-direction: column;
+ }
+ 
+ .service-card .card-text {
+     flex-grow: 1;
+ }
+ 
+ .card {
+     margin-bottom: 30px;
+     transition: transform 0.3s ease;
+ }
+ 
+ .card:hover {
+     transform: translateY(-5px);
+ }
+ 
+ .row .col-sm-6{
+     padding-top: 0vh;
+     margin-bottom: 20px;
+ }
+ 
+ @media (max-width:600px){
+     .row .col-sm-6{
+         margin-bottom: 20px;
+         padding-top: 5px;
+     }
+ }
+ 
  @media (max-width: 530px) and (min-width: 360px) {
     .home h3 {
       text-align: center;
@@ -40,9 +69,6 @@
       font-size: small;
     }
   }
-
-
-
 </style>
 <!--Header Image-->
 <div class="row">
@@ -52,8 +78,8 @@
         <p style="font-family: poppins;font-weight: bolder;">NOU-e-Gyan PORTAL, CONCEPT BY NALANDA OPEN UNIVERSITY</p>
         </div>
     </section>
-  </div>
-  <!-- Header Image -->
+</div>
+<!-- Header Image -->
 
 <section class="sevice-section">
     <div class="container">
@@ -62,82 +88,74 @@
             <hr>
         </div>
         <!--body-section-->
-    <!--row1-->
-    <div class="row">
-       <div class="col-sm-6" >
-        <div class="card w-80" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);">
-            <div class="card-body" style="font-family: poppins,sans-serif; background-color: aliceblue;">
-              <h3 class="card-title" style="color: rgb(6,6,106);">Login</h3>
-              <p class="card-text" style="text-align: justify;">Make your way into the portal through the login page where different users are provided with a username and password to gain access to the university's programs and other learning related materials.</p>
-              <a href="{% url 'nouapp:login' %}" class="btn btn-info" data-mdb-ripple-init>Login</a>
-            </div>
-          </div>
-
-       </div>
-       <div class="col-sm-6">
-        <div class="card w-80" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);">
-            <div class="card-body" style="font-family: poppins,sans-serif; background-color: aliceblue;">
-              <h3 class="card-title" style="color: rgb(6,6,106);">Dashboard</h3>
-              <p class="card-text"style="text-align: justify;">The AI-based dashboard will serve as an administrative home page to access key Information about Course Details, Assignments, Quizzes/MCQs, Self-Learning Materials, Course Catalogue, Progress Report, Notifications and other useful tabs.</p>
-              <a href="{% url 'studentapp:studenthome' %}" class="btn btn-info" data-mdb-ripple-init>Dashboard</a>
-            </div>
-          </div>
-        
-       </div>
-    </div>
-    <!--row2-->
-    <div class="row">
-        <div class="col-sm-6">
-            <div class="card w-80" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);">
-                <div class="card-body" style="font-family: poppins,sans-serif; background-color: aliceblue;">
-                  <h3 class="card-title" style="color: rgb(6,6,106);">Self Learning Material</h3>
-                  <p class="card-text"style="text-align: justify;">The students enrolled in the university have a wide range of courses available online covering different subjects. These courses include videos, images, word/PDF files,external links, assignments and quizzes for their study material.</p>
-                  <a href="{% url 'studentapp:viewmat' %}"  class="btn btn-info" data-mdb-ripple-init>Self Learning Material</a>
+        <!--row1-->
+        <div class="row">
+           <div class="col-sm-6 col-md-6 col-lg-6">
+                <div class="card w-100 service-card" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);">
+                    <div class="card-body" style="font-family: poppins,sans-serif; background-color: var(--card-bg); color: var(--card-text);">
+                      <h3 class="card-title" style="color: var(--primary-color);">Login</h3>
+                      <p class="card-text" style="text-align: justify;">Make your way into the portal through the login page where different users are provided with a username and password to gain access to the university's programs and other learning related materials.</p>
+                      <a href="{% url 'nouapp:login' %}" class="btn btn-info mt-auto" data-mdb-ripple-init style="align-self: flex-start;">Login</a>
+                    </div>
                 </div>
-              </div>
-        
+           </div>
+           
+           <div class="col-sm-6 col-md-6 col-lg-6">
+                <div class="card w-100 service-card" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);">
+                    <div class="card-body" style="font-family: poppins,sans-serif; background-color: var(--card-bg); color: var(--card-text);">
+                      <h3 class="card-title" style="color: var(--primary-color);">Dashboard</h3>
+                      <p class="card-text" style="text-align: justify;">The AI-based dashboard will serve as an administrative home page to access key Information about Course Details, Assignments, Quizzes/MCQs, Self-Learning Materials, Course Catalogue, Progress Report, Notifications and other useful tabs.</p>
+                      <a href="{% url 'studentapp:studenthome' %}" class="btn btn-info mt-auto" data-mdb-ripple-init style="align-self: flex-start;">Dashboard</a>
+                    </div>
+                </div>
+           </div>
         </div>
-        <div class="col-sm-6">
-            <div class="card w-80" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);">
-                <div class="card-body"style="font-family: poppins,sans-serif; background-color: aliceblue;">
-                  <h3 class="card-title" style="color: rgb(6,6,106);">Performance</h3>
-                  <p class="card-text"style="text-align: justify;">The enrolled students will have courses ranging from certificate to degree course. The progress reports of these courses can be monitored by the students on their portal and give the student an in-depth analysis of the progress.</p>
-                  <a href="{% url 'studentapp:viewprofile' %}" class="btn btn-info" data-mdb-ripple-init>Performance</a>
+        <!--row2-->
+        <div class="row">
+            <div class="col-sm-6 col-md-6 col-lg-6">
+                <div class="card w-100 service-card" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);">
+                    <div class="card-body" style="font-family: poppins,sans-serif; background-color: var(--card-bg); color: var(--card-text);">
+                      <h3 class="card-title" style="color: var(--primary-color);">Self Learning Material</h3>
+                      <p class="card-text" style="text-align: justify;">The students enrolled in the university have a wide range of courses available online covering different subjects. These courses include videos, images, word/PDF files,external links, assignments and quizzes for their study material.</p>
+                      <a href="{% url 'studentapp:viewmat' %}" class="btn btn-info mt-auto" data-mdb-ripple-init style="align-self: flex-start;">Self Learning Material</a>
+                    </div>
                 </div>
-              </div>
-        
+            </div>
+            
+            <div class="col-sm-6 col-md-6 col-lg-6">
+                <div class="card w-100 service-card" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);">
+                    <div class="card-body" style="font-family: poppins,sans-serif; background-color: var(--card-bg); color: var(--card-text);">
+                      <h3 class="card-title" style="color: var(--primary-color);">Performance</h3>
+                      <p class="card-text" style="text-align: justify;">The enrolled students will have courses ranging from certificate to degree course. The progress reports of these courses can be monitored by the students on their portal and give the student an in-depth analysis of the progress.</p>
+                      <a href="{% url 'studentapp:viewprofile' %}" class="btn btn-info mt-auto" data-mdb-ripple-init style="align-self: flex-start;">Performance</a>
+                    </div>
+                </div>
+            </div>
         </div>
         <!--row3-->
-
-        <div class="row" style= "padding-bottom: 10vh;">
-            <div class="col-sm-6">
-             <div class="card w-80" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);">
-                 <div class="card-body"style="font-family: poppins,sans-serif; background-color: aliceblue;">
-                   <h3 class="card-title" style="color: rgb(6,6,106);">Feedback</h3>
-                   <p class="card-text" style="text-align: justify;">Constructive feedback from students is a valuable resource for improving the learning process. The portal allows the students to provide feedback to address aspects of the course and self-learning material.</p>
-                   <a href="{% url 'studentapp:response' %}" class="btn btn-info" data-mdb-ripple-init>Feedback</a>
-                 </div>
-               </div>
-     
+        <div class="row" style="padding-bottom: 10vh;">
+            <div class="col-sm-6 col-md-6 col-lg-6">
+                <div class="card w-100 service-card" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);">
+                    <div class="card-body" style="font-family: poppins,sans-serif; background-color: var(--card-bg); color: var(--card-text);">
+                      <h3 class="card-title" style="color: var(--primary-color);">Feedback</h3>
+                      <p class="card-text" style="text-align: justify;">Constructive feedback from students is a valuable resource for improving the learning process. The portal allows the students to provide feedback to address aspects of the course and self-learning material.</p>
+                      <a href="{% url 'studentapp:response' %}" class="btn btn-info mt-auto" data-mdb-ripple-init style="align-self: flex-start;">Feedback</a>
+                    </div>
+                </div>
             </div>
-            <div class="col-sm-6">
-             <div class="card w-80" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);">
-                 <div class="card-body"style="font-family: poppins,sans-serif; background-color: aliceblue;">
-                   <h3 class="card-title" style="color: rgb(6,6,106);">Course-Catalogue</h3>
-                   <p class="card-text" style="text-align: justify;">The course catalogue is a document that lists the courses available in the university with a complete and brief description of each course. This course catalogue also provides a description that includes important details.</p>
-                   <a href="{% url 'nouapp:courses' %}"" class="btn btn-info" data-mdb-ripple-init>Course-Catalogue</a>
-                 </div>
-               </div>
-             
+            
+            <div class="col-sm-6 col-md-6 col-lg-6">
+                <div class="card w-100 service-card" style="box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);">
+                    <div class="card-body" style="font-family: poppins,sans-serif; background-color: var(--card-bg); color: var(--card-text);">
+                      <h3 class="card-title" style="color: var(--primary-color);">Course-Catalogue</h3>
+                      <p class="card-text" style="text-align: justify;">The course catalogue is a document that lists the courses available in the university with a complete and brief description of each course. This course catalogue also provides a description that includes important details.</p>
+                      <a href="{% url 'nouapp:courses' %}" class="btn btn-info mt-auto" data-mdb-ripple-init style="align-self: flex-start;">Course-Catalogue</a>
+                    </div>
+                </div>
             </div>
-         </div>
-
-
+        </div>
+        <!--body-section end-->  
     </div>
-
-    <!--body-section end-->  
-   
-
 </section>
 
 {% endblock body %}
