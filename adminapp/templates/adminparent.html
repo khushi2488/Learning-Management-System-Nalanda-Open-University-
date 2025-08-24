@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="{% static 'assets/vendors/mdi/css/materialdesignicons.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/vendors/css/vendor.bundle.base.css' %}">
     
+    
     <link rel="stylesheet" href="{% static 'assets/vendors/jvectormap/jquery-jvectormap.css' %}">
     <link rel="stylesheet" href="{% static 'assets/vendors/flag-icon-css/css/flag-icon.min.css' %}">
     <link rel="stylesheet" href="{% static 'assets/vendors/owl-carousel-2/owl.carousel.min.css' %}">
@@ -176,10 +177,23 @@
         .dark-theme tbody tr:nth-child(even) {
             background-color: #252538 !important;
         }
+
+        /* ---- ACCESSIBILITY CHANGE: Style for the skip link ---- */
+        .visually-hidden-focusable:not(:focus):not(:active) {
+            clip: rect(0 0 0 0);
+            clip-path: inset(50%);
+            height: 1px;
+            overflow: hidden;
+            position: absolute;
+            white-space: nowrap;
+            width: 1px;
+        }
     </style>
 </head>
 <body>
-    <button id="theme-toggle">
+    <a href="#main-content" class="visually-hidden-focusable" style="background-color: #005fcc; color: white; padding: 10px; position: absolute; z-index: 10000;">Skip to main content</a>
+    
+    <button id="theme-toggle" aria-label="Toggle dark and light theme">
         <span id="theme-icon">🌙</span>
     </button>
     
@@ -193,14 +207,14 @@
             <div class="profile-desc">
               <div class="profile-pic">
                 <div class="count-indicator">
-                  <img class="img-xs rounded-circle " src="{% static 'assets/images/faces/face15.jpg' %}" alt="">
+                  <img class="img-xs rounded-circle " src="{% static 'assets/images/faces/face15.jpg' %}" alt="Profile picture">
                   <span class="count bg-success"></span>
                 </div>
                 <div class="profile-name">
                   <h5 class="mb-0 font-weight-normal">{{adminid}}</h5>                    
                 </div>
               </div>
-              <a href="#" id="profile-dropdown" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
+              <a href="#" id="profile-dropdown" data-bs-toggle="dropdown" role="button" aria-label="Open profile options"><i class="mdi mdi-dots-vertical"></i></a>
               <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown" style="background-color: var(--sidebar-bg);">
                 <a href="#" class="dropdown-item preview-item">
                   <div class="preview-thumbnail">
@@ -303,14 +317,14 @@
               <a class="navbar-brand brand-logo-mini" href="#"><img src="{% static 'assets/images/logo-mini.svg' %}" alt="logo" /></a>
             </div>
             <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-              <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
+              <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize" aria-label="Toggle sidebar">
                 <span class="mdi mdi-menu"></span>
               </button>
               <ul class="navbar-nav navbar-nav-right">
                 <li class="nav-item dropdown">
                   <a class="nav-link" id="profileDropdown" href="#" data-bs-toggle="dropdown">
                     <div class="navbar-profile">
-                      <img class="img-xs rounded-circle" src="{% static 'assets/images/faces/face15.jpg' %}" alt="">
+                      <img class="img-xs rounded-circle" src="{% static 'assets/images/faces/face15.jpg' %}" alt="Profile picture">
                       <p class="mb-0 d-none d-sm-block navbar-profile-name">{{adminid}}</p>
                       <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                     </div>
@@ -344,13 +358,13 @@
                   </div>
                 </li>
               </ul>
-              <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+              <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas" aria-label="Toggle sidebar">
                 <span class="mdi mdi-format-line-spacing"></span>
               </button>
             </div>
           </nav>
           
-          <div class="main-panel">
+          <div class="main-panel" id="main-content">
             <div class="content-wrapper" style="background-color: var(--content-bg);">
               {% block body %}              
 
@@ -381,6 +395,7 @@
       <script src="{% static 'assets/js/todolist.js' %}"></script>
       
       <script src="{% static 'assets/js/dashboard.js'%}"></script>
+      <script src="{% static 'assets/js/accessibility.js' %}"></script>
       
       <script>
         document.addEventListener('DOMContentLoaded', function() {

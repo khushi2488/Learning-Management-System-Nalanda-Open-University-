@@ -9,9 +9,9 @@
                 {% csrf_token %}
                 <table class="table table-bordered" style="width: 70%; margin:auto;background-color: rgb(6,6,106);border: 2px aliceblue;">
                     <tr>
-                        <td style="color: white;">Enter News :</td>
+                        <td style="color: white;"><label for="news-input">Enter News :</label></td>
                         <td>
-                            <textarea name="newstext" id="" class="form-control " style="color: rgb(6,6,106);background-color: aliceblue;"></textarea>
+                            <textarea name="newstext" id="news-input" class="form-control " style="color: rgb(6,6,106);background-color: aliceblue;"></textarea>
                         </td>
                     </tr>
 
@@ -26,9 +26,9 @@
 
               <table class="table table-bordered" style="width: 70%; margin:auto; color: rgb(6,6,106);">
                 <tr>
-                    <th>News Id :</th>
-                    <th>News :</th>
-                    <th>News Date :</th>
+                    <th scope="col">News Id :</th>
+                    <th scope="col">News :</th>
+                    <th scope="col">News Date :</th>
                 </tr>
 
                 {% for n in ns %}
