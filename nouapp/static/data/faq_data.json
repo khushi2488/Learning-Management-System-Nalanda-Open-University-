@@ -1,162 +1,167 @@
 [
   {
     "tag": "greeting",
-    "patterns": ["hi", "hello", "hey", "good morning", "good afternoon", "good evening", "is anyone there", "good day", "hi there", "hello there", "greetings", "namaste", "howdy"],
-    "responses": ["Hello! Welcome to Nalanda Open University. How can I help you today?", "Hi there! Welcome to NOU e-Gyan Portal! How can I assist you?", "Namaste! Welcome to Nalanda Open University. How may I help you?", "Welcome to Nalanda Open University! How can I assist you today?", "Good day! It's great to see you. How can I support your learning journey today?", "Hello and welcome! Are you a current student or looking for admission information?", "Hey! Welcome to the NOU help portal. What can I do for you?", "Greetings! Nalanda Open University at your service. How may I guide you?", "Hi! Ready to explore the world of distance learning? How can I help?", "Welcome! You've reached Nalanda Open University's assistant. What would you like to know?"]
+    "patterns": ["hi", "hello", "hey", "good morning", "good afternoon", "good evening", "is anyone there", "good day"],
+    "responses": ["Hello! Welcome to Nalanda Open University. How can I help you today?", "Hi there! Welcome to NOU e-Gyan Portal! How can I assist you?", "Namaste! Welcome to Nalanda Open University. How may I help you?"]
   },
   {
     "tag": "farewell",
-    "patterns": ["bye", "goodbye", "see you", "thank you", "thanks", "that's all", "i'm done", "exit", "quit", "talk to you later", "have a good day", "appreciate your help", "cheers", "thanks a lot", "ok thank you"],
-    "responses": ["Goodbye! Have a great day!", "Thank you for visiting Nalanda Open University!", "See you soon! Feel free to ask if you have more questions.", "Best of luck with your studies! Farewell.", "You're welcome! Wishing you success in your academic pursuits.", "Thank you for chatting. Don't hesitate to return if you need more assistance.", "Goodbye! Remember, the e-Gyan portal is always here for you.", "Take care! If you have more questions, we're just a message away.", "Farewell! We hope to assist you again soon.", "Thank you and all the best for your exams/course!"]
+    "patterns": ["bye", "goodbye", "see you", "thank you", "thanks", "that's all"],
+    "responses": ["Goodbye! Have a great day!", "Thank you for visiting Nalanda Open University!", "See you soon! Feel free to ask if you have more questions."]
   },
   {
     "tag": "university_intro",
-    "patterns": ["what is nalanda open university", "tell me about nou", "about nalanda open university", "history of nou", "when was nou established", "nou", "what does nou stand for", "information about nou", "describe nou", "what is the purpose of nou", "why was nou created", "foundation of nou", "origin of nou"],
-    "responses": ["Nalanda Open University (NOU) is the only university in Bihar state established for imparting learning exclusively through the distance education system. It was established in March 1987 by an ordinance promulgated by the Government of Bihar. The university is named after the famous ancient Nalanda University, a great center of learning in ancient India.", "NOU was founded in 1987 with the specific aim of providing quality higher education through distance and open learning modes, making education accessible to all sections of society.", "Nalanda Open University is a testament to Bihar's commitment to education, continuing the legacy of the ancient Nalanda Mahavihara by offering flexible learning opportunities.", "As a pioneer in distance education in Bihar, NOU offers a wide range of courses from certificate to postgraduate levels, all through a flexible learning framework.", "Established in 1987, NOU's mission is to 'take education to the people' by overcoming barriers of time, location, and resources.", "The university is named after the historic Nalanda University, reflecting its commitment to academic excellence and making knowledge accessible to everyone.", "NOU is a UGC-recognized university dedicated to the open and distance learning (ODL) system, serving thousands of students across India.", "It was set up to provide an alternative system of education for those who cannot pursue regular full-time courses due to various constraints.", "The foundation of NOU is built on the principles of equity, accessibility, and quality in higher education for all.", "Nalanda Open University is not just an institution; it's a movement to democratize education in Bihar and beyond."]
+    "patterns": ["what is nalanda open university", "tell me about nou", "about nalanda open university", "history of nou", "when was nou established"],
+    "responses": ["Nalanda Open University (NOU) is the only university in Bihar state established for imparting learning exclusively through the distance education system. It was established in March 1987 by an ordinance promulgated by the Government of Bihar. The university is named after the famous ancient Nalanda University, a great center of learning in ancient India."]
+  },
+  {
+    "tag": "location",
+    "patterns": ["where is nalanda open university", "address of nou", "location of nou", "how to reach nou", "where is the university located"],
+    "responses": ["Nalanda Open University is located at 2nd/3rd Floor, Biscoman Bhawan, Patna - 800001, Bihar, India. The university is situated in the heart of Patna city, easily accessible from all parts of the city."]
+  },
+  {
+    "tag": "contact_info",
+    "patterns": ["contact information", "phone number", "email address", "how to contact", "help desk", "customer care"],
+    "responses": ["You can contact Nalanda Open University at: Phone: +91 7080102007, Email: nouegyanhelp@gmail.com. For administrative queries: admin@nalanda.edu.in. The university helpline is available from 10 AM to 5 PM on working days."]
   },
   {
     "tag": "courses_offered",
-    "patterns": ["what courses do you offer", "programs available", "departments", "what can I study", "courses list", "academic programs", "study options", "which degrees are available", "list of all courses", "pg courses", "ug courses", "diploma courses", "certificate courses", "mba program", "bba program", "ma courses", "msc courses", "bcom", "mcom", "bca", "mca"],
-    "responses": ["Nalanda Open University offers a wide range of undergraduate, postgraduate, diploma and certificate programs in Arts, Science, Commerce, Management, Computer Applications, and Vocational studies. Some popular programs include B.A., B.Com, B.Sc, M.A., M.Com, M.Sc, BBA, BCA, MBA, and MCA.", "You can find the complete list of courses, including Bachelor's, Master's, Diplomas, and Certificates, in the 'Academic Programs' section of our official website.", "We offer over 50 programs! Key ones are: MA (History, Pol Science, Economics, English, Hindi, Sociology, Psychology), MSc (Maths, Physics, Chemistry, Zoology, Botany), MBA, MCA, BBA, BCA, and various B.Ed and D.Ed programs.", "For a full and updated list of all courses, including new additions and special programs, please download the current year's prospectus from the website.", "Are you looking for a program in a specific field like Arts, Science, Commerce, or Management? I can help narrow it down. Our website has a filterable list.", "Yes! We offer traditional degrees like BA, BSc, BCom and professional courses like Bachelor of Computer Applications (BCA) and Bachelor of Business Administration (BBA).", "At the postgraduate level, we have MA, MSc, MCom, Master of Computer Applications (MCA), and a Master of Business Administration (MBA) program.", "We also have a variety of one-year Diploma and Certificate courses in areas like Functional English, Environmental Studies, and Computer Applications.", "The university continuously updates its curriculum. It's best to check the 'Admissions' section on www.nalandaopenuniversity.com for the most current course offerings.", "Many vocational and job-oriented certificate programs are also available for skill development alongside regular degree courses."]
+    "patterns": ["what courses do you offer", "programs available", "departments", "what can I study", "courses list", "academic programs", "study options"],
+    "responses": ["Nalanda Open University offers a wide range of undergraduate, postgraduate, diploma and certificate programs in Arts, Science, Commerce, Management, Computer Applications, and Vocational studies. Some popular programs include B.A., B.Com, B.Sc, M.A., M.Com, M.Sc, BBA, BCA, MBA, and MCA."]
   },
   {
     "tag": "admission_process",
-    "patterns": ["how to apply", "admission process", "admission procedure", "how to get admission", "registration process", "how to enroll", "admission requirements", "steps to apply", "apply for course", "online application", "offline application", "where to get form", "application steps", "admission portal login", "how to register", "new admission"],
-    "responses": ["You can apply for admission through our online portal. The admission process typically involves: 1. Registration on the NOU portal 2. Filling the application form 3. Uploading required documents 4. Payment of fees 5. Submission of the application. For detailed guidance contact the help desk at +91 7080102007.", "The process is primarily online. Visit the university website, go to the 'Admission' tab, click on 'New Registration', and follow the instructions. You will need scanned copies of your photo, signature, and documents.", "You need to first create a student account on the NOU admission portal. Once registered, you can log in, select your desired course, fill the form, upload documents, pay the fee online, and submit.", "For those without internet access, prospectus and application forms can be purchased from the university's head office or designated study centers. The filled form can be submitted there.", "The key steps are: 1. Check eligibility for your chosen course. 2. Register on the portal. 3. Fill the form carefully. 4. Pay the application fee. 5. Note your application number for future reference.", "Ensure you have digital copies of your photograph, signature, age proof, educational certificates, and category certificate (if applicable) ready before starting the online application.", "After successful fee payment, you will receive an application number. Keep it safe. You can use it to track your application status later.", "The help desk can guide you through each step of the online application process if you face any difficulties.", "Make sure to review all entered details before final submission, as changes later might be difficult.", "Once submitted, you can download and print the submitted application form for your records."]
+    "patterns": ["how to apply", "admission process", "admission procedure", "how to get admission", "registration process", "how to enroll", "admission requirements"],
+    "responses": ["You can apply for admission through our online portal. The admission process typically involves: 1. Registration on the NOU portal 2. Filling the application form 3. Uploading required documents 4. Payment of fees 5. Submission of the application. For detailed guidance, visit the 'Admissions' section on our website or contact the help desk at +91 7080102007."]
   },
   {
-    "tag": "exam_results",
-    "patterns": ["exam schedule", "when are exams", "examination dates", "exam pattern", "how exams are conducted", "exam center", "when will results be declared", "how to check results", "result date", "scorecard", "marksheet", "how to get marksheet", "duplicate marksheet", "revaluation process", "rechecking", "exam form", "exam fee", "hall ticket", "admit card", "exam time table"],
-    "responses": ["Examinations are generally conducted twice a year in June and December. The exact schedule is announced on the university website 2-3 months before the exams. Exams are conducted at designated examination centers across Bihar and other states.", "Results are typically declared within 2-3 months after the examination. You can check your results on the university website by entering your enrollment number.", "You can download your hall ticket/admit card from the student portal approximately 3-4 weeks before the exam date. It is mandatory to carry it to the exam center.", "To apply for revaluation, you need to submit an application form with the prescribed fee within 30 days of the result declaration. The form is available on the website.", "For a duplicate marksheet, you must apply to the Controller of Examinations with a written application, a copy of the FIR (if lost), and the required fee.", "The exam pattern usually consists of theory papers. Some practical-based courses may have practical exams. The question pattern is detailed in the study material.", "You can find the detailed exam timetable for your specific program under the 'Examination' section of the website once it is released.", "Exam fees are usually paid along with the annual course fee. For specific exam-related fees, please check the exam notification.", "Keep checking the 'Results' section on the website. When results are out, you will need your enrollment number to access your scorecard.", "If you have any issues with your result or marksheet, you should contact the Examination Department at the university headquarters directly."]
+    "tag": "admission_dates",
+    "patterns": ["when does admission start", "admission dates", "last date for admission", "admission schedule", "application deadline"],
+    "responses": ["Admission dates vary by program. Generally, admissions for most programs open in June-July and January-February for different sessions. Please check the official university website or contact the admission cell for the current academic session's exact dates."]
   },
   {
-    "tag": "study_material_support",
-    "patterns": ["how to access study material", "where are the online courses", "e-learning content", "self learning material", "digital content", "books", "study resources", "when will I get books", "slm not received", "how to download books", "online lectures", "video lessons", "counseling sessions", "doubt clearing", "contact faculty", "e-gyan portal login", "student login", "learning management system"],
-    "responses": ["Once you login to your student dashboard on the e-Gyan portal, you can access all your self-learning materials (SLMs) under the 'Self Learning Material' section.", "After confirmation of your admission, study materials are dispatched to your registered address by post. It can take 4-6 weeks. You can also download soft copies from the portal.", "The university provides printed study material, e-books, video lectures, and online resources. If you're facing any issues, please contact the help desk.", "To access digital content, log in to the e-Gyan portal with your enrollment number and password. Navigate to the 'E-Content' or 'Digital Library' section.", "If you haven't received your books by post, please contact the Distribution Section at the headquarters or your regional study center with your enrollment details.", "The university schedules periodic counseling sessions and live doubt-clearing classes at various study centers. The schedule is published on the website and student portal.", "Video lectures for certain subjects are available on the university's YouTube channel or embedded within the e-Gyan portal for registered students.", "For subject-specific doubts, you can contact the assigned counsellor at your nearest study center. Their contact details are available on the website.", "Your login credentials for the e-Gyan portal are usually your enrollment number and a default password (like your date of birth). You can change it after first login.", "The Learning Management System (LMS) on the portal allows you to access unit-wise lessons, submit assignments, and track your academic progress."]
+    "tag": "fees_structure",
+    "patterns": ["fee structure", "course fees", "how much does it cost", "tuition fees", "fee payment", "what are the fees"],
+    "responses": ["The fee structure varies depending on the program and course. Generally, undergraduate programs range from ₹2,000 to ₹5,000 per year, and postgraduate programs range from ₹3,000 to ₹7,000 per year. For exact fee details, please refer to the prospectus or contact the accounts department."]
   },
   {
-    "tag": "fees_financial",
-    "patterns": ["fee structure", "course fees", "how much does it cost", "tuition fees", "fee payment", "what are the fees", "fee for mba", "fee for bsc", "how to pay fee", "online payment", "fee receipt", "scholarship opportunities", "financial aid", "fee concession", "education loan", "scholarship schemes", "refund policy", "fee refund", "cancellation policy"],
-    "responses": ["The fee structure varies depending on the program and course. Generally, undergraduate programs range from ₹2,000 to ₹5,000 per year, and postgraduate programs range from ₹3,000 to ₹7,000 per year. For exact fee details, please refer to the prospectus or contact the accounts department.", "You can pay your fees online through the student portal using net banking, credit/debit card, or UPI. A payment receipt will be generated instantly.", "Nalanda Open University offers various scholarship schemes for meritorious and economically disadvantaged students. These include merit-based scholarships, fee concessions for certain categories, and special schemes for female students. Details are available in the prospectus.", "The university has a specific refund policy. Generally, fees are refundable (with deduction of processing charges) if cancellation is made within a specified period after admission. For details, please refer to the prospectus.", "For information on education loans, you would need to approach banks directly. However, NOU's low fee structure makes it highly affordable compared to regular universities.", "The exact fee for a specific program (e.g., MBA, BSc) is clearly mentioned in the program's information brochure and the fee chart within the prospectus.", "Always download and save the fee payment receipt after successful transaction. It is proof of your payment.", "Fee concessions for SC/ST/OBC/PwD candidates are available as per government rules. Relevant certificates must be submitted during admission.", "If an online payment fails but the amount is debited, it usually gets refunded automatically by the bank within 7-10 days. Contact the help desk if it doesn't.", "The total fee usually includes tuition fees, registration fees, and examination fees. There are no hidden costs."]
+    "tag": "study_material",
+    "patterns": ["how to access study material", "where are the online courses", "e-learning content", "self learning material", "digital content", "books", "study resources"],
+    "responses": ["Once you login to your student dashboard, you can access all your self-learning materials under the 'Self Learning Material' section. The university provides printed study material, e-books, video lectures, and online resources. If you're facing any issues, please contact the help desk."]
   },
   {
-    "tag": "support_contact",
-    "patterns": ["contact information", "phone number", "email address", "how to contact", "help desk", "customer care", "where is the office", "head office address", "visit university", "whom to contact for", "department contact", "study center phone number", "complaint", "grievance", "feedback", "suggestion"],
-    "responses": ["You can contact Nalanda Open University at: Phone: +91 7080102007, Email: nouegyanhelp@gmail.com. For administrative queries: admin@nalanda.edu.in. The university helpline is available from 10 AM to 5 PM on working days.", "The university is located at 2nd/3rd Floor, Biscoman Bhawan, Patna - 800001, Bihar, India. You can visit during office hours: 10 AM to 5 PM (Mon-Fri), 10 AM to 2 PM (Sat).", "For specific queries, you can contact different departments: Admissions, Examinations, Accounts, etc. Their contact details are listed under the 'Contact Us' section on the website.", "You can provide feedback or register complaints through the 'Grievance Redressal' section on the university website. Alternatively, you can email your feedback to feedback@nalanda.edu.in.", "If you want to visit a study center, their addresses and contact numbers are available in the 'Study Centers' list on the website. Please call them before visiting.", "For technical issues with the e-Gyan portal (login, downloading material), please email the IT support team at nouegyanhelp@gmail.com or call the helpline.", "The help desk can guide you on whom to contact for your specific issue, be it related to books, exams, fees, or results.", "You can also write a formal letter and post it to the Registrar at the university's head office address for official correspondence.", "The university is working on a dedicated student relationship management (SRM) system for faster query resolution.", "For urgent admission-related queries during the admission period, it is best to call the helpline number."]
+    "tag": "examination",
+    "patterns": ["exam schedule", "when are exams", "examination dates", "exam pattern", "how exams are conducted", "exam center"],
+    "responses": ["Examinations are generally conducted twice a year in June and December. The exact schedule is announced on the university website 2-3 months before the exams. Exams are conducted at designated examination centers across Bihar and other states."]
   },
   {
-    "tag": "eligibility_documents",
-    "patterns": ["eligibility criteria", "who can apply", "qualification required", "minimum marks", "age limit", "documents needed for admission", "what documents to submit", "required certificates", "need original documents", "age proof", "id proof", "photo size", "category certificate", "migration certificate"],
-    "responses": ["Eligibility criteria vary by program. Generally, for undergraduate programs, you need 10+2 qualification, and for postgraduate programs, a relevant bachelor's degree is required. There's no upper age limit for most programs. Please check the specific eligibility criteria for your chosen program in the prospectus.", "Typically, you need to submit scanned copies of: 1. Educational certificates/mark sheets 2. Identity proof (Aadhar card is preferred) 3. Date of birth proof 4. Passport size photographs 5. Category certificate (if applicable). The exact document requirements are specified in the admission form.", "You usually do not need to submit original documents during the application process. Only self-attested scanned copies are uploaded. Originals might be required for verification at a later stage if requested.", "For most courses, there is no minimum percentage requirement, only a pass marks in the qualifying exam. However, some professional courses like MBA might have specific criteria.", "There is no upper age limit for enrolling in most undergraduate or postgraduate programs at NOU, which is a key benefit of open universities.", "The photograph should be a recent passport-size color photo with a light background. The signature should be done with black or blue ink on white paper.", "If you are applying under a reserved category (SC/ST/OBC/EWS), you must upload a valid category certificate issued by a competent authority.", "A migration certificate from your previous university is generally required for postgraduate admissions if your qualifying degree is from a university other than NOU.", "Keep all original documents safe and ready. You might be asked to produce them for verification during the program or before the degree is awarded.", "The list of required documents is always provided in the instruction booklet that comes with the admission form and is available on the website."]
+    "tag": "results",
+    "patterns": ["when will results be declared", "how to check results", "result date", "scorecard", "marksheet"],
+    "responses": ["Results are typically declared within 2-3 months after the examination. You can check your results on the university website by entering your enrollment number. For duplicate mark sheets or other result-related queries, please contact the examination department."]
   },
   {
-    "tag": "recognition_verification",
-    "patterns": ["is nou recognized", "ugc recognition", "deemed university", "accreditation", "naac grade", "degree valid", "for government jobs", "upsc recognition", "verification of degree", "employer verification", "is degree valid for higher studies", "aicte approval", "distance education bureau"],
-    "responses": ["Yes, Nalanda Open University is recognized by the University Grants Commission (UGC) and is a member of the Association of Indian Universities (AIU). The university is also recognized by the Distance Education Bureau (DEB) of UGC for offering programs through distance mode.", "Degrees from NOU are valid for all purposes, including higher studies (like NET, SET, Ph.D.) and government jobs, provided you meet the specific eligibility criteria of that exam or job.", "The university is accredited by the National Assessment and Accreditation Council (NAAC). For its current grade, please check the latest notification on the website.", "For employer background checks or degree verification, organizations can contact the University's Verification Cell or the Controller of Examinations.", "Yes, the degrees are valid. The UGC has mandated that degrees obtained through distance mode from UGC-DEB recognized universities are equivalent to regular degrees.", "For technical programs like MCA, the university follows the guidelines set by the concerned regulatory bodies.", "You can use your NOU degree to apply for postgraduate courses at other Indian universities and many foreign universities, subject to their specific entry requirements.", "The recognition information is usually mentioned on the degree certificate and marksheets issued by the university.", "If any organization has a doubt about the validity, you can direct them to the UGC's list of recognized universities where NOU is listed.", "The Distance Education Bureau (DEB-UGC) approval ensures that the programs meet the quality standards set for open and distance learning in India."]
+    "tag": "library",
+    "patterns": ["library facilities", "digital library", "library resources", "library membership", "how to access library"],
+    "responses": ["Nalanda Open University has a well-stocked central library with a vast collection of books, journals, and digital resources. Students can access the digital library through their student portal. The library also offers remote access to e-books and online journals."]
+  },
+  {
+    "tag": "library_timings",
+    "patterns": ["when is the library open", "library hours", "what are the timings of the library", "library schedule"],
+    "responses": ["The central library is open from 9:00 AM to 8:00 PM from Monday to Saturday. It remains closed on Sundays and public holidays. The digital library is accessible 24/7 through the student portal."]
+  },
+  {
+    "tag": "study_centers",
+    "patterns": ["study centers", "where are study centers located", "list of study centers", "regional centers", "contact study center"],
+    "responses": ["Nalanda Open University has a network of study centers across Bihar and other states. These centers provide academic support, counseling sessions, and library facilities. You can find the complete list of study centers on the university website or by contacting the regional office."]
+  },
+  {
+    "tag": "strength_departments",
+    "patterns": ["best departments", "strong departments", "department strength", "which departments are good", "reputation of departments"],
+    "responses": ["Nalanda Open University has strong departments in Humanities, Social Sciences, Commerce, and Management studies. The Department of History, Economics, English, Hindi, Political Science, Commerce, and Management are particularly renowned for their quality education and experienced faculty."]
+  },
+  {
+    "tag": "placement",
+    "patterns": ["placement opportunities", "career services", "job placement", "placement cell", "campus recruitment"],
+    "responses": ["The university has a placement cell that organizes career counseling sessions, workshops, and placement drives. While distance education focuses on self-paced learning, the university provides guidance for career development and connects students with potential employers through its network."]
+  },
+  {
+    "tag": "scholarship",
+    "patterns": ["scholarship opportunities", "financial aid", "fee concession", "education loan", "scholarship schemes"],
+    "responses": ["Nalanda Open University offers various scholarship schemes for meritorious and economically disadvantaged students. These include merit-based scholarships, fee concessions for certain categories, and special schemes for female students. Details are available in the prospectus or on the university website."]
+  },
+  {
+    "tag": "online_classes",
+    "patterns": ["online classes", "virtual classes", "live sessions", "video lectures", "how are classes conducted"],
+    "responses": ["Nalanda Open University provides a blend of self-study material and online support. While the primary mode is self-study through provided materials, the university also conducts online counseling sessions, video lectures, and live interactive sessions for certain subjects. Check your student portal for the schedule."]
+  },
+  {
+    "tag": "revaluation",
+    "patterns": ["revaluation process", "how to apply for revaluation", "copy of answer script", "rechecking", "revaluation fee"],
+    "responses": ["Students can apply for revaluation within 30 days of result declaration. The process involves submitting an application form with the prescribed fee. Detailed instructions are available on the university website under the examination section."]
+  },
+  {
+    "tag": "website",
+    "patterns": ["university website", "official website", "web address", "online portal", "where to find information"],
+    "responses": ["The official website of Nalanda Open University is www.nalandaopenuniversity.com. You can find all information regarding admissions, courses, examinations, results, and announcements on the website. The student portal can be accessed through the website."]
+  },
+  {
+    "tag": "working_hours",
+    "patterns": ["university working hours", "office timings", "when is office open", "administrative hours"],
+    "responses": ["The university administrative office is open from 10:00 AM to 5:00 PM from Monday to Friday, and 10:00 AM to 2:00 PM on Saturdays. The office remains closed on Sundays and public holidays."]
+  },
+  {
+    "tag": "vc_info",
+    "patterns": ["vice chancellor", "who is the vc", "professor k c sinha", "current vc"],
+    "responses": ["The current Vice Chancellor of Nalanda Open University is Prof. (Dr.) K. C. Sinha. He is a renowned academician and has been leading the university with a vision to enhance distance education in Bihar."]
+  },
+  {
+    "tag": "recognition",
+    "patterns": ["is nou recognized", "ugc recognition", "deemed university", "accreditation", "naac grade"],
+    "responses": ["Yes, Nalanda Open University is recognized by the University Grants Commission (UGC) and is a member of the Association of Indian Universities (AIU). The university is also recognized by the Distance Education Bureau (DEB) of UGC for offering programs through distance mode."]
+  },
+  {
+    "tag": "distance_learning",
+    "patterns": ["what is distance learning", "benefits of distance education", "why choose distance learning", "open learning system"],
+    "responses": ["Distance learning allows you to study at your own pace and convenience without attending regular classes. Benefits include flexibility, affordability, accessibility, and the ability to balance education with work and personal commitments. Nalanda Open University specializes in providing quality education through this mode."]
+  },
+  {
+    "tag": "eligibility",
+    "patterns": ["eligibility criteria", "who can apply", "qualification required", "minimum marks", "age limit"],
+    "responses": ["Eligibility criteria vary by program. Generally, for undergraduate programs, you need 10+2 qualification, and for postgraduate programs, a relevant bachelor's degree is required. There's no upper age limit for most programs. Please check the specific eligibility criteria for your chosen program in the prospectus."]
+  },
+  {
+    "tag": "documents_required",
+    "patterns": ["documents needed for admission", "what documents to submit", "required certificates"],
+    "responses": ["Typically, you need to submit: 1. Educational certificates 2. Identity proof (Aadhar card, etc.) 3. Date of birth proof 4. Passport size photographs 5. Category certificate (if applicable). The exact document requirements are specified in the admission form."]
+  },
+  {
+    "tag": "refund_policy",
+    "patterns": ["fee refund", "cancellation policy", "can I get fee refund", "withdrawal from course"],
+    "responses": ["The university has a specific refund policy. Generally, fees are refundable (with deduction of processing charges) if cancellation is made within a specified period after admission. For details, please refer to the prospectus or contact the accounts department."]
+  },
+  {
+    "tag": "international_students",
+    "patterns": ["admission for nri students", "international students", "foreign students", "admission from abroad"],
+    "responses": ["Nalanda Open University welcomes international students/NRIs. There is a separate admission process and fee structure for international students. Please contact the international students cell or check the university website for detailed information."]
+  },
+  {
+    "tag": "alumni",
+    "patterns": ["alumni network", "former students", "alumni association", "connect with alumni"],
+    "responses": ["Nalanda Open University has a growing alumni network. The university is in the process of forming an official alumni association. For information about alumni activities, please contact the university's public relations office."]
+  },
+  {
+    "tag": "events",
+    "patterns": ["university events", "workshops", "seminars", "conferences", "cultural events"],
+    "responses": ["The university organizes various academic events, workshops, seminars, and cultural programs throughout the year. Information about upcoming events is posted on the university website and notice boards at study centers."]
+  },
+  {
+    "tag": "feedback",
+    "patterns": ["how to give feedback", "complaint", "suggestion", "grievance", "report problem"],
+    "responses": ["You can provide feedback or register complaints through the 'Grievance Redressal' section on the university website. Alternatively, you can email your feedback to feedback@nalanda.edu.in or contact the help desk at +91 7080102007."]
   },
   {
     "tag": "fallback",
     "patterns": [],
-    "responses": ["I'm sorry, I don't have the answer to that yet. For more specific queries, please email us at info@nalanda.edu.in or call +91-7080102007. You can also visit our website www.nalandaopenuniversity.com for detailed information.", "That's a good question! I'm still learning about that. Please contact the university help desk at +91 7080102007 for immediate assistance with this query.", "I apologize, but I don't have the information on that topic right now. The best place to find this would be the official NOU website or the prospectus.", "My knowledge doesn't cover that specific detail yet. For accurate and official information, I recommend reaching out to the relevant department directly.", "I'm programmed to answer frequently asked questions. For complex or specific issues, a human representative at the help desk would be better equipped to assist you.", "Hmm, I'm not sure about that. You could try rephrasing your question, or check the 'FAQ' section on the NOU website.", "I'm here to help with common queries. For this particular question, please email nouegyanhelp@gmail.com for a detailed response.", "It seems your query is outside my current training data. Please contact the university administration during working hours for clarification.", "I don't want to give you incorrect information. Let me connect you with a human agent? Please call our helpline.", "Thank you for your query. To get the most accurate and updated information on this, please refer to the latest official notification or circular on the NOU website."]
-  },
-  {
-    "tag": "academic_calendar",
-    "patterns": ["academic calendar", "important dates", "session start date", "session end date", "academic schedule", "yearly schedule", "when does the session begin", "last date for submission", "assignment due dates", "holiday list", "university closure dates", "schedule of activities", "academic timeline", "key deadlines"],
-    "responses": ["The academic calendar, containing all important dates for the session, is available on the homepage of the university website under the 'Notifications' section.", "The new session typically begins in August. However, for the exact dates of commencement, assignment submissions, term-end exams, and breaks, please download the current academic calendar from the website.", "All key deadlines, including admission, assignment submission, exam form filling, and results, are outlined in the official academic calendar. It's your primary resource for planning your year.", "You can find the detailed academic schedule, including public holidays and university closures, in the 'Student Corner' section of the e-Gyan portal after logging in.", "The university releases a new academic calendar at the start of each session. Please ensure you refer to the latest one to avoid missing any critical dates."]
-  },
-  {
-    "tag": "assignment_submission",
-    "patterns": ["assignments", "how to submit assignments", "assignment last date", "where to submit assignments", "assignment format", "assignment questions", "download assignment", "assignment weightage", "marks for assignment", "failed in assignment", "re-submit assignment", "assignment status", "postal assignment", "online assignment submission", "assignment guidelines"],
-    "responses": ["Assignments are a crucial part of your evaluation. You can download the assignment questions from your student portal under the 'Assignments' section.", "Submission deadlines for assignments are strict. The last date is mentioned on the assignment question paper and in the academic calendar. Typically, it's a few months before the term-end exam.", "You can submit assignments online through the e-Gyan portal or by post to your designated study center. Please check the specific instructions provided with your assignment.", "Each assignment carries a certain weightage (usually 30%) towards your final marks. It is mandatory to submit them to be eligible to appear for the term-end examination.", "If you have issues with submission, immediately contact the coordinator at your study center or the university's assignment cell before the deadline passes."]
-  },
-  {
-    "tag": "phd_programs",
-    "patterns": ["phd programs", "research programs", "doctoral studies", "how to do phd from nou", "phd admission", "research eligibility", "entrance exam for phd", "phd guide", "research supervisor", "mphil programs", "phd course work", "phd fee structure", "is phd available", "phd notification"],
-    "responses": ["Nalanda Open University offers Ph.D. programs in various disciplines. Admissions are based on entrance exams and interviews, as per UGC regulations.", "To be eligible for a Ph.D., you typically need a Master's degree with a minimum of 55% marks (or an equivalent grade). The process involves a rigorous entrance test followed by an interview.", "The list of available research guides/supervisors and their specializations is published in the Ph.D. admission notification, which is released on the university website.", "The Ph.D. program includes course work followed by research and thesis submission. The entire process is governed by the University's Research Ordinance.", "For the most accurate and updated information on Ph.D. admissions, including the application process and deadlines, please check the 'Admissions' or 'Research' section on the NOU website."]
-  },
-  {
-    "tag": "student_portal_login",
-    "patterns": ["how to login", "student login", "e gyan portal login", "forgot password", "reset password", "enrollment number login", "username and password", "portal not working", "can't access my account", "login issues", "portal help", "my dashboard", "student profile", "update profile", "change password"],
-    "responses": ["You can log in to the e-Gyan student portal using your Enrollment Number as the username and your Date of Birth (in DDMMYYYY format) as the default password.", "If you have forgotten your password, use the 'Forgot Password' link on the login page. You will need your enrollment number and registered email ID to reset it.", "For any technical issues with logging in (e.g., 'invalid credentials'), please contact the IT helpdesk at nouegyanhelp@gmail.com or call the helpline number.", "Once logged in, your dashboard will show your profile, course details, study material, assignment status, and exam details all in one place.", "It is highly recommended to change your default password after your first login to secure your account."]
-  },
-  {
-    "tag": "time_commitment",
-    "patterns": ["how many hours to study", "time required for course", "work study balance", "can I work and study", "is it self paced", "how long to complete degree", "duration of course", "maximum time to complete", "minimum duration", "part time study", "study hours per week", "how to manage time"],
-    "responses": ["As a distance learning student, you are expected to devote 12-15 hours per week to your studies to stay on track with the curriculum.", "The beauty of open learning is its flexibility. You can create your own schedule, but consistency is key to succeeding in the exams.", "Most undergraduate programs have a minimum duration of 3 years and a maximum of 6 years to complete. Postgraduate programs are 2 years min, 4 years max.", "Yes, NOU is perfectly designed for working professionals. You can balance your job and studies by dedicating your weekends and evenings to learning.", "The study material is designed for self-paced learning. You can progress faster or slower based on your understanding, as long as you complete within the maximum time limit."]
-  },
-  {
-    "tag": "career_guidance",
-    "patterns": ["career options after ba", "what to do after mcom", "job opportunities", "career guidance", "placement support", "job fairs", "career counseling", "which course is best for job", "skill development courses", "resume help", "interview preparation", "future prospects", "alumni success", "corporate relations"],
-    "responses": ["NOU's placement cell provides career counseling and organizes workshops on resume writing and interview skills. Check the 'Placement' section on the portal for updates.", "The best course depends on your interest and career goals. Our Bachelor's degrees provide a strong foundation, and professional courses like MBA/MCA are geared towards specific industries.", "Many of our alumni have succeeded in government jobs, banking, teaching, and private sectors. The degree is valid for all competitive exams where a graduate degree is required.", "The university focuses on providing knowledge that is relevant to the job market. We also offer several vocational and skill-based certificate programs to enhance employability.", "For personalized career guidance, you can get in touch with the counselors at your regional study center who can advise based on your academic background."]
-  },
-  {
-    "tag": "hostel_facility",
-    "patterns": ["hostel facility", "accommodation", "stay in patna", "university hostel", "hostel fees", "pg accommodation", "nearby hotels", "hostel for students", "room availability", "how to get hostel", "hostel application", "hostel rules", "mess facility"],
-    "responses": ["Nalanda Open University, being a distance learning institution, does not provide hostel or accommodation facilities for students.", "As your studies are primarily self-paced and from home, there is no requirement for you to stay on campus. All resources are provided remotely.", "If you need to visit Patna for administrative work or exams, you will need to arrange your own accommodation in the city.", "We recommend looking for reputable guest houses or hotels near the university area (Biscoman Bhawan) for your short stays.", "Some study centers in other districts might have their own arrangements or can guide you to local staying options if needed for counseling sessions."]
-  },
-  {
-    "tag": "renew_admission",
-    "patterns": ["second year admission", "renew admission", "next year fee", "how to get promoted", "continue next year", "re-registration", "part 2 admission", "session continuation", "pay fee for next year", "not promoted", "failed in exam what next"],
-    "responses": ["To continue to the next year of your program, you need to pay the fee for the subsequent year during the specified re-registration period announced by the university.", "The process is often called 're-registration' or 'continuation'. You will get a notification in your student portal when the window opens.", "If you have failed in some subjects, you can still re-register for the next year. You will have to reappear for the failed subjects in the next exam cycle.", "You must re-register and pay the fee every year to maintain your student status and receive new study materials for the upcoming year.", "Failure to re-register and pay the fee will lead to your admission being canceled, and you will have to apply for re-admission later with a penalty fee."]
-  },
-  {
-    "tag": "nep_compliance",
-    "patterns": ["national education policy", "nou and nep", "multiple entry exit", "credit system", "academic bank of credits", "nep implemented", "four year degree", "nep courses", "skill enhancement", "nep update"],
-    "responses": ["Nalanda Open University is actively aligning its programs and policies with the National Education Policy (NEP) 2020 to provide a more flexible and multidisciplinary education.", "Features like the Academic Bank of Credits (ABC) and Multiple Entry and Exit options are being integrated into our program structures in a phased manner.", "We are developing new curriculum frameworks that include major, minor, and skill enhancement courses as recommended by the NEP.", "For the latest updates on how NEP is being implemented in your specific program, please refer to the circulars and notifications section on the NOU website.", "The NEP aims to make education more holistic. NOU is committed to adopting these changes to enhance the learning experience for our students."]
-  },
-  {
-    "tag": "convocation",
-    "patterns": ["convocation", "degree distribution", "when is convocation", "how to get degree certificate", "attend convocation", "convocation form", "convocation date", "degree in absentia", "passing certificate", "final certificate", "apply for convocation", "convocation regalia"],
-    "responses": ["The university holds a convocation ceremony usually once a year to award degrees to its successful students. Notifications are sent via email and posted on the website.", "Eligible students receive an invitation to register for the convocation ceremony. You must fill out the online convocation form and pay the requisite fee to attend.", "If you cannot attend the ceremony in person, you can request to receive your degree in absentia. It will be posted to your registered address after the event.", "The degree certificate is dispatched to all passed-out students after the convocation, regardless of attendance. Ensure your address is correct in the university records.", "For any queries regarding your degree dispatch or convocation, please contact the Examination Section or the Convocation Cell at the university headquarters."]
-  },
-  {
-    "tag": "lms_usage",
-    "patterns": ["how to use lms", "navigate e gyan portal", "where are my courses", "track my progress", "how to download books", "find video lectures", "submit assignment online", "check assignment marks", "see grade card", "lms tutorial", "how to use learning portal", "portal features"],
-    "responses": ["After logging in, your 'Dashboard' is the main hub. From there, you can access 'My Courses', 'SLMs', 'Assignments', 'E-Content', and 'Exam Section'.", "To download a book, go to 'Self Learning Material' > Select your program and course > click on the unit links to download the PDFs.", "Video lectures, if available for your course, are typically found under the 'E-Content' or 'Video Library' tab within your course page.", "You can track your academic progress, including assignment scores and exam results, in the 'Grade Card' or 'Academic Progress' section of the portal.", "For a guided tour of all LMS features, please look for the 'Help' or 'FAQ' section within the portal, or watch the tutorial videos on our official YouTube channel."]
-  },
-  {
-    "tag": "prospectus",
-    "patterns": ["how to get prospectus", "download prospectus", "buy prospectus", "prospectus fee", "what is in prospectus", "information brochure", "course details prospectus", "offline prospectus", "online prospectus", "prospectus form"],
-    "responses": ["The prospectus can be downloaded for free from the 'Admissions' section of the university website. It contains all details about courses, fees, and rules.", "You can also purchase a physical copy of the prospectus along with the admission form from the university's head office or designated study centers for a nominal fee.", "The prospectus is the most important document. It contains the syllabus, fee structure, eligibility criteria, application form, and all university ordinances. Read it carefully.", "There is no need to buy the prospectus separately if you are applying online, as all the information and forms are available digitally on the website.", "Always ensure you are referring to the prospectus for the current academic year, as rules and fees are subject to change."]
-  },
-  {
-    "tag": "credit_transfer",
-    "patterns": ["credit transfer", "migration from other university", "lateral entry", "direct second year admission", "transfer to nou", "complete course from nou", "credits from other uni", "switching university", "admission with credits"],
-    "responses": ["NOU has a provision for credit transfer for students migrating from other recognized universities, subject to the equivalence of courses and the University's regulations.", "You must apply for credit transfer at the time of admission by submitting detailed syllabi and mark sheets of the courses you have already completed.", "The decision on credit transfer is made by a special committee based on the compatibility of the curriculum and the grades you obtained.", "This allows for lateral entry into a higher semester, meaning you may not have to start from the first year if your previous credits are accepted.", "For specific procedures and eligibility for credit transfer, please write to the Registrar's office or contact the admission helpline with your details."]
-  },
-  {
-    "tag": "trademark_notice",
-    "patterns": ["nou logo", "university name usage", "can I use nou name", "nou trademark", "brand guidelines", "official merchandise", "university seal", "name and fame of nou", "reputation"],
-    "responses": ["The name 'Nalanda Open University' and its official logo are protected trademarks and intellectual property of the University.", "The use of the University's name, logo, or any official insignia for any commercial or promotional purpose without prior written permission is strictly prohibited.", "Students and alumni are encouraged to represent the university with pride but must avoid any use that implies official endorsement of a product, service, or opinion.", "For inquiries regarding the use of the University's name or logo, please contact the Public Relations Officer at the university headquarters.", "We take pride in our reputation. Any misuse of the university's identity for fraudulent activities will be dealt with strictly as per the law."]
-  },
-  {
-    "tag": "accessibility",
-    "patterns": ["facilities for disabled", "wheelchair access", "visually impaired students", "hearing impaired", "special needs", "scribe for exam", "extra time for exam", "accessible study material", "disability support", "pwd quota", "pwd help"],
-    "responses": ["Nalanda Open University is committed to inclusive education. We provide various facilities for students with disabilities as per government guidelines.", "Students with benchmark disabilities (40% and above) are eligible for a fee concession and can avail a scribe/writer and extra time during examinations.", "We strive to provide study material in accessible formats. Please contact the Student Support Service cell after admission to state your specific requirements.", "The university's head office and many study centers are wheelchair accessible. Please check with your specific study center for their facilities.", "To avail these facilities, you must submit a copy of your valid disability certificate issued by a competent medical authority during the admission process."]
-  },
-  {
-    "tag": "language_support",
-    "patterns": ["medium of instruction", "courses in hindi", "english medium", "regional language", "bhojpuri medium", "maithili courses", "language of books", "change medium", "translate material"],
-    "responses": ["The primary medium of instruction and examination at NOU is Hindi and English. Most study materials are available in both languages for major courses.", "You can choose your preferred medium (Hindi or English) during the admission process for most programs. This choice is generally final for the duration of the course.", "The university also offers some specific programs and courses in other languages. Please check the prospectus for details on language-specific offerings.", "Currently, we do not offer the facility to change the medium of instruction after the admission process is complete.", "The study material is professionally developed. We do not provide official translations, but the material is written in simple and clear language for easy understanding."]
-  },
-  {
-    "tag": "social_media",
-    "patterns": ["facebook page", "twitter handle", "instagram id", "youtube channel", "social media links", "official facebook", "follow nou", "social media presence", "get updates on facebook", "whatsapp group", "telegram channel"],
-    "responses": ["You can follow Nalanda Open University on official social media channels for regular updates, news, and alerts. Find the links in the footer of our website.", "Our official YouTube channel hosts video lectures, tutorials, and recordings of important webinars. Search for 'Nalanda Open University Official' on YouTube.", "We recommend only following and trusting our verified social media accounts. The university is not responsible for information shared on unofficial groups or pages.", "Important announcements are always made on the website first. Social media is a supplementary channel for quicker updates and engagement.", "Be cautious of fake social media accounts or groups claiming to represent NOU for admissions or selling guides. Always verify through the official website."]
-  },
-  {
-    "tag": "moocs_swayam",
-    "patterns": ["swayam courses", "nou on swayam", "moocs", "online courses", "swayam registration", "credit for swayam", "nou nptel", "free online courses", "massive open online courses", "integrated courses"],
-    "responses": ["NOU encourages students to supplement their learning with courses on the SWAYAM platform, an initiative of the Government of India.", "The university may offer credit transfer for relevant courses completed on SWAYAM, as per UGC guidelines and the equivalence decided by the university.", "Information about which SWAYAM courses are recognized for credit transfer will be notified by the university from time to time on the website.", "You can explore a wide range of subjects on SWAYAM. While they are beneficial, they are optional unless specified for your program.", "For details on how to get credit for a SWAYAM course, please contact the Academic Section after successfully completing the course and obtaining the certificate."]
-  },
-  {
-    "tag": "faq_general",
-    "patterns": ["common questions", "frequently asked questions", "faq", "quick help", "general queries", "top questions", "need help quickly", "where are faqs", "usual doubts"],
-    "responses": ["You can find a comprehensive list of Frequently Asked Questions (FAQs) covering all topics on the 'Help' or 'FAQ' page of the university website.", "The FAQ section is a great first place to look for quick answers to common questions about admissions, exams, fees, and the portal.", "I am essentially a live FAQ bot! You can ask me your questions directly, and I'll try to answer them based on my knowledge.", "The prospectus also contains a detailed FAQ section that addresses most doubts students have before and after taking admission.", "If you can't find your answer in the FAQs, remember you can always email us at nouegyanhelp@gmail.com or call the helpline for personalized support."]
-  },
-  {
-    "tag": "feedback_positive",
-    "patterns": ["thank you", "great help", "you are awesome", "good bot", "nice help", "well done", "thanks for the help", "appreciate it", "good job", "that was quick", "perfect", "solved my problem"],
-    "responses": ["You're most welcome! I'm glad I could assist you. Don't hesitate to return if you have more questions.", "Thank you for the kind words! It's my purpose to help you navigate your journey at Nalanda Open University.", "That's great to hear! Wishing you all the best with your studies. Come back anytime.", "My pleasure! Remember, the e-Gyan portal and website are also full of resources for you to explore.", "I'm here to help 24/7. Good luck with your academic goals! Feel free to chat again."]
+    "responses": ["I'm sorry, I don't have the answer to that yet. For more specific queries, please email us at info@nalanda.edu.in or call +91-7080102007. You can also visit our website www.nalandaopenuniversity.com for detailed information."]
   }
 ]
