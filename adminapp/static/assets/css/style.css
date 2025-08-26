@@ -20835,3 +20835,10 @@ div.tagsinput {
   flex-grow: 1; }
 
 /*# sourceMappingURL=maps/style.css.map */
+
+/* This adds a bright blue outline to any element a keyboard user tabs to */
+:focus-visible {
+  outline: 3px solid #007BFF;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
