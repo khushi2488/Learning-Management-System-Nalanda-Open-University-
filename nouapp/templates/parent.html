@@ -42,6 +42,9 @@
         --footer-social-bg: linear-gradient(135deg, rgba(6, 6, 106, 0.05) 0%, rgba(74, 144, 226, 0.05) 100%);
         --copyright-bg: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
         --copyright-text: var(--text-white);
+        --chat-primary: rgb(6, 6, 106);
+        --chat-primary-hover: #064B89;
+        --chat-accent: #4a90e2;
     }
 
     /* Dark Theme */
@@ -67,6 +70,9 @@
         --footer-social-bg: #252525;
         --copyright-bg: #252525;
         --copyright-text: #e0e0e0;
+        --chat-primary: #64b5f6;
+        --chat-primary-hover: #90caf9;
+        --chat-accent: #2196f3;
     }
 
     body {
@@ -817,6 +823,159 @@
         color: var(--card-text) !important;
         background-color: transparent !important;
     }
+    
+    /* Chatbot Styles */
+    #chat-container {
+        font-family: 'Poppins', sans-serif;
+        z-index: 1000;
+    }
+    
+    #chat-box {
+        width: 320px;
+        height: 400px;
+        position: fixed;
+        bottom: 120px;
+        right: 20px;
+        border: 1px solid #ccc;
+        background: var(--card-bg);
+        z-index: 1000;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        display: none;
+        transition: var(--transition);
+    }
+    
+    #chat-header {
+        padding: 12px 15px;
+        background: linear-gradient(135deg, var(--chat-primary), var(--chat-primary-hover));
+        color: var(--text-white);
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        font-weight: bold;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    #chat-messages {
+        height: 280px;
+        padding: 15px;
+        overflow-y: auto;
+        background: var(--bg-light);
+        transition: var(--transition);
+    }
+    
+    #chat-toggle {
+        position: fixed;
+        bottom: 90px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, var(--chat-primary), var(--chat-primary-hover));
+        color: var(--text-white);
+        border: none;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 24px;
+        z-index: 1000;
+        transition: var(--transition);
+    }
+    
+    #chat-toggle:hover {
+        transform: scale(1.05);
+        background: linear-gradient(135deg, var(--chat-primary-hover), var(--chat-accent));
+    }
+    
+    .chat-message {
+        margin-bottom: 12px;
+        padding: 8px 12px;
+        border-radius: 18px;
+        max-width: 80%;
+        word-wrap: break-word;
+    }
+    
+    .user-message {
+        background: linear-gradient(135deg, var(--chat-primary), var(--chat-primary-hover));
+        color: var(--text-white);
+        margin-left: auto;
+        border-bottom-right-radius: 5px;
+    }
+    
+    .bot-message {
+        background: var(--accent-color);
+        color: var(--text-white);
+        margin-right: auto;
+        border-bottom-left-radius: 5px;
+    }
+    
+    #user-input {
+        flex-grow: 1;
+        padding: 10px 15px;
+        border: 1px solid #ddd;
+        border-radius: 25px;
+        margin-right: 8px;
+        outline: none;
+        font-size: 14px;
+        background: var(--card-bg);
+        color: var(--text-color);
+        transition: var(--transition);
+    }
+    
+    #user-input:focus {
+        border-color: var(--chat-primary);
+        box-shadow: 0 0 0 2px rgba(6, 6, 106, 0.2);
+    }
+    
+    #send-button {
+        padding: 10px 15px;
+        background: linear-gradient(135deg, var(--chat-primary), var(--chat-primary-hover));
+        color: var(--text-white);
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        transition: var(--transition);
+    }
+    
+    #send-button:hover {
+        background: linear-gradient(135deg, var(--chat-primary-hover), var(--chat-accent));
+        transform: scale(1.05);
+    }
+    
+    .dark-theme #chat-box {
+        border-color: #444;
+    }
+    
+    .dark-theme #chat-messages {
+        background: #2a2a2a;
+    }
+    
+    .dark-theme #user-input {
+        background: #333;
+        color: #f5f5f5;
+        border-color: #555;
+    }
+    
+    @media (max-width: 576px) {
+        #chat-box {
+            width: 90%;
+            right: 5%;
+            bottom: 80px;
+        }
+        
+        #chat-toggle {
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+        }
+    }
 </style>
 
 <body>
@@ -1130,6 +1289,137 @@
         function scrollToTop() {
             window.scrollTo({top: 0, behavior: 'smooth'});
         }
+    </script>
+
+    <!-- Chatbot Widget -->
+    <div id="chat-container">
+        <div id="chat-box">
+            <div id="chat-header">
+                <span>NOU Assistant 🤖</span>
+                <button onclick="toggleChat()" style="background: transparent; border: none; color: white; cursor: pointer; font-size: 18px;">×</button>
+            </div>
+            <div id="chat-messages"></div>
+            <div style="padding: 12px; border-top: 1px solid #eee; background: var(--card-bg); border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; display: flex;">
+                <input type="text" id="user-input" placeholder="Ask about NOU...">
+                <button id="send-button" onclick="sendMessage()">Send</button>
+            </div>
+        </div>
+        <button id="chat-toggle" onclick="toggleChat()">💬</button>
+    </div>
+
+    <script>
+    const API_URL = "/chat/"; // URL to your chatbot API
+
+    function toggleChat() {
+        const chatBox = document.getElementById('chat-box');
+        const toggleBtn = document.getElementById('chat-toggle');
+        if (chatBox.style.display === 'block') {
+            chatBox.style.display = 'none';
+            toggleBtn.innerHTML = '💬';
+            toggleBtn.style.background = 'linear-gradient(135deg, var(--chat-primary), var(--chat-primary-hover))';
+        } else {
+            chatBox.style.display = 'block';
+            toggleBtn.innerHTML = '✕';
+            toggleBtn.style.background = 'linear-gradient(135deg, var(--chat-primary-hover), var(--chat-accent))';
+            document.getElementById('user-input').focus();
+            // Initialize with welcome message if chat is empty
+            if (document.getElementById('chat-messages').children.length === 0) {
+                appendMessage('Bot', 'Hello! Welcome to Nalanda Open University. I\'m here to help you with information about courses, admissions, and more. How can I assist you today?');
+            }
+        }
+    }
+
+    function appendMessage(sender, message) {
+        const messageDiv = document.createElement('div');
+        messageDiv.classList.add('chat-message');
+        
+        if (sender === 'You') {
+            messageDiv.classList.add('user-message');
+        } else {
+            messageDiv.classList.add('bot-message');
+        }
+        
+        messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+        document.getElementById('chat-messages').appendChild(messageDiv);
+        
+        // Scroll to bottom
+        const messageContainer = document.getElementById('chat-messages');
+        messageContainer.scrollTop = messageContainer.scrollHeight;
+    }
+
+    async function sendMessage() {
+        const userInput = document.getElementById('user-input');
+        const message = userInput.value.trim();
+        if (message === "") return;
+
+        appendMessage('You', message);
+        userInput.value = ''; // Clear input field
+        userInput.focus();
+
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken')
+                },
+                body: JSON.stringify({ message: message })
+            });
+            
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            if (data.response) {
+                appendMessage('Bot', data.response);
+            } else if (data.error) {
+                appendMessage('Bot', `Sorry, there was an error: ${data.error}`);
+            } else {
+                appendMessage('Bot', 'Sorry, I encountered an unexpected error.');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            appendMessage('Bot', 'Oops! Something went wrong. Please try again in a moment.');
+        }
+    }
+
+    // Helper function to get CSRF token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // Allow sending message with Enter key
+    document.getElementById('user-input').addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            sendMessage();
+        }
+    });
+
+    // Auto-open chat after a short delay
+    setTimeout(() => {
+        const chatBox = document.getElementById('chat-box');
+        if (chatBox.style.display !== 'block') {
+            toggleChat();
+            // Auto-close after showing welcome message
+            setTimeout(() => {
+                if (document.getElementById('chat-messages').children.length === 1) {
+                    toggleChat();
+                }
+            }, 5000);
+        }
+    }, 3000);
     </script>
 </body>
 </html>
