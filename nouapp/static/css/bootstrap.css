@@ -3358,6 +3358,30 @@ textarea.form-control-lg {
 .fade {
   transition: opacity 0.15s linear;
 }
+/* ===== Theme text visibility fixes ===== */
+[data-bs-theme="light"] .text-light,
+[data-bs-theme="light"] .text-white {
+  color: #212529 !important; /* readable dark text */
+}
+
+[data-bs-theme="dark"] .text-light,
+[data-bs-theme="dark"] .text-white {
+  color: #f8f9fa !important; /* readable light text */
+}
+
+/* Force readable body text per theme */
+[data-bs-theme="light"] body {
+  --bs-body-color: #212529;   /* dark text */
+  --bs-body-bg: #ffffff;      /* light background */
+  color: #212529 !important;  /* fallback */
+}
+
+[data-bs-theme="dark"] body {
+  --bs-body-color: #f8f9fa;   /* light text */
+  --bs-body-bg: #000000;      /* dark background */
+  color: #f8f9fa !important;  /* fallback */
+}
+
 @media (prefers-reduced-motion: reduce) {
   .fade {
     transition: none;
