@@ -12,6 +12,32 @@ from adminapp.models import News
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
+# Add these imports at the top of nouapp/views.py
+import json
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_http_methods
+from .chatbot_logic import chatbot
+
+# Add this view function to nouapp/views.py
+@csrf_exempt
+@require_http_methods(["POST"])
+def chat_api(request):
+    try:
+        data = json.loads(request.body)
+        user_message = data.get('message', '').strip()
+        
+        if not user_message:
+            return JsonResponse({'error': 'Empty message'}, status=400)
+            
+        bot_response, tag = chatbot.get_response(user_message)
+        return JsonResponse({'response': bot_response, 'tag': tag})
+            
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+    except Exception as e:
+        return JsonResponse({'error': 'Server error', 'details': str(e)}, status=500)
+    
 @require_POST
 def set_theme(request):
     theme = request.POST.get('theme', 'light')

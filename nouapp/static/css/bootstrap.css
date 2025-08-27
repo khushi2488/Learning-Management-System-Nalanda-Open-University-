@@ -3358,6 +3358,30 @@ textarea.form-control-lg {
 .fade {
   transition: opacity 0.15s linear;
 }
+/* ===== Theme text visibility fixes ===== */
+[data-bs-theme="light"] .text-light,
+[data-bs-theme="light"] .text-white {
+  color: #212529 !important; /* readable dark text */
+}
+
+[data-bs-theme="dark"] .text-light,
+[data-bs-theme="dark"] .text-white {
+  color: #f8f9fa !important; /* readable light text */
+}
+
+/* Force readable body text per theme */
+[data-bs-theme="light"] body {
+  --bs-body-color: #212529;   /* dark text */
+  --bs-body-bg: #ffffff;      /* light background */
+  color: #212529 !important;  /* fallback */
+}
+
+[data-bs-theme="dark"] body {
+  --bs-body-color: #f8f9fa;   /* light text */
+  --bs-body-bg: #000000;      /* dark background */
+  color: #f8f9fa !important;  /* fallback */
+}
+
 @media (prefers-reduced-motion: reduce) {
   .fade {
     transition: none;
@@ -7590,14 +7614,12 @@ textarea.form-control-lg {
   border-color: rgba(var(--bs-dark-rgb), var(--bs-border-opacity)) !important;
 }
 
-.border-black {
-  --bs-border-opacity: 1;
-  border-color: rgba(var(--bs-black-rgb), var(--bs-border-opacity)) !important;
+.border-black { 
+  border-color: var(--bs-dark) !important; 
 }
 
-.border-white {
-  --bs-border-opacity: 1;
-  border-color: rgba(var(--bs-white-rgb), var(--bs-border-opacity)) !important;
+.border-white { 
+  border-color: var(--bs-light) !important; 
 }
 
 .border-primary-subtle {
@@ -8567,15 +8589,13 @@ textarea.form-control-lg {
   color: var(--bs-secondary-color) !important;
 }
 
-.text-black-50 {
-  --bs-text-opacity: 1;
-  color: rgba(0, 0, 0, 0.5) !important;
+.text-black-50 { 
+  color: rgba(var(--bs-dark-rgb), .5) !important; 
 }
 
 .text-white-50 {
-  --bs-text-opacity: 1;
-  color: rgba(255, 255, 255, 0.5) !important;
-}
+   color: rgba(var(--bs-light-rgb), .5) !important;
+   }
 
 .text-body-secondary {
   --bs-text-opacity: 1;
@@ -8851,14 +8871,12 @@ textarea.form-control-lg {
   background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
 }
 
-.bg-black {
-  --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-black-rgb), var(--bs-bg-opacity)) !important;
+.bg-black { 
+  background-color: var(--bs-dark) !important; 
 }
 
-.bg-white {
-  --bs-bg-opacity: 1;
-  background-color: rgba(var(--bs-white-rgb), var(--bs-bg-opacity)) !important;
+.bg-white { 
+  background-color: var(--bs-light) !important; 
 }
 
 .bg-body {

@@ -59,3 +59,11 @@ redis>=4.5.0
 
 # API Documentation (if REST APIs are used)
 drf-yasg>=1.21.5
+
+# ===== NLP & Machine Learning (Chatbot) =====
+nltk>=3.8.0
+scikit-learn>=1.2.0
+numpy>=1.24.0
+scipy>=1.10.0
+threadpoolctl>=3.1.0
+joblib>=1.2.0

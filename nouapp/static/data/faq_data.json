@@ -1,0 +1,167 @@
+[
+  {
+    "tag": "greeting",
+    "patterns": ["hi", "hello", "hey", "good morning", "good afternoon", "good evening", "is anyone there", "good day"],
+    "responses": ["Hello! Welcome to Nalanda Open University. How can I help you today?", "Hi there! Welcome to NOU e-Gyan Portal! How can I assist you?", "Namaste! Welcome to Nalanda Open University. How may I help you?"]
+  },
+  {
+    "tag": "farewell",
+    "patterns": ["bye", "goodbye", "see you", "thank you", "thanks", "that's all"],
+    "responses": ["Goodbye! Have a great day!", "Thank you for visiting Nalanda Open University!", "See you soon! Feel free to ask if you have more questions."]
+  },
+  {
+    "tag": "university_intro",
+    "patterns": ["what is nalanda open university", "tell me about nou", "about nalanda open university", "history of nou", "when was nou established"],
+    "responses": ["Nalanda Open University (NOU) is the only university in Bihar state established for imparting learning exclusively through the distance education system. It was established in March 1987 by an ordinance promulgated by the Government of Bihar. The university is named after the famous ancient Nalanda University, a great center of learning in ancient India."]
+  },
+  {
+    "tag": "location",
+    "patterns": ["where is nalanda open university", "address of nou", "location of nou", "how to reach nou", "where is the university located"],
+    "responses": ["Nalanda Open University is located at 2nd/3rd Floor, Biscoman Bhawan, Patna - 800001, Bihar, India. The university is situated in the heart of Patna city, easily accessible from all parts of the city."]
+  },
+  {
+    "tag": "contact_info",
+    "patterns": ["contact information", "phone number", "email address", "how to contact", "help desk", "customer care"],
+    "responses": ["You can contact Nalanda Open University at: Phone: +91 7080102007, Email: nouegyanhelp@gmail.com. For administrative queries: admin@nalanda.edu.in. The university helpline is available from 10 AM to 5 PM on working days."]
+  },
+  {
+    "tag": "courses_offered",
+    "patterns": ["what courses do you offer", "programs available", "departments", "what can I study", "courses list", "academic programs", "study options"],
+    "responses": ["Nalanda Open University offers a wide range of undergraduate, postgraduate, diploma and certificate programs in Arts, Science, Commerce, Management, Computer Applications, and Vocational studies. Some popular programs include B.A., B.Com, B.Sc, M.A., M.Com, M.Sc, BBA, BCA, MBA, and MCA."]
+  },
+  {
+    "tag": "admission_process",
+    "patterns": ["how to apply", "admission process", "admission procedure", "how to get admission", "registration process", "how to enroll", "admission requirements"],
+    "responses": ["You can apply for admission through our online portal. The admission process typically involves: 1. Registration on the NOU portal 2. Filling the application form 3. Uploading required documents 4. Payment of fees 5. Submission of the application. For detailed guidance, visit the 'Admissions' section on our website or contact the help desk at +91 7080102007."]
+  },
+  {
+    "tag": "admission_dates",
+    "patterns": ["when does admission start", "admission dates", "last date for admission", "admission schedule", "application deadline"],
+    "responses": ["Admission dates vary by program. Generally, admissions for most programs open in June-July and January-February for different sessions. Please check the official university website or contact the admission cell for the current academic session's exact dates."]
+  },
+  {
+    "tag": "fees_structure",
+    "patterns": ["fee structure", "course fees", "how much does it cost", "tuition fees", "fee payment", "what are the fees"],
+    "responses": ["The fee structure varies depending on the program and course. Generally, undergraduate programs range from ₹2,000 to ₹5,000 per year, and postgraduate programs range from ₹3,000 to ₹7,000 per year. For exact fee details, please refer to the prospectus or contact the accounts department."]
+  },
+  {
+    "tag": "study_material",
+    "patterns": ["how to access study material", "where are the online courses", "e-learning content", "self learning material", "digital content", "books", "study resources"],
+    "responses": ["Once you login to your student dashboard, you can access all your self-learning materials under the 'Self Learning Material' section. The university provides printed study material, e-books, video lectures, and online resources. If you're facing any issues, please contact the help desk."]
+  },
+  {
+    "tag": "examination",
+    "patterns": ["exam schedule", "when are exams", "examination dates", "exam pattern", "how exams are conducted", "exam center"],
+    "responses": ["Examinations are generally conducted twice a year in June and December. The exact schedule is announced on the university website 2-3 months before the exams. Exams are conducted at designated examination centers across Bihar and other states."]
+  },
+  {
+    "tag": "results",
+    "patterns": ["when will results be declared", "how to check results", "result date", "scorecard", "marksheet"],
+    "responses": ["Results are typically declared within 2-3 months after the examination. You can check your results on the university website by entering your enrollment number. For duplicate mark sheets or other result-related queries, please contact the examination department."]
+  },
+  {
+    "tag": "library",
+    "patterns": ["library facilities", "digital library", "library resources", "library membership", "how to access library"],
+    "responses": ["Nalanda Open University has a well-stocked central library with a vast collection of books, journals, and digital resources. Students can access the digital library through their student portal. The library also offers remote access to e-books and online journals."]
+  },
+  {
+    "tag": "library_timings",
+    "patterns": ["when is the library open", "library hours", "what are the timings of the library", "library schedule"],
+    "responses": ["The central library is open from 9:00 AM to 8:00 PM from Monday to Saturday. It remains closed on Sundays and public holidays. The digital library is accessible 24/7 through the student portal."]
+  },
+  {
+    "tag": "study_centers",
+    "patterns": ["study centers", "where are study centers located", "list of study centers", "regional centers", "contact study center"],
+    "responses": ["Nalanda Open University has a network of study centers across Bihar and other states. These centers provide academic support, counseling sessions, and library facilities. You can find the complete list of study centers on the university website or by contacting the regional office."]
+  },
+  {
+    "tag": "strength_departments",
+    "patterns": ["best departments", "strong departments", "department strength", "which departments are good", "reputation of departments"],
+    "responses": ["Nalanda Open University has strong departments in Humanities, Social Sciences, Commerce, and Management studies. The Department of History, Economics, English, Hindi, Political Science, Commerce, and Management are particularly renowned for their quality education and experienced faculty."]
+  },
+  {
+    "tag": "placement",
+    "patterns": ["placement opportunities", "career services", "job placement", "placement cell", "campus recruitment"],
+    "responses": ["The university has a placement cell that organizes career counseling sessions, workshops, and placement drives. While distance education focuses on self-paced learning, the university provides guidance for career development and connects students with potential employers through its network."]
+  },
+  {
+    "tag": "scholarship",
+    "patterns": ["scholarship opportunities", "financial aid", "fee concession", "education loan", "scholarship schemes"],
+    "responses": ["Nalanda Open University offers various scholarship schemes for meritorious and economically disadvantaged students. These include merit-based scholarships, fee concessions for certain categories, and special schemes for female students. Details are available in the prospectus or on the university website."]
+  },
+  {
+    "tag": "online_classes",
+    "patterns": ["online classes", "virtual classes", "live sessions", "video lectures", "how are classes conducted"],
+    "responses": ["Nalanda Open University provides a blend of self-study material and online support. While the primary mode is self-study through provided materials, the university also conducts online counseling sessions, video lectures, and live interactive sessions for certain subjects. Check your student portal for the schedule."]
+  },
+  {
+    "tag": "revaluation",
+    "patterns": ["revaluation process", "how to apply for revaluation", "copy of answer script", "rechecking", "revaluation fee"],
+    "responses": ["Students can apply for revaluation within 30 days of result declaration. The process involves submitting an application form with the prescribed fee. Detailed instructions are available on the university website under the examination section."]
+  },
+  {
+    "tag": "website",
+    "patterns": ["university website", "official website", "web address", "online portal", "where to find information"],
+    "responses": ["The official website of Nalanda Open University is www.nalandaopenuniversity.com. You can find all information regarding admissions, courses, examinations, results, and announcements on the website. The student portal can be accessed through the website."]
+  },
+  {
+    "tag": "working_hours",
+    "patterns": ["university working hours", "office timings", "when is office open", "administrative hours"],
+    "responses": ["The university administrative office is open from 10:00 AM to 5:00 PM from Monday to Friday, and 10:00 AM to 2:00 PM on Saturdays. The office remains closed on Sundays and public holidays."]
+  },
+  {
+    "tag": "vc_info",
+    "patterns": ["vice chancellor", "who is the vc", "professor k c sinha", "current vc"],
+    "responses": ["The current Vice Chancellor of Nalanda Open University is Prof. (Dr.) K. C. Sinha. He is a renowned academician and has been leading the university with a vision to enhance distance education in Bihar."]
+  },
+  {
+    "tag": "recognition",
+    "patterns": ["is nou recognized", "ugc recognition", "deemed university", "accreditation", "naac grade"],
+    "responses": ["Yes, Nalanda Open University is recognized by the University Grants Commission (UGC) and is a member of the Association of Indian Universities (AIU). The university is also recognized by the Distance Education Bureau (DEB) of UGC for offering programs through distance mode."]
+  },
+  {
+    "tag": "distance_learning",
+    "patterns": ["what is distance learning", "benefits of distance education", "why choose distance learning", "open learning system"],
+    "responses": ["Distance learning allows you to study at your own pace and convenience without attending regular classes. Benefits include flexibility, affordability, accessibility, and the ability to balance education with work and personal commitments. Nalanda Open University specializes in providing quality education through this mode."]
+  },
+  {
+    "tag": "eligibility",
+    "patterns": ["eligibility criteria", "who can apply", "qualification required", "minimum marks", "age limit"],
+    "responses": ["Eligibility criteria vary by program. Generally, for undergraduate programs, you need 10+2 qualification, and for postgraduate programs, a relevant bachelor's degree is required. There's no upper age limit for most programs. Please check the specific eligibility criteria for your chosen program in the prospectus."]
+  },
+  {
+    "tag": "documents_required",
+    "patterns": ["documents needed for admission", "what documents to submit", "required certificates"],
+    "responses": ["Typically, you need to submit: 1. Educational certificates 2. Identity proof (Aadhar card, etc.) 3. Date of birth proof 4. Passport size photographs 5. Category certificate (if applicable). The exact document requirements are specified in the admission form."]
+  },
+  {
+    "tag": "refund_policy",
+    "patterns": ["fee refund", "cancellation policy", "can I get fee refund", "withdrawal from course"],
+    "responses": ["The university has a specific refund policy. Generally, fees are refundable (with deduction of processing charges) if cancellation is made within a specified period after admission. For details, please refer to the prospectus or contact the accounts department."]
+  },
+  {
+    "tag": "international_students",
+    "patterns": ["admission for nri students", "international students", "foreign students", "admission from abroad"],
+    "responses": ["Nalanda Open University welcomes international students/NRIs. There is a separate admission process and fee structure for international students. Please contact the international students cell or check the university website for detailed information."]
+  },
+  {
+    "tag": "alumni",
+    "patterns": ["alumni network", "former students", "alumni association", "connect with alumni"],
+    "responses": ["Nalanda Open University has a growing alumni network. The university is in the process of forming an official alumni association. For information about alumni activities, please contact the university's public relations office."]
+  },
+  {
+    "tag": "events",
+    "patterns": ["university events", "workshops", "seminars", "conferences", "cultural events"],
+    "responses": ["The university organizes various academic events, workshops, seminars, and cultural programs throughout the year. Information about upcoming events is posted on the university website and notice boards at study centers."]
+  },
+  {
+    "tag": "feedback",
+    "patterns": ["how to give feedback", "complaint", "suggestion", "grievance", "report problem"],
+    "responses": ["You can provide feedback or register complaints through the 'Grievance Redressal' section on the university website. Alternatively, you can email your feedback to feedback@nalanda.edu.in or contact the help desk at +91 7080102007."]
+  },
+  {
+    "tag": "fallback",
+    "patterns": [],
+    "responses": ["I'm sorry, I don't have the answer to that yet. For more specific queries, please email us at info@nalanda.edu.in or call +91-7080102007. You can also visit our website www.nalandaopenuniversity.com for detailed information."]
+  }
+]
