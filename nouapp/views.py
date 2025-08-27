@@ -85,7 +85,7 @@ def registration(request):
     ns=News.objects.all()
     return render(request,"registration.html",locals())
 
-def login_view(request):
+def login(request):
     if request.method=="POST":
         userid=request.POST['userid']
         password=request.POST['password']
