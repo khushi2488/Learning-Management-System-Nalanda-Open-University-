@@ -1,0 +1,12 @@
+{% extends 'parent.html' %}
+{% block body %}
+<div class="container" style="max-width: 600px; margin: auto; margin-top: 50px;">
+  <h2 style="text-align:center; color: var(--primary-color);">Password Reset Link</h2>
+  <p style="margin-top: 20px; text-align:center;">
+    Copy and open this link in your browser to reset your password:
+  </p>
+  <div style="background:#f8f9fa; padding:15px; border-radius:8px; text-align:center;">
+    <a href="{{ reset_link }}" style="word-break: break-all;">{{ reset_link }}</a>
+  </div>
+</div>
+{% endblock %}
