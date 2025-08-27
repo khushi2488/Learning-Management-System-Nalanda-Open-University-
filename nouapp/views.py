@@ -59,7 +59,7 @@ def registration(request):
     ns=News.objects.all()
     return render(request,"registration.html",locals())
 
-def login(request):
+def login_view(request):
     if request.method=="POST":
         userid=request.POST['userid']
         password=request.POST['password']
@@ -98,3 +98,87 @@ def courses(request):
 
 def services(request):
     return render(request,"services.html")
+
+
+#_____________________________this is for forgot password / reset password logic views_______________________________
+import uuid
+from django.contrib import messages
+from django.shortcuts import render, redirect
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
+from django.urls import reverse
+
+# Store reset tokens temporarily (in production, use database or cache)
+reset_tokens = {}
+
+def forgot_password(request):
+    if request.method == "POST":
+        email = request.POST.get("email")
+        
+        try:
+            student = Student.objects.get(emailaddress=email)
+            
+            if Login.objects.filter(userid=student.rollno).exists():
+                login_user = Login.objects.get(userid=student.rollno)
+                
+                # Generate unique reset token
+                reset_token = str(uuid.uuid4())
+                
+                # Store token
+                reset_tokens[reset_token] = login_user.userid
+                
+                # Create reset link
+                reset_link = request.build_absolute_uri(
+                    reverse('nouapp:reset_password', args=[reset_token])
+                )
+
+                # Show link directly instead of sending email
+                return render(request, "show_reset_link.html", {"reset_link": reset_link})
+            
+            else:
+                messages.error(request, "No login found for this email")
+        except Student.DoesNotExist:
+            messages.error(request, "Email not registered")
+    
+    return render(request, "forgot_password.html")
+
+def reset_password(request, token):
+    if token not in reset_tokens:
+        messages.error(request, "Invalid or expired link")
+        return render(request, "reset_password.html", {"token": token})
+
+    userid = reset_tokens[token]
+
+    if request.method == 'POST':
+        new_password = request.POST.get('new_password')
+        confirm_password = request.POST.get('confirm_password')
+
+        # Validation
+        if not new_password or not confirm_password:
+            messages.error(request, "Please fill in both password fields")
+            return render(request, 'reset_password.html', {'token': token})
+
+        if len(new_password) > 30:
+            messages.error(request, 'Password cannot be longer than 30 characters')
+            return render(request, 'reset_password.html', {'token': token})
+
+        if new_password != confirm_password:
+            messages.error(request, 'Passwords do not match')
+            return render(request, 'reset_password.html', {'token': token})
+
+        try:
+            login_user = Login.objects.get(userid=userid)
+            login_user.password = new_password
+            login_user.save()
+
+            # Delete token after use
+            del reset_tokens[token]
+            
+            messages.success(request, "Password reset successfully! You can now login with your new password.")
+            return redirect('nouapp:login')
+            
+        except Login.DoesNotExist:
+            messages.error(request, 'User not found')
+            return render(request, 'reset_password.html', {'token': token})
+
+    return render(request, "reset_password.html", {"token": token})
