@@ -54,8 +54,8 @@ django-ses>=3.5.0
 django-redis>=5.2.0
 
 # Task Queue (for background tasks)
-celery>=5.2.0
-redis>=4.5.0
+#celery>=5.2.0
+#redis>=4.5.0
 
 # API Documentation (if REST APIs are used)
 drf-yasg>=1.21.5
