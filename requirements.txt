@@ -3,8 +3,8 @@ Django>=4.0,<5.0
 djangorestframework>=3.14.0
 
 # Database
-# SQLite is built into Python, but for PostgreSQL support:
-# psycopg2-binary>=2.9.5
+SQLite is built into Python, but for PostgreSQL support:
+psycopg2-binary>=2.9.5
 
 # User Authentication & Authorization
 django-allauth>=0.54.0
