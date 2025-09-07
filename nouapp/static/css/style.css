@@ -1,11 +1,11 @@
 /* ================= Theme Base ================= */
 [data-bs-theme="light"] body {
-  color: #212529;   /* readable dark text */
+  color: #212529; /* readable dark text */
   background-color: #ffffff;
 }
 
 [data-bs-theme="dark"] body {
-  color: #f8f9fa;   /* readable light text */
+  color: #f8f9fa; /* readable light text */
   background-color: #121212;
 }
 
@@ -14,14 +14,14 @@
   background-color: #ffffff !important;
 }
 [data-bs-theme="light"] .navbar-nav .nav-link {
-  color: #212529 !important;  /* dark text for light mode */
+  color: #212529 !important; /* dark text for light mode */
 }
 
 [data-bs-theme="dark"] .navbar {
   background-color: #000000 !important;
 }
 [data-bs-theme="dark"] .navbar-nav .nav-link {
-  color: #f8f9fa !important;  /* white text for dark mode */
+  color: #f8f9fa !important; /* white text for dark mode */
 }
 
 /* Active navbar link */
@@ -36,35 +36,42 @@
   color: var(--bs-body-color) !important;
 }
 
-.about-section p, 
-.about-section h1, .about-section h2, .about-section h3, 
+.about-section p,
+.about-section h1,
+.about-section h2,
+.about-section h3,
 .content-section p,
-.content-section h1, .content-section h2, .content-section h3,
-.card p, .card h1, .card h2, .card h3 {
+.content-section h1,
+.content-section h2,
+.content-section h3,
+.card p,
+.card h1,
+.card h2,
+.card h3 {
   color: var(--bs-body-color) !important;
 }
 
 /* ================= Hero Section Text ================= */
-.hero-text, 
-.hero-text h1, 
-.hero-text h2, 
+.hero-text,
+.hero-text h1,
+.hero-text h2,
 .hero-text p {
   color: #ffffff !important; /* always white for contrast */
-  text-shadow: 0 2px 6px rgba(0,0,0,0.7); /* makes it readable */
+  text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7); /* makes it readable */
 }
 
 /* ================= Cards ================= */
 .card {
   background-color: var(--bs-body-bg);
   border: 1px solid var(--bs-border-color);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 .card-title {
   font-weight: 600;
 }
 /* Logo fix */
 .navbar-brand img {
-  height: 45px;   /* smaller height */
+  height: 45px; /* smaller height */
   width: auto;
   object-fit: contain;
 }
@@ -73,7 +80,7 @@
 footer {
   background-color: var(--bs-body-bg);
   color: var(--bs-body-color);
-  padding: 1rem 0;
-  text-align: center;
+  padding: 1rem 0; */
+  text-align: center; 
   border-top: 1px solid var(--bs-border-color);
 }
