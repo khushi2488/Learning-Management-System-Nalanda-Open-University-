@@ -12,7 +12,7 @@ DEBUG = os.getenv("DEBUG", "False") == "True"
 ALLOWED_HOSTS = [
     "127.0.0.1",
     "localhost",
-    "learning-management-system-nalanda-open.onrender.com",
+    "learning-management-system-nou.onrender.com",
     "learning.management.nou.live"
 ]
 
