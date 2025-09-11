@@ -7,7 +7,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Security
 # ----------------------------------------------------------------------
 SECRET_KEY = os.getenv("SECRET_KEY", "django-insecure-dev-key")
-DEBUG = os.getenv("DEBUG", "False") == "True"
+DEBUG = True
+
 
 ALLOWED_HOSTS = ["*"]
 
@@ -21,6 +22,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+     'django.contrib.humanize',  # For human-readable file sizes
 
     # Your apps
     "nouapp",
@@ -119,3 +121,17 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+# _________ for file management system____________________
+FILE_UPLOAD_MAX_MEMORY_SIZE = 100 * 1024 * 1024
+DATA_UPLOAD_MAX_MEMORY_SIZE = FILE_UPLOAD_MAX_MEMORY_SIZE
+
+# Allowed file extensions for materials
+ALLOWED_MATERIAL_EXTENSIONS = [
+    'pdf', 'doc', 'docx', 'ppt', 'pptx', 'txt', 
+    'mp4', 'mp3', 'jpg', 'jpeg', 'png', 'gif', 'zip', 'rar'
+]
+
+# Preview generation settings
+PREVIEW_IMAGE_SIZE = (300, 300)  # Size for preview images
+PDF_PREVIEW_QUALITY = 200  # DPI for PDF preview generation

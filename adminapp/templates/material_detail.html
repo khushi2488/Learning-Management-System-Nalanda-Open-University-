@@ -1,0 +1,103 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ material.title }}{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0">{{ material.title }}</h4>
+                    <span class="badge bg-primary">v{{ material.version }}</span>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <strong>Course:</strong> {{ material.course.title }}
+                        </div>
+                        <div class="col-md-6">
+                            <strong>Category:</strong> 
+                            {% if material.category %}
+                                <span class="badge" style="background-color: {{ material.category.color_code }};">
+                                    {{ material.category.name }}
+                                </span>
+                            {% else %}
+                                <span class="text-muted">Uncategorized</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    {% if material.description %}
+                        <p>{{ material.description }}</p>
+                    {% endif %}
+                    
+                    <div class="row mb-3">
+                        <div class="col-md-3">
+                            <strong>File Size:</strong><br>
+                            {{ material.get_formatted_size }}
+                        </div>
+                        <div class="col-md-3">
+                            <strong>File Type:</strong><br>
+                            {{ material.file_type|upper }}
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Downloads:</strong><br>
+                            {{ material.download_count }}
+                        </div>
+                        <div class="col-md-3">
+                            <strong>Views:</strong><br>
+                            {{ material.view_count }}
+                        </div>
+                    </div>
+                    
+                    <div class="d-grid gap-2 d-md-flex">
+                        {% if material.is_previewable %}
+                            <button class="btn btn-outline-primary me-md-2" onclick="openPreview({{ material.id }})">
+                                <i class="fas fa-eye"></i> Preview
+                            </button>
+                        {% endif %}
+                        <a href="{% url 'material_download' material.id %}" class="btn btn-primary">
+                            <i class="fas fa-download"></i> Download
+                        </a>
+                        {% if can_edit %}
+                            <a href="{% url 'create_material_version' material.id %}" class="btn btn-success">
+                                <i class="fas fa-code-branch"></i> New Version
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <!-- Version History -->
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Version History</h5>
+                </div>
+                <div class="card-body">
+                    {% for version in all_versions %}
+                        <div class="d-flex justify-content-between align-items-center mb-2 p-2 {% if version.id == material.id %}bg-light{% endif %} rounded">
+                            <div>
+                                <strong>v{{ version.version }}</strong>
+                                {% if version.is_latest_version %}
+                                    <span class="badge bg-success">Latest</span>
+                                {% endif %}
+                                <br>
+                                <small class="text-muted">{{ version.created_at|date:"M d, Y" }}</small>
+                            </div>
+                            <div>
+                                {% if version.id != material.id %}
+                                    <a href="{% url 'material_detail' version.id %}" class="btn btn-sm btn-outline-primary">View</a>
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

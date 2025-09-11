@@ -1,27 +1,66 @@
 {% extends "studentparent.html" %}
 {% block body %}
     <div class="row">
-        <h1 style="text-align:center; color: rgb(6,6,106)">View Your Study Material</h1>   
-        <div class="col-sm-12">
-              <table class="table table-bordered" style="color:rgb(6,6,106)">
-                <tr>
-                    <th>#</th>
-                    <th>Subject</th>
-                    <th>File Name</th>
-                    <th>Download</th>
-                </tr>
-
-                {% for m in mat %}
-                <tr style="color: steelblue;">
-                    <td>{{forloop.counter}}</td>
-                    <td>{{m.subject}}</td>
-                    <td>{{m.file_name}}</td>
-                    <td>
-                        <a download="" href="{{m.my_file.url}}">{{m.file_name}}</a>
-                    </td>
-                </tr>
-                {% endfor %}
-              </table>
+        <div class="row">
+            <h1 style="text-align:center; color: rgb(6,6,106)">Study Materials</h1>
+            <h3 style="text-align:center; color: rgb(6,6,106)">{{stu.program}} - {{stu.branch}} - {{stu.year}}</h3>
+            <div class="col-sm-12">
+                {% if mat %}
+                   <table class="table table-bordered text-light">
+                    <tr style="color: rgb(6,6,106)">
+                        <th>#</th>
+                        <th>Course</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>File Type</th>
+                        <th>File Size</th>
+                        <th>Upload Date</th>
+                        <th>Download</th>
+                    </tr>
+    
+                    {% for m in mat %}
+                        <tr style="color: steelblue;">
+                            <td>{{forloop.counter}}</td>
+                            <td>{{m.course.title|default:"N/A"}}</td>
+                            <td>{{m.title}}</td>
+                            <td>{{m.description|truncatewords:15|default:"No description"}}</td>
+                            <td>
+                                {% if m.category %}
+                                    <span class="badge" style="background-color: {{m.category.color_code}};">
+                                        {{m.category.name}}
+                                    </span>
+                                {% else %}
+                                    <span class="badge badge-secondary">General</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <i class="{{m.get_file_icon}}"></i>
+                                {{m.file_type|upper}}
+                            </td>
+                            <td>{{m.get_formatted_size}}</td>
+                            <td>{{m.created_at|date:"M d, Y"}}</td>
+                            <td>
+                                {% if m.file %}
+                                    <a href="{{m.file.url}}" class="btn btn-sm btn-success" download>
+                                        <i class="fas fa-download"></i> Download
+                                    </a>
+                                {% else %}
+                                    <span class="text-muted">No file</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                   </table>
+                {% else %}
+                    <div class="alert alert-info text-center">
+                        <h4>No Study Materials Available</h4>
+                        <p>There are currently no materials available for your course:</p>
+                        <p><strong>{{stu.program}} - {{stu.branch}} - {{stu.year}}</strong></p>
+                        <p>Please check back later or contact your instructor.</p>
+                    </div>
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock body %}
