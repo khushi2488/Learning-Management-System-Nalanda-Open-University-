@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block title %}Material Categories{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">Material Categories</h4>
+                </div>
+                <div class="card-body">
+                    {% if categories %}
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Color</th>
+                                        <th>Materials</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for category in categories %}
+                                        <tr>
+                                            <td>
+                                                {% if category.icon %}
+                                                    <i class="{{ category.icon }} me-2"></i>
+                                                {% endif %}
+                                                {{ category.name }}
+                                            </td>
+                                            <td>{{ category.description|truncatechars:50 }}</td>
+                                            <td>
+                                                <div style="width: 20px; height: 20px; background-color: {{ category.color_code }}; border-radius: 50%;"></div>
+                                            </td>
+                                            <td>{{ category.materials.count }}</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary">Edit</button>
+                                                <button class="btn btn-sm btn-outline-danger">Delete</button>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No categories created yet.</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Add New Category</h5>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="mb-3">
+                            {{ form.name }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.description }}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.icon }}
+                            {% if form.icon.help_text %}
+                                <div class="form-text">{{ form.icon.help_text }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="mb-3">
+                            {{ form.color_code }}
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="fas fa-plus"></i> Add Category
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

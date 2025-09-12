@@ -1,10 +1,12 @@
+
 from django.shortcuts import render, redirect
 from nouapp.models import Student, Login
 from django.views.decorators.cache import cache_control
-from . models import StuResponse, Question, Answer
+from .models import StuResponse, Question, Answer
 from datetime import date
 from django.contrib import messages
-from adminapp.models import Material
+from adminapp.models import Material, Course, Program, Branch, Year
+from django.db.models import Q
 
 # Create your views here.
 @cache_control(no_cache=True,must_revalidate=True,no_store=True)
@@ -121,17 +123,91 @@ def changepassword(request):
             return render(request,"changepassword.html",{'stu':stu})
     except KeyError:
         return redirect('nouapp:login')
-    
-@cache_control(no_cache=True,must_revalidate=True,no_store=True)
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def viewmat(request):
     try:
-        if request.session['rollno']!=None:
-            rollno=request.session['rollno']
-            stu=Student.objects.get(rollno=rollno)
-            mat=Material.objects.filter(program=stu.program,branch=stu.branch,year=stu.year)
-            return render(request,"viewmat.html",locals())
-    except KeyError:
+        rollno = request.session.get('rollno')
+        if not rollno:
+            return redirect('nouapp:login')
+
+        stu = Student.objects.get(rollno=rollno)
+        print(f"Student: {stu.name}, Program: {stu.program}, Branch: {stu.branch}, Year: {stu.year}")
+
+        # Map Student text to FK objects (case-insensitive)
+        program_obj = Program.objects.filter(program__iexact=stu.program).first()
+        branch_obj = Branch.objects.filter(branch__iexact=stu.branch).first()
+        year_obj = Year.objects.filter(year__iexact=stu.year).first()
+
+        if not (program_obj and branch_obj and year_obj):
+            messages.warning(request, "No matching Program/Branch/Year found.")
+            mat = Material.objects.none()
+        else:
+            # Filter using IDs, ensures correct FK matching
+            mat = Material.objects.filter(
+                course__program=program_obj,
+                course__branch=branch_obj,
+                course__year=year_obj,
+                is_latest_version=True
+            ).select_related(
+                'course', 'course__program', 'course__branch', 'course__year', 'category', 'created_by'
+            ).order_by('-created_at')
+
+        print(f"Found {mat.count()} materials for this student")
+
+        return render(request, 'viewmat.html', {
+            'mat': mat,
+            'stu': stu,
+            'total_materials': mat.count()
+        })
+
+    except Student.DoesNotExist:
+        messages.error(request, "Student profile not found. Please login again.")
         return redirect('nouapp:login')
+    except Exception as e:
+        print(f"Error in viewmat: {e}")
+        import traceback
+        traceback.print_exc()
+        messages.error(request, "An error occurred while loading materials.")
+        return redirect('studentapp:studenthome')
+
+
+# Optional: Add a function to download materials with logging
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def download_material(request, material_id):
+    try:
+        # Check if student is logged in
+        rollno = request.session.get('rollno')
+        if not rollno:
+            return redirect('nouapp:login')
+        
+        # Get student object
+        stu = Student.objects.get(rollno=rollno)
+        
+        # Get material object
+        material = Material.objects.get(id=material_id)
+        
+        # Log the download (optional)
+        print(f"Student {stu.name} downloaded material: {material.title}")
+        
+        # Redirect to the file URL for download
+        if material.file:
+            from django.http import HttpResponseRedirect
+            return HttpResponseRedirect(material.file.url)
+        else:
+            messages.error(request, "File not found.")
+            return redirect('studentapp:viewmat')
+            
+    except Student.DoesNotExist:
+        messages.error(request, "Student profile not found.")
+        return redirect('nouapp:login')
+    except Material.DoesNotExist:
+        messages.error(request, "Material not found.")
+        return redirect('studentapp:viewmat')
+    except Exception as e:
+        print(f"Error in download_material: {e}")
+        messages.error(request, "Error downloading file.")
+        return redirect('studentapp:viewmat')
     
 @cache_control(no_cache=True,must_revalidate=True,no_store=True)
 def viewprofile(request):

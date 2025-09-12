@@ -4,31 +4,71 @@
         <div class="row">
             <h1 style="text-align:center; color: rgb(6,6,106)">View All Study Material</h1>
             <div class="col-sm-12">
-                   <table class="table table-bordered text-light">
-                    <tr style="color: rgb(6,6,106)">
-                        <th>#</th>
-                        <th>Program</th>
-                        <th>Branch</th>
-                        <th>Year</th>
-                        <th>Subject</th>
-                        <th>File Name</th>
-                        <th>Download</th>
-                    </tr>
-    
-                    {% for m in mat %}
-                        <tr style="color: steelblue;">
-                            <td>{{forloop.counter}}</td>
-                            <td>{{m.program}}</td>
-                            <td>{{m.branch}}</td>
-                            <td>{{m.year}}</td>
-                            <td>{{m.subject}}</td>
-                            <td>{{m.file_name}}</td>
-                            <td>
-                                <a  href="{{m.my_file.url}}">{{m.my_file}}</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                   </table>
+                {% if mat %}
+                    <div class="table-responsive">
+                       <table class="table table-bordered table-striped">
+                        <thead style="background-color: #06066A; color: white;">
+                            <tr>
+                                <th>#</th>
+                                <th>Program</th>
+                                <th>Branch</th>
+                                <th>Year</th>
+                                <th>Subject/Title</th>
+                                <th>File Name</th>
+                                <th>File Size</th>
+                                <th>Upload Date</th>
+                                <th>Download</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for m in mat %}
+                                <tr style="color: #495057;">
+                                    <td>{{forloop.counter}}</td>
+                                    <td>
+                                        {% if m.course.program %}
+                                            {{m.course.program}}
+                                        {% else %}
+                                            N/A
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if m.course.branch %}
+                                            {{m.course.branch}}
+                                        {% else %}
+                                            N/A
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if m.course.year %}
+                                            {{m.course.year}}
+                                        {% else %}
+                                            N/A
+                                        {% endif %}
+                                    </td>
+                                    <td>{{m.title}}</td>
+                                    <td>{{m.file.name|default:"No file"}}</td>
+                                    <td>{{m.get_formatted_size}}</td>
+                                    <td>{{m.created_at|date:"M d, Y"}}</td>
+                                    <td>
+                                        {% if m.file %}
+                                            <a href="{{m.file.url}}" download class="btn btn-sm btn-info">
+                                                <i class="fas fa-download"></i> Download
+                                            </a>
+                                        {% else %}
+                                            <span class="text-danger">No file</span>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                {% else %}
+                    <div class="alert alert-info text-center">
+                        <h4>No Materials Found</h4>
+                        <p>No study materials have been uploaded yet.</p>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </div>

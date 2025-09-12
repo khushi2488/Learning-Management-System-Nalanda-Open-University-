@@ -1,15 +1,29 @@
+ 
 from django.urls import path
 from . import views
 
-urlpatterns=[
-    path('studenthome/',views.studenthome,name='studenthome'),
-    path('studentlogout/',views.studentlogout,name='studentlogout'),
-    path('response/',views.response,name='response'),
-    path('postquestion/',views.postquestion,name='postquestion'),
-    path('postanswer/<qid>',views.postanswer,name='postanswer'),
-    path('postans/',views.postans,name='postans'),
-    path('viewanswer/<qid>',views.viewanswer,name='viewanswer'),
-    path('changepassword/',views.changepassword,name='changepassword'),
-    path('viewmat/',views.viewmat,name='viewmat'),
-    path('viewprofile/',views.viewprofile,name='viewprofile'),
+app_name = 'studentapp'
+
+urlpatterns = [
+    # Student Dashboard and Home
+    path('', views.studenthome, name='studenthome'),
+    path('studenthome/', views.studenthome, name='studenthome'),
+    path('studentlogout/', views.studentlogout, name='studentlogout'),
+    
+    # Student Response and Feedback
+    path('response/', views.response, name='response'),
+    
+    # Q&A System
+    path('postquestion/', views.postquestion, name='postquestion'),
+    path('postanswer/<int:qid>/', views.postanswer, name='postanswer'),
+    path('postans/', views.postans, name='postans'),
+    path('viewanswer/<int:qid>/', views.viewanswer, name='viewanswer'),
+    
+    # Profile and Password Management
+    path('changepassword/', views.changepassword, name='changepassword'),
+    path('viewprofile/', views.viewprofile, name='viewprofile'),
+    
+    # Study Materials - Updated
+    path('viewmat/', views.viewmat, name='viewmat'),
+    path('download/<int:material_id>/', views.download_material, name='download_material'),
 ]
