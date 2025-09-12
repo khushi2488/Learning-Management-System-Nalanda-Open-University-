@@ -8,31 +8,6 @@
         <h4 style="text-align:center; color: #444; margin-bottom: 25px;">
             Welcome {{stu.name}} | All Available Materials
         </h4>
-
-        {% comment %} <!-- Search and Filter Section -->
-        <div class="col-sm-12 mb-3">
-            <form method="GET" class="row">
-                <div class="col-md-6 mb-2">
-                    <input type="text" name="search" class="form-control"
-                           placeholder="Search materials..."
-                           value="{{search_query|default:''}}"
-                           style="border: 1.5px solid #06066A; border-radius: 8px;">
-                </div>
-                <div class="col-md-4 mb-2">
-                    <input type="text" name="category" class="form-control"
-                           placeholder="Filter by category..."
-                           value="{{category_filter|default:''}}"
-                           style="border: 1.5px solid #06066A; border-radius: 8px;">
-                </div>
-                <div class="col-md-2 mb-2">
-                    <button type="submit" class="btn btn-primary w-100"
-                            style="background-color: #06066A; border-radius: 8px; border: none;">
-                        <i class="fas fa-search"></i> Search
-                    </button>
-                </div>
-            </form>
-        </div> {% endcomment %}
-
         <!-- Materials Count -->
         <div class="col-sm-12 mb-2">
             <p class="text-info" style="font-weight: 500;">
@@ -67,7 +42,7 @@
                                     <td>{{forloop.counter}}</td>
                                     <td><strong>{{m.course.title|default:"General"}}</strong></td>
                                     <td><span class="badge badge-info">{{m.course.program|default:"N/A"}}</span></td>
-                                    <td><span class="badge badge-secondary">{{m.course.branch|default:"N/A"}}</span></td>
+                                    <td><span class="badge badge-info">{{m.course.branch|default:"N/A"}}</span></td>
                                     <td><span class="badge badge-success">{{m.course.year|default:"N/A"}}</span></td>
                                     <td><strong>{{m.title}}</strong></td>
                                     <td><small>{{m.description|truncatewords:10|default:"No description"}}</small></td>
