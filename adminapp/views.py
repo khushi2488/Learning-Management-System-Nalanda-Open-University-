@@ -190,6 +190,8 @@ from PIL import Image
 import pdf2image
 from .models import Material, MaterialCategory, MaterialAccess, Course
 from .forms import MaterialForm, MaterialCategoryForm
+from django.db.models import F
+
 
 @login_required
 def material_list(request, course_id=None):
@@ -272,7 +274,7 @@ def material_detail(request, material_id):
     )
     
     # Increment view count
-    Material.objects.filter(id=material_id).update(view_count=models.F('view_count') + 1)
+    Material.objects.filter(id=material_id).update(view_count=F('view_count') + 1)
     
     context = {
         'material': material,
@@ -371,7 +373,7 @@ def material_download(request, material_id):
     )
     
     # Increment download count
-    Material.objects.filter(id=material_id).update(download_count=models.F('download_count') + 1)
+    Material.objects.filter(id=material_id).update(download_count=F('download_count') + 1)
     
     # Serve the file
     response = FileResponse(
