@@ -1,9 +1,87 @@
 {% extends "adminparent.html" %}
 {% block body %}
-    <div class="row">
+<div class="container-fluid">
+    <!-- Header -->
+    <div class="row mb-4">
         <div class="col-sm-12">
-            <h1 style="text-align:center; color: rgb(6,6,106)">Admin Home</h1>   
-              
+            <h1 style="text-align:center; color: rgb(6,6,106)">Admin Home</h1>
         </div>
     </div>
+
+   
+    <!-- Analytics Dashboard Access -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-chart-line me-2"></i>Analytics Dashboard
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h6 class="card-title">Comprehensive Analytics & Insights</h6>
+                            <p class="card-text">
+                                View detailed analytics including students, course activity, 
+                                material usage statistics,and login activity.
+                            </p>
+                        </div>
+                        <div class="col-md-4 text-center">
+                            <a href="{% url 'adminapp:admin_dashboard' %}" class="btn btn-primary btn-lg mb-2">
+                                <i class="fas fa-chart-bar me-2"></i>Open Analytics Dashboard
+                            </a>
+                            <br>
+                            <small class="text-muted">View comprehensive reports & insights</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
+    
+</div>
+
+<script>
+function refreshStats() {
+    // Add loading spinner or indicator
+    const button = event.target;
+    const originalText = button.innerHTML;
+    button.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Refreshing...';
+    button.disabled = true;
+    
+    // Simulate refresh (you can implement actual AJAX call here)
+    setTimeout(() => {
+        button.innerHTML = originalText;
+        button.disabled = false;
+        // Optionally reload the page to get fresh stats
+        location.reload();
+    }, 2000);
+}
+
+// Auto-refresh stats every 5 minutes
+setInterval(() => {
+    // You can implement AJAX calls to update stats without page reload
+    console.log('Auto-refreshing stats...');
+}, 5 * 60 * 1000);
+</script>
+
+<style>
+.card {
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.list-group-item-action:hover {
+    background-color: #f8f9fa;
+}
+
+.bg-primary { background-color: rgb(6,6,106) !important; }
+</style>
 {% endblock body %}
