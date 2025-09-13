@@ -1,0 +1,357 @@
+{% extends "adminparent.html" %}
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center mb-4" style="color: rgb(6,6,106)">Admin Analytics Dashboard</h1>
+        </div>
+    </div>
+
+    <!-- Summary Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="card bg-primary text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>{{summary.total_students}}</h4>
+                            <p class="mb-0">Total Students</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-users fa-2x"></i>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <small>
+                            {% if summary.week_unique_students > 0 %}
+                                <i class="fas fa-arrow-up"></i> {{summary.week_unique_students}} active this week
+                            {% endif %}
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card bg-success text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>{{summary.total_courses}}</h4>
+                            <p class="mb-0">Total Courses</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-book fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card bg-info text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>{{summary.total_materials}}</h4>
+                            <p class="mb-0">Study Materials</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-file fa-2x"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card bg-warning text-white">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <h4>{{summary.today_logins}}</h4>
+                            <p class="mb-0">Today's Logins</p>
+                        </div>
+                        <div>
+                            <i class="fas fa-sign-in-alt fa-2x"></i>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <small>
+                            {% if summary.login_change > 0 %}
+                                <i class="fas fa-arrow-up"></i> +{{summary.login_change|floatformat:1}}%
+                            {% elif summary.login_change < 0 %}
+                                <i class="fas fa-arrow-down"></i> {{summary.login_change|floatformat:1}}%
+                            {% else %}
+                                <i class="fas fa-minus"></i> No change
+                            {% endif %}
+                            from yesterday
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row">
+        <!-- Enrollment Chart -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Student Enrollment Overview</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="enrollmentChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course Activity Chart -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Daily Activity</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="activityChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Material Downloads Chart -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Material Downloads & Views</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="materialChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Program Distribution Chart -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Students by Program</h5>
+                </div>
+                <div class="card-body">
+                    <canvas id="programChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Activity Table -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Recent Activity</h5>
+                </div>
+                <div class="card-body">
+                    <div id="recentActivity">
+                        <p class="text-center">Loading recent activity...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+
+<script>
+// Chart configurations and data loading
+const chartOptions = {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+        legend: {
+            position: 'top',
+        }
+    }
+};
+
+// Function to load analytics data - FIXED URL
+async function loadAnalyticsData(type, days = 30) {
+    try {
+        const response = await fetch(`{% url 'adminapp:analytics_data' %}?type=${type}&days=${days}`);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return await response.json();
+    } catch (error) {
+        console.error('Error loading analytics data:', error);
+        return null;
+    }
+}
+
+// Initialize charts
+async function initializeCharts() {
+    try {
+        // Enrollment Chart
+        const enrollmentData = await loadAnalyticsData('enrollment');
+        if (enrollmentData && enrollmentData.enrollment_by_program) {
+            const ctx1 = document.getElementById('enrollmentChart').getContext('2d');
+            new Chart(ctx1, {
+                type: 'doughnut',
+                data: {
+                    labels: enrollmentData.enrollment_by_program.map(item => item.program || 'Unknown'),
+                    datasets: [{
+                        data: enrollmentData.enrollment_by_program.map(item => item.count),
+                        backgroundColor: [
+                            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'
+                        ]
+                    }]
+                },
+                options: chartOptions
+            });
+        }
+
+        // Daily Activity Chart
+        const activityData = await loadAnalyticsData('daily_activity');
+        if (activityData && Array.isArray(activityData)) {
+            const ctx2 = document.getElementById('activityChart').getContext('2d');
+            new Chart(ctx2, {
+                type: 'line',
+                data: {
+                    labels: activityData.map(item => item.date),
+                    datasets: [{
+                        label: 'Logins',
+                        data: activityData.map(item => item.logins || 0),
+                        borderColor: '#36A2EB',
+                        backgroundColor: 'rgba(184, 208, 224, 0.1)',
+                        tension: 0.1,
+                        fill: true
+                    }, {
+                        label: 'Material Views',
+                        data: activityData.map(item => item.material_views || 0),
+                        borderColor: '#4BC0C0',
+                        backgroundColor: 'rgba(75, 192, 192, 0.1)',
+                        tension: 0.1,
+                        fill: true
+                    }]
+                },
+                options: {
+                    ...chartOptions,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Material Downloads Chart
+        const materialData = await loadAnalyticsData('materials');
+        if (materialData && materialData.daily_activity) {
+            const ctx3 = document.getElementById('materialChart').getContext('2d');
+            new Chart(ctx3, {
+                type: 'bar',
+                data: {
+                    labels: materialData.daily_activity.map(item => item.date),
+                    datasets: [{
+                        label: 'Downloads',
+                        data: materialData.daily_activity.map(item => item.downloads || 0),
+                        backgroundColor: '#FF6384',
+                        borderRadius: 4
+                    }, {
+                        label: 'Views', 
+                        data: materialData.daily_activity.map(item => item.views || 0),
+                        backgroundColor: '#36A2EB',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    ...chartOptions,
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Program Distribution
+        if (enrollmentData && enrollmentData.enrollment_by_branch) {
+            const ctx4 = document.getElementById('programChart').getContext('2d');
+            new Chart(ctx4, {
+                type: 'pie',
+                data: {
+                    labels: enrollmentData.enrollment_by_branch.map(item => item.branch || 'Unknown'),
+                    datasets: [{
+                        data: enrollmentData.enrollment_by_branch.map(item => item.count),
+                        backgroundColor: [
+                            '#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF', '#FF9F40'
+                        ]
+                    }]
+                },
+                options: chartOptions
+            });
+        }
+
+        // Load recent activity
+        await loadRecentActivity();
+        
+    } catch (error) {
+        console.error('Error initializing charts:', error);
+    }
+}
+
+// Load recent activity function
+async function loadRecentActivity() {
+    try {
+        const response = await fetch(`{% url 'adminapp:real_time_analytics' %}`);
+        if (response.ok) {
+            const data = await response.json();
+            const activityContainer = document.getElementById('recentActivity');
+            
+            if (data.recent_activities && data.recent_activities.length > 0) {
+                let activityHTML = '<div class="table-responsive"><table class="table table-sm"><thead><tr><th>Student</th><th>Activity</th><th>Time</th><th>Details</th></tr></thead><tbody>';
+                
+                data.recent_activities.forEach(activity => {
+                    const date = new Date(activity.activity_date);
+                    activityHTML += `
+                        <tr>
+                            <td>${activity.student_name || 'Unknown'}</td>
+                            <td><span class="badge bg-primary">${activity.activity_type || 'Unknown'}</span></td>
+                            <td>${date.toLocaleTimeString()}</td>
+                            <td>${activity.additional_info || '-'}</td>
+                        </tr>`;
+                });
+                
+                activityHTML += '</tbody></table></div>';
+                activityContainer.innerHTML = activityHTML;
+            } else {
+                activityContainer.innerHTML = '<p class="text-muted text-center">No recent activity found.</p>';
+            }
+        }
+    } catch (error) {
+        console.error('Error loading recent activity:', error);
+        document.getElementById('recentActivity').innerHTML = '<p class="text-danger text-center">Error loading recent activity.</p>';
+    }
+}
+
+// Auto-refresh function
+function autoRefresh() {
+    // Refresh charts every 5 minutes
+    setInterval(() => {
+        initializeCharts();
+    }, 5 * 60 * 1000);
+}
+
+// Initialize everything when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    initializeCharts();
+    autoRefresh();
+});
+</script>
+{% endblock body %}

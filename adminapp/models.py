@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 import os
+from nouapp.models import Student
 
 # Create your models here.
 class MaterialCategory(models.Model):
@@ -226,3 +227,70 @@ class Admin_table(models.Model):
     
     def __str__(self):
         return self.Admin_Name
+    
+#___________For the Admin analytic dashboard___________________
+class StudentActivity(models.Model):
+    """Track student activity using rollno instead of FK"""
+    rollno = models.CharField(max_length=50)  # Use rollno like your existing system
+    student_name = models.CharField(max_length=100)
+    program = models.CharField(max_length=100)
+    branch = models.CharField(max_length=100)
+    year = models.CharField(max_length=100)
+    
+    activity_type = models.CharField(max_length=50, choices=[
+        ('login', 'Login'),
+        ('logout', 'Logout'),
+        ('material_view', 'Material View'),
+        ('material_download', 'Material Download'),
+        ('question_post', 'Question Post'),
+        ('answer_post', 'Answer Post'),
+        ('feedback_submit', 'Feedback Submit'),
+        ('complaint_submit', 'Complaint Submit'),
+    ])
+    activity_date = models.DateTimeField(auto_now_add=True)
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    additional_info = models.TextField(blank=True)  # JSON-like string for extra data
+
+    class Meta:
+        ordering = ['-activity_date']
+
+class DailyStats(models.Model):
+    """Daily aggregated statistics"""
+    date = models.DateField(unique=True)
+    
+    # Student metrics
+    total_students = models.PositiveIntegerField(default=0)
+    students_logged_in = models.PositiveIntegerField(default=0)
+    unique_active_students = models.PositiveIntegerField(default=0)
+    
+    # Activity metrics
+    total_logins = models.PositiveIntegerField(default=0)
+    material_views = models.PositiveIntegerField(default=0)
+    material_downloads = models.PositiveIntegerField(default=0)
+    questions_posted = models.PositiveIntegerField(default=0)
+    answers_posted = models.PositiveIntegerField(default=0)
+    feedback_submitted = models.PositiveIntegerField(default=0)
+    complaints_submitted = models.PositiveIntegerField(default=0)
+    
+    # Material metrics
+    materials_uploaded = models.PositiveIntegerField(default=0)
+    
+    class Meta:
+        ordering = ['-date']
+
+class ProgramStats(models.Model):
+    """Statistics by program"""
+    program = models.CharField(max_length=100)
+    total_students = models.PositiveIntegerField(default=0)
+    active_students_today = models.PositiveIntegerField(default=0)
+    materials_count = models.PositiveIntegerField(default=0)
+    last_updated = models.DateTimeField(auto_now=True)
+
+class BranchStats(models.Model):
+    """Statistics by branch"""
+    branch = models.CharField(max_length=100)
+    total_students = models.PositiveIntegerField(default=0)
+    active_students_today = models.PositiveIntegerField(default=0)
+    materials_count = models.PositiveIntegerField(default=0)
+    last_updated = models.DateTimeField(auto_now=True)
+    

@@ -188,6 +188,24 @@
             white-space: nowrap;
             width: 1px;
         }
+
+        /* Analytics menu highlight */
+        .analytics-menu-item {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            border-left: 3px solid #28a745 !important;
+            margin: 2px 0;
+        }
+
+        .analytics-menu-item .menu-title {
+            font-weight: 600 !important;
+        }
+
+        /* Menu item hover effects */
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1) !important;
+            border-radius: 5px;
+            margin: 2px 8px;
+        }
     </style>
 </head>
 <body>
@@ -250,19 +268,43 @@
                 </a>
               </div>
             </div>
-          </li>            
+          </li>
+
+          <!-- Admin Home -->
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="{% url 'adminapp:adminhome' %}">
+              <span class="menu-icon">
+                <i class="mdi mdi-home"></i>
+              </span>
+              <span class="menu-title" style="color: var(--menu-text);">Admin Home</span>
+            </a>
+          </li>
+
+          <!-- NEW: Analytics Dashboard - Featured -->
+          <li class="nav-item menu-items analytics-menu-item">
+            <a class="nav-link" href="{% url 'adminapp:admin_dashboard' %}">
+              <span class="menu-icon">
+                <i class="mdi mdi-chart-line"></i>
+              </span>
+              <span class="menu-title" style="color: var(--menu-text);">Analytics Dashboard</span>
+            </a>
+          </li>
+
+          <!-- Student Management -->            
           <li class="nav-item menu-items">
             <a class="nav-link" href="{% url 'adminapp:viewstudent' %}">
               <span class="menu-icon">
-                <i class="mdi mdi-speedometer"></i>
+                <i class="mdi mdi-account-multiple"></i>
               </span>
               <span class="menu-title" style="color: var(--menu-text);">Student Management</span>
             </a>
           </li>
+
+          <!-- Material Management -->
          <li class="nav-item menu-items">
             <a class="nav-link" href="{% url 'adminapp:studymaterial' %}">
               <span class="menu-icon">
-                <i class="mdi mdi-playlist-play"></i>
+                <i class="mdi mdi-upload"></i>
               </span>
               <span class="menu-title" style="color: var(--menu-text);">Upload Study Material</span>
             </a>
@@ -270,15 +312,19 @@
           <li class="nav-item menu-items">
             <a class="nav-link" href="{% url 'adminapp:viewmaterial' %}">
               <span class="menu-icon">
-                <i class="mdi mdi-playlist-play"></i>
+                <i class="mdi mdi-folder-open"></i>
               </span>
               <span class="menu-title" style="color: var(--menu-text);">View Study Material</span>
             </a>
-          </li> 
+          </li>
+
+         
+
+          <!-- Communications -->
           <li class="nav-item menu-items">
             <a class="nav-link" href="{% url 'adminapp:viewfeedback' %}">
               <span class="menu-icon">
-                <i class="mdi mdi-playlist-play"></i>
+                <i class="mdi mdi-thumb-up"></i>
               </span>
               <span class="menu-title" style="color: var(--menu-text);">View Feedbacks</span>
             </a>
@@ -286,7 +332,7 @@
           <li class="nav-item menu-items">
             <a class="nav-link" href="{% url 'adminapp:viewcomplain' %}">
               <span class="menu-icon">
-                <i class="mdi mdi-playlist-play"></i>
+                <i class="mdi mdi-alert-circle"></i>
               </span>
               <span class="menu-title" style="color: var(--menu-text);">View Complaints</span>
             </a>
@@ -294,19 +340,24 @@
           <li class="nav-item menu-items">
             <a class="nav-link" href="{% url 'adminapp:viewenquiry' %}">
               <span class="menu-icon">
-                <i class="mdi mdi-playlist-play"></i>
+                <i class="mdi mdi-help-circle"></i>
               </span>
               <span class="menu-title" style="color: var(--menu-text);">View Enquiries</span>
             </a>
-          </li>    
+          </li>
+
+          <!-- News Management -->
           <li class="nav-item menu-items">
             <a class="nav-link" href="{% url 'adminapp:news' %}">
               <span class="menu-icon">
-                <i class="mdi mdi-playlist-play"></i>
+                <i class="mdi mdi-newspaper"></i>
               </span>
               <span class="menu-title" style="color: var(--menu-text);">Add News & Events</span>
             </a>
-          </li>              
+          </li>
+
+          <!-- Detailed Analytics Submenu -->
+          
         </ul>
       </nav>
         
@@ -320,6 +371,17 @@
               <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize" aria-label="Toggle sidebar">
                 <span class="mdi mdi-menu"></span>
               </button>
+
+              <!-- Quick Analytics Access in Top Nav -->
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'adminapp:admin_dashboard' %}" title="Analytics Dashboard">
+                    <i class="mdi mdi-chart-line text-white"></i>
+                    <span class="d-none d-md-inline text-white">Analytics</span>
+                  </a>
+                </li>
+              </ul>
+
               <ul class="navbar-nav navbar-nav-right">
                 <li class="nav-item dropdown">
                   <a class="nav-link" id="profileDropdown" href="#" data-bs-toggle="dropdown">
@@ -340,6 +402,18 @@
                       </div>
                       <div class="preview-item-content">
                         <p class="preview-subject mb-1">Settings</p>
+                      </div>
+                    </a>
+                    <div class="dropdown-divider"></div>
+                    <!-- Quick Analytics Access in Profile Menu -->
+                    <a class="dropdown-item preview-item" href="{% url 'adminapp:admin_dashboard' %}">
+                      <div class="preview-thumbnail">
+                        <div class="preview-icon bg-dark rounded-circle">
+                          <i class="mdi mdi-chart-line text-info"></i>
+                        </div>
+                      </div>
+                      <div class="preview-item-content">
+                        <p class="preview-subject mb-1">Analytics Dashboard</p>
                       </div>
                     </a>
                     <div class="dropdown-divider"></div>
@@ -415,6 +489,19 @@
                 const isDark = document.body.classList.contains('dark-theme');
                 localStorage.setItem('theme', isDark ? 'dark' : 'light');
                 themeIcon.textContent = isDark ? '☀️' : '🌙';
+            });
+
+            // Highlight current page in menu
+            const currentPath = window.location.pathname;
+            const menuLinks = document.querySelectorAll('.nav-link');
+            
+            menuLinks.forEach(link => {
+                if (link.getAttribute('href') === currentPath) {
+                    link.closest('.nav-item').classList.add('active');
+                    link.style.backgroundColor = 'rgba(232, 213, 213, 0.2)';
+                    link.style.borderRadius = '5px';
+                    link.style.margin = '2px 8px';
+                }
             });
         });
       </script>

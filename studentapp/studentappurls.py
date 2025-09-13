@@ -26,4 +26,6 @@ urlpatterns = [
     # Study Materials - Updated
     path('viewmat/', views.viewmat, name='viewmat'),
     path('download/<int:material_id>/', views.download_material, name='download_material'),
+    
+    # path('download-material/<int:material_id>/', views.download_material, name='download_material'),
 ]

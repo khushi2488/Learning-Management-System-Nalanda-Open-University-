@@ -1,147 +1,105 @@
 {% extends "studentparent.html" %}
 {% block body %}
-<div class="row">
+<div class="container-fluid mt-4">
     <div class="row">
-        <h1 style="text-align:center; color: #06066A; font-weight: 700; margin-bottom: 10px;">
-            Study Materials
-        </h1>
-        <h4 style="text-align:center; color: #444; margin-bottom: 25px;">
-            Welcome {{stu.name}} | All Available Materials
-        </h4>
-        <!-- Materials Count -->
-        <div class="col-sm-12 mb-2">
-            <p class="text-info" style="font-weight: 500;">
-                <i class="fas fa-info-circle"></i>
-                Showing {{total_materials}} material{{total_materials|pluralize}} available for download
-            </p>
+        <div class="col-12">
+            <h2 class="text-center mb-4" style="color: rgb(6,6,106)">Study Materials</h2>
         </div>
+    </div>
 
+    {% if debug_mode %}
+    <div class="alert alert-info">
+        <strong>Debug Mode:</strong> Showing all materials as no exact match found for your program/branch/year combination.
+    </div>
+    {% endif %}
+
+    <div class="row">
         <div class="col-sm-12">
             {% if mat %}
                 <div class="table-responsive">
-                    <table class="table table-bordered  shadow-sm" style="border-radius: 10px; overflow: hidden;">
+                    <table class="table table-bordered table-striped">
                         <thead style="background-color: #06066A; color: white;">
                             <tr>
                                 <th>#</th>
                                 <th>Course</th>
-                                <th>Program</th>
-                                <th>Branch</th>
-                                <th>Year</th>
                                 <th>Title</th>
                                 <th>Description</th>
                                 <th>Category</th>
-                                <th>File Type</th>
-                                <th>File Size</th>
                                 <th>Upload Date</th>
-                                <th>Actions</th>
+                                <th>File Size</th>
+                                <th>Created By</th>
+                                <th>Version</th>
+                                <th>Download</th>
+                                <th>Preview</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for m in mat %}
-                                <tr style="color: #333;">
-                                    <td>{{forloop.counter}}</td>
-                                    <td><strong>{{m.course.title|default:"General"}}</strong></td>
-                                    <td><span class="badge badge-info">{{m.course.program|default:"N/A"}}</span></td>
-                                    <td><span class="badge badge-info">{{m.course.branch|default:"N/A"}}</span></td>
-                                    <td><span class="badge badge-success">{{m.course.year|default:"N/A"}}</span></td>
-                                    <td><strong>{{m.title}}</strong></td>
-                                    <td><small>{{m.description|truncatewords:10|default:"No description"}}</small></td>
-                                    <td>
-                                        {% if m.category %}
-                                            <span class="badge"
-                                                  style="background-color: {{m.category.color_code|default:'#6c757d'}}; color: white;">
-                                                  {{m.category.name}}
-                                            </span>
-                                        {% else %}
-                                            <span class="badge badge-secondary">General</span>
-                                        {% endif %}
-                                    </td>
-                                    <td>
-                                        <i class="{{m.get_file_icon|default:'fas fa-file'}}"></i>
-                                        {{m.file_type|upper|default:'FILE'}}
-                                    </td>
-                                    <td><small>{{m.get_formatted_size|default:'N/A'}}</small></td>
-                                    <td><small>{{m.created_at|date:"M d, Y"|default:'N/A'}}</small></td>
-                                    <td>
-                                        {% if m.file %}
-                                            <a href="{{m.file.url}}" class="btn btn-sm btn-success"
-                                               download title="Download {{m.title}}"
-                                               style="border-radius: 6px; font-weight: 500;">
-                                                <i class="fas fa-download"></i> Download
-                                            </a>
-                                        {% else %}
-                                            <button class="btn btn-sm btn-secondary" disabled
-                                                    style="border-radius: 6px;">
-                                                <i class="fas fa-times"></i> No File
-                                            </button>
-                                        {% endif %}
-                                    </td>
-                                </tr>
+                            {% for material in mat %}
+                            <tr style="color: #495057;">
+                                <td>{{ forloop.counter }}</td>
+                                <td>{{ material.course.title|default:"N/A" }}</td>
+                                <td>{{ material.title|truncatechars:30 }}</td>
+                                <td>{{ material.description|truncatechars:50|default:"-" }}</td>
+                                <td>{{ material.category.name|default:"-" }}</td>
+                                <td>{{ material.created_at|date:"M d, Y" }}</td>
+                                <td>{{ material.get_formatted_size }}</td>
+                                <td>{{ material.created_by.username|default:"Unknown" }}</td>
+                                <td>v{{ material.version }}</td>
+                                <td>
+                                    <a href="{% url 'studentapp:download_material' material.id %}" 
+                                       class="btn btn-sm btn-primary">
+                                        <i class="fas fa-download"></i> Download
+                                    </a>
+                                </td>
+                                <td>
+                                    {% if material.is_previewable %}
+                                    <a href="{{ material.file.url }}" target="_blank" class="btn btn-sm btn-info">
+                                        <i class="fas fa-eye"></i> Preview
+                                    </a>
+                                    {% else %}
+                                    <span class="text-muted">N/A</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
             {% else %}
-                <div class="alert alert-warning text-center shadow-sm" style="border-radius: 12px; padding: 25px;">
-                    <i class="fas fa-exclamation-triangle fa-3x mb-3" style="color: #ffc107;"></i>
-                    <h4 style="font-weight: 600;">No Study Materials Found</h4>
-                    {% if search_query or category_filter %}
-                        <p>No materials match your search criteria.</p>
-                        <p><strong>Search:</strong> "{{search_query}}"
-                        {% if category_filter %} | <strong>Category:</strong> "{{category_filter}}"{% endif %}</p>
-                        <a href="{% url 'studentapp:viewmat' %}" class="btn btn-primary"
-                           style="background-color: #06066A; border-radius: 8px; border: none;">
-                            <i class="fas fa-arrow-left"></i> Show All Materials
-                        </a>
-                    {% else %}
-                        <p>There are currently no materials available in the system.</p>
-                        <p>Please check back later or contact your administrator.</p>
-                    {% endif %}
+                <div class="alert alert-warning text-center">
+                    <h4><i class="fas fa-exclamation-triangle"></i> No Materials Found</h4>
+                    <p>No study materials are currently available for your program, branch, and year combination.</p>
+                    <p class="mb-0">Please contact your administrator if you believe this is an error.</p>
                 </div>
             {% endif %}
         </div>
     </div>
+
+    <!-- Statistics Section -->
+    {% if mat %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card bg-light">
+                <div class="card-body text-center">
+                    <h6>Material Statistics</h6>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <strong>{{ mat|length }}</strong><br>
+                            <small>Total Materials</small>
+                        </div>
+                        <div class="col-md-4">
+                            <strong>{{ stu.program }}</strong><br>
+                            <small>Your Program</small>
+                        </div>
+                        <div class="col-md-4">
+                            <strong>{{ stu.branch }}</strong><br>
+                            <small>Your Branch</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
-
-<!-- Inline CSS -->
-<style>
-    /* Table hover effect */
-    .table-hover tbody tr:hover {
-        background-color: rgba(222, 222, 222, 0.07);
-        transition: background 0.2s ease-in-out;
-    }
-
-    /* Badges */
-    .badge {
-        font-size: 0.8em;
-        padding: 0.35em 0.6em;
-        border-radius: 12px;
-    }
-
-    /* Buttons */
-    .btn-success {
-        background-color: #198754;
-        border: none;
-        transition: all 0.2s ease;
-    }
-    .btn-success:hover {
-        background-color: #157347;
-        transform: translateY(-2px);
-        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    }
-
-    .btn-primary {
-        transition: all 0.2s ease;
-    }
-    .btn-primary:hover {
-        background-color: #040450 !important;
-        transform: translateY(-2px);
-        box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-    }
-
-    /* Alerts */
-    .alert {
-        margin-top: 20px;
-    }
-</style>
 {% endblock body %}
