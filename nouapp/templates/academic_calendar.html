@@ -48,7 +48,8 @@
         h1 {
             font-size: 18px;
             margin: 0;
-            letter-spacing: .2px
+            letter-spacing: .2px;
+            color: #0c0c9a;
         }
 
         .controls {
@@ -93,7 +94,24 @@
             border: 1px solid var(--border);
             border-radius: 999px;
             background: #dee3e3;
-            font-size: 12px
+            font-size: 12px;
+            cursor: default;
+        }
+
+        .pill:hover{
+            color: #6363ff;
+            background-color: #0c0c9a;
+            cursor: default;
+        }
+
+        #fAssign,#fExam,#fAnn{
+            cursor: pointer;
+        }
+
+        .ghost:hover{
+            color: #6363ff;
+            background-color: #0c0c9a;
+            cursor: pointer;
         }
 
         .dot {
@@ -144,6 +162,10 @@
         .month-title {
             font-weight: 700;
             letter-spacing: .3px
+        }
+
+        .month-title:hover{
+            cursor: default;
         }
 
         .weekday-row,
