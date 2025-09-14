@@ -1,27 +1,28 @@
-{% extends "studentparent.html" %}
-{% block body %}
-    <div class="row">
-        <h1 style="text-align:center; color: rgb(6,6,106)">View Your Study Material</h1>   
-        <div class="col-sm-12">
-              <table class="table table-bordered" style="color:rgb(6,6,106)">
-                <tr>
-                    <th>#</th>
-                    <th>Subject</th>
-                    <th>File Name</th>
-                    <th>Download</th>
-                </tr>
+{% extends "studentparent.html" %} {% block body %}
+<div class="row">
+  <h1 style="text-align: center; color: rgb(6, 6, 106)">
+    View Your Study Material
+  </h1>
+  <div class="col-sm-12">
+    <table class="table table-bordered" style="color: rgb(6, 6, 106)">
+      <tr>
+        <th>#</th>
+        <th>Subject</th>
+        <th>File Name</th>
+        <th>Download</th>
+      </tr>
 
-                {% for m in mat %}
-                <tr style="color: steelblue;">
-                    <td>{{forloop.counter}}</td>
-                    <td>{{m.subject}}</td>
-                    <td>{{m.file_name}}</td>
-                    <td>
-                        <a download="" href="{{m.my_file.url}}">{{m.file_name}}</a>
-                    </td>
-                </tr>
-                {% endfor %}
-              </table>
-        </div>
-    </div>
+      {% for m in mat %}
+      <tr style="color: steelblue">
+        <td>{{forloop.counter}}</td>
+        <td>{{m.subject}}</td>
+        <td>{{m.file_name}}</td>
+        <td>
+          <a download="" href="{{m.my_file.url}}">{{m.file_name}}</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+  </div>
+</div>
 {% endblock body %}

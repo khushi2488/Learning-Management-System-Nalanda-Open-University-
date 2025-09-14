@@ -1,35 +1,36 @@
-{% extends "adminparent.html" %}
-{% block body %}
-    <div class="row">
-        <div class="row">
-            <h1 style="text-align:center; color: rgb(6,6,106)">View All Study Material</h1>
-            <div class="col-sm-12">
-                   <table class="table table-bordered text-light">
-                    <tr style="color: rgb(6,6,106)">
-                        <th>#</th>
-                        <th>Program</th>
-                        <th>Branch</th>
-                        <th>Year</th>
-                        <th>Subject</th>
-                        <th>File Name</th>
-                        <th>Download</th>
-                    </tr>
-    
-                    {% for m in mat %}
-                        <tr style="color: steelblue;">
-                            <td>{{forloop.counter}}</td>
-                            <td>{{m.program}}</td>
-                            <td>{{m.branch}}</td>
-                            <td>{{m.year}}</td>
-                            <td>{{m.subject}}</td>
-                            <td>{{m.file_name}}</td>
-                            <td>
-                                <a  href="{{m.my_file.url}}">{{m.my_file}}</a>
-                            </td>
-                        </tr>
-                    {% endfor %}
-                   </table>
-            </div>
-        </div>
+{% extends "adminparent.html" %} {% block body %}
+<div class="row">
+  <div class="col-sm-12">
+    <h1 style="text-align: center; color: rgb(6, 6, 106)">
+      View All Study Material
+    </h1>
+    <div class="table-responsive">
+      <table class="table table-bordered text-light align-middle">
+        <tr style="color: rgb(6, 6, 106)">
+          <th>#</th>
+          <th>Program</th>
+          <th>Branch</th>
+          <th>Year</th>
+          <th>Subject</th>
+          <th>File Name</th>
+          <th>Download</th>
+        </tr>
+
+        {% for m in mat %}
+        <tr style="color: steelblue">
+          <td>{{forloop.counter}}</td>
+          <td>{{m.program}}</td>
+          <td>{{m.branch}}</td>
+          <td>{{m.year}}</td>
+          <td>{{m.subject}}</td>
+          <td>{{m.file_name}}</td>
+          <td>
+            <a href="{{m.my_file.url}}">{{m.my_file}}</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
     </div>
+  </div>
+</div>
 {% endblock body %}
