@@ -1,0 +1,103 @@
+<!-- templates/simple_student_news.html -->
+{% extends "studentparent.html" %}
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center mb-4" style="color: #0d47a1;">News & Announcements</h1>
+            <p class="text-center welcome-text mb-4">
+                Welcome {{stu.sname}} ({{stu.program}} - {{stu.branch}})
+            </p>
+            
+            <!-- News Items -->
+            {% if news_list %}
+                {% for news in news_list %}
+                <div class="card news-card mb-3 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="card-title mb-0 text-primary">Announcement #{{news.nid}}</h5>
+                            <small class="news-date">{{news.newsdate}}</small>
+                        </div>
+                        
+                        <div class="news-content">
+                            {{news.newstext|linebreaks}}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="card empty-card shadow-sm">
+                    <div class="card-body text-center py-5">
+                        <i class="fas fa-newspaper fa-3x text-secondary mb-3"></i>
+                        <h4 class="no-news">No announcements available</h4>
+                        <p class="no-news-sub">Check back later for new announcements.</p>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<style>
+/* === Global Theme === */
+body {
+    background-color: #f4f7fb; /* soft background */
+}
+
+/* Welcome text */
+.welcome-text {
+    color: #555;
+    font-size: 1.1rem;
+}
+
+/* === News Cards === */
+.news-card {
+    background: #ffffff;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    transition: transform 0.2s ease-in-out;
+}
+.news-card:hover {
+    transform: translateY(-3px);
+}
+
+/* News title */
+.news-card .card-title {
+    color: #0d47a1;
+    font-weight: 600;
+}
+
+/* Date text */
+.news-date {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+/* News content */
+.news-content {
+    color: #333;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+/* === Empty State === */
+.empty-card {
+    background: #fdfdfd;
+    border: 1px dashed #bbb;
+}
+.no-news {
+    color: #0d47a1;
+    font-weight: 600;
+}
+.no-news-sub {
+    color: #666;
+}
+
+/* === Responsive === */
+@media (max-width: 768px) {
+    .news-card .card-title {
+        font-size: 1.1rem;
+    }
+}
+</style>
+{% endblock body %}

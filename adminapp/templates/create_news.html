@@ -1,0 +1,166 @@
+{% extends "adminparent.html" %}
+{% block body %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0"><i class="fas fa-plus-circle"></i> Create News/Announcement</h3>
+                    <a href="{% url 'adminapp:manage_news' %}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
+
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- Title & Category -->
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <label for="title" class="form-label fw-bold">Title *</label>
+                                <input type="text" class="form-control" id="title" name="title" required maxlength="200">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="category" class="form-label fw-bold">Category</label>
+                                <select class="form-control" id="category" name="category">
+                                    <option value="">Select Category</option>
+                                    {% for category in categories %}
+                                    <option value="{{ category.id }}">{{ category.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="mb-3">
+                            <label for="newstext" class="form-label fw-bold">Content *</label>
+                            <textarea class="form-control" id="newstext" name="newstext" rows="6" required></textarea>
+                        </div>
+
+                        <!-- Attachment -->
+                        <div class="mb-3">
+                            <label for="attachment" class="form-label fw-bold">Attachment (Optional)</label>
+                            <input type="file" class="form-control" id="attachment" name="attachment">
+                            <small class="form-text text-muted">Supported formats: PDF, DOC, DOCX, JPG, PNG, etc.</small>
+                        </div>
+
+                        <!-- Priority, Publish & Expiry -->
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="priority" class="form-label fw-bold">Priority</label>
+                                <select class="form-control" id="priority" name="priority">
+                                    <option value="low">Low</option>
+                                    <option value="normal" selected>Normal</option>
+                                    <option value="high">High</option>
+                                    <option value="urgent">Urgent</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="publish_date" class="form-label fw-bold">Publish Date & Time</label>
+                                <input type="datetime-local" class="form-control" id="publish_date" name="publish_date">
+                                <small class="text-muted">Leave empty to publish immediately</small>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="expiry_date" class="form-label fw-bold">Expiry Date & Time</label>
+                                <input type="datetime-local" class="form-control" id="expiry_date" name="expiry_date">
+                                <small class="text-muted">Leave empty for no expiry</small>
+                            </div>
+                        </div>
+
+                        <!-- Target Audience -->
+                        <div class="mb-3">
+                            <label for="target_audience" class="form-label fw-bold">Target Audience</label>
+                            <select class="form-control" id="target_audience" name="target_audience" onchange="toggleTargeting()">
+                                <option value="all">Everyone</option>
+                                <option value="students">All Students</option>
+                                <option value="specific">Specific Groups</option>
+                            </select>
+                        </div>
+
+                        <!-- Specific Target Fields -->
+                        <div id="specific-targeting" class="p-3 rounded bg-light" style="display: none;">
+                            <label class="fw-bold">Specific Targeting</label>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <label for="target_programs" class="form-label">Target Programs</label>
+                                    <input type="text" class="form-control" id="target_programs" name="target_programs"
+                                           placeholder="e.g., BCA, MCA (comma-separated)">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="target_branches" class="form-label">Target Branches</label>
+                                    <input type="text" class="form-control" id="target_branches" name="target_branches"
+                                           placeholder="e.g., Computer Science, IT (comma-separated)">
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="target_years" class="form-label">Target Years</label>
+                                    <input type="text" class="form-control" id="target_years" name="target_years"
+                                           placeholder="e.g., 1st Year, 2nd Year (comma-separated)">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pin Option -->
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="is_pinned" name="is_pinned">
+                            <label class="form-check-label" for="is_pinned">Pin this announcement</label>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="fas fa-save"></i> Create News
+                            </button>
+                            <a href="{% url 'adminapp:manage_news' %}" class="btn btn-secondary px-4 mx-2">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleTargeting() {
+    const audience = document.getElementById('target_audience').value;
+    const specificDiv = document.getElementById('specific-targeting');
+    specificDiv.style.display = (audience === 'specific') ? 'block' : 'none';
+}
+
+// Default publish date
+document.addEventListener('DOMContentLoaded', function() {
+    const now = new Date();
+    now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+    document.getElementById('publish_date').value = now.toISOString().slice(0, 16);
+});
+</script>
+
+<!-- Custom Styles -->
+<style>
+.card {
+    background-color: #b1b2ddff !important;
+    color: #171718ff !important;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+.form-control {
+    background-color: #ffffff !important;
+    color: #1e293b !important;
+    border: 1px solid #d1d5db !important;
+}
+
+.form-control:focus {
+    background-color: #ffffff !important;
+    color: #1e293b !important;
+    border-color: #2563eb !important;
+}
+
+#specific-targeting {
+    background-color: #f8f9fa !important;
+    border: 1px solid #dee2e6;
+}
+</style>
+{% endblock %}

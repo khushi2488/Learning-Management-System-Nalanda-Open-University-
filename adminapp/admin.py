@@ -1,12 +1,14 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Program, Branch, Year, Material, News, Admin_table, MaterialCategory, MaterialAccess , Course
+from .models import Program, Branch, Year, Material, News, Admin_table, MaterialCategory, MaterialAccess , Course , NewsCategory ,NewsAnnouncement
 
 # Register simple models directly
 admin.site.register(Program)
 admin.site.register(Branch)
 admin.site.register(Year)
 admin.site.register(News)
+admin.site.register(NewsCategory)
+admin.site.register(NewsAnnouncement)
 admin.site.register(Admin_table)
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
