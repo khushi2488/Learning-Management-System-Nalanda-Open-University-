@@ -1,0 +1,825 @@
+{% extends "adminparent.html" %}
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1>Manage News & Announcements</h1>
+                <div>
+                    <a href="{% url 'adminapp:manage_categories' %}" class="btn btn-info mr-2">
+                        <i class="fas fa-tags"></i> Categories
+                    </a>
+                    <a href="{% url 'adminapp:create_news' %}" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Create New
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Statistics Cards - FIXED -->
+            <div class="row mb-4">
+                <div class="col-md-3">
+                    <div class="card bg-primary text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Total News</h5>
+                                    <h3>{{ news_stats.total_count|default:0 }}</h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-newspaper fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-success text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Active</h5>
+                                    <h3>{{ news_stats.active_count|default:0 }}</h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-check-circle fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-info text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Scheduled</h5>
+                                    <h3>{{ news_stats.scheduled_count|default:0 }}</h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-clock fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card bg-danger text-white">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Expired</h5>
+                                    <h3>{{ news_stats.expired_count|default:0 }}</h3>
+                                </div>
+                                <div class="align-self-center">
+                                    <i class="fas fa-exclamation-triangle fa-2x"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Filters -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form method="GET" class="row">
+                        <div class="col-md-3">
+                            <select name="category" class="form-control">
+                                <option value="">All Categories</option>
+                                {% for cat in categories %}
+                                    <option value="{{cat.id}}" {% if current_category == cat.id|stringformat:"s" %}selected{% endif %}>
+                                        {{cat.name}}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select name="status" class="form-control">
+                                <option value="all" {% if current_status == "all" %}selected{% endif %}>All Status</option>
+                                <option value="active" {% if current_status == "active" %}selected{% endif %}>Active</option>
+                                <option value="scheduled" {% if current_status == "scheduled" %}selected{% endif %}>Scheduled</option>
+                                <option value="expired" {% if current_status == "expired" %}selected{% endif %}>Expired</option>
+                                <option value="inactive" {% if current_status == "inactive" %}selected{% endif %}>Inactive</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select name="priority" class="form-control">
+                                <option value="">All Priorities</option>
+                                <option value="urgent" {% if current_priority == "urgent" %}selected{% endif %}>Urgent</option>
+                                <option value="high" {% if current_priority == "high" %}selected{% endif %}>High</option>
+                                <option value="normal" {% if current_priority == "normal" %}selected{% endif %}>Normal</option>
+                                <option value="low" {% if current_priority == "low" %}selected{% endif %}>Low</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-secondary mr-2">Filter</button>
+                            <a href="{% url 'adminapp:manage_news' %}" class="btn btn-outline-secondary">Reset</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Search Bar -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form method="GET" class="form-inline">
+                        {% for key, value in request.GET.items %}
+                            {% if key != 'search' and key != 'page' %}
+                                <input type="hidden" name="{{ key }}" value="{{ value }}">
+                            {% endif %}
+                        {% endfor %}
+                        <div class="form-group mr-3">
+                            <input type="text" name="search" class="form-control" placeholder="Search news..." value="{{ search_query }}">
+                        </div>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-search"></i> Search
+                        </button>
+                        {% if search_query %}
+                        <a href="?{% for key, value in request.GET.items %}{% if key != 'search' and key != 'page' %}{{ key }}={{ value }}&{% endif %}{% endfor %}" class="btn btn-outline-secondary ml-2">
+                            <i class="fas fa-times"></i> Clear Search
+                        </a>
+                        {% endif %}
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Bulk Actions -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <form id="bulkActionForm" method="POST" action="{% url 'adminapp:bulk_news_action' %}">
+                        {% csrf_token %}
+                        <div class="row align-items-center">
+                            <div class="col-md-4">
+                                <div class="form-check">
+                                    <input type="checkbox" class="form-check-input" id="selectAll">
+                                    <label class="form-check-label" for="selectAll">
+                                        Select All News Items
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <select name="bulk_action" class="form-control">
+                                    <option value="">Select Action</option>
+                                    <option value="activate">Activate Selected</option>
+                                    <option value="deactivate">Deactivate Selected</option>
+                                    <option value="delete">Delete Selected</option>
+                                    <option value="pin">Pin Selected</option>
+                                    <option value="unpin">Unpin Selected</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <button type="submit" class="btn btn-warning" onclick="return confirmBulkAction()">
+                                    Apply Action
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- News List -->
+            <div class="card">
+                <div class="card-body">
+                    {% if news_list %}
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th width="50px">
+                                            <input type="checkbox" id="masterCheckbox">
+                                        </th>
+                                        <th>Title</th>
+                                        <th>Category</th>
+                                        <th>Priority</th>
+                                        <th>Audience</th>
+                                        <th>Status</th>
+                                        <th>Publish Date</th>
+                                        <th>Expires</th>
+                                        {% comment %} <th>Views</th> {% endcomment %}
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for news in news_list %}
+                                    <tr>
+                                        <td>
+                                            <input type="checkbox" class="news-checkbox" name="selected_news" value="{{ news.nid }}">
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center">
+                                                {% if news.is_pinned %}<i class="fas fa-thumbtack text-primary mr-1" title="Pinned"></i>{% endif %}
+                                                <div>
+                                                    <strong>{{ news.title|truncatechars:50 }}</strong>
+                                                    <br>
+                                                    <small class="text-muted">{{ news.newstext|truncatechars:80 }}</small>
+                                                    {% if news.attachment %}<br><i class="fas fa-paperclip text-muted" title="Has Attachment"></i> <small class="text-muted">Attachment</small>{% endif %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            {% if news.category %}
+                                                <span class="badge" style="background-color: {{news.category.color_code}}; color: white;">
+                                                    {% if news.category.icon %}<i class="{{news.category.icon}}"></i>{% endif %}
+                                                    {{news.category.name}}
+                                                </span>
+                                            {% else %}
+                                                <span class="badge badge-secondary">Uncategorized</span>
+                                            {% endif %}
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-{% if news.priority == 'urgent' %}danger{% elif news.priority == 'high' %}warning{% elif news.priority == 'normal' %}info{% else %}secondary{% endif %}">
+                                                {% if news.priority == 'urgent' %}<i class="fas fa-exclamation-triangle"></i>{% elif news.priority == 'high' %}<i class="fas fa-arrow-up"></i>{% elif news.priority == 'low' %}<i class="fas fa-arrow-down"></i>{% else %}<i class="fas fa-minus"></i>{% endif %}
+                                                {{news.get_priority_display}}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <small>{{ news.get_target_audience_display|truncatechars:40 }}</small>
+                                        </td>
+                                        <!-- UPDATED STATUS COLUMN -->
+                                        <td>
+                                            <span class="badge {{ news.get_status_class }}">
+                                                <i class="fas fa-{% if news.get_current_status == 'active' %}check-circle{% elif news.get_current_status == 'scheduled' %}clock{% elif news.get_current_status == 'expired' %}times-circle{% else %}pause-circle{% endif %}"></i> 
+                                                {{ news.get_status_display }}
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <small>{{news.publish_date|date:"M d, Y"}}</small><br>
+                                            <small class="text-muted">{{news.publish_date|time:"H:i"}}</small>
+                                        </td>
+                                        <td>
+                                            {% if news.expiry_date %}
+                                                <small>{{news.expiry_date|date:"M d, Y"}}</small><br>
+                                                <small class="text-muted">{{news.expiry_date|time:"H:i"}}</small>
+                                                {% if news.get_current_status == 'expired' %}
+                                                    <br><small class="text-danger"><i class="fas fa-exclamation-triangle"></i> Expired</small>
+                                                {% endif %}
+                                            {% else %}
+                                                <em class="text-muted">Never</em>
+                                            {% endif %}
+                                        </td>
+                                        {% comment %} <td>
+                                            <span class="badge badge-light">{{ news.view_count|default:0 }}</span>
+                                        </td> {% endcomment %}
+                                        <td>
+                                            <div class="btn-group-vertical btn-group-sm">
+                                                <a href="{% url 'adminapp:edit_news' news.nid %}" class="btn btn-outline-primary btn-sm mb-1" title="Edit">
+                                                    <i class="fas fa-edit"></i> Edit
+                                                </a>
+                                                
+                                                <button type="button" class="btn btn-outline-info btn-sm mb-1" 
+                                                        onclick="previewNews({{ news.nid }})" title="Preview">
+                                                    <i class="fas fa-eye"></i> Preview
+                                                </button>
+                                                
+                                                <a href="{% url 'adminapp:toggle_news_status' news.nid %}" class="btn btn-outline-secondary btn-sm mb-1" title="Toggle Status">
+                                                    <i class="fas fa-{% if news.is_active %}pause{% else %}play{% endif %}"></i> 
+                                                    {% if news.is_active %}Deactivate{% else %}Activate{% endif %}
+                                                </a>
+                                                
+                                                <a href="{% url 'adminapp:pin_news' news.nid %}" class="btn btn-outline-info btn-sm mb-1" title="Pin/Unpin">
+                                                    <i class="fas fa-thumbtack"></i> 
+                                                    {% if news.is_pinned %}Unpin{% else %}Pin{% endif %}
+                                                </a>
+                                                
+                                                {% if news.attachment %}
+                                                <a href="{{ news.attachment.url }}" class="btn btn-outline-success btn-sm mb-1" target="_blank" title="View Attachment">
+                                                    <i class="fas fa-download"></i> File
+                                                </a>
+                                                {% endif %}
+                                                
+                                                <a href="{% url 'adminapp:duplicate_news' news.nid %}" class="btn btn-outline-warning btn-sm mb-1" title="Duplicate">
+                                                    <i class="fas fa-copy"></i> Copy
+                                                </a>
+                                                
+                                                <a href="{% url 'adminapp:delete_news' news.nid %}" class="btn btn-outline-danger btn-sm" title="Delete"
+                                                   onclick="return confirm('Are you sure you want to delete this news item? This action cannot be undone.')">
+                                                    <i class="fas fa-trash"></i> Delete
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Pagination -->
+                        {% if is_paginated %}
+                        <nav aria-label="News pagination">
+                            <ul class="pagination justify-content-center">
+                                {% if page_obj.has_previous %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page=1{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.priority %}&priority={{ request.GET.priority }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}">First</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.previous_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.priority %}&priority={{ request.GET.priority }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}">Previous</a>
+                                    </li>
+                                {% endif %}
+                                
+                                <li class="page-item active">
+                                    <span class="page-link">
+                                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+                                    </span>
+                                </li>
+                                
+                                {% if page_obj.has_next %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.next_page_number }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.priority %}&priority={{ request.GET.priority }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}">Next</a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}{% if request.GET.category %}&category={{ request.GET.category }}{% endif %}{% if request.GET.status %}&status={{ request.GET.status }}{% endif %}{% if request.GET.priority %}&priority={{ request.GET.priority }}{% endif %}{% if search_query %}&search={{ search_query }}{% endif %}">Last</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                        {% endif %}
+                        
+                    {% else %}
+                        <div class="text-center py-5">
+                            <i class="fas fa-newspaper fa-3x text-muted mb-3"></i>
+                            <h4 class="text-muted">No news items found</h4>
+                            <p class="text-muted">{% if request.GET %}Try adjusting your filters or{% endif %} create your first news item to get started.</p>
+                            <a href="{% url 'adminapp:create_news' %}" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> Create News Item
+                            </a>
+                            {% if request.GET %}
+                            <a href="{% url 'adminapp:manage_news' %}" class="btn btn-outline-secondary ml-2">
+                                <i class="fas fa-times"></i> Clear Filters
+                            </a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- DARK THEME PREVIEW MODAL -->
+<div class="modal fade" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="previewModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg preview-modal-dark" role="document">
+        <div class="modal-content dark-modal-content">
+            <div class="modal-header dark-modal-header">
+                <h5 class="modal-title text-white" id="previewModalLabel">
+                    <i class="fas fa-newspaper mr-2"></i>News Preview
+                </h5>
+                <button type="button" class="close text-white dark-close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body dark-modal-body" id="previewContent">
+                <!-- Content will be loaded here -->
+                <div class="text-center py-4">
+                    <div class="spinner-border text-light" role="status">
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <p class="text-light mt-2">Loading preview...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// Master checkbox functionality
+document.getElementById('masterCheckbox').addEventListener('change', function() {
+    const checkboxes = document.getElementsByClassName('news-checkbox');
+    for (let checkbox of checkboxes) {
+        checkbox.checked = this.checked;
+    }
+});
+
+// Select all functionality
+document.getElementById('selectAll').addEventListener('change', function() {
+    const checkboxes = document.getElementsByClassName('news-checkbox');
+    for (let checkbox of checkboxes) {
+        checkbox.checked = this.checked;
+    }
+    document.getElementById('masterCheckbox').checked = this.checked;
+});
+
+// Bulk action confirmation
+function confirmBulkAction() {
+    const selected = document.querySelectorAll('input[name="selected_news"]:checked');
+    const action = document.querySelector('select[name="bulk_action"]').value;
+    
+    if (selected.length === 0) {
+        alert('Please select at least one news item.');
+        return false;
+    }
+    
+    if (!action) {
+        alert('Please select an action.');
+        return false;
+    }
+    
+    const actionText = action.charAt(0).toUpperCase() + action.slice(1);
+    return confirm(`Are you sure you want to ${actionText.toLowerCase()} ${selected.length} selected news item(s)?`);
+}
+
+// Enhanced AJAX preview with dark theme content formatting
+function previewNews(newsId) {
+    // Show loading state
+    document.getElementById('previewContent').innerHTML = `
+        <div class="text-center py-4">
+            <div class="spinner-border text-light" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <p class="text-light mt-2">Loading preview...</p>
+        </div>
+    `;
+    $('#previewModal').modal('show');
+    
+    fetch(`/adminapp/news/${newsId}/preview/`)
+        .then(response => response.text())
+        .then(html => {
+            // Wrap the content in dark theme styling
+            const darkFormattedHtml = `<div class="dark-preview-wrapper">${html}</div>`;
+            document.getElementById('previewContent').innerHTML = darkFormattedHtml;
+        })
+        .catch(error => {
+            console.error('Error loading preview:', error);
+            document.getElementById('previewContent').innerHTML = `
+                <div class="alert alert-danger dark-alert" role="alert">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    <strong>Error:</strong> Could not load preview. Please try again.
+                </div>
+            `;
+        });
+}
+</script>
+
+<!-- UPDATED STYLES WITH DARK PREVIEW THEME -->
+<style>
+:root {
+  --primary-color: #1e3a8a;   /* Indigo */
+  --secondary-color: #2563eb; /* Bright Blue */
+  --text-dark: #1e293b;       /* Slate */
+  --success-color: #10b981;   /* Green */
+  --danger-color: #ef4444;    /* Red */
+  --warning-color: #f59e0b;   /* Amber */
+  --info-color: #06b6d4;      /* Cyan */
+  
+  /* Dark theme colors */
+  --dark-bg: #0f0f0f;         /* Very dark background */
+  --dark-surface: #1a1a1a;    /* Dark surface */
+  --dark-border: #333333;     /* Dark border */
+  --dark-text: #e5e7eb;       /* Light text */
+  --dark-muted: #9ca3af;      /* Muted text */
+  --dark-accent: #3b82f6;     /* Blue accent */
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--primary-color) !important;
+}
+
+.table thead th {
+  color: var(--primary-color) !important;
+  font-weight: 600;
+}
+
+.card-title {
+  color: var(--text-dark) !important;
+}
+
+.btn-primary {
+  background-color: var(--secondary-color) !important;
+  border-color: var(--secondary-color) !important;
+}
+
+.btn-info {
+  background-color: var(--primary-color) !important;
+  border-color: var(--primary-color) !important;
+}
+
+.text-primary {
+  color: var(--primary-color) !important;
+}
+
+.card, 
+.card-body {
+    background-color: #b1b2ddff !important;
+    color: #171718ff !important;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(153, 138, 138, 0.05);
+}
+
+.table thead {
+    background-color: #f1f5f9 !important;
+}
+
+.table thead th {
+    color: #1e3a8a !important;
+    font-weight: 600;
+}
+
+.form-control, 
+select, 
+input, 
+textarea {
+    background-color: #ffffff !important;
+    color: #1e293b !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 6px !important;
+    padding: 0.5rem 0.75rem;
+}
+
+.form-control::placeholder {
+    color: #6b7280 !important;
+}
+
+.form-control:focus {
+    background-color: #ffffff !important;
+    color: #1e293b !important;
+    border-color: #2563eb !important;
+    box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.25) !important;
+}
+
+/* ===== DARK PREVIEW MODAL STYLES ===== */
+.preview-modal-dark {
+    border: none !important;
+    border-radius: 15px !important;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6) !important;
+    overflow: hidden !important;
+}
+
+.dark-modal-content {
+    background-color: var(--dark-bg) !important;
+    border: 1px solid var(--dark-border) !important;
+    border-radius: 15px !important;
+}
+
+.dark-modal-header {
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #2d3748 100%) !important;
+    border-bottom: 2px solid var(--dark-accent) !important;
+    padding: 1.5rem 2rem !important;
+    border-radius: 15px 15px 0 0 !important;
+}
+
+.dark-modal-header .modal-title {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 1.4rem !important;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark-close {
+    color: #ffffff !important;
+    opacity: 0.9 !important;
+    font-size: 1.8rem !important;
+    text-shadow: none !important;
+    transition: all 0.3s ease !important;
+}
+
+.dark-close:hover {
+    color: var(--dark-accent) !important;
+    opacity: 1 !important;
+    transform: scale(1.1) !important;
+}
+
+.dark-modal-body {
+    background-color: var(--dark-bg) !important;
+    color: var(--dark-text) !important;
+    padding: 2rem !important;
+    max-height: 75vh !important;
+    overflow-y: auto !important;
+    border-radius: 0 0 15px 15px !important;
+}
+
+/* Dark Preview Content Wrapper */
+.dark-preview-wrapper {
+    background: linear-gradient(135deg, var(--dark-surface) 0%, #262626 100%) !important;
+    border-radius: 12px !important;
+    padding: 2rem !important;
+    border: 1px solid var(--dark-border) !important;
+    box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Override all preview content styles for dark theme */
+.dark-preview-wrapper .news-preview {
+    background: transparent !important;
+    color: var(--dark-text) !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+
+.dark-preview-wrapper h4 {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    margin-bottom: 1.5rem !important;
+    border-bottom: 3px solid var(--dark-accent) !important;
+    padding-bottom: 0.75rem !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dark-preview-wrapper .badge {
+    font-size: 0.9rem !important;
+    padding: 0.6rem 1rem !important;
+    border-radius: 20px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.5px !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark-preview-wrapper .badge-primary {
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%) !important;
+    border: 1px solid #1d4ed8 !important;
+}
+
+.dark-preview-wrapper .badge-warning {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+    border: 1px solid #b45309 !important;
+    color: #000 !important;
+}
+
+.dark-preview-wrapper .badge-danger {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%) !important;
+    border: 1px solid #b91c1c !important;
+}
+
+.dark-preview-wrapper .badge-info {
+    background: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%) !important;
+    border: 1px solid #0e7490 !important;
+}
+
+.dark-preview-wrapper .badge-secondary {
+    background: linear-gradient(135deg, #6b7280 0%, #4b5563 100%) !important;
+    border: 1px solid #374151 !important;
+}
+
+.dark-preview-wrapper .bg-light {
+    background: linear-gradient(135deg, #2d3748 0%, #1a202c 100%) !important;
+    border-left: 4px solid var(--dark-accent) !important;
+    border-radius: 8px !important;
+    color: var(--dark-text) !important;
+    padding: 1.5rem !important;
+    margin: 1rem 0 !important;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+.dark-preview-wrapper strong {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+}
+
+.dark-preview-wrapper .text-muted {
+    color: var(--dark-muted) !important;
+}
+
+.dark-preview-wrapper .row {
+    background: linear-gradient(135deg, #1f2937 0%, #111827 100%) !important;
+    border-radius: 10px !important;
+    padding: 1.5rem !important;
+    margin: 1.5rem 0 !important;
+    border: 1px solid var(--dark-border) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.dark-preview-wrapper a {
+    color: var(--dark-accent) !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+}
+
+.dark-preview-wrapper a:hover {
+    color: #60a5fa !important;
+    text-decoration: underline !important;
+    text-shadow: 0 0 8px rgba(96, 165, 250, 0.5) !important;
+}
+
+/* Loading and Error States for Dark Theme */
+.dark-modal-body .spinner-border {
+    border-color: var(--dark-accent) !important;
+    border-right-color: transparent !important;
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+}
+
+.dark-alert {
+    background: linear-gradient(135deg, #7f1d1d 0%, #991b1b 100%) !important;
+    border: 1px solid #dc2626 !important;
+    color: #fef2f2 !important;
+    border-radius: 10px !important;
+    padding: 1.5rem !important;
+    box-shadow: 0 4px 12px rgba(127, 29, 29, 0.3) !important;
+}
+
+/* Enhanced scrollbar for dark theme */
+.dark-modal-body::-webkit-scrollbar {
+    width: 10px;
+}
+
+.dark-modal-body::-webkit-scrollbar-track {
+    background: var(--dark-surface);
+    border-radius: 10px;
+}
+
+.dark-modal-body::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, var(--dark-accent) 0%, #1d4ed8 100%);
+    border-radius: 10px;
+    border: 2px solid var(--dark-surface);
+}
+
+.dark-modal-body::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #60a5fa 0%, var(--dark-accent) 100%);
+}
+
+/* Additional dark theme enhancements */
+.dark-preview-wrapper div,
+.dark-preview-wrapper span,
+.dark-preview-wrapper p {
+    color: var(--dark-text) !important;
+}
+
+.dark-preview-wrapper small {
+    color: var(--dark-muted) !important;
+    font-size: 0.85rem !important;
+}
+
+.dark-preview-wrapper .mb-3,
+.dark-preview-wrapper .mt-3 {
+    border-radius: 8px !important;
+}
+
+/* Responsive adjustments for dark modal */
+@media (max-width: 768px) {
+    .preview-modal-dark {
+        margin: 0.5rem !important;
+    }
+    
+    .dark-modal-header,
+    .dark-modal-body {
+        padding: 1.5rem !important;
+    }
+    
+    .dark-preview-wrapper {
+        padding: 1.5rem !important;
+    }
+    
+    .dark-modal-header .modal-title {
+        font-size: 1.2rem !important;
+    }
+}
+
+/* Animation effects for modal */
+.modal.fade .preview-modal-dark {
+    transform: translate(0, -50px) scale(0.95) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.modal.show .preview-modal-dark {
+    transform: translate(0, 0) scale(1) !important;
+}
+
+/* Backdrop for dark modal */
+.modal-backdrop.show {
+    opacity: 0.8 !important;
+    background-color: #000000 !important;
+}
+
+/* Focus states for dark theme */
+.dark-modal-content *:focus {
+    outline: 2px solid var(--dark-accent) !important;
+    outline-offset: 2px !important;
+    border-radius: 4px !important;
+}
+
+/* News content text styling in dark theme */
+.dark-preview-wrapper .news-content {
+    line-height: 1.7 !important;
+    font-size: 1.1rem !important;
+    color: var(--dark-text) !important;
+    text-align: justify !important;
+}
+
+/* Category and priority badges special styling */
+.dark-preview-wrapper .badge[style*="background-color"] {
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4) !important;
+}
+
+/* Enhanced button styling for dark theme */
+.dark-preview-wrapper .btn {
+    background: linear-gradient(135deg, var(--dark-accent) 0%, #1d4ed8 100%) !important;
+    border: 1px solid var(--dark-accent) !important;
+    color: #ffffff !important;
+    padding: 0.75rem 1.5rem !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+    transition: all 0.3s ease !important;
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3) !important;
+}
+
+.dark-preview-wrapper .btn:hover {
+    background: linear-gradient(135deg, #60a5fa 0%, var(--dark-accent) 100%) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 16px rgba(96, 165, 250, 0.4) !important;
+}
+</style>
+
+{% endblock %}
