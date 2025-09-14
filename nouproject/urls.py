@@ -27,4 +27,6 @@ urlpatterns = [
     path('set-theme/', set_theme, name='set-theme'),
 ]
 
+handler404 = 'nouapp.views.custom_404_view'
+
 urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
