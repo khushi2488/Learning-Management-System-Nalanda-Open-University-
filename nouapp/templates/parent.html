@@ -1,22 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
-    {% load static %}
+{% load static %}
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NOU e-Gyan PORTAL</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
     <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js" integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+        integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
     {% load static %}
-   <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
-   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <style>
     /* Root Variables for Consistent Theming */
@@ -27,14 +34,14 @@
         --text-white: #ffffff;
         --bg-light: aliceblue;
         --transition: all 0.3s ease;
-        --shadow: 0 2px 15px rgba(0,0,0,0.1);
-        --shadow-hover: 0 5px 25px rgba(0,0,0,0.15);
+        --shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+        --shadow-hover: 0 5px 25px rgba(0, 0, 0, 0.15);
         --text-color: #212529;
         --bg-color: #ffffff;
         --nav-bg: aliceblue;
-        --icon-color: rgb(6,6,106);
-        --heading-color: rgb(6,6,106);
-        --underline-color: rgb(6,6,106);
+        --icon-color: rgb(6, 6, 106);
+        --heading-color: rgb(6, 6, 106);
+        --underline-color: rgb(6, 6, 106);
         --card-bg: white;
         --card-text: #212529;
         --footer-bg: linear-gradient(135deg, var(--bg-light) 0%, #f8f9fa 100%);
@@ -149,7 +156,7 @@
         gap: 0;
     }
 
-    .navbar-nav > .nav-item { 
+    .navbar-nav>.nav-item {
         margin: 0 12px;
     }
 
@@ -229,8 +236,15 @@
     }
 
     @keyframes pulse {
-        0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.1); }
+
+        0%,
+        100% {
+            transform: scale(1);
+        }
+
+        50% {
+            transform: scale(1.1);
+        }
     }
 
     /* Mobile Navbar Enhancements */
@@ -238,7 +252,7 @@
         body {
             padding-top: 140px;
         }
-        
+
         .navbar-collapse {
             background: var(--nav-bg);
             margin-top: 15px;
@@ -272,7 +286,7 @@
     .main-footer {
         background: var(--footer-bg);
         margin-top: 60px;
-        box-shadow: 0 -5px 20px rgba(0,0,0,0.1);
+        box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
         color: var(--footer-text);
         transition: var(--transition);
     }
@@ -423,19 +437,20 @@
         opacity: 1;
         transform: translateX(-5px);
     }
-    /* Add this to your CARD PROTECTION section */
-.dark-theme .card-title,
-.dark-theme .service-card h3 {
-    color: var(--primary-color) !important;
-    background-color: transparent !important;
-}
 
-/* Also add this to ensure all card content is properly styled */
-.dark-theme .service-card,
-.dark-theme .service-card .card-body {
-    background-color: var(--card-bg) !important;
-    color: var(--card-text) !important;
-}
+    /* Add this to your CARD PROTECTION section */
+    .dark-theme .card-title,
+    .dark-theme .service-card h3 {
+        color: var(--primary-color) !important;
+        background-color: transparent !important;
+    }
+
+    /* Also add this to ensure all card content is properly styled */
+    .dark-theme .service-card,
+    .dark-theme .service-card .card-body {
+        background-color: var(--card-bg) !important;
+        color: var(--card-text) !important;
+    }
 
     /* Specific protection for service card buttons */
     .dark-theme .btn-info {
@@ -517,7 +532,7 @@
             padding: 30px 0 20px 0;
         }
 
-        .footer-content .row > [class^="col-"] {
+        .footer-content .row>[class^="col-"] {
             margin-bottom: 16px;
         }
 
@@ -565,7 +580,7 @@
             font-size: 13px;
         }
 
-        .footer-content .row > [class^="col-"] {
+        .footer-content .row>[class^="col-"] {
             margin-bottom: 14px;
         }
 
@@ -594,6 +609,7 @@
             opacity: 0;
             transform: translateY(-30px);
         }
+
         to {
             opacity: 1;
             transform: translateY(0);
@@ -605,6 +621,7 @@
             opacity: 0;
             transform: translateY(30px);
         }
+
         to {
             opacity: 1;
             transform: translateY(0);
@@ -632,7 +649,7 @@
     .main-footer {
         animation: slideInUp 0.8s ease-out;
     }
-    
+
     /* Scroll to Top Button Styling */
     #topBtn {
         display: none;
@@ -649,13 +666,13 @@
         border-radius: 50%;
         font-size: 18px;
         transition: background-color 0.3s ease;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
     }
 
     #topBtn:hover {
         background-color: var(--primary-hover);
     }
-    
+
     /* Theme Toggle Button */
     #theme-toggle {
         background: var(--primary-color);
@@ -672,11 +689,11 @@
         z-index: 9999;
         transition: var(--transition);
     }
-    
+
     #theme-toggle:hover {
         transform: scale(1.1);
     }
-    
+
     /* CARD PROTECTION - Add these new rules */
     .dark-theme .card,
     .dark-theme .card *:not(.fas):not(.fa):not(.nav-link):not(.me-4 i),
@@ -706,7 +723,7 @@
     .dark-theme footer {
         background-color: var(--nav-bg) !important;
     }
-    
+
     .dark-theme .nav-link,
     .dark-theme .me-4 i,
     .dark-theme .text-reset,
@@ -714,7 +731,7 @@
     .dark-theme p {
         color: var(--text-color) !important;
     }
-    
+
     .dark-theme .me-4:hover i {
         color: var(--secondary-color) !important;
     }
@@ -746,18 +763,18 @@
         margin-right: 1rem;
         transition: transform 0.3s ease, color 0.3s ease;
     }
-   
+
     .me-4 i {
-        color: var(--primary-color); 
+        color: var(--primary-color);
         font-size: 20px;
         transition: color 0.3s ease, transform 0.3s ease;
     }
-   
+
     .me-4:hover i {
         color: var(--primary-hover);
         transform: scale(1.5);
     }
-    
+
     .dark-theme .form-container,
     .dark-theme .form-container h1,
     .dark-theme .form-container h2,
@@ -765,19 +782,19 @@
         background-color: var(--card-bg) !important;
         color: var(--card-text) !important;
     }
-  
+
     /* Specific protection for registration form heading */
     .dark-theme #frmregistration h2 {
         color: var(--primary-color) !important;
         background-color: transparent !important;
     }
-  
+
     /* Specific protection for enquiry form heading */
     .dark-theme #frmcontactus h1 {
         color: var(--primary-color) !important;
         background-color: transparent !important;
     }
-    
+
     .alert {
         border-radius: 6px;
         font-weight: 500;
@@ -820,19 +837,19 @@
         background-color: #0c5460 !important;
         color: #ffffff !important;
     }
-    
+
     /* Add this to your CSS to protect radio button labels in dark mode */
     .dark-theme .form-check-label {
         color: var(--card-text) !important;
         background-color: transparent !important;
     }
-    
+
     /* Chatbot Styles */
     #chat-container {
         font-family: 'Poppins', sans-serif;
         z-index: 1000;
     }
-    
+
     #chat-box {
         width: 320px;
         height: 400px;
@@ -843,11 +860,11 @@
         background: var(--card-bg);
         z-index: 1000;
         border-radius: 15px;
-        box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
         display: none;
         transition: var(--transition);
     }
-    
+
     #chat-header {
         padding: 12px 15px;
         background: linear-gradient(135deg, var(--chat-primary), var(--chat-primary-hover));
@@ -859,7 +876,7 @@
         justify-content: space-between;
         align-items: center;
     }
-    
+
     #chat-messages {
         height: 280px;
         padding: 15px;
@@ -867,7 +884,7 @@
         background: var(--bg-light);
         transition: var(--transition);
     }
-    
+
     #chat-toggle {
         position: fixed;
         bottom: 90px;
@@ -879,7 +896,7 @@
         border: none;
         border-radius: 50%;
         cursor: pointer;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -887,12 +904,12 @@
         z-index: 1000;
         transition: var(--transition);
     }
-    
+
     #chat-toggle:hover {
         transform: scale(1.05);
         background: linear-gradient(135deg, var(--chat-primary-hover), var(--chat-accent));
     }
-    
+
     .chat-message {
         margin-bottom: 12px;
         padding: 8px 12px;
@@ -900,21 +917,21 @@
         max-width: 80%;
         word-wrap: break-word;
     }
-    
+
     .user-message {
         background: linear-gradient(135deg, var(--chat-primary), var(--chat-primary-hover));
         color: var(--text-white);
         margin-left: auto;
         border-bottom-right-radius: 5px;
     }
-    
+
     .bot-message {
         background: var(--accent-color);
         color: var(--text-white);
         margin-right: auto;
         border-bottom-left-radius: 5px;
     }
-    
+
     #user-input {
         flex-grow: 1;
         padding: 10px 15px;
@@ -927,12 +944,12 @@
         color: var(--text-color);
         transition: var(--transition);
     }
-    
+
     #user-input:focus {
         border-color: var(--chat-primary);
         box-shadow: 0 0 0 2px rgba(6, 6, 106, 0.2);
     }
-    
+
     #send-button {
         padding: 10px 15px;
         background: linear-gradient(135deg, var(--chat-primary), var(--chat-primary-hover));
@@ -944,33 +961,33 @@
         font-weight: bold;
         transition: var(--transition);
     }
-    
+
     #send-button:hover {
         background: linear-gradient(135deg, var(--chat-primary-hover), var(--chat-accent));
         transform: scale(1.05);
     }
-    
+
     .dark-theme #chat-box {
         border-color: #444;
     }
-    
+
     .dark-theme #chat-messages {
         background: #2a2a2a;
     }
-    
+
     .dark-theme #user-input {
         background: #333;
         color: #f5f5f5;
         border-color: #555;
     }
-    
+
     @media (max-width: 576px) {
         #chat-box {
             width: 90%;
             right: 5%;
             bottom: 80px;
         }
-        
+
         #chat-toggle {
             bottom: 20px;
             right: 20px;
@@ -1023,57 +1040,59 @@
             <nav class="navbar navbar-expand-lg main-navbar">
                 <div class="container">
                     <a class="navbar-brand" href="{% url 'nouapp:index' %}">
-                     <img src="{% static 'images/NOU.jpg' %}" alt="NOU e-Gyan Portal"  class="navbar-logo">
-                     </a> 
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <img src="{% static 'images/NOU.jpg' %}" alt="NOU e-Gyan Portal" class="navbar-logo">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    
+
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav ms-auto">
                             <li class="nav-item">
-                                <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}" 
-                                   href="{% url 'nouapp:index' %}">
+                                <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"
+                                    href="{% url 'nouapp:index' %}">
                                     <i class="fa-solid fa-house"></i>Home
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {% if request.resolver_match.url_name == 'aboutus' %}active{% endif %}" 
-                                   href="{% url 'nouapp:aboutus' %}">
+                                <a class="nav-link {% if request.resolver_match.url_name == 'aboutus' %}active{% endif %}"
+                                    href="{% url 'nouapp:aboutus' %}">
                                     <i class="fa-solid fa-user"></i>About Us
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {% if request.resolver_match.url_name == 'courses' %}active{% endif %}" 
-                                   href="{% url 'nouapp:courses' %}">
+                                <a class="nav-link {% if request.resolver_match.url_name == 'courses' %}active{% endif %}"
+                                    href="{% url 'nouapp:courses' %}">
                                     <i class="fa-solid fa-book"></i>Courses
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% endif %}" 
-                                   href="{% url 'nouapp:services' %}">
+                                <a class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% endif %}"
+                                    href="{% url 'nouapp:services' %}">
                                     <i class="fa-solid fa-list"></i>Services
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {% if request.resolver_match.url_name == 'login' %}active{% endif %}" 
-                                   href="{% url 'nouapp:login' %}">
+                                <a class="nav-link {% if request.resolver_match.url_name == 'login' %}active{% endif %}"
+                                    href="{% url 'nouapp:login' %}">
                                     <i class="fa-solid fa-key"></i>Login
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {% if request.resolver_match.url_name == 'registration' %}active{% endif %}" 
-                                   href="{% url 'nouapp:registration' %}">
+                                <a class="nav-link {% if request.resolver_match.url_name == 'registration' %}active{% endif %}"
+                                    href="{% url 'nouapp:registration' %}">
                                     <i class="fa-solid fa-user-plus"></i>Registration
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {% if request.resolver_match.url_name == 'contactus' %}active{% endif %}" 
-                                   href="{% url 'nouapp:contactus' %}">
+                                <a class="nav-link {% if request.resolver_match.url_name == 'contactus' %}active{% endif %}"
+                                    href="{% url 'nouapp:contactus' %}">
                                     <i class="fa-solid fa-phone"></i>Contact Us
                                 </a>
                             </li>
-                            
+
                         </ul>
                     </div>
                 </div>
@@ -1097,23 +1116,17 @@
                             <span>Get connected with us on social networks:</span>
                         </div>
                         <div class="social-icons">
-                            <a href="#" class="social-icon" aria-label="Facebook" title="Follow us on Facebook">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                            <a href="#" class="social-icon" aria-label="Twitter" title="Follow us on Twitter">
-                                <i class="fab fa-twitter"></i>
-                            </a>
-                            <a href="#" class="social-icon" aria-label="Google" title="Find us on Google">
-                                <i class="fab fa-google"></i>
-                            </a>
-                            <a href="#" class="social-icon" aria-label="Instagram" title="Follow us on Instagram">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                            <a href="#" class="social-icon" aria-label="LinkedIn" title="Connect on LinkedIn">
+                            <a href="https://www.linkedin.com/in/shailjaverma18" class="social-icon"
+                                aria-label="LinkedIn" title="Connect on LinkedIn">
                                 <i class="fab fa-linkedin-in"></i>
                             </a>
-                            <a href="#" class="social-icon" aria-label="YouTube" title="Subscribe to our channel">
-                                <i class="fab fa-youtube"></i>
+                            <a href="https://github.com/ShailjaVerma18" class="social-icon" aria-label="GitHub"
+                                title="Check out my GitHub" target="_blank">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="mailto:vermashailja018@gmail.com" class="social-icon" aria-label="Email"
+                                title="Send me an email">
+                                <i class="fas fa-envelope"></i>
                             </a>
                         </div>
                     </div>
@@ -1127,10 +1140,13 @@
                         <!-- About Section -->
                         <div class="text-start col-lg-4 col-md-6 mb-4">
                             <a href="{% url 'nouapp:index' %}">
-                               <img src="{% static 'images/NOU.jpg' %}" alt="NOU Logo" class="footer-logo img-fluid d-block mb-2" style="height: 80px; width: auto;" />
+                                <img src="{% static 'images/NOU.jpg' %}" alt="NOU Logo"
+                                    class="footer-logo img-fluid d-block mb-2" style="height: 80px; width: auto;" />
                             </a>
                             <p class="footer-description">
-                                Nalanda Open University is a State Open University duly established under the Act of Bihar Government and is also recognized by Distance Education Council, IGNOU, Maidan Garhi, New Delhi.
+                                Nalanda Open University is a State Open University duly established under the Act of
+                                Bihar Government and is also recognized by Distance Education Council, IGNOU, Maidan
+                                Garhi, New Delhi.
                             </p>
                         </div>
 
@@ -1204,7 +1220,7 @@
             </div>
         </footer>
     </div>
-    
+
     <!-- Scroll to Top Button -->
     <button onclick="scrollToTop()" id="topBtn" title="Go to top">
         <i class="fa-solid fa-arrow-up"></i>
@@ -1212,11 +1228,11 @@
 
     <!-- JavaScript for Enhanced Functionality -->
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Smooth scrolling for anchor links
-            $('a[href^="#"]').on('click', function(event) {
+            $('a[href^="#"]').on('click', function (event) {
                 var target = $(this.getAttribute('href'));
-                if( target.length ) {
+                if (target.length) {
                     event.preventDefault();
                     $('html, body').stop().animate({
                         scrollTop: target.offset().top - 120
@@ -1225,7 +1241,7 @@
             });
 
             // Mobile menu close on link click
-            $('.navbar-nav .nav-link').on('click', function() {
+            $('.navbar-nav .nav-link').on('click', function () {
                 if ($(window).width() < 992) {
                     $('.navbar-collapse').collapse('hide');
                 }
@@ -1233,27 +1249,27 @@
 
             // Add hover effect to navbar brand
             $('.navbar-brand').hover(
-                function() {
+                function () {
                     $(this).find('img').css('transform', 'scale(1.05)');
                 },
-                function() {
+                function () {
                     $(this).find('img').css('transform', 'scale(1)');
                 }
             );
-            
+
             // Theme toggle functionality
             const themeToggle = document.getElementById('theme-toggle');
             const themeIcon = document.getElementById('theme-icon');
-            
+
             // Check for saved theme preference
             const savedTheme = localStorage.getItem('theme') || 'light';
             if (savedTheme === 'dark') {
                 document.body.classList.add('dark-theme');
                 themeIcon.textContent = '☀️';
             }
-            
+
             // Toggle theme on button click
-            themeToggle.addEventListener('click', function() {
+            themeToggle.addEventListener('click', function () {
                 document.body.classList.toggle('dark-theme');
                 const isDark = document.body.classList.contains('dark-theme');
                 localStorage.setItem('theme', isDark ? 'dark' : 'light');
@@ -1262,7 +1278,7 @@
         });
 
         // Navbar background change on scroll
-        $(window).scroll(function() {
+        $(window).scroll(function () {
             if ($(this).scrollTop() > 50) {
                 $('.main-navbar').css({
                     'background': 'rgba(240, 248, 255, 0.95)',
@@ -1275,12 +1291,12 @@
                 });
             }
         });
-        
+
         // Get the button
         let topBtn = document.getElementById("topBtn");
 
         // Show button when scrolled 100px
-        window.onscroll = function() {
+        window.onscroll = function () {
             if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
                 topBtn.style.display = "block";
             } else {
@@ -1290,7 +1306,7 @@
 
         // Scroll to top smoothly
         function scrollToTop() {
-            window.scrollTo({top: 0, behavior: 'smooth'});
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
     </script>
 
@@ -1299,10 +1315,12 @@
         <div id="chat-box">
             <div id="chat-header">
                 <span>NOU Assistant 🤖</span>
-                <button onclick="toggleChat()" style="background: transparent; border: none; color: white; cursor: pointer; font-size: 18px;">×</button>
+                <button onclick="toggleChat()"
+                    style="background: transparent; border: none; color: white; cursor: pointer; font-size: 18px;">×</button>
             </div>
             <div id="chat-messages"></div>
-            <div style="padding: 12px; border-top: 1px solid #eee; background: var(--card-bg); border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; display: flex;">
+            <div
+                style="padding: 12px; border-top: 1px solid #eee; background: var(--card-bg); border-bottom-left-radius: 15px; border-bottom-right-radius: 15px; display: flex;">
                 <input type="text" id="user-input" placeholder="Ask about NOU...">
                 <button id="send-button" onclick="sendMessage()">Send</button>
             </div>
@@ -1311,118 +1329,119 @@
     </div>
 
     <script>
-    const API_URL = "/chat/"; // URL to your chatbot API
+        const API_URL = "/chat/"; // URL to your chatbot API
 
-    function toggleChat() {
-        const chatBox = document.getElementById('chat-box');
-        const toggleBtn = document.getElementById('chat-toggle');
-        if (chatBox.style.display === 'block') {
-            chatBox.style.display = 'none';
-            toggleBtn.innerHTML = '💬';
-            toggleBtn.style.background = 'linear-gradient(135deg, var(--chat-primary), var(--chat-primary-hover))';
-        } else {
-            chatBox.style.display = 'block';
-            toggleBtn.innerHTML = '✕';
-            toggleBtn.style.background = 'linear-gradient(135deg, var(--chat-primary-hover), var(--chat-accent))';
-            document.getElementById('user-input').focus();
-            // Initialize with welcome message if chat is empty
-            if (document.getElementById('chat-messages').children.length === 0) {
-                appendMessage('Bot', 'Hello! Welcome to Nalanda Open University. I\'m here to help you with information about courses, admissions, and more. How can I assist you today?');
-            }
-        }
-    }
-
-    function appendMessage(sender, message) {
-        const messageDiv = document.createElement('div');
-        messageDiv.classList.add('chat-message');
-        
-        if (sender === 'You') {
-            messageDiv.classList.add('user-message');
-        } else {
-            messageDiv.classList.add('bot-message');
-        }
-        
-        messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
-        document.getElementById('chat-messages').appendChild(messageDiv);
-        
-        // Scroll to bottom
-        const messageContainer = document.getElementById('chat-messages');
-        messageContainer.scrollTop = messageContainer.scrollHeight;
-    }
-
-    async function sendMessage() {
-        const userInput = document.getElementById('user-input');
-        const message = userInput.value.trim();
-        if (message === "") return;
-
-        appendMessage('You', message);
-        userInput.value = ''; // Clear input field
-        userInput.focus();
-
-        try {
-            const response = await fetch(API_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRFToken': getCookie('csrftoken')
-                },
-                body: JSON.stringify({ message: message })
-            });
-            
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            
-            const data = await response.json();
-            if (data.response) {
-                appendMessage('Bot', data.response);
-            } else if (data.error) {
-                appendMessage('Bot', `Sorry, there was an error: ${data.error}`);
+        function toggleChat() {
+            const chatBox = document.getElementById('chat-box');
+            const toggleBtn = document.getElementById('chat-toggle');
+            if (chatBox.style.display === 'block') {
+                chatBox.style.display = 'none';
+                toggleBtn.innerHTML = '💬';
+                toggleBtn.style.background = 'linear-gradient(135deg, var(--chat-primary), var(--chat-primary-hover))';
             } else {
-                appendMessage('Bot', 'Sorry, I encountered an unexpected error.');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            appendMessage('Bot', 'Oops! Something went wrong. Please try again in a moment.');
-        }
-    }
-
-    // Helper function to get CSRF token
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.substring(0, name.length + 1) === (name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
+                chatBox.style.display = 'block';
+                toggleBtn.innerHTML = '✕';
+                toggleBtn.style.background = 'linear-gradient(135deg, var(--chat-primary-hover), var(--chat-accent))';
+                document.getElementById('user-input').focus();
+                // Initialize with welcome message if chat is empty
+                if (document.getElementById('chat-messages').children.length === 0) {
+                    appendMessage('Bot', 'Hello! Welcome to Nalanda Open University. I\'m here to help you with information about courses, admissions, and more. How can I assist you today?');
                 }
             }
         }
-        return cookieValue;
-    }
 
-    // Allow sending message with Enter key
-    document.getElementById('user-input').addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            sendMessage();
+        function appendMessage(sender, message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('chat-message');
+
+            if (sender === 'You') {
+                messageDiv.classList.add('user-message');
+            } else {
+                messageDiv.classList.add('bot-message');
+            }
+
+            messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+            document.getElementById('chat-messages').appendChild(messageDiv);
+
+            // Scroll to bottom
+            const messageContainer = document.getElementById('chat-messages');
+            messageContainer.scrollTop = messageContainer.scrollHeight;
         }
-    });
 
-    // Auto-open chat after a short delay
-    setTimeout(() => {
-        const chatBox = document.getElementById('chat-box');
-        if (chatBox.style.display !== 'block') {
-            toggleChat();
-            // Auto-close after showing welcome message
-            setTimeout(() => {
-                if (document.getElementById('chat-messages').children.length === 1) {
-                    toggleChat();
+        async function sendMessage() {
+            const userInput = document.getElementById('user-input');
+            const message = userInput.value.trim();
+            if (message === "") return;
+
+            appendMessage('You', message);
+            userInput.value = ''; // Clear input field
+            userInput.focus();
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
-            }, 5000);
+
+                const data = await response.json();
+                if (data.response) {
+                    appendMessage('Bot', data.response);
+                } else if (data.error) {
+                    appendMessage('Bot', `Sorry, there was an error: ${data.error}`);
+                } else {
+                    appendMessage('Bot', 'Sorry, I encountered an unexpected error.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                appendMessage('Bot', 'Oops! Something went wrong. Please try again in a moment.');
+            }
         }
-    }, 3000);
+
+        // Helper function to get CSRF token
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+        // Allow sending message with Enter key
+        document.getElementById('user-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Auto-open chat after a short delay
+        setTimeout(() => {
+            const chatBox = document.getElementById('chat-box');
+            if (chatBox.style.display !== 'block') {
+                toggleChat();
+                // Auto-close after showing welcome message
+                setTimeout(() => {
+                    if (document.getElementById('chat-messages').children.length === 1) {
+                        toggleChat();
+                    }
+                }, 5000);
+            }
+        }, 3000);
     </script>
 </body>
+
 </html>
