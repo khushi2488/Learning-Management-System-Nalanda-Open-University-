@@ -12,6 +12,7 @@ from adminapp.models import News
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
+
 # Add these imports at the top of nouapp/views.py
 import json
 from django.http import JsonResponse
@@ -208,3 +209,8 @@ def reset_password(request, token):
             return render(request, 'reset_password.html', {'token': token})
 
     return render(request, "reset_password.html", {"token": token})
+
+def custom_404_view(request, exception):
+    return render(request, "404.html", status=404)
+
+

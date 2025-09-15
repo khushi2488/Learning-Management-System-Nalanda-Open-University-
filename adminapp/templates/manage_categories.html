@@ -1,0 +1,175 @@
+<!-- templates/manage_categories.html -->
+{% extends "adminparent.html" %}
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 style="color: rgb(6,6,106)">Manage News Categories</h1>
+                <a href="{% url 'adminapp:manage_news' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to News
+                </a>
+            </div>
+            
+            <!-- Create New Category -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h5>Create New Category</h5>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="name">Category Name *</label>
+                                    <input type="text" name="name" id="name" class="form-control" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <input type="text" name="description" id="description" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="icon">Icon Class</label>
+                                    <input type="text" name="icon" id="icon" class="form-control" placeholder="fas fa-info">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label for="color_code">Color</label>
+                                    <input type="color" name="color_code" id="color_code" class="form-control" value="#007bff">
+                                </div>
+                            </div>
+                            <div class="col-md-1">
+                                <div class="form-group">
+                                    <label>&nbsp;</label>
+                                    <button type="submit" class="btn btn-primary form-control">Add</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Categories List -->
+            <div class="card">
+                <div class="card-body">
+                    {% if categories %}
+                        <div class="table-responsive">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr style="color: rgb(6,6,106)">
+                                        <th>Preview</th>
+                                        <th>Name</th>
+                                        <th>Description</th>
+                                        <th>Icon Class</th>
+                                        <th>Color</th>
+                                        <th>Status</th>
+                                        <th>Created</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for cat in categories %}
+                                    <tr>
+                                        <td>
+                                            <span class="badge" style="background-color: {{cat.color_code}};">
+                                                {% if cat.icon %}<i class="{{cat.icon}}"></i>{% endif %}
+                                                {{cat.name}}
+                                            </span>
+                                        </td>
+                                        <td><strong>{{cat.name}}</strong></td>
+                                        <td>{{cat.description|default:"No description"}}</td>
+                                        <td><code>{{cat.icon|default:"None"}}</code></td>
+                                        <td>
+                                            <span class="badge" style="background-color: {{cat.color_code}};">{{cat.color_code}}</span>
+                                        </td>
+                                        <td>
+                                            <span class="badge badge-{% if cat.is_active %}success{% else %}secondary{% endif %}">
+                                                {% if cat.is_active %}Active{% else %}Inactive{% endif %}
+                                            </span>
+                                        </td>
+                                        <td>{{cat.created_at|date:"M d, Y"}}</td>
+                                        <td>
+                                            <div class="btn-group btn-group-sm">
+                                                <button class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#editModal{{cat.id}}" title="Edit">
+                                                    <i class="fas fa-edit"></i>
+                                                </button>
+                                                <a href="#" class="btn btn-outline-danger btn-sm" title="Delete"
+                                                   onclick="return confirm('Are you sure? This will affect all news items in this category.')">
+                                                    <i class="fas fa-trash"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    
+                                    <!-- Edit Modal for each category -->
+                                    <div class="modal fade" id="editModal{{cat.id}}" tabindex="-1" role="dialog">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">Edit Category</h5>
+                                                    <button type="button" class="close" data-dismiss="modal">
+                                                        <span>&times;</span>
+                                                    </button>
+                                                </div>
+                                                <form method="POST">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="edit_category" value="{{cat.id}}">
+                                                    <div class="modal-body">
+                                                        <div class="form-group">
+                                                            <label>Category Name</label>
+                                                            <input type="text" name="edit_name" class="form-control" value="{{cat.name}}" required>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Description</label>
+                                                            <input type="text" name="edit_description" class="form-control" value="{{cat.description}}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Icon Class</label>
+                                                            <input type="text" name="edit_icon" class="form-control" value="{{cat.icon}}">
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label>Color</label>
+                                                            <input type="color" name="edit_color_code" class="form-control" value="{{cat.color_code}}">
+                                                        </div>
+                                                        <div class="form-check">
+                                                            <input type="checkbox" name="edit_is_active" class="form-check-input" {% if cat.is_active %}checked{% endif %}>
+                                                            <label class="form-check-label">Active</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                        <button type="submit" class="btn btn-primary">Update Category</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="fas fa-tags fa-3x text-muted mb-3"></i>
+                            <h4 class="text-muted">No categories found</h4>
+                            <p>Create your first category using the form above.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.badge {
+    color: white !important;
+}
+</style>
+{% endblock body %}

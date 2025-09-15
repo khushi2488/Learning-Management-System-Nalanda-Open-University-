@@ -231,16 +231,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 🎥 Demo Video
-
-Check out our demo video to see the LMS in action:
-
-https://github.com/user-attachments/assets/b94a36f4-563e-4841-ab41-10f221e02aa8
-
----
-
 <div align="center">
 <p><strong>Built with ❤️ By Shailja Verma</strong></p>
 <p><em>Empowering education through technology</em></p>
 </div>
+
+[⬆️ Back to Top](#readme)
+
 
