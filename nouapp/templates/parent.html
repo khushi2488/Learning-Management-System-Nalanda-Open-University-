@@ -712,7 +712,7 @@
       display: none;
       position: fixed;
       bottom: 30px;
-      right: 30px;
+      right: 36px;
       z-index: 999;
       border: none;
       outline: none;
@@ -730,6 +730,42 @@
     #topBtn:hover {
       background-color: var(--primary-hover);
     }
+
+     /* Large devices */
+    @media screen and (max-width: 1000px) {
+        div.container{
+flex-direction: column;
+        }
+    }
+    
+/* Medium devices */
+@media screen and (max-width: 992px) {
+  button.navbar-toggler.collapsed{
+margin-left: auto;
+  }
+  img.img-fluid{
+max-width: 400px;
+    height: 50;
+    margin: 10px;
+    margin-left: 15px;
+  }
+}
+
+/* Small devices */
+@media screen and (max-width: 768px) {
+button.navbar-toggler-icon{
+  display: flex;
+  float: right;
+}
+}
+
+/* Extra small devices */
+@media screen and (max-width: 576px) {
+  #topBtn{
+  bottom: 75px;
+    right: 22px;
+  }
+}
 
     /* Theme Toggle Button */
     #theme-toggle {
@@ -1138,7 +1174,7 @@
               />
             </a>
             <button
-              class="navbar-toggler"
+              class="navbar-toggler ms-auto"
               type="button"
               data-bs-toggle="collapse"
               data-bs-target="#navbarSupportedContent"
