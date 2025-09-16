@@ -1,61 +1,114 @@
-{% extends "adminparent.html" %}
-{% block body %}
+{% extends "adminparent.html" %} {% block body %}
 <div class="row">
-    <h1 style="text-align:center; color: rgb(6,6,106)">Upload Study Material</h1>
-    <form action="{% url 'adminapp:move' %}" method="post" class="form-group" enctype="multipart/form-data">
-        {% csrf_token %}
-        <table class="table table-bordered text-light" style="background-color:rgb(6,6,106); border: 2px aliceblue;">
-            
-            <!-- Select Course -->
-            <tr>
-                <td><label for="course-select">Select Course: </label></td>
-                <td>
-                    <select name="course" id="course-select" class="form-control" style="background-color: aliceblue; color: rgb(6,6,106);">
-                        <option selected>--Select Course--</option>
-                        {% for c in courses %}
-                            <option value="{{ c.id }}">{{ c.title }} - {{ c.program.program }} {{ c.branch.branch }} {{ c.year.year }}</option>
-                        {% endfor %}
-                    </select>
-                </td>
-            </tr>
+  <h1 style="text-align: center; color: rgb(6, 6, 106)">
+    Upload Study Material
+  </h1>
+  <form
+    action="{% url 'adminapp:move' %}"
+    method="post"
+    class="form-group"
+    enctype="multipart/form-data"
+  >
+    {% csrf_token %}
+    <table
+      class="table table-bordered text-light"
+      style="background-color: rgb(6, 6, 106); border: 2px aliceblue"
+    >
+      <tr>
+        <td><label for="program-select">Select Program: </label></td>
+        <td>
+          <select
+            name="program"
+            id="program-select"
+            class="form-control"
+            style="background-color: aliceblue; color: rgb(6, 6, 106)"
+          >
+            <option selected>--Select Program-</option>
+            {% for p in program %}
+            <option value="{{p.program}}">{{p.program}}</option>
+            {% endfor%}
+          </select>
+        </td>
+      </tr>
 
-            <!-- Title -->
-            <tr>
-                <td><label for="title-input">Material Title :</label></td>
-                <td><input type="text" name="title" id="title-input" class="form-control" style="background-color: aliceblue; color: rgb(6,6,106);" required></td>
-            </tr>
+      <tr>
+        <td><label for="branch-select">Select Branch: </label></td>
+        <td>
+          <select
+            name="branch"
+            id="branch-select"
+            class="form-control"
+            style="background-color: aliceblue; color: rgb(6, 6, 106)"
+          >
+            <option selected>--Select Branch--</option>
+            {% for b in branch %}
+            <option value="{{b.branch}}">{{b.branch}}</option>
+            {% endfor%}
+          </select>
+        </td>
+      </tr>
 
-            <!-- Description -->
-            <tr>
-                <td><label for="description-input">Description :</label></td>
-                <td><textarea name="description" id="description-input" class="form-control" style="background-color: aliceblue; color: rgb(6,6,106);"></textarea></td>
-            </tr>
+      <tr>
+        <td><label for="year-select">Select Year: </label></td>
+        <td>
+          <select
+            name="year"
+            id="year-select"
+            class="form-control"
+            style="background-color: aliceblue; color: rgb(6, 6, 106)"
+          >
+            <option selected>--Select Year--</option>
+            {% for y in year %}
+            <option value="{{y.year}}">{{y.year}}</option>
+            {% endfor%}
+          </select>
+        </td>
+      </tr>
 
-            <!-- Category (Optional) -->
-            <tr>
-                <td><label for="category-select">Category :</label></td>
-                <td>
-                    <select name="category" id="category-select" class="form-control" style="background-color: aliceblue; color: rgb(6,6,106);">
-                        <option selected>--Select Category--</option>
-                        {% for cat in categories %}
-                            <option value="{{ cat.id }}">{{ cat.name }}</option>
-                        {% endfor %}
-                    </select>
-                </td>
-            </tr>
+      <tr>
+        <td><label for="subject-input">Enter Subject :</label></td>
+        <td>
+          <input
+            type="text"
+            name="subject"
+            id="subject-input"
+            class="form-control"
+            style="background-color: aliceblue; color: rgb(6, 6, 106)"
+          />
+        </td>
+      </tr>
 
-            <!-- File Upload -->
-            <tr>
-                <td><label for="file-upload">Select File :</label></td>
-                <td><input type="file" name="my_file" id="file-upload" class="form-control" style="background-color: aliceblue; color: rgb(6,6,106);" required></td>
-            </tr>
+      <tr>
+        <td><label for="filename-input">Enter File Name :</label></td>
+        <td>
+          <input
+            type="text"
+            name="file_name"
+            id="filename-input"
+            class="form-control text-light"
+            style="background-color: aliceblue; color: rgb(6, 6, 106)"
+          />
+        </td>
+      </tr>
 
-            <!-- Submit Button -->
-            <tr>
-                <td></td>
-                <td><button type="submit" class="btn btn-success">Upload</button></td>
-            </tr>
-        </table>
-    </form>
+      <tr>
+        <td><label for="file-upload">Select File :</label></td>
+        <td>
+          <input
+            type="file"
+            name="my_file"
+            id="file-upload"
+            class="form-control"
+            style="background-color: aliceblue; color: rgb(6, 6, 106)"
+          />
+        </td>
+      </tr>
+
+      <tr>
+        <td></td>
+        <td><button type="submit" class="btn btn-success">Upload</button></td>
+      </tr>
+    </table>
+  </form>
 </div>
 {% endblock body %}
