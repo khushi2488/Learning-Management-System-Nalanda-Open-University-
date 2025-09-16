@@ -1,400 +1,490 @@
 <!DOCTYPE html>
 <html lang="en">
-    {% load static %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  {% load static %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NOU EGyan Portal</title>
-    <link rel="stylesheet" href="{% static 'assets/vendors/mdi/css/materialdesignicons.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/vendors/css/vendor.bundle.base.css' %}">
-    
-    <link rel="stylesheet" href="{% static 'assets/vendors/jvectormap/jquery-jvectormap.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/vendors/flag-icon-css/css/flag-icon.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/vendors/owl-carousel-2/owl.carousel.min.css' %}">
-    <link rel="stylesheet" href="{% static 'assets/vendors/owl-carousel-2/owl.theme.default.min.css' %}">
-    
-    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
-    
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/vendors/mdi/css/materialdesignicons.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/vendors/css/vendor.bundle.base.css' %}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/vendors/jvectormap/jquery-jvectormap.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/vendors/flag-icon-css/css/flag-icon.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/vendors/owl-carousel-2/owl.carousel.min.css' %}"
+    />
+    <link
+      rel="stylesheet"
+      href="{% static 'assets/vendors/owl-carousel-2/owl.theme.default.min.css' %}"
+    />
+
+    <link rel="stylesheet" href="{% static 'assets/css/style.css' %}" />
+
     <link rel="shortcut icon" href="{% static 'assets/images/favicon.png' %}" />
     <style>
-        /* Light Theme (default) */
-        :root {
-            --sidebar-bg: rgb(6,6,106);
-            --navbar-bg: rgb(6,6,106);
-            --footer-bg: rgb(6,6,106);
-            --content-bg: aliceblue;
-            --text-color: #212529;
-            --menu-text: white;
-            --card-bg: white;
-            --card-text: #212529;
-        }
+      /* Light Theme (default) */
+      :root {
+        --sidebar-bg: #06066a;
+        --navbar-bg: rgb(6, 6, 106);
+        --footer-bg: rgb(6, 6, 106);
+        --content-bg: aliceblue;
+        --text-color: #212529;
+        --menu-text: white;
+        --card-bg: white;
+        --card-text: #212529;
+      }
 
-        /* Dark Theme */
-        .dark-theme {
-            --sidebar-bg: #1a1a2e;
-            --navbar-bg: #1a1a2e;
-            --footer-bg: #1a1a2e;
-            --content-bg: #121212;
-            --text-color: #f5f5f5;
-            --menu-text: #e0e0e0;
-            --card-bg: #1e1e1e;
-            --card-text: #f5f5f5;
-        }
+      /* Dark Theme */
+      .dark-theme {
+        --sidebar-bg: #1a1a2e;
+        --navbar-bg: #1a1a2e;
+        --footer-bg: #1a1a2e;
+        --content-bg: #121212;
+        --text-color: #f5f5f5;
+        --menu-text: #e0e0e0;
+        --card-bg: #1e1e1e;
+        --card-text: #f5f5f5;
+      }
 
-        /* Apply theme colors */
-        .dark-theme {
-            background-color: var(--content-bg);
-            color: var(--text-color);
-        }
+      /* Apply theme colors */
+      .dark-theme {
+        background-color: var(--content-bg);
+        color: var(--text-color);
+      }
 
-        /* Sidebar styling */
-        .sidebar {
-            background-color: var(--sidebar-bg) !important;
-        }
-        
-        .sidebar-brand-wrapper {
-            background-color: var(--sidebar-bg) !important;
-        }
-        
-        .menu-title {
-            color: var(--menu-text) !important;
-        }
+      /* Sidebar styling */
+      .sidebar {
+        background-color: var(--sidebar-bg) !important;
+      }
 
-        /* Navbar styling */
-        .navbar {
-            background-color: var(--navbar-bg) !important;
-        }
+      .sidebar-brand-wrapper {
+        background-color: var(--sidebar-bg) !important;
+      }
 
-        /* Footer styling */
-        .footer {
-            background-color: var(--footer-bg) !important;
-        }
+      .menu-title {
+        color: var(--menu-text) !important;
+      }
 
-        /* Content area */
-        .content-wrapper {
-            background-color: var(--content-bg) !important;
-        }
+      /* Navbar styling */
+      .navbar {
+        background-color: var(--navbar-bg) !important;
+      }
 
-        /* Card protection */
-        .dark-theme .card,
-        .dark-theme .card *:not(.mdi):not(.nav-link),
-        .dark-theme .card-header,
-        .dark-theme .card-footer,
-        .dark-theme .card-body,
-        .dark-theme .card-title,
-        .dark-theme .card-text {
-            background-color: var(--card-bg) !important;
-            color: var(--card-text) !important;
-            border-color: #444 !important;
-        }
+      /* Footer styling */
+      .footer {
+        background-color: var(--footer-bg) !important;
+      }
 
-        /* Form elements */
-        .dark-theme .form-control,
-        .dark-theme .form-label,
-        .dark-theme .form-select {
-            background-color: var(--card-bg) !important;
-            color: var(--card-text) !important;
-            border-color: #555 !important;
-        }
+      /* Content area */
+      .content-wrapper {
+        background-color: var(--content-bg) !important;
+      }
 
-        /* Alerts */
-        .dark-theme .alert {
-            border: none !important;
-        }
-        
-        .dark-theme .alert-success {
-            background-color: #006400 !important;
-            color: white !important;
-        }
-        
-        .dark-theme .alert-danger {
-            background-color: #8b0000 !important;
-            color: white !important;
-        }
-        
-        .dark-theme .alert-warning {
-            background-color: #8b8000 !important;
-            color: white !important;
-        }
-        
-        .dark-theme .alert-info {
-            background-color: #0c5460 !important;
-            color: white !important;
-        }
+      /* Card protection */
+      .dark-theme .card,
+      .dark-theme .card *:not(.mdi):not(.nav-link),
+      .dark-theme .card-header,
+      .dark-theme .card-footer,
+      .dark-theme .card-body,
+      .dark-theme .card-title,
+      .dark-theme .card-text {
+        background-color: var(--card-bg) !important;
+        color: var(--card-text) !important;
+        border-color: #444 !important;
+      }
 
-        /* Theme toggle button - moved lower to avoid profile photo */
-        #theme-toggle {
-            position: fixed;
-            top: 80px;  /* Changed from 20px to 80px to move it down */
-            right: 20px;
-            z-index: 9999;
-            background: var(--navbar-bg);
-            color: white;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            border: none;
-            cursor: pointer;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+      /* Form elements */
+      .dark-theme .form-control,
+      .dark-theme .form-label,
+      .dark-theme .form-select {
+        background-color: var(--card-bg) !important;
+        color: var(--card-text) !important;
+        border-color: #555 !important;
+      }
 
-        .dark-theme h1,
-        .dark-theme h2,
-        .dark-theme h3,
-        .dark-theme h4,
-        .dark-theme h5,
-        .dark-theme h6 {
-            color: white !important;
-        }
+      /* Alerts */
+      .dark-theme .alert {
+        border: none !important;
+      }
 
-        /* Tables in dark theme */
-        .dark-theme table {
-            background-color: var(--card-bg) !important;
-            color: var(--card-text) !important;
-            border-color: #444 !important;
-        }
+      .dark-theme .alert-success {
+        background-color: #006400 !important;
+        color: white !important;
+      }
 
-        .dark-theme th,
-        .dark-theme td {
-            background-color: var(--card-bg) !important;
-            color: var(--card-text) !important;
-            border-color: #555 !important;
-        }
+      .dark-theme .alert-danger {
+        background-color: #8b0000 !important;
+        color: white !important;
+      }
 
-        .dark-theme thead th {
-            background-color: #2a2a3e !important;
-            color: #ffffff !important;
-        }
+      .dark-theme .alert-warning {
+        background-color: #8b8000 !important;
+        color: white !important;
+      }
 
-        .dark-theme tbody tr:nth-child(odd) {
-            background-color: #1e1e2e !important;
-        }
+      .dark-theme .alert-info {
+        background-color: #0c5460 !important;
+        color: white !important;
+      }
 
-        .dark-theme tbody tr:nth-child(even) {
-            background-color: #252538 !important;
-        }
+      /* Theme toggle button - moved lower to avoid profile photo */
+      #theme-toggle {
+        position: fixed;
+        top: 80px; /* Changed from 20px to 80px to move it down */
+        right: 20px;
+        z-index: 9999;
+        background: var(--navbar-bg);
+        color: white;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        border: none;
+        cursor: pointer;
+        font-size: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .dark-theme h1,
+      .dark-theme h2,
+      .dark-theme h3,
+      .dark-theme h4,
+      .dark-theme h5,
+      .dark-theme h6 {
+        color: white !important;
+      }
+
+      /* Tables in dark theme */
+      .dark-theme table {
+        background-color: var(--card-bg) !important;
+        color: var(--card-text) !important;
+        border-color: #444 !important;
+      }
+
+      .dark-theme th,
+      .dark-theme td {
+        background-color: var(--card-bg) !important;
+        color: var(--card-text) !important;
+        border-color: #555 !important;
+      }
+
+      .dark-theme thead th {
+        background-color: #2a2a3e !important;
+        color: #ffffff !important;
+      }
+
+      .dark-theme tbody tr:nth-child(odd) {
+        background-color: #1e1e2e !important;
+      }
+
+      .dark-theme tbody tr:nth-child(even) {
+        background-color: #252538 !important;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <button id="theme-toggle">
-        <span id="theme-icon">🌙</span>
+      <span id="theme-icon">🌙</span>
     </button>
-    
-    <div class="container-scroller">
-      <nav class="sidebar sidebar-offcanvas" id="sidebar" style="background-color: var(--sidebar-bg);">
-          <div class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top" style="background-color: var(--sidebar-bg);">
-            <span>Nalanda Open University</span>
-          </div>
-          <ul class="nav">
-            <li class="nav-item profile">
-              <div class="profile-desc">
-                <div class="profile-pic">
-                  <div class="count-indicator">
-                    <img class="img-xs rounded-circle " src="{% static 'assets/images/faces/face15.jpg' %}" alt="">
-                    <span class="count bg-success"></span>
-                  </div>
-                  <div class="profile-name">
-                    <h5 class="mb-0 font-weight-normal">{{stu.name}}</h5>                    
-                  </div>
-                </div>
-                <a href="#" id="profile-dropdown" data-bs-toggle="dropdown"><i class="mdi mdi-dots-vertical"></i></a>
-                <div class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list" aria-labelledby="profile-dropdown">
-                  <a href="#" class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-dark rounded-circle">
-                        <i class="mdi mdi-settings text-primary"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject ellipsis mb-1 text-small">Profile Management</p>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a href="{% url 'studentapp:changepassword' %}" class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-dark rounded-circle">
-                        <i class="mdi mdi-onepassword  text-info"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject ellipsis mb-1 text-small">Change Password</p>
-                    </div>
-                  </a>
-                  <div class="dropdown-divider"></div>
-                  <a href="{% url 'studentapp:studentlogout' %}" class="dropdown-item preview-item">
-                    <div class="preview-thumbnail">
-                      <div class="preview-icon bg-dark rounded-circle">
-                        <i class="mdi mdi-calendar-today text-success"></i>
-                      </div>
-                    </div>
-                    <div class="preview-item-content">
-                      <p class="preview-subject ellipsis mb-1 text-small">Logout</p>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </li>            
-            <li class="nav-item menu-items">
-              <a class="nav-link" href="#">
-                <span class="menu-icon">
-                  <i class="mdi mdi-speedometer"></i>
-                </span>
-                <span class="menu-title" style="color: var(--menu-text);">Dashboard</span>
-              </a>
-            </li>
-           <li class="nav-item menu-items">
-              <a class="nav-link" href="{% url 'studentapp:viewmat' %}">
-                <span class="menu-icon">
-                  <i class="mdi mdi-playlist-play"></i>
-                </span>
-                <span class="menu-title" style="color: var(--menu-text);">View Study Material</span>
-              </a>
-            </li>    
-                        
-            <li class="nav-item menu-items">
-              <a class="nav-link" href="{% url 'studentapp:postquestion' %}">
-                <span class="menu-icon">
-                  <i class="mdi mdi-playlist-play"></i>
-                </span>
-                <span class="menu-title" style="color: var(--menu-text);">Discussion Forum</span>
-              </a>
-            </li>    
-            <li class="nav-item menu-items">
-              <a class="nav-link" href="{% url 'studentapp:response' %}">
-                <span class="menu-icon">
-                  <i class="mdi mdi-playlist-play"></i>
-                </span>
-                <span class="menu-title" style="color: var(--menu-text);">Complain/Feedback</span>
-              </a>
-            </li>  
-            <li class="nav-item menu-items">
-              <a class="nav-link" href="{% url 'studentapp:student_news' %}">
-                <span class="menu-icon">
-                  <i class="mdi mdi-newspaper"></i>
-                </span>
-                <span class="menu-title" style="color: var(--menu-text);">News & Announce</span>
-              </a>
-            </li>  
-            <li class="nav-item menu-items">
-              <a class="nav-link" href="{% url 'studentapp:viewprofile' %}">
-                <span class="menu-icon">
-                  <i class="mdi mdi-playlist-play"></i>
-                </span>
-                <span class="menu-title" style="color: var(--menu-text);">View Profile</span>
-              </a>
-            </li>    
-          </ul>
-        </nav>
-        
-        <div class="container-fluid page-body-wrapper">
-        
-          <nav class="navbar p-0 fixed-top d-flex flex-row" style="background-color: var(--navbar-bg);">
-            <div class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center">
-              <a class="navbar-brand brand-logo-mini" href="#"><img src="{% static 'assets/images/logo-mini.svg' %}" alt="logo" /></a>
-            </div>
-            <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
-              <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-                <span class="mdi mdi-menu"></span>
-              </button>
-              <ul class="navbar-nav navbar-nav-right">
-                <li class="nav-item dropdown">
-                  <a class="nav-link" id="profileDropdown" href="#" data-bs-toggle="dropdown">
-                    <div class="navbar-profile">
-                      <img class="img-xs rounded-circle" src="{% static 'assets/images/faces/face15.jpg' %}" alt="">
-                      <p class="mb-0 d-none d-sm-block navbar-profile-name">{{stu.name}}</p>
-                      <i class="mdi mdi-menu-down d-none d-sm-block"></i>
-                    </div>
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="profileDropdown" style="background-color: var(--navbar-bg);">
-                    <h6 class="p-3 mb-0">Profile</h6>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item preview-item">
-                      <div class="preview-thumbnail">
-                        <div class="preview-icon bg-dark rounded-circle">
-                          <i class="mdi mdi-settings text-success"></i>
-                        </div>
-                      </div>
-                      <div class="preview-item-content">
-                        <p class="preview-subject mb-1">Settings</p>
-                      </div>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item preview-item" href="{% url 'studentapp:studentlogout' %}">
-                      <div class="preview-thumbnail">
-                        <div class="preview-icon bg-dark rounded-circle">
-                          <i class="mdi mdi-logout text-danger"></i>
-                        </div>
-                      </div>
-                      <div class="preview-item-content">
-                        <p class="preview-subject mb-1">Log out</p>
-                      </div>
-                    </a>
-                    <div class="dropdown-divider"></div>
-                    <p class="p-3 mb-0 text-center">Advanced settings</p>
-                  </div>
-                </li>
-              </ul>
-              <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-                <span class="mdi mdi-format-line-spacing"></span>
-              </button>
-            </div>
-          </nav>
-          
-          <div class="main-panel">
-            <div class="content-wrapper" style="background-color: var(--content-bg);">
-              {% block body %}              
 
-              {% endblock body %}
-            </div>
-          
-            <footer class="footer" style="background-color: var(--footer-bg);">
-              <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                <span class="d-block text-center text-sm-left d-sm-inline-block" style="color: white;"><b>Copyright © Nalanda Open University 2021</b></span>              
+    <div class="container-scroller">
+      <nav
+        class="sidebar sidebar-offcanvas"
+        id="sidebar"
+        style="background-color: var(--sidebar-bg)"
+      >
+        <div
+          class="sidebar-brand-wrapper d-none d-lg-flex align-items-center justify-content-center fixed-top"
+          style="background-color: var(--sidebar-bg)"
+        >
+          <span>Nalanda Open University</span>
+        </div>
+        <ul class="nav">
+          <li class="nav-item profile">
+            <div class="profile-desc">
+              <div class="profile-pic">
+                <div class="count-indicator">
+                  <img
+                    class="img-xs rounded-circle"
+                    src="{% static 'assets/images/faces/face15.jpg' %}"
+                    alt=""
+                  />
+                  <span class="count bg-success"></span>
+                </div>
+                <div class="profile-name">
+                  <h5 class="mb-0 font-weight-normal">{{stu.name}}</h5>
+                </div>
               </div>
-            </footer>
+              <a href="#" id="profile-dropdown" data-bs-toggle="dropdown"
+                ><i class="mdi mdi-dots-vertical"></i
+              ></a>
+              <div
+                class="dropdown-menu dropdown-menu-right sidebar-dropdown preview-list"
+                aria-labelledby="profile-dropdown"
+              >
+                <a href="#" class="dropdown-item preview-item">
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-dark rounded-circle">
+                      <i class="mdi mdi-settings text-primary"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <p class="preview-subject ellipsis mb-1 text-small">
+                      Profile Management
+                    </p>
+                  </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a
+                  href="{% url 'studentapp:changepassword' %}"
+                  class="dropdown-item preview-item"
+                >
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-dark rounded-circle">
+                      <i class="mdi mdi-onepassword text-info"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <p class="preview-subject ellipsis mb-1 text-small">
+                      Change Password
+                    </p>
+                  </div>
+                </a>
+                <div class="dropdown-divider"></div>
+                <a
+                  href="{% url 'studentapp:studentlogout' %}"
+                  class="dropdown-item preview-item"
+                >
+                  <div class="preview-thumbnail">
+                    <div class="preview-icon bg-dark rounded-circle">
+                      <i class="mdi mdi-calendar-today text-success"></i>
+                    </div>
+                  </div>
+                  <div class="preview-item-content">
+                    <p class="preview-subject ellipsis mb-1 text-small">
+                      Logout
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </li>
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="#">
+              <span class="menu-icon">
+                <i class="mdi mdi-speedometer"></i>
+              </span>
+              <span class="menu-title" style="color: var(--menu-text)"
+                >Dashboard</span
+              >
+            </a>
+          </li>
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="{% url 'studentapp:viewmat' %}">
+              <span class="menu-icon">
+                <i class="mdi mdi-playlist-play"></i>
+              </span>
+              <span class="menu-title" style="color: var(--menu-text)"
+                >View Study Material</span
+              >
+            </a>
+          </li>
+
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="{% url 'studentapp:postquestion' %}">
+              <span class="menu-icon">
+                <i class="mdi mdi-playlist-play"></i>
+              </span>
+              <span class="menu-title" style="color: var(--menu-text)"
+                >Discussion Forum</span
+              >
+            </a>
+          </li>
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="{% url 'studentapp:response' %}">
+              <span class="menu-icon">
+                <i class="mdi mdi-playlist-play"></i>
+              </span>
+              <span class="menu-title" style="color: var(--menu-text)"
+                >Complain/Feedback</span
+              >
+            </a>
+          </li>
+          <li class="nav-item menu-items">
+            <a class="nav-link" href="{% url 'studentapp:viewprofile' %}">
+              <span class="menu-icon">
+                <i class="mdi mdi-playlist-play"></i>
+              </span>
+              <span class="menu-title" style="color: var(--menu-text)"
+                >View Profile</span
+              >
+            </a>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="container-fluid page-body-wrapper">
+        <nav
+          class="navbar p-0 fixed-top d-flex flex-row"
+          style="background-color: var(--navbar-bg)"
+        >
+          <div
+            class="navbar-brand-wrapper d-flex d-lg-none align-items-center justify-content-center"
+          >
+            <a class="navbar-brand brand-logo-mini" href="#"
+              ><img src="{% static 'assets/images/logo-mini.svg' %}" alt="logo"
+            /></a>
           </div>
+          <div class="navbar-menu-wrapper flex-grow d-flex align-items-stretch">
+            <button
+              class="navbar-toggler navbar-toggler align-self-center"
+              type="button"
+              data-toggle="minimize"
+            >
+              <span class="mdi mdi-menu"></span>
+            </button>
+            <ul class="navbar-nav navbar-nav-right">
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link"
+                  id="profileDropdown"
+                  href="#"
+                  data-bs-toggle="dropdown"
+                >
+                  <div class="navbar-profile">
+                    <img
+                      class="img-xs rounded-circle"
+                      src="{% static 'assets/images/faces/face15.jpg' %}"
+                      alt=""
+                    />
+                    <p class="mb-0 d-none d-sm-block navbar-profile-name">
+                      {{stu.name}}
+                    </p>
+                    <i class="mdi mdi-menu-down d-none d-sm-block"></i>
+                  </div>
+                </a>
+                <div
+                  class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
+                  aria-labelledby="profileDropdown"
+                  style="background-color: var(--navbar-bg)"
+                >
+                  <h6 class="p-3 mb-0">Profile</h6>
+                  <div class="dropdown-divider"></div>
+                  <a class="dropdown-item preview-item">
+                    <div class="preview-thumbnail">
+                      <div class="preview-icon bg-dark rounded-circle">
+                        <i class="mdi mdi-settings text-success"></i>
+                      </div>
+                    </div>
+                    <div class="preview-item-content">
+                      <p class="preview-subject mb-1">Settings</p>
+                    </div>
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <a
+                    class="dropdown-item preview-item"
+                    href="{% url 'studentapp:studentlogout' %}"
+                  >
+                    <div class="preview-thumbnail">
+                      <div class="preview-icon bg-dark rounded-circle">
+                        <i class="mdi mdi-logout text-danger"></i>
+                      </div>
+                    </div>
+                    <div class="preview-item-content">
+                      <p class="preview-subject mb-1">Log out</p>
+                    </div>
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <p class="p-3 mb-0 text-center">Advanced settings</p>
+                </div>
+              </li>
+            </ul>
+            <button
+              class="navbar-toggler navbar-toggler-right d-lg-none align-self-center"
+              type="button"
+              data-toggle="offcanvas"
+            >
+              <span class="mdi mdi-format-line-spacing"></span>
+            </button>
+          </div>
+        </nav>
+
+        <div class="main-panel">
+          <div
+            class="content-wrapper"
+            style="background-color: var(--content-bg)"
+          >
+            {% block body %} {% endblock body %}
+          </div>
+
+          <footer class="footer" style="background-color: var(--footer-bg)">
+            <div
+              class="d-sm-flex justify-content-center justify-content-sm-between"
+            >
+              <span
+                class="d-block text-center text-sm-left d-sm-inline-block"
+                style="color: white"
+                ><b>Copyright © Nalanda Open University 2021</b></span
+              >
+            </div>
+          </footer>
         </div>
       </div>
-      
-      <script src="{% static 'assets/vendors/js/vendor.bundle.base.js' %}"></script>
-      <script src="{% static 'assets/vendors/chart.js/Chart.min.js' %}"></script>
-      <script src="{% static 'assets/vendors/progressbar.js/progressbar.min.js' %}"></script>
-      <script src="{% static 'assets/vendors/jvectormap/jquery-jvectormap.min.js' %}"></script>
-      <script src="{% static 'assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js' %}"></script>
-      <script src="{% static 'assets/vendors/owl-carousel-2/owl.carousel.min.js' %}"></script>
-      <script src="{% static 'assets/js/jquery.cookie.js' %}" type="text/javascript"></script>
-      
-      <script src="{% static 'assets/js/off-canvas.js' %}"></script>
-      <script src="{% static 'assets/js/hoverable-collapse.js' %}"></script>
-      <script src="{% static 'assets/js/misc.js' %}"></script>
-      <script src="{% static 'assets/js/settings.js' %}"></script>
-      <script src="{% static 'assets/js/todolist.js' %}"></script>
-      
-      <script src="{% static 'assets/js/dashboard.js'%}"></script>
-      
-      <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const themeToggle = document.getElementById('theme-toggle');
-            const themeIcon = document.getElementById('theme-icon');
-            
-            // Check for saved theme preference
-            const savedTheme = localStorage.getItem('theme') || 'light';
-            if (savedTheme === 'dark') {
-                document.body.classList.add('dark-theme');
-                themeIcon.textContent = '☀️';
-            }
-            
-            // Toggle theme on button click
-            themeToggle.addEventListener('click', function() {
-                document.body.classList.toggle('dark-theme');
-                const isDark = document.body.classList.contains('dark-theme');
-                localStorage.setItem('theme', isDark ? 'dark' : 'light');
-                themeIcon.textContent = isDark ? '☀️' : '🌙';
-            });
+    </div>
+
+    <script src="{% static 'assets/vendors/js/vendor.bundle.base.js' %}"></script>
+    <script src="{% static 'assets/vendors/chart.js/Chart.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/progressbar.js/progressbar.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/jvectormap/jquery-jvectormap.min.js' %}"></script>
+    <script src="{% static 'assets/vendors/jvectormap/jquery-jvectormap-world-mill-en.js' %}"></script>
+    <script src="{% static 'assets/vendors/owl-carousel-2/owl.carousel.min.js' %}"></script>
+    <script
+      src="{% static 'assets/js/jquery.cookie.js' %}"
+      type="text/javascript"
+    ></script>
+
+    <script src="{% static 'assets/js/off-canvas.js' %}"></script>
+    <script src="{% static 'assets/js/hoverable-collapse.js' %}"></script>
+    <script src="{% static 'assets/js/misc.js' %}"></script>
+    <script src="{% static 'assets/js/settings.js' %}"></script>
+    <script src="{% static 'assets/js/todolist.js' %}"></script>
+
+    <script src="{% static 'assets/js/dashboard.js'%}"></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const themeToggle = document.getElementById("theme-toggle");
+        const themeIcon = document.getElementById("theme-icon");
+
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem("theme") || "light";
+        if (savedTheme === "dark") {
+          document.body.classList.add("dark-theme");
+          themeIcon.textContent = "☀️";
+        }
+
+        // Toggle theme on button click
+        themeToggle.addEventListener("click", function () {
+          document.body.classList.toggle("dark-theme");
+          const isDark = document.body.classList.contains("dark-theme");
+          localStorage.setItem("theme", isDark ? "dark" : "light");
+          themeIcon.textContent = isDark ? "☀️" : "🌙";
         });
-      </script>
-</body>
+      });
+    </script>
+  </body>
 </html>
