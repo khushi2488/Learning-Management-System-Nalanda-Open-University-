@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
   {% load static %}
   <head>
     <meta charset="UTF-8" />
@@ -78,7 +77,6 @@
       --chat-primary: rgb(6, 6, 106);
       --chat-primary-hover: #064b89;
       --chat-accent: #4a90e2;
-
     }
 
     /* Dark Theme */
@@ -184,10 +182,8 @@
       gap: 0;
     }
 
-
     .navbar-nav > .nav-item {
       margin: 0 12px;
-
     }
 
     .navbar-nav .nav-link {
@@ -274,7 +270,6 @@
     }
 
     @keyframes pulse {
-
       0%,
       100% {
         transform: scale(1);
@@ -286,11 +281,9 @@
 
     /* Mobile Navbar Enhancements */
     @media (max-width: 991px) {
-
       body {
         padding-top: 140px;
       }
-
 
       .navbar-collapse {
         background: var(--nav-bg);
@@ -323,13 +316,11 @@
 
     /* Enhanced Footer */
     .main-footer {
-
       background: var(--footer-bg);
       margin-top: 60px;
       box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
       color: var(--footer-text);
       transition: var(--transition);
-
     }
 
     .footer-social-section {
@@ -490,19 +481,15 @@
     /* Add this to your CARD PROTECTION section */
     .dark-theme .card-title,
     .dark-theme .service-card h3 {
-
       color: var(--primary-color) !important;
       background-color: transparent !important;
-
     }
 
     /* Also add this to ensure all card content is properly styled */
     .dark-theme .service-card,
     .dark-theme .service-card .card-body {
-
       background-color: var(--card-bg) !important;
       color: var(--card-text) !important;
-
     }
 
     /* Specific protection for service card buttons */
@@ -585,11 +572,9 @@
         padding: 30px 0 20px 0;
       }
 
-
       .footer-content .row > [class^="col-"] {
         margin-bottom: 16px;
       }
-
 
       .footer-section-title {
         font-size: 16px;
@@ -635,11 +620,9 @@
         font-size: 13px;
       }
 
-
       .footer-content .row > [class^="col-"] {
         margin-bottom: 14px;
       }
-
 
       .navbar-nav .nav-link {
         padding: 12px 14px !important;
@@ -662,7 +645,6 @@
     }
 
     @keyframes slideInDown {
-
       from {
         opacity: 0;
         transform: translateY(-30px);
@@ -682,7 +664,6 @@
         opacity: 1;
         transform: translateY(0);
       }
-
     }
 
     /* Enhanced Mobile Menu */
@@ -724,48 +705,47 @@
       font-size: 18px;
       transition: background-color 0.3s ease;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-
     }
 
     #topBtn:hover {
       background-color: var(--primary-hover);
     }
 
-     /* Large devices */
+    /* Large devices */
     @media screen and (max-width: 1000px) {
-        div.container{
-flex-direction: column;
-        }
+      div.container {
+        flex-direction: column;
+      }
     }
-    
-/* Medium devices */
-@media screen and (max-width: 992px) {
-  button.navbar-toggler.collapsed{
-margin-left: auto;
-  }
-  img.img-fluid{
-max-width: 400px;
-    height: 50;
-    margin: 10px;
-    margin-left: 15px;
-  }
-}
 
-/* Small devices */
-@media screen and (max-width: 768px) {
-button.navbar-toggler-icon{
-  display: flex;
-  float: right;
-}
-}
+    /* Medium devices */
+    @media screen and (max-width: 992px) {
+      button.navbar-toggler.collapsed {
+        margin-left: auto;
+      }
+      img.img-fluid {
+        max-width: 400px;
+        height: 50;
+        margin: 10px;
+        margin-left: 15px;
+      }
+    }
 
-/* Extra small devices */
-@media screen and (max-width: 576px) {
-  #topBtn{
-  bottom: 75px;
-    right: 22px;
-  }
-}
+    /* Small devices */
+    @media screen and (max-width: 768px) {
+      button.navbar-toggler-icon {
+        display: flex;
+        float: right;
+      }
+    }
+
+    /* Extra small devices */
+    @media screen and (max-width: 576px) {
+      #topBtn {
+        bottom: 75px;
+        right: 22px;
+      }
+    }
 
     /* Theme Toggle Button */
     #theme-toggle {
@@ -859,7 +839,6 @@ button.navbar-toggler-icon{
     }
 
     .me-4 i {
-
       color: var(--primary-color);
       font-size: 20px;
       transition: color 0.3s ease, transform 0.3s ease;
@@ -974,7 +953,6 @@ button.navbar-toggler-icon{
       display: flex;
       justify-content: space-between;
       align-items: center;
-
     }
 
     #chat-messages {
@@ -986,7 +964,6 @@ button.navbar-toggler-icon{
     }
 
     #chat-toggle {
-
       position: fixed;
       bottom: 90px;
       right: 30px;
@@ -1008,7 +985,6 @@ button.navbar-toggler-icon{
       font-size: 24px;
       z-index: 1000;
       transition: var(--transition);
-
     }
 
     #chat-toggle:hover {
@@ -1104,7 +1080,6 @@ button.navbar-toggler-icon{
     }
 
     @media (max-width: 576px) {
-
       #chat-box {
         width: 90%;
         right: 5%;
@@ -1138,7 +1113,6 @@ button.navbar-toggler-icon{
       >
         <span id="theme-icon">🌙</span>
       </button>
-
     </div>
     <div class="container-fluid">
       <!-- Enhanced Sticky Navigation -->
@@ -1268,37 +1242,36 @@ button.navbar-toggler-icon{
                 <span>Get connected with us on social networks:</span>
               </div>
               <div class="social-icons">
-               <a
-  href="https://www.linkedin.com/in/shailjaverma18"
-  class="social-icon"
-  aria-label="LinkedIn"
-  title="Connect on LinkedIn"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  <i class="fab fa-linkedin-in"></i>
-</a>
+                <a
+                  href="https://www.linkedin.com/in/shailjaverma18"
+                  class="social-icon"
+                  aria-label="LinkedIn"
+                  title="Connect on LinkedIn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
 
-<a
-  href="https://github.com/ShailjaVerma18"
-  class="social-icon"
-  aria-label="GitHub"
-  title="Check out my GitHub"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  <i class="fab fa-github"></i>
-</a>
+                <a
+                  href="https://github.com/ShailjaVerma18"
+                  class="social-icon"
+                  aria-label="GitHub"
+                  title="Check out my GitHub"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i class="fab fa-github"></i>
+                </a>
 
-<a
-  href="mailto:vermashailja018@gmail.com"
-  class="social-icon"
-  aria-label="Email"
-  title="Send me an email"
->
-  <i class="fas fa-envelope"></i>
-</a>
-
+                <a
+                  href="mailto:vermashailja018@gmail.com"
+                  class="social-icon"
+                  aria-label="Email"
+                  title="Send me an email"
+                >
+                  <i class="fas fa-envelope"></i>
+                </a>
               </div>
             </div>
           </div>
@@ -1433,7 +1406,6 @@ button.navbar-toggler-icon{
 
     <!-- JavaScript for Enhanced Functionality -->
     <script>
-
       $(document).ready(function () {
         // Smooth scrolling for anchor links
         $('a[href^="#"]').on("click", function (event) {
@@ -1515,7 +1487,6 @@ button.navbar-toggler-icon{
           topBtn.style.display = "block";
         } else {
           topBtn.style.display = "none";
-
         }
       };
 
@@ -1527,7 +1498,6 @@ button.navbar-toggler-icon{
 
     <!-- Chatbot Widget -->
     <div id="chat-container">
-
       <div id="chat-box">
         <div id="chat-header">
           <span>NOU Assistant 🤖</span>
@@ -1543,7 +1513,6 @@ button.navbar-toggler-icon{
           >
             ×
           </button>
-
         </div>
         <div id="chat-messages"></div>
         <div
@@ -1564,7 +1533,6 @@ button.navbar-toggler-icon{
     </div>
 
     <script>
-
       const API_URL = "/chat/"; // URL to your chatbot API
 
       function toggleChat() {
@@ -1661,7 +1629,6 @@ button.navbar-toggler-icon{
                 cookie.substring(name.length + 1)
               );
               break;
-
             }
           }
         }
@@ -1696,4 +1663,3 @@ button.navbar-toggler-icon{
     </script>
   </body>
 </html>
-
