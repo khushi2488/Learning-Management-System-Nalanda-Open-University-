@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   {% load static %}
   <head>
     <meta charset="UTF-8" />
@@ -77,6 +78,7 @@
       --chat-primary: rgb(6, 6, 106);
       --chat-primary-hover: #064b89;
       --chat-accent: #4a90e2;
+
     }
 
     /* Dark Theme */
@@ -182,8 +184,10 @@
       gap: 0;
     }
 
+
     .navbar-nav > .nav-item {
       margin: 0 12px;
+
     }
 
     .navbar-nav .nav-link {
@@ -270,6 +274,7 @@
     }
 
     @keyframes pulse {
+
       0%,
       100% {
         transform: scale(1);
@@ -281,9 +286,11 @@
 
     /* Mobile Navbar Enhancements */
     @media (max-width: 991px) {
+
       body {
         padding-top: 140px;
       }
+
 
       .navbar-collapse {
         background: var(--nav-bg);
@@ -316,11 +323,13 @@
 
     /* Enhanced Footer */
     .main-footer {
+
       background: var(--footer-bg);
       margin-top: 60px;
       box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
       color: var(--footer-text);
       transition: var(--transition);
+
     }
 
     .footer-social-section {
@@ -477,18 +486,23 @@
       opacity: 1;
       transform: translateX(-5px);
     }
+
     /* Add this to your CARD PROTECTION section */
     .dark-theme .card-title,
     .dark-theme .service-card h3 {
+
       color: var(--primary-color) !important;
       background-color: transparent !important;
+
     }
 
     /* Also add this to ensure all card content is properly styled */
     .dark-theme .service-card,
     .dark-theme .service-card .card-body {
+
       background-color: var(--card-bg) !important;
       color: var(--card-text) !important;
+
     }
 
     /* Specific protection for service card buttons */
@@ -571,9 +585,11 @@
         padding: 30px 0 20px 0;
       }
 
+
       .footer-content .row > [class^="col-"] {
         margin-bottom: 16px;
       }
+
 
       .footer-section-title {
         font-size: 16px;
@@ -619,9 +635,11 @@
         font-size: 13px;
       }
 
+
       .footer-content .row > [class^="col-"] {
         margin-bottom: 14px;
       }
+
 
       .navbar-nav .nav-link {
         padding: 12px 14px !important;
@@ -644,6 +662,7 @@
     }
 
     @keyframes slideInDown {
+
       from {
         opacity: 0;
         transform: translateY(-30px);
@@ -663,6 +682,7 @@
         opacity: 1;
         transform: translateY(0);
       }
+
     }
 
     /* Enhanced Mobile Menu */
@@ -704,6 +724,7 @@
       font-size: 18px;
       transition: background-color 0.3s ease;
       box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+
     }
 
     #topBtn:hover {
@@ -802,6 +823,7 @@
     }
 
     .me-4 i {
+
       color: var(--primary-color);
       font-size: 20px;
       transition: color 0.3s ease, transform 0.3s ease;
@@ -916,6 +938,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+
     }
 
     #chat-messages {
@@ -927,6 +950,7 @@
     }
 
     #chat-toggle {
+
       position: fixed;
       bottom: 90px;
       right: 30px;
@@ -948,6 +972,7 @@
       font-size: 24px;
       z-index: 1000;
       transition: var(--transition);
+
     }
 
     #chat-toggle:hover {
@@ -1043,6 +1068,7 @@
     }
 
     @media (max-width: 576px) {
+
       #chat-box {
         width: 90%;
         right: 5%;
@@ -1076,6 +1102,7 @@
       >
         <span id="theme-icon">🌙</span>
       </button>
+
     </div>
     <div class="container-fluid">
       <!-- Enhanced Sticky Navigation -->
@@ -1205,54 +1232,37 @@
                 <span>Get connected with us on social networks:</span>
               </div>
               <div class="social-icons">
-                <a
-                  href="#"
-                  class="social-icon"
-                  aria-label="Facebook"
-                  title="Follow us on Facebook"
-                >
-                  <i class="fab fa-facebook-f"></i>
-                </a>
-                <a
-                  href="#"
-                  class="social-icon"
-                  aria-label="Twitter"
-                  title="Follow us on Twitter"
-                >
-                  <i class="fab fa-twitter"></i>
-                </a>
-                <a
-                  href="#"
-                  class="social-icon"
-                  aria-label="Google"
-                  title="Find us on Google"
-                >
-                  <i class="fab fa-google"></i>
-                </a>
-                <a
-                  href="#"
-                  class="social-icon"
-                  aria-label="Instagram"
-                  title="Follow us on Instagram"
-                >
-                  <i class="fab fa-instagram"></i>
-                </a>
-                <a
-                  href="#"
-                  class="social-icon"
-                  aria-label="LinkedIn"
-                  title="Connect on LinkedIn"
-                >
-                  <i class="fab fa-linkedin-in"></i>
-                </a>
-                <a
-                  href="#"
-                  class="social-icon"
-                  aria-label="YouTube"
-                  title="Subscribe to our channel"
-                >
-                  <i class="fab fa-youtube"></i>
-                </a>
+               <a
+  href="https://www.linkedin.com/in/shailjaverma18"
+  class="social-icon"
+  aria-label="LinkedIn"
+  title="Connect on LinkedIn"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <i class="fab fa-linkedin-in"></i>
+</a>
+
+<a
+  href="https://github.com/ShailjaVerma18"
+  class="social-icon"
+  aria-label="GitHub"
+  title="Check out my GitHub"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <i class="fab fa-github"></i>
+</a>
+
+<a
+  href="mailto:vermashailja018@gmail.com"
+  class="social-icon"
+  aria-label="Email"
+  title="Send me an email"
+>
+  <i class="fas fa-envelope"></i>
+</a>
+
               </div>
             </div>
           </div>
@@ -1387,6 +1397,7 @@
 
     <!-- JavaScript for Enhanced Functionality -->
     <script>
+
       $(document).ready(function () {
         // Smooth scrolling for anchor links
         $('a[href^="#"]').on("click", function (event) {
@@ -1468,6 +1479,7 @@
           topBtn.style.display = "block";
         } else {
           topBtn.style.display = "none";
+
         }
       };
 
@@ -1479,6 +1491,7 @@
 
     <!-- Chatbot Widget -->
     <div id="chat-container">
+
       <div id="chat-box">
         <div id="chat-header">
           <span>NOU Assistant 🤖</span>
@@ -1494,6 +1507,7 @@
           >
             ×
           </button>
+
         </div>
         <div id="chat-messages"></div>
         <div
@@ -1514,6 +1528,7 @@
     </div>
 
     <script>
+
       const API_URL = "/chat/"; // URL to your chatbot API
 
       function toggleChat() {
@@ -1610,9 +1625,11 @@
                 cookie.substring(name.length + 1)
               );
               break;
+
             }
           }
         }
+
         return cookieValue;
       }
 
@@ -1643,3 +1660,4 @@
     </script>
   </body>
 </html>
+
