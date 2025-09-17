@@ -544,7 +544,7 @@ def manage_news(request):
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def create_news(request):
-    """Create new news/announcement with proper date handling"""
+    """Create new news/announcement with proper ManyToMany handling"""
     try:
         if request.session['adminid'] is not None:
             adminid = request.session['adminid']
@@ -561,17 +561,20 @@ def create_news(request):
                 publish_date_str = request.POST.get('publish_date')
                 expiry_date_str = request.POST.get('expiry_date')
                 
-                # Target specific groups
-                target_programs = request.POST.get('target_programs', '')
-                target_branches = request.POST.get('target_branches', '')
-                target_years = request.POST.get('target_years', '')
+                # UPDATED: Handle ManyToMany relationships
+                target_programs = request.POST.getlist('target_programs')  # Changed to getlist
+                target_branches = request.POST.getlist('target_branches')  # Changed to getlist
+                target_years = request.POST.getlist('target_years')        # Changed to getlist
                 
                 # Validation
                 if not title or not newstext:
                     messages.error(request, "Title and content are required!")
                     return render(request, "create_news.html", {
                         'adminid': adminid,
-                        'categories': NewsCategory.objects.filter(is_active=True)
+                        'categories': NewsCategory.objects.filter(is_active=True),
+                        'programs': Program.objects.all(),
+                        'branches': Branch.objects.all(),
+                        'years': Year.objects.all()
                     })
                 
                 # Parse dates properly with timezone
@@ -585,7 +588,10 @@ def create_news(request):
                         messages.error(request, "Invalid publish date format!")
                         return render(request, "create_news.html", {
                             'adminid': adminid,
-                            'categories': NewsCategory.objects.filter(is_active=True)
+                            'categories': NewsCategory.objects.filter(is_active=True),
+                            'programs': Program.objects.all(),
+                            'branches': Branch.objects.all(),
+                            'years': Year.objects.all()
                         })
                 
                 expiry_date = None
@@ -597,35 +603,44 @@ def create_news(request):
                         messages.error(request, "Invalid expiry date format!")
                         return render(request, "create_news.html", {
                             'adminid': adminid,
-                            'categories': NewsCategory.objects.filter(is_active=True)
+                            'categories': NewsCategory.objects.filter(is_active=True),
+                            'programs': Program.objects.all(),
+                            'branches': Branch.objects.all(),
+                            'years': Year.objects.all()
                         })
                 
-                # Create news item
+                # UPDATED: Create news item without ManyToMany fields first
                 news = NewsAnnouncement.objects.create(
                     title=title,
                     newstext=newstext,
                     category_id=category_id if category_id else None,
                     priority=priority,
                     target_audience=target_audience,
-                    target_programs=target_programs,
-                    target_branches=target_branches, 
-                    target_years=target_years,
+                    # REMOVED: target_programs, target_branches, target_years from create
                     publish_date=publish_date,
                     expiry_date=expiry_date,
                     created_by=f"Admin_{adminid}",
                     is_pinned=bool(request.POST.get('is_pinned')),
                     attachment=request.FILES.get('attachment'),
-                    is_active=True  # Make sure it's active by default
+                    is_active=True
                 )
+                
+                # UPDATED: Set ManyToMany relationships after creation
+                if target_programs:
+                    news.target_programs.set(target_programs)
+                if target_branches:
+                    news.target_branches.set(target_branches)
+                if target_years:
+                    news.target_years.set(target_years)
                 
                 messages.success(request, "News/Announcement created successfully!")
                 return redirect('adminapp:manage_news')
             
             # GET request - show form
             categories = NewsCategory.objects.filter(is_active=True)
-            programs = Program.objects.all()  # Add programs for dropdown
-            branches = Branch.objects.all()   # Add branches for dropdown
-            years = Year.objects.all()        # Add years for dropdown
+            programs = Program.objects.all()
+            branches = Branch.objects.all()
+            years = Year.objects.all()
             
             return render(request, "create_news.html", {
                 'adminid': adminid,
@@ -640,7 +655,7 @@ def create_news(request):
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def edit_news(request, news_id):
-    """Edit existing news/announcement"""
+    """Edit existing news/announcement with ManyToMany handling"""
     try:
         if request.session['adminid'] is not None:
             adminid = request.session['adminid']
@@ -653,36 +668,57 @@ def edit_news(request, news_id):
                 news.category_id = request.POST.get('category') or None
                 news.priority = request.POST.get('priority', 'normal')
                 news.target_audience = request.POST.get('target_audience', 'all')
-                news.target_programs = request.POST.get('target_programs', '')
-                news.target_branches = request.POST.get('target_branches', '')
-                news.target_years = request.POST.get('target_years', '')
                 news.is_pinned = bool(request.POST.get('is_pinned'))
+                
+                # UPDATED: Handle ManyToMany relationships
+                target_programs = request.POST.getlist('target_programs')
+                target_branches = request.POST.getlist('target_branches')
+                target_years = request.POST.getlist('target_years')
                 
                 # Handle dates
                 publish_date = request.POST.get('publish_date')
                 if publish_date:
-                    news.publish_date = datetime.strptime(publish_date, '%Y-%m-%dT%H:%M')
+                    naive_dt = datetime.strptime(publish_date, '%Y-%m-%dT%H:%M')
+                    news.publish_date = timezone.make_aware(naive_dt)
                 
                 expiry_date = request.POST.get('expiry_date')
-                news.expiry_date = datetime.strptime(expiry_date, '%Y-%m-%dT%H:%M') if expiry_date else None
+                if expiry_date:
+                    naive_dt = datetime.strptime(expiry_date, '%Y-%m-%dT%H:%M')
+                    news.expiry_date = timezone.make_aware(naive_dt)
+                else:
+                    news.expiry_date = None
                 
                 # Handle file upload
                 if request.FILES.get('attachment'):
                     news.attachment = request.FILES.get('attachment')
                 
                 news.save()
+                
+                # UPDATED: Set ManyToMany relationships after save
+                news.target_programs.set(target_programs)
+                news.target_branches.set(target_branches)
+                news.target_years.set(target_years)
+                
                 messages.success(request, "News/Announcement updated successfully!")
                 return redirect('adminapp:manage_news')
             
-            # GET request - show edit form
+            # GET request - show edit form with current values
             categories = NewsCategory.objects.filter(is_active=True)
+            programs = Program.objects.all()
+            branches = Branch.objects.all()
+            years = Year.objects.all()
+            
             return render(request, "edit_news.html", {
                 'adminid': adminid,
                 'news': news,
-                'categories': categories
+                'categories': categories,
+                'programs': programs,
+                'branches': branches,
+                'years': years
             })
     except KeyError:
         return redirect('nouapp:login')
+
 
 # @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def manage_categories(request):
@@ -901,29 +937,31 @@ def bulk_news_action(request):
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def duplicate_news(request, news_id):
-    """Duplicate a news item"""
+    """Duplicate a news item with ManyToMany field handling"""
     try:
         if request.session['adminid'] is not None:
             adminid = request.session['adminid']
             original_news = get_object_or_404(NewsAnnouncement, nid=news_id)
             
-            # Create a duplicate
+            # Create a duplicate (without ManyToMany fields first)
             duplicate = NewsAnnouncement.objects.create(
                 title=f"Copy of {original_news.title}",
                 newstext=original_news.newstext,
                 category=original_news.category,
                 priority=original_news.priority,
                 target_audience=original_news.target_audience,
-                target_programs=original_news.target_programs,
-                target_branches=original_news.target_branches,
-                target_years=original_news.target_years,
-                publish_date=timezone.now(),  # Set to current time
+                # REMOVED: target_programs, target_branches, target_years from create
+                publish_date=timezone.now(),
                 expiry_date=original_news.expiry_date,
                 created_by=f"Admin_{adminid}",
-                is_active=False,  # Start as inactive for review
-                is_pinned=False,  # Don't duplicate pinned status
-                # Note: attachment is not duplicated for security reasons
+                is_active=False,
+                is_pinned=False,
             )
+            
+            # UPDATED: Copy ManyToMany relationships after creation
+            duplicate.target_programs.set(original_news.target_programs.all())
+            duplicate.target_branches.set(original_news.target_branches.all())
+            duplicate.target_years.set(original_news.target_years.all())
             
             messages.success(request, f"News item duplicated successfully! Please review and activate.")
             return redirect('adminapp:edit_news', news_id=duplicate.nid)
@@ -933,10 +971,15 @@ def duplicate_news(request, news_id):
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def preview_news(request, news_id):
-    """Preview news item (AJAX endpoint)"""
+    """Preview news item with proper ManyToMany field display"""
     try:
         if request.session['adminid'] is not None:
             news = get_object_or_404(NewsAnnouncement, nid=news_id)
+            
+            # UPDATED: Get ManyToMany field values properly
+            programs_list = list(news.target_programs.values_list('program', flat=True))
+            branches_list = list(news.target_branches.values_list('branch', flat=True))
+            years_list = list(news.target_years.values_list('year', flat=True))
             
             # Return HTML preview
             preview_html = f"""
@@ -952,9 +995,9 @@ def preview_news(request, news_id):
                 
                 <div class="mb-3">
                     <strong>Target Audience:</strong> {news.get_target_audience_display()}
-                    {f'<br><strong>Programs:</strong> {news.target_programs}' if news.target_programs else ''}
-                    {f'<br><strong>Branches:</strong> {news.target_branches}' if news.target_branches else ''}
-                    {f'<br><strong>Years:</strong> {news.target_years}' if news.target_years else ''}
+                    {f'<br><strong>Programs:</strong> {", ".join(programs_list)}' if programs_list else ''}
+                    {f'<br><strong>Branches:</strong> {", ".join(branches_list)}' if branches_list else ''}
+                    {f'<br><strong>Years:</strong> {", ".join(years_list)}' if years_list else ''}
                 </div>
                 
                 <div class="mb-3">
@@ -988,6 +1031,7 @@ def preview_news(request, news_id):
             
     except KeyError:
         return redirect('nouapp:login')
+
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def news_analytics(request):
