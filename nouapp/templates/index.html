@@ -6,18 +6,58 @@
 
 <style>
   /*Home*/
-  .home {
+  /* .home {
     background-image: url(../static/images/bg4.jpg);
     width: 100%;
     height: 85vh;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+  } */
+
+  .hero {
+    background: url("../images/bg4.jpg") no-repeat center center;
+    background-size: cover;
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
   }
+
+  .hero h1 {
+    font-size: 2.5rem;
+    color: #1a1a1a;
+  }
+
+  .hero p {
+    font-size: 1.1rem;
+    color: #333;
+  }
+
+  .hero .btn {
+    background-color: #007bff;
+    border: none;
+  }
+
+  .hero .btn:hover {
+    background-color: #0056b3;
+  }
+
+  .hero img {
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border 0.4s ease;
+    border-radius: 10px;
+    border: 3px solid transparent;
+  }
+
+  .hero img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(0, 86, 179, 0.6); /* blue glow */
+    border: 3px solid #0056b3; /* theme blue border */
+  }
+
   /*Home end*/
   /*headline*/
   /*aboutsection*/
-  .about-section .row h3 {
+  /* .about-section .row h3 {
     color: rgb(6, 6, 106);
     font-family: poppins, sans-serif;
     font-weight: bold;
@@ -32,10 +72,10 @@
     padding-top: 60px;
     padding-bottom: 25px;
     width: 30%;
-  }
+  } */
 
-  @media (max-width: 600px) {
-    .about-section .row h3 {
+  /* @media (max-width: 600px) { */
+  /* .about-section .row h3 {
       text-align: center;
       padding-left: 0px;
       padding-top: 0px;
@@ -60,8 +100,84 @@
     }
     .about-section .row .col-sm-5 img {
       width: 100%;
+    } */
+  /* } */
+
+  /* Animation Keyframes */
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
     }
   }
+
+  @keyframes fadeInRight {
+    from {
+      opacity: 0;
+      transform: translateX(50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* About Section */
+  .about-section {
+    padding: 60px 0;
+  }
+
+  .about-title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #003366; /* theme dark blue */
+    margin-bottom: 15px;
+    position: relative;
+    display: inline-block;
+    animation: fadeInLeft 1s ease forwards;
+  }
+
+  /* Hover underline animation */
+  .about-title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 3px;
+    background: #0056b3; /* theme blue */
+    transition: width 0.4s ease;
+  }
+
+  .about-title:hover::after {
+    width: 100%;
+  }
+
+  .about-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #333;
+    margin-bottom: 15px;
+    animation: fadeInLeft 1.2s ease forwards;
+  }
+
+  .about-img {
+    border-radius: 10px;
+    opacity: 0;
+    animation: fadeInRight 1.2s ease forwards;
+    animation-delay: 0.3s;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .about-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 8px 20px rgba(0, 86, 179, 0.3);
+  }
+
   /*gallery*/
   .gallery .row h3 {
     color: rgb(6, 6, 106);
@@ -203,7 +319,7 @@
   }
 </style>
 <!--Home-->
-<div class="row">
+<!-- <div class="row">
   <section class="home">
     <div
       class="row"
@@ -222,7 +338,43 @@
       </p>
     </div>
   </section>
-</div>
+</div> -->
+
+<!-- Hero Section -->
+<section class="hero py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <!-- Left Column -->
+      <div class="col-lg-6 text-center text-lg-start">
+        <h1 class="fw-bold mb-3">
+          Get Started <br />
+          From Our Content For Distance Learning
+        </h1>
+        <p class="mb-4">NOU e-Gyan Portal Concept by Nalanda Open University</p>
+
+        <!-- Search Box -->
+        <div class="input-group shadow-sm" style="max-width: 400px">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Search courses here..."
+          />
+          <button class="btn btn-primary">Search</button>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="col-lg-6 text-center mt-4 mt-lg-0">
+        <img
+          src="{% static 'images/bg4.jpg' %}"
+          class="img-fluid rounded"
+          alt="Hero Image"
+        />
+      </div>
+    </div>
+  </div>
+</section>
+
 <!--headline-->
 <div
   class="row"
@@ -248,7 +400,7 @@
 </div>
 
 <!--aboutsection-->
-<div class="row" style="padding-top: 10vh">
+<!-- <div class="row" style="padding-top: 10vh">
   <section class="about-section">
     <div class="row">
       <h3>ABOUT NOU e-GYAN PORTAL</h3>
@@ -277,7 +429,46 @@
       </div>
     </div>
   </section>
-</div>
+</div> -->
+
+<!-- aboutsection -->
+<section class="about-section container my-5">
+  <div class="row align-items-center">
+    <!-- Left Column (Text) -->
+    <div class="col-sm-7" style="text-align: justify">
+      <h2 class="about-title">ABOUT NOU e-GYAN PORTAL</h2>
+      <p class="about-text">
+        Nalanda Open University welcomes all our students, faculties & study
+        centres to the very new & innovative online study portal
+        <strong>NOU e-Gyan</strong>. The portal is a unique initiative by
+        Hon’ble Vice-Chancellor Prof. (Dr.) K C Sinha, which is aimed at
+        providing online study material to the students of NOU.
+      </p>
+      <p class="about-text">
+        The portal is accessible from any nook and corner of the world if the
+        system allows permission to its users. It is a web-based solution
+        assisting 24×7 to its authorized users. It will resolve the academic
+        issues such as
+        <em
+          >e-Content Distribution, Delivery, Tracking, Assessment, Progress
+          Monitoring</em
+        >
+        & <em>Controlling of all stakeholders</em> of the system i.e. students,
+        teachers, study centre administrators as well as Nalanda Open University
+        Admins when they are at a distance.
+      </p>
+    </div>
+
+    <!-- Right Column (Image) -->
+    <div class="col-sm-5 text-center">
+      <img
+        src="{% static 'images/contactimg.jpeg' %}"
+        alt="NOU Campus"
+        class="img-fluid about-img"
+      />
+    </div>
+  </div>
+</section>
 
 <!--gallery-->
 <div class="row" style="padding-top: 10vh">
@@ -427,7 +618,7 @@
               src="{% static 'images/vc.jpg' %}"
               alt="Card image cap"
               width="auto"
-              height="250px"
+              height="auto"
               style="border-radius: 50%"
             />
             <div class="card-body" style="text-align: center">
@@ -448,7 +639,7 @@
               src="{% static 'images/pvc.jpg' %}"
               alt="Card image cap"
               width="auto"
-              height="250px"
+              height="auto"
               style="border-radius: 50%"
             />
             <div class="card-body" style="text-align: center">
@@ -469,7 +660,7 @@
               src="{% static 'images/registrar1.jpeg' %}"
               alt="Card image cap"
               width="auto"
-              height="250px"
+              height="auto"
               style="border-radius: 50%"
             />
             <div class="card-body" style="text-align: center">
@@ -490,7 +681,7 @@
               src="{% static 'images/examreg.jpg' %}"
               alt="Card image cap"
               width="auto"
-              height="250px"
+              height="auto"
               style="border-radius: 50%"
             />
             <div class="card-body" style="text-align: center">

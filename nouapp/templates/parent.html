@@ -712,31 +712,87 @@
     }
 
     /* Large devices */
-    @media screen and (max-width: 1000px) {
+    @media screen and (max-width: 1500px) {
       div.container {
         flex-direction: column;
+      }
+      .navbar > .container,
+      .navbar > .container-fluid,
+      .navbar > .container-sm,
+      .navbar > .container-md,
+      .navbar > .container-lg,
+      .navbar > .container-xl,
+      .navbar > .container-xxl {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: center;
+      }
+    }
+
+    /* Large devices */
+    @media screen and (max-width: 991px) {
+      div.container {
+        flex-direction: column;
+      }
+      .navbar > .container,
+      .navbar > .container-fluid,
+      .navbar > .container-sm,
+      .navbar > .container-md,
+      .navbar > .container-lg,
+      .navbar > .container-xl,
+      .navbar > .container-xxl {
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        justify-content: center;
       }
     }
 
     /* Medium devices */
-    @media screen and (max-width: 992px) {
+    @media screen and (max-width: 990px) {
       button.navbar-toggler.collapsed {
         margin-left: auto;
       }
-      img.img-fluid {
-        max-width: 400px;
-        height: 50;
-        margin: 10px;
-        margin-left: 15px;
+      .navbar > .container,
+      .navbar > .container-fluid,
+      .navbar > .container-sm,
+      .navbar > .container-md,
+      .navbar > .container-lg,
+      .navbar > .container-xl,
+      .navbar > .container-xxl {
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        justify-content: center;
       }
     }
 
     /* Small devices */
     @media screen and (max-width: 768px) {
-      button.navbar-toggler-icon {
-        display: flex;
-        float: right;
+      .navbar-brand img {
+        height: 60px !important;
+        width: 100% !important;
+        object-fit: contain;
       }
+      .navbar > .container,
+      .navbar > .container-fluid,
+      .navbar > .container-sm,
+      .navbar > .container-md,
+      .navbar > .container-lg,
+      .navbar > .container-xl,
+      .navbar > .container-xxl {
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        justify-content: center;
+      }
+    }
+
+    @media screen and (max-width: 600px) {
+      /* .col-sm-7{
+  padding-left: 20px;
+  padding-right: 20px;
+  } */
     }
 
     /* Extra small devices */
@@ -744,6 +800,30 @@
       #topBtn {
         bottom: 75px;
         right: 22px;
+      }
+      .gallery div.row .col-sm-3 {
+        padding: 50px;
+      }
+      .navbar-brand img {
+        height: 60px !important;
+        width: 100% !important;
+        object-fit: contain;
+      }
+      .navbar {
+        display: flex;
+        flex-wrap: nowrap;
+      }
+      .navbar > .container,
+      .navbar > .container-fluid,
+      .navbar > .container-sm,
+      .navbar > .container-md,
+      .navbar > .container-lg,
+      .navbar > .container-xl,
+      .navbar > .container-xxl {
+        display: flex;
+        flex-wrap: nowrap;
+        flex-direction: row;
+        justify-content: center;
       }
     }
 
@@ -1147,17 +1227,19 @@
                 class="navbar-logo"
               />
             </a>
-            <button
-              class="navbar-toggler ms-auto"
-              type="button"
-              data-bs-toggle="collapse"
-              data-bs-target="#navbarSupportedContent"
-              aria-controls="navbarSupportedContent"
-              aria-expanded="false"
-              aria-label="Toggle navigation"
-            >
-              <span class="navbar-toggler-icon"></span>
-            </button>
+            <div class="button-nav">
+              <button
+                class="navbar-toggler ms-auto"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+            </div>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
               <ul class="navbar-nav ms-auto">
