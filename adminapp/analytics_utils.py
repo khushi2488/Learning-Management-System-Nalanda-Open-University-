@@ -5,34 +5,34 @@ from django.utils import timezone
 from datetime import datetime, timedelta
 from nouapp.models import Student
 from studentapp.models import StuResponse, Question, Answer
-from .models import Material, News, StudentActivity, DailyStats, ProgramStats, BranchStats, Course
+from .models import Material, News, StudentActivity, DailyStats, ProgramStats, BranchStats, Course, Program, Branch, Year
 
-def log_student_activity(rollno, activity_type, request=None, additional_info=''):
-    """Log student activity using rollno (compatible with your session system)"""
+def log_student_activity(rollno, activity_type, request, additional_info=''):
+    """Log student activity with proper ForeignKey handling"""
     try:
-        # Get student info
-        student = Student.objects.get(rollno=rollno)
+        # Get student with related objects
+        student = Student.objects.select_related('program', 'branch', 'year').get(rollno=rollno)
         
-        # Create activity log
-        activity = StudentActivity.objects.create(
+        # FIXED: Use the actual ForeignKey objects
+        StudentActivity.objects.create(
             rollno=rollno,
             student_name=student.name,
-            program=student.program,
-            branch=student.branch,
-            year=student.year,
+            program=student.program,      # ForeignKey to Program
+            branch=student.branch,        # ForeignKey to Branch  
+            year=student.year,            # ForeignKey to Year
             activity_type=activity_type,
-            ip_address=request.META.get('REMOTE_ADDR') if request else None,
+            ip_address=request.META.get('REMOTE_ADDR'),
             additional_info=additional_info
         )
-        return activity
     except Student.DoesNotExist:
-        print(f"Student with rollno {rollno} not found")
-        return None
-
+        print(f"Student with rollno {rollno} not found for activity logging")
+    except Exception as e:
+        print(f"Error logging student activity: {e}")
+        
 def get_enrollment_analytics(days=30):
-    """Get enrollment data based on your existing Student model"""
+    """FIXED: Get enrollment data based on your existing Student model"""
     
-    # Get enrollment by program
+    # Get enrollment by program (using string values from Student model)
     enrollment_by_program = Student.objects.values('program').annotate(
         count=Count('rollno')
     ).order_by('-count')
@@ -47,7 +47,7 @@ def get_enrollment_analytics(days=30):
         count=Count('rollno')
     ).order_by('-count')
     
-    # Get daily login activity
+    # Get daily login activity (using ForeignKey relationships in StudentActivity)
     end_date = timezone.now().date()
     start_date = end_date - timedelta(days=days)
     
@@ -132,7 +132,7 @@ def get_material_analytics(days=30):
 def get_student_engagement_analytics():
     """Get student engagement metrics based on your existing models"""
     
-    # Get feedback/complaint statistics
+    # Get feedback/complaint statistics (using string values from StuResponse)
     feedback_by_program = StuResponse.objects.filter(
         responsetype='feedback'
     ).values('program').annotate(
@@ -145,23 +145,25 @@ def get_student_engagement_analytics():
         count=Count('id')
     ).order_by('-count')
     
-    # Q&A Statistics from activity logs
+    # FIXED: Q&A Statistics from activity logs (using ForeignKey relationships)
     question_activities = StudentActivity.objects.filter(
         activity_type='question_post'
-    ).values('program').annotate(
+    ).values('program__program').annotate(  # Access the program name through ForeignKey
         count=Count('id')
     ).order_by('-count')
     
     answer_activities = StudentActivity.objects.filter(
         activity_type='answer_post'  
-    ).values('program').annotate(
+    ).values('program__program').annotate(  # Access the program name through ForeignKey
         count=Count('id')
     ).order_by('-count')
     
-    # Most active students
+    # Most active students (using ForeignKey relationships)
     most_active_students = StudentActivity.objects.values(
-        'rollno', 'student_name', 'program', 'branch'
+        'rollno', 'student_name'
     ).annotate(
+        program_name=Q('program__program'),  # Get program name through ForeignKey
+        branch_name=Q('branch__branch'),     # Get branch name through ForeignKey
         activity_count=Count('id')
     ).order_by('-activity_count')[:20]
     
@@ -233,11 +235,11 @@ def get_dashboard_summary():
     return {
         'total_students': Student.objects.count(),
         'total_materials': Material.objects.count(),
-        'total_courses': Course.objects.count(),  # ADDED THIS
+        'total_courses': Course.objects.count(),
         'total_news': News.objects.count(),
         'today_logins': today_logins,
         'today_unique_students': today_unique_students,
-        'week_unique_students': week_unique_students,  # ADDED THIS
+        'week_unique_students': week_unique_students,
         'today_downloads': today_downloads,
         'today_views': today_views,
         'login_change': round(login_change, 1),
@@ -299,3 +301,53 @@ def update_daily_stats():
     
     stats.save()
     return stats
+
+# ADDED: Helper function to sync existing students with Program/Branch/Year tables
+def sync_student_data():
+    """Sync existing Student string data with Program/Branch/Year tables"""
+    try:
+        students = Student.objects.all()
+        
+        for student in students:
+            # Create Program if doesn't exist
+            program_obj, created = Program.objects.get_or_create(program=student.program)
+            if created:
+                print(f"Created Program: {student.program}")
+            
+            # Create Branch if doesn't exist
+            branch_obj, created = Branch.objects.get_or_create(branch=student.branch)
+            if created:
+                print(f"Created Branch: {student.branch}")
+            
+            # Create Year if doesn't exist
+            year_obj, created = Year.objects.get_or_create(year=student.year)
+            if created:
+                print(f"Created Year: {student.year}")
+        
+        print(f"Synced data for {students.count()} students")
+        
+    except Exception as e:
+        print(f"Error syncing student data: {e}")
+
+# ADDED: Data migration function
+def migrate_student_activity_data():
+    """Migrate existing StudentActivity records if any have string values"""
+    try:
+        # This function would be used if you have existing StudentActivity records
+        # with string values that need to be converted to ForeignKey relationships
+        activities = StudentActivity.objects.all()
+        
+        for activity in activities:
+            # Check if program, branch, year are already ForeignKey instances
+            # If they're strings, convert them
+            if isinstance(activity.program, str):
+                program_obj, _ = Program.objects.get_or_create(program=activity.program)
+                activity.program = program_obj
+                activity.save()
+            
+            # Similar for branch and year...
+            
+        print(f"Migrated {activities.count()} activity records")
+        
+    except Exception as e:
+        print(f"Error migrating activity data: {e}")

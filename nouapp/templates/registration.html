@@ -330,7 +330,7 @@
             </div>
           </div>
 
-          <!-- Program -->
+          <!-- Program - UPDATED: Dynamic dropdown from database -->
           <div class="row mb-3">
             <label class="col-sm-3 col-form-label required form-label">
               Select Program :
@@ -338,14 +338,14 @@
             <div class="col-sm-9">
               <select class="form-select" id="program" name="program" required>
                 <option value="">---Select Program---</option>
-                <option value="btech">B.Tech</option>
-                <option value="mtech">M.Tech</option>
-                <option value="mba">MBA</option>
+                {% for prog in program %}
+                <option value="{{ prog.id }}">{{ prog.program }}</option>
+                {% endfor %}
               </select>
             </div>
           </div>
 
-          <!-- Branch -->
+          <!-- Branch - UPDATED: Dynamic dropdown from database -->
           <div class="row mb-3">
             <label class="col-sm-3 col-form-label required form-label">
               Select Branch :
@@ -353,17 +353,14 @@
             <div class="col-sm-9">
               <select class="form-select" id="branch" name="branch" required>
                 <option value="">---Select Branch---</option>
-                <option value="Computer Science">Computer Science</option>
-                <option value="Information Technology">Information Technology</option>
-                <option value="Electonic">Electronic</option>
-                <option value="Electrical">Electrical</option>
-                <option value="Mechanical">Mechanical</option>
-                <option value="Other">Other</option>
+                {% for br in branch %}
+                <option value="{{ br.id }}">{{ br.branch }}</option>
+                {% endfor %}
               </select>
             </div>
           </div>
 
-          <!-- Year -->
+          <!-- Year - UPDATED: Dynamic dropdown from database -->
           <div class="row mb-3">
             <label class="col-sm-3 col-form-label required form-label">
               Select Year :
@@ -371,10 +368,9 @@
             <div class="col-sm-9">
               <select class="form-select" id="year" name="year" required>
                 <option value="">---Select Year---</option>
-                <option value="First Year">First Year</option>
-                <option value="Second Year">Second Year</option>
-                <option value="Third Year">Third Year</option>
-                <option value="Final Year">Final Year</option>
+                {% for yr in year %}
+                <option value="{{ yr.id }}">{{ yr.year }}</option>
+                {% endfor %}
               </select>
             </div>
           </div>

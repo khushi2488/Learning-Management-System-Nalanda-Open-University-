@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 import os
-from nouapp.models import Student
+# from nouapp.models import Student
 from django.utils import timezone
 
 # Create your models here.
@@ -216,11 +216,6 @@ class MaterialAccess(models.Model):
     class Meta:
         ordering = ['-accessed_at']    
 
-# class News(models.Model):
-#     nid = models.AutoField(primary_key=True)
-#     newstext = models.TextField()
-#     newsdate = models.CharField(max_length=30)
-
 class Admin_table(models.Model):
     Admin_Id = models.BigAutoField(primary_key=True)
     Admin_Name = models.CharField(max_length=100, null=False)
@@ -231,12 +226,13 @@ class Admin_table(models.Model):
     
 #___________For the Admin analytic dashboard___________________
 class StudentActivity(models.Model):
-    """Track student activity using rollno instead of FK"""
-    rollno = models.CharField(max_length=50)  # Use rollno like your existing system
+    """Track student activity using ForeignKeys instead of plain text"""
+    # NORMALIZED: Use ForeignKeys instead of plain text fields
+    rollno = models.CharField(max_length=50)  # Keep rollno as is for compatibility
     student_name = models.CharField(max_length=100)
-    program = models.CharField(max_length=100)
-    branch = models.CharField(max_length=100)
-    year = models.CharField(max_length=100)
+    program = models.ForeignKey(Program, on_delete=models.CASCADE)  # CHANGED: ForeignKey instead of CharField
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)    # CHANGED: ForeignKey instead of CharField
+    year = models.ForeignKey(Year, on_delete=models.CASCADE)        # CHANGED: ForeignKey instead of CharField
     
     activity_type = models.CharField(max_length=50, choices=[
         ('login', 'Login'),
@@ -280,16 +276,16 @@ class DailyStats(models.Model):
         ordering = ['-date']
 
 class ProgramStats(models.Model):
-    """Statistics by program"""
-    program = models.CharField(max_length=100)
+    """Statistics by program - NORMALIZED"""
+    program = models.ForeignKey(Program, on_delete=models.CASCADE)  # CHANGED: ForeignKey instead of CharField
     total_students = models.PositiveIntegerField(default=0)
     active_students_today = models.PositiveIntegerField(default=0)
     materials_count = models.PositiveIntegerField(default=0)
     last_updated = models.DateTimeField(auto_now=True)
 
 class BranchStats(models.Model):
-    """Statistics by branch"""
-    branch = models.CharField(max_length=100)
+    """Statistics by branch - NORMALIZED"""
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)    # CHANGED: ForeignKey instead of CharField
     total_students = models.PositiveIntegerField(default=0)
     active_students_today = models.PositiveIntegerField(default=0)
     materials_count = models.PositiveIntegerField(default=0)
@@ -311,7 +307,7 @@ class NewsCategory(models.Model):
         return self.name
 
 class NewsAnnouncement(models.Model):
-    """Enhanced News/Announcements model"""
+    """Enhanced News/Announcements model - NORMALIZED"""
     
     # Priority levels
     PRIORITY_CHOICES = [
@@ -333,9 +329,9 @@ class NewsAnnouncement(models.Model):
     
     # Basic fields (keeping compatibility with your existing News model)
     nid = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=200)  # New: separate title field
+    title = models.CharField(max_length=200)
     newstext = models.TextField()
-    newsdate = models.DateTimeField(default=timezone.now)  # Changed to DateTime
+    newsdate = models.DateTimeField(default=timezone.now)
     
     # Enhanced fields
     category = models.ForeignKey(NewsCategory, on_delete=models.SET_NULL, null=True, blank=True)
@@ -346,19 +342,17 @@ class NewsAnnouncement(models.Model):
     publish_date = models.DateTimeField(default=timezone.now)
     expiry_date = models.DateTimeField(null=True, blank=True)
     
-    # Target audience
+    # Target audience - NORMALIZED: Use ForeignKeys and ManyToMany instead of plain text
     target_audience = models.CharField(max_length=20, choices=AUDIENCE_CHOICES, default='all')
-    target_programs = models.TextField(blank=True, help_text="Comma-separated program names")
-    target_branches = models.TextField(blank=True, help_text="Comma-separated branch names") 
-    target_years = models.TextField(blank=True, help_text="Comma-separated year names")
+    target_programs = models.ManyToManyField(Program, blank=True, related_name='targeted_news')  # CHANGED: ManyToMany instead of TextField
+    target_branches = models.ManyToManyField(Branch, blank=True, related_name='targeted_news')  # CHANGED: ManyToMany instead of TextField
+    target_years = models.ManyToManyField(Year, blank=True, related_name='targeted_news')       # CHANGED: ManyToMany instead of TextField
     
     # Additional metadata
-    created_by = models.CharField(max_length=100, blank=True)  # Admin who created it
+    created_by = models.CharField(max_length=100, blank=True)
     attachment = models.FileField(upload_to='news_attachments/', blank=True, null=True)
-    is_pinned = models.BooleanField(default=False)  # Pin important announcements
+    is_pinned = models.BooleanField(default=False)
     view_count = models.PositiveIntegerField(default=0)
-    # Add these methods to your NewsAnnouncement model in adminapp/models.py
-# Add them inside the NewsAnnouncement class, before the Meta class
 
     def get_current_status(self):
         """Get the current status of this news item"""
@@ -397,7 +391,7 @@ class NewsAnnouncement(models.Model):
         return class_map.get(status, 'badge-secondary')
 
     def is_visible_to_student(self, student):
-        """Check if this news should be visible to a specific student"""
+        """Check if this news should be visible to a specific student - UPDATED for ForeignKeys"""
         from django.utils import timezone
         now = timezone.now()
         
@@ -414,56 +408,44 @@ class NewsAnnouncement(models.Model):
             return True
         
         elif self.target_audience == 'students':
-            # Show to ALL students regardless of program/branch/year
             return True
         
-        elif self.target_audience == 'specific':
-            # Check specific targeting criteria
-            program_match = True
-            branch_match = True
-            year_match = True
-            
-            # Check program targeting
-            if self.target_programs:
-                target_programs = [p.strip() for p in self.target_programs.split(',')]
-                program_match = student.program.name in target_programs
-            
-            # Check branch targeting
-            if self.target_branches:
-                target_branches = [b.strip() for b in self.target_branches.split(',')]
-                branch_match = student.branch.name in target_branches
-            
-            # Check year targeting
-            if self.target_years:
-                target_years = [y.strip() for y in self.target_years.split(',')]
-                year_match = student.year.name in target_years
-            
-            return program_match and branch_match and year_match
+        elif self.target_audience == 'specific_program':
+            # Check if student's program is in target_programs
+            return self.target_programs.filter(id=student.program.id).exists()
+        
+        elif self.target_audience == 'specific_branch':
+            # Check if student's branch is in target_branches
+            return self.target_branches.filter(id=student.branch.id).exists()
+        
+        elif self.target_audience == 'specific_year':
+            # Check if student's year is in target_years
+            return self.target_years.filter(id=student.year.id).exists()
         
         return False
 
     def get_target_display(self):
-        """Get human-readable target audience"""
+        """Get human-readable target audience - UPDATED for ManyToMany fields"""
         if self.target_audience == 'all':
             return 'Everyone'
         elif self.target_audience == 'students':
             return 'All Students'
-        elif self.target_audience == 'specific':
-            parts = []
-            if self.target_programs:
-                parts.append(f"Programs: {self.target_programs}")
-            if self.target_branches:
-                parts.append(f"Branches: {self.target_branches}")
-            if self.target_years:
-                parts.append(f"Years: {self.target_years}")
-            return " | ".join(parts) if parts else "Specific (no criteria)"
+        elif self.target_audience == 'specific_program':
+            programs = list(self.target_programs.values_list('program', flat=True))
+            return f"Programs: {', '.join(programs)}" if programs else "Specific Programs (none selected)"
+        elif self.target_audience == 'specific_branch':
+            branches = list(self.target_branches.values_list('branch', flat=True))
+            return f"Branches: {', '.join(branches)}" if branches else "Specific Branches (none selected)"
+        elif self.target_audience == 'specific_year':
+            years = list(self.target_years.values_list('year', flat=True))
+            return f"Years: {', '.join(years)}" if years else "Specific Years (none selected)"
         else:
             return self.get_target_audience_display()
 
     @property
     def is_currently_active(self):
-     """Property to check if news is currently active"""
-     return self.get_current_status() == 'active'
+        """Property to check if news is currently active"""
+        return self.get_current_status() == 'active'
     
     class Meta:
         ordering = ['-is_pinned', '-priority', '-publish_date']
@@ -494,9 +476,8 @@ class NewsAnnouncement(models.Model):
         }
         return priority_classes.get(self.priority, 'alert-info')
     
-    
     def can_view(self, user_type, user_program=None, user_branch=None, user_year=None):
-        """Check if a user can view this news item"""
+        """Check if a user can view this news item - UPDATED for ForeignKey relationships"""
         if not self.is_published():
             return False
             
@@ -507,22 +488,18 @@ class NewsAnnouncement(models.Model):
         elif self.target_audience == 'admins' and user_type == 'admin':
             return True
         elif self.target_audience == 'specific_program':
-            if user_program and self.target_programs:
-                programs = [p.strip() for p in self.target_programs.split(',')]
-                return user_program in programs
+            if user_program:
+                return self.target_programs.filter(id=user_program.id).exists()
         elif self.target_audience == 'specific_branch':
-            if user_branch and self.target_branches:
-                branches = [b.strip() for b in self.target_branches.split(',')]
-                return user_branch in branches
+            if user_branch:
+                return self.target_branches.filter(id=user_branch.id).exists()
         elif self.target_audience == 'specific_year':
-            if user_year and self.target_years:
-                years = [y.strip() for y in self.target_years.split(',')]
-                return user_year in years
+            if user_year:
+                return self.target_years.filter(id=user_year.id).exists()
                 
         return False
-     
 
-# Keep your original News model for backward compatibility, or migrate data
+# Keep your original News model for backward compatibility
 class News(models.Model):
     """Legacy News model - keep for backward compatibility"""
     nid = models.AutoField(primary_key=True)
@@ -531,4 +508,3 @@ class News(models.Model):
     
     class Meta:
         db_table = 'adminapp_news'  # Keep original table name
-    

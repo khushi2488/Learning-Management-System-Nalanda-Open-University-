@@ -68,36 +68,49 @@
                             </div>
                         </div>
 
-                        <!-- Target Audience -->
+                        <!-- UPDATED: Target Audience -->
                         <div class="mb-3">
                             <label for="target_audience" class="form-label fw-bold">Target Audience</label>
                             <select class="form-control" id="target_audience" name="target_audience" onchange="toggleTargeting()">
                                 <option value="all">Everyone</option>
                                 <option value="students">All Students</option>
-                                <option value="specific">Specific Groups</option>
+                                <option value="specific_program">Specific Programs</option>
+                                <option value="specific_branch">Specific Branches</option>
+                                <option value="specific_year">Specific Years</option>
                             </select>
                         </div>
 
-                        <!-- Specific Target Fields -->
-                        <div id="specific-targeting" class="p-3 rounded bg-light" style="display: none;">
-                            <label class="fw-bold">Specific Targeting</label>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="target_programs" class="form-label">Target Programs</label>
-                                    <input type="text" class="form-control" id="target_programs" name="target_programs"
-                                           placeholder="e.g., BCA, MCA (comma-separated)">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="target_branches" class="form-label">Target Branches</label>
-                                    <input type="text" class="form-control" id="target_branches" name="target_branches"
-                                           placeholder="e.g., Computer Science, IT (comma-separated)">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="target_years" class="form-label">Target Years</label>
-                                    <input type="text" class="form-control" id="target_years" name="target_years"
-                                           placeholder="e.g., 1st Year, 2nd Year (comma-separated)">
-                                </div>
-                            </div>
+                        <!-- UPDATED: Program Targeting -->
+                        <div id="program-targeting" class="mb-3 p-3 rounded bg-light" style="display: none;">
+                            <label for="target_programs" class="form-label fw-bold">Select Target Programs</label>
+                            <select name="target_programs" id="target_programs" class="form-control" multiple size="4">
+                                {% for program in programs %}
+                                    <option value="{{ program.id }}">{{ program.program }}</option>
+                                {% endfor %}
+                            </select>
+                            <small class="form-text text-muted">Hold Ctrl (Cmd on Mac) to select multiple programs</small>
+                        </div>
+
+                        <!-- UPDATED: Branch Targeting -->
+                        <div id="branch-targeting" class="mb-3 p-3 rounded bg-light" style="display: none;">
+                            <label for="target_branches" class="form-label fw-bold">Select Target Branches</label>
+                            <select name="target_branches" id="target_branches" class="form-control" multiple size="4">
+                                {% for branch in branches %}
+                                    <option value="{{ branch.id }}">{{ branch.branch }}</option>
+                                {% endfor %}
+                            </select>
+                            <small class="form-text text-muted">Hold Ctrl (Cmd on Mac) to select multiple branches</small>
+                        </div>
+
+                        <!-- UPDATED: Year Targeting -->
+                        <div id="year-targeting" class="mb-3 p-3 rounded bg-light" style="display: none;">
+                            <label for="target_years" class="form-label fw-bold">Select Target Years</label>
+                            <select name="target_years" id="target_years" class="form-control" multiple size="4">
+                                {% for year in years %}
+                                    <option value="{{ year.id }}">{{ year.year }}</option>
+                                {% endfor %}
+                            </select>
+                            <small class="form-text text-muted">Hold Ctrl (Cmd on Mac) to select multiple years</small>
                         </div>
 
                         <!-- Pin Option -->
@@ -125,8 +138,23 @@
 <script>
 function toggleTargeting() {
     const audience = document.getElementById('target_audience').value;
-    const specificDiv = document.getElementById('specific-targeting');
-    specificDiv.style.display = (audience === 'specific') ? 'block' : 'none';
+    const programDiv = document.getElementById('program-targeting');
+    const branchDiv = document.getElementById('branch-targeting');
+    const yearDiv = document.getElementById('year-targeting');
+    
+    // Hide all targeting divs first
+    programDiv.style.display = 'none';
+    branchDiv.style.display = 'none';
+    yearDiv.style.display = 'none';
+    
+    // Show relevant targeting div
+    if (audience === 'specific_program') {
+        programDiv.style.display = 'block';
+    } else if (audience === 'specific_branch') {
+        branchDiv.style.display = 'block';
+    } else if (audience === 'specific_year') {
+        yearDiv.style.display = 'block';
+    }
 }
 
 // Default publish date
@@ -158,7 +186,7 @@ document.addEventListener('DOMContentLoaded', function() {
     border-color: #2563eb !important;
 }
 
-#specific-targeting {
+#program-targeting, #branch-targeting, #year-targeting {
     background-color: #f8f9fa !important;
     border: 1px solid #dee2e6;
 }
