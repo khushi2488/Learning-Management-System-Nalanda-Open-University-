@@ -1,22 +1,47 @@
-{% extends "studentparent.html" %}
-{% block body %}
-    <div class="row">
-        <div class="col-sm-12">
-            <h1 style="text-align:center; color:rgb(6,6,106)">Post Answer</h1>   
-              <form class="form-group" action="{% url 'studentapp:postans' %}" method="post">
-                {% csrf_token %}
-                <table class="table" style="width: 70%; margin:auto; background-color: rgb(6,6,106); border: 2px aliceblue">
-                    <tr>
-                        <td style="color: white">Enter Answer</td>
-                        <td><textarea name="answer" class="form-control" style="background-color: aliceblue; color: rgb(6,6,106);"></textarea></td>
-                    </tr>
+{% extends "studentparent.html" %} {% block body %}
+<div class="row">
+  <div class="col-sm-12">
+    <h1 style="text-align: center; color: rgb(6, 6, 106)">Post Answer</h1>
+    <div class="container-fluid my-3">
+      <div class="row justify-content-center">
+        <div class="col-lg-10 col-md-12">
+          <form
+            class="form-group"
+            action="{% url 'studentapp:postans' %}"
+            method="post"
+          >
+            {% csrf_token %}
+            <table
+              class="table"
+              style="
+                width: 70%;
+                margin: auto;
+                background-color: rgb(6, 6, 106);
+                border: 2px aliceblue;
+              "
+            >
+              <tr>
+                <td style="color: white">Enter Answer</td>
+                <td>
+                  <textarea
+                    name="answer"
+                    class="form-control"
+                    style="background-color: aliceblue; color: rgb(6, 6, 106)"
+                  ></textarea>
+                </td>
+              </tr>
 
-                    <tr>
-                        <td><input type="hidden" name="qid" value="{{qid}}"/></td>
-                        <td><button type="submit" class="btn btn-info">Post</button></td>
-                    </tr>
-                </table>
-              </form>
+              <tr>
+                <td><input type="hidden" name="qid" value="{{qid}}" /></td>
+                <td>
+                  <button type="submit" class="btn btn-info">Post</button>
+                </td>
+              </tr>
+            </table>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
+</div>
 {% endblock body %}

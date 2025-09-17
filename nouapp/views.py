@@ -12,6 +12,7 @@ from adminapp.models import News
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 
+
 # Add these imports at the top of nouapp/views.py
 import json
 from django.http import JsonResponse
@@ -135,7 +136,7 @@ def services(request):
     return render(request,"services.html")
 
 
-#_____________________________this is for forgot password / reset password logic views_______________________________
+# _____________________________this is for forgot password / reset password logic views_______________________________
 import uuid
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -219,6 +220,10 @@ def reset_password(request, token):
     return render(request, "reset_password.html", {"token": token})
 
 
+# ---------------------------
+# Schema normalization helpers
+# ---------------------------
+
 def migrate_existing_students():
     """
     Utility function to migrate any existing students with string values
@@ -232,23 +237,19 @@ def migrate_existing_students():
             students = Student.objects.all()
             
             for student in students:
-                # If somehow you have students with string values instead of objects
-                # (This would only happen if there's mixed data)
-                
                 if isinstance(student.program, str):
-                    # Find or create Program object
                     program_obj, created = Program.objects.get_or_create(program=student.program)
                     if created:
                         print(f"Created Program: {student.program}")
-                    # Note: You can't update like this because program is now a ForeignKey
-                    # You'd need to handle this in a custom migration
+                    # Note: You’d normally handle this in a custom migration
                 
-                # Similar for branch and year...
+                # Similar logic can be applied for branch and year...
                 
             print("Migration completed successfully")
             
     except Exception as e:
         print(f"Error during migration: {e}")
+
 
 def ensure_dropdown_data():
     """
@@ -256,20 +257,25 @@ def ensure_dropdown_data():
     """
     from adminapp.models import Program, Branch, Year
     
-    # Add default programs if none exist
     if not Program.objects.exists():
         programs = ['BCA', 'MCA', 'B.Tech', 'M.Tech', 'MBA']
         for prog in programs:
             Program.objects.create(program=prog)
             
-    # Add default branches if none exist  
     if not Branch.objects.exists():
         branches = ['Computer Science', 'Electronics', 'Mechanical', 'Civil']
         for branch in branches:
             Branch.objects.create(branch=branch)
             
-    # Add default years if none exist
     if not Year.objects.exists():
         years = ['1st Year', '2nd Year', '3rd Year', '4th Year']
         for year in years:
             Year.objects.create(year=year)
+
+
+# ---------------------------
+# Custom error handlers
+# ---------------------------
+
+def custom_404_view(request, exception):
+    return render(request, "404.html", status=404)
