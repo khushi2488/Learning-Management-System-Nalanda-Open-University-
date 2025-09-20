@@ -1,0 +1,222 @@
+{% extends "adminparent.html" %}
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="text-center mb-5" style="color: rgb(6, 6, 106); font-weight: 700;">
+                <i class="fas fa-database mr-3"></i>Manage Academic Data
+            </h1>
+        </div>
+    </div>
+    
+    <!-- Navigation Cards -->
+    <div class="row mb-5">
+        <div class="col-md-3">
+            <div class="card border-0 shadow-lg h-100" style="border-radius: 20px; overflow: hidden;">
+                <div class="card-body text-center p-4" style="background: linear-gradient(135deg, #f8f9fc, white);">
+                    <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4" 
+                         style="width: 80px; height: 80px;">
+                        <i class="fas fa-graduation-cap fa-2x text-white"></i>
+                    </div>
+                    <h5 class="card-title text-primary font-weight-bold">Programs</h5>
+                    <p class="card-text text-muted">Manage academic programs like B.Tech, M.Tech, etc.</p>
+                    <div class="mb-3">
+                        <span class="badge badge-primary badge-pill px-3 py-2" style="font-size: 1rem;">
+                            Total: {{ programs.count }}
+                        </span>
+                    </div>
+                    <a href="{% url 'adminapp:manage_programs' %}" 
+                       class="btn btn-primary btn-lg shadow-sm" 
+                       style="border-radius: 25px; width: 100%;">
+                        <i class="fas fa-cog mr-2"></i>Manage Programs
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card border-0 shadow-lg h-100" style="border-radius: 20px; overflow: hidden;">
+                <div class="card-body text-center p-4" style="background: linear-gradient(135deg, #f8f9fc, white);">
+                    <div class="bg-success rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4" 
+                         style="width: 80px; height: 80px;">
+                        <i class="fas fa-code-branch fa-2x text-white"></i>
+                    </div>
+                    <h5 class="card-title text-success font-weight-bold">Branches</h5>
+                    <p class="card-text text-muted">Manage academic branches like CSE, ECE, etc.</p>
+                    <div class="mb-3">
+                        <span class="badge badge-success badge-pill px-3 py-2" style="font-size: 1rem;">
+                            Total: {{ branches.count }}
+                        </span>
+                    </div>
+                    <a href="{% url 'adminapp:manage_branches' %}" 
+                       class="btn btn-success btn-lg shadow-sm" 
+                       style="border-radius: 25px; width: 100%;">
+                        <i class="fas fa-cog mr-2"></i>Manage Branches
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3">
+            <div class="card border-0 shadow-lg h-100" style="border-radius: 20px; overflow: hidden;">
+                <div class="card-body text-center p-4" style="background: linear-gradient(135deg, #f8f9fc, white);">
+                    <div class="bg-warning rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4" 
+                         style="width: 80px; height: 80px;">
+                        <i class="fas fa-calendar-alt fa-2x text-white"></i>
+                    </div>
+                    <h5 class="card-title text-warning font-weight-bold">Years</h5>
+                    <p class="card-text text-muted">Manage academic years like 1st Year, 2nd Year, etc.</p>
+                    <div class="mb-3">
+                        <span class="badge badge-warning badge-pill px-3 py-2" style="font-size: 1rem;">
+                            Total: {{ years.count }}
+                        </span>
+                    </div>
+                    <a href="{% url 'adminapp:manage_years' %}" 
+                       class="btn btn-warning btn-lg text-white shadow-sm" 
+                       style="border-radius: 25px; width: 100%;">
+                        <i class="fas fa-cog mr-2"></i>Manage Years
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card border-0 shadow-lg h-100" style="border-radius: 20px; overflow: hidden;">
+                <div class="card-body text-center p-4" style="background: linear-gradient(135deg, #f8f9fc, white);">
+                    <div class="bg-info rounded-circle d-flex align-items-center justify-content-center mx-auto mb-4" 
+                         style="width: 80px; height: 80px;">
+                        <i class="fas fa-book fa-2x text-white"></i>
+                    </div>
+                    <h5 class="card-title text-info font-weight-bold">Courses</h5>
+                    <p class="card-text text-muted">Manage courses for different programs and branches.</p>
+                    <div class="mb-3">
+                        <span class="badge badge-info badge-pill px-3 py-2" style="font-size: 1rem;">
+                            Total: {{ courses.count }}
+                        </span>
+                    </div>
+                    <a href="{% url 'adminapp:manage_courses' %}" 
+                       class="btn btn-info btn-lg shadow-sm" 
+                       style="border-radius: 25px; width: 100%;">
+                        <i class="fas fa-cog mr-2"></i>Manage Courses
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Quick Overview -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card border-0 shadow-lg" style="border-radius: 20px;">
+                <div class="card-header text-white" 
+                     style="background: linear-gradient(135deg, rgb(6, 6, 106), rgb(40, 40, 150)); border-radius: 20px 20px 0 0;">
+                    <h5 class="mb-0 font-weight-bold">
+                        <i class="fas fa-eye mr-2"></i>Quick Overview
+                    </h5>
+                </div>
+                <div class="card-body p-4" style="background-color: #f8f9fc;">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="bg-white p-4 rounded shadow-sm h-100">
+                                <h6 class="text-primary font-weight-bold mb-3">
+                                    <i class="fas fa-graduation-cap mr-2"></i>Available Programs:
+                                </h6>
+                                <ul class="list-unstyled">
+                                    {% for program in programs|slice:":5" %}
+                                    <li class="mb-2">
+                                        <i class="fas fa-chevron-right text-primary mr-2"></i>
+                                        <span class="text-dark">{{ program.program }}</span>
+                                    </li>
+                                    {% endfor %}
+                                    {% if programs.count > 5 %}
+                                    <li class="text-primary font-weight-bold">
+                                        <i class="fas fa-ellipsis-h mr-2"></i>
+                                        ... and {{ programs.count|add:"-5" }} more
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="bg-white p-4 rounded shadow-sm h-100">
+                                <h6 class="text-success font-weight-bold mb-3">
+                                    <i class="fas fa-code-branch mr-2"></i>Available Branches:
+                                </h6>
+                                <ul class="list-unstyled">
+                                    {% for branch in branches|slice:":5" %}
+                                    <li class="mb-2">
+                                        <i class="fas fa-chevron-right text-success mr-2"></i>
+                                        <span class="text-dark">{{ branch.branch }}</span>
+                                    </li>
+                                    {% endfor %}
+                                    {% if branches.count > 5 %}
+                                    <li class="text-success font-weight-bold">
+                                        <i class="fas fa-ellipsis-h mr-2"></i>
+                                        ... and {{ branches.count|add:"-5" }} more
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4">
+                            <div class="bg-white p-4 rounded shadow-sm h-100">
+                                <h6 class="text-warning font-weight-bold mb-3">
+                                    <i class="fas fa-calendar-alt mr-2"></i>Available Years:
+                                </h6>
+                                <ul class="list-unstyled">
+                                    {% for year in years|slice:":5" %}
+                                    <li class="mb-2">
+                                        <i class="fas fa-chevron-right text-warning mr-2"></i>
+                                        <span class="text-dark">{{ year.year }}</span>
+                                    </li>
+                                    {% endfor %}
+                                    {% if years.count > 5 %}
+                                    <li class="text-warning font-weight-bold">
+                                        <i class="fas fa-ellipsis-h mr-2"></i>
+                                        ... and {{ years.count|add:"-5" }} more
+                                    </li>
+                                    {% endif %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: all 0.3s ease;
+    }
+    
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15) !important;
+    }
+
+    .btn {
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    h6 {
+        font-weight: 600;
+    }
+
+    .list-unstyled li {
+        transition: all 0.2s ease;
+    }
+
+    .list-unstyled li:hover {
+        transform: translateX(5px);
+    }
+</style>
+{% endblock body %}

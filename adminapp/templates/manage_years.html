@@ -1,0 +1,269 @@
+{% extends "adminparent.html" %}
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 style="color: rgb(6, 6, 106)">Manage Academic Years</h1>
+                <a href="{% url 'adminapp:manage_academic_data' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Academic Data
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Add New Year -->
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <div class="card border-warning shadow-sm">
+                <div class="card-header bg-warning text-dark">
+                    <h5 class="mb-0"><i class="fas fa-plus-circle mr-2"></i>Add New Academic Year</h5>
+                </div>
+                <div class="card-body bg-light">
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="add">
+                        <div class="input-group">
+                            <input type="text" 
+                                   name="year_name" 
+                                   class="form-control form-control-lg" 
+                                   placeholder="Enter year (e.g., 1st Year, 2nd Year, Final Year)" 
+                                   style="background-color: white; border: 2px solid #e3e6f0; color: #333;"
+                                   required>
+                            <div class="input-group-append">
+                                <button class="btn btn-warning btn-lg" type="submit">
+                                    <i class="fas fa-plus"></i> Add Year
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="card border-info shadow-sm">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0"><i class="fas fa-chart-bar mr-2"></i>Year Statistics</h5>
+                </div>
+                <div class="card-body bg-light">
+                    <div class="row text-center">
+                        <div class="col-6">
+                            <div class="p-3 bg-white rounded shadow-sm">
+                                <h3 class="text-warning">{{ years.count }}</h3>
+                                <p class="text-muted mb-0">Total Years</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-3 bg-white rounded shadow-sm">
+                                <h3 class="text-primary">{{ years.count }}</h3>
+                                <p class="text-muted mb-0">Active Years</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Years List -->
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header" style="background: linear-gradient(135deg, rgb(6, 6, 106), rgb(40, 40, 150)); color: white;">
+                    <h5 class="mb-0"><i class="fas fa-list mr-2"></i>All Academic Years ({{ years.count }})</h5>
+                </div>
+                <div class="card-body" style="background-color: #f8f9fc;">
+                    {% if years %}
+                    <div class="table-responsive">
+                        <table class="table table-hover" style="background-color: white; border-radius: 8px; overflow: hidden;">
+                            <thead style="background: linear-gradient(135deg, #e3e6f0, #d1d3e2);">
+                                <tr>
+                                    <th scope="col" class="text-dark font-weight-bold">#</th>
+                                    <th scope="col" class="text-dark font-weight-bold">Year Name</th>
+                                    <th scope="col" class="text-dark font-weight-bold">Courses Using</th>
+                                    <th scope="col" class="text-dark font-weight-bold">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for year in years %}
+                                <tr style="border-bottom: 1px solid #e3e6f0;">
+                                    <td class="align-middle">
+                                        <span class="badge badge-light text-dark">{{ forloop.counter }}</span>
+                                    </td>
+                                    <td class="align-middle">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-warning rounded-circle d-flex align-items-center justify-content-center mr-3" 
+                                                 style="width: 40px; height: 40px;">
+                                                <i class="fas fa-calendar-alt text-dark"></i>
+                                            </div>
+                                            <div>
+                                                <strong class="text-dark">{{ year.year }}</strong>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle">
+                                        <span class="badge badge-info badge-pill px-3 py-2">
+                                            <i class="fas fa-book mr-1"></i>{{ year.course_set.count }} courses
+                                        </span>
+                                    </td>
+                                    <td class="align-middle">
+                                        <!-- Edit Button -->
+                                        <button class="btn btn-warning btn-sm mr-2 shadow-sm" 
+                                                data-toggle="modal" 
+                                                data-target="#editYearModal{{ year.id }}"
+                                                style="border-radius: 20px;">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </button>
+                                        
+                                        <!-- Delete Button -->
+                                        {% if year.course_set.count == 0 %}
+                                        <button class="btn btn-danger btn-sm shadow-sm" 
+                                                data-toggle="modal" 
+                                                data-target="#deleteYearModal{{ year.id }}"
+                                                style="border-radius: 20px;">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                        {% else %}
+                                        <button class="btn btn-secondary btn-sm shadow-sm" 
+                                                disabled title="Cannot delete: Used in courses"
+                                                style="border-radius: 20px;">
+                                            <i class="fas fa-trash"></i> Delete
+                                        </button>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                
+                                <!-- Edit Modal -->
+                                <div class="modal fade" id="editYearModal{{ year.id }}" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content shadow-lg" style="border-radius: 15px;">
+                                            <div class="modal-header bg-warning text-dark" style="border-radius: 15px 15px 0 0;">
+                                                <h5 class="modal-title"><i class="fas fa-edit mr-2"></i>Edit Academic Year</h5>
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span>
+                                                </button>
+                                            </div>
+                                            <form method="post">
+                                                {% csrf_token %}
+                                                <div class="modal-body" style="background-color: #f8f9fc;">
+                                                    <input type="hidden" name="action" value="edit">
+                                                    <input type="hidden" name="year_id" value="{{ year.id }}">
+                                                    <div class="form-group">
+                                                        <label class="font-weight-bold text-dark">Year Name:</label>
+                                                        <input type="text" 
+                                                               name="new_year_name" 
+                                                               class="form-control form-control-lg" 
+                                                               value="{{ year.year }}" 
+                                                               style="background-color: white; border: 2px solid #e3e6f0; color: #333; border-radius: 10px;"
+                                                               required>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer" style="background-color: #f8f9fc; border-radius: 0 0 15px 15px;">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" style="border-radius: 20px;">Cancel</button>
+                                                    <button type="submit" class="btn btn-warning" style="border-radius: 20px;">
+                                                        <i class="fas fa-save mr-1"></i>Update Year
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Delete Modal -->
+                                {% if year.course_set.count == 0 %}
+                                <div class="modal fade" id="deleteYearModal{{ year.id }}" tabindex="-1">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content shadow-lg" style="border-radius: 15px;">
+                                            <div class="modal-header bg-danger text-white" style="border-radius: 15px 15px 0 0;">
+                                                <h5 class="modal-title"><i class="fas fa-exclamation-triangle mr-2"></i>Confirm Delete</h5>
+                                                <button type="button" class="close text-white" data-dismiss="modal">
+                                                    <span>&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body" style="background-color: #f8f9fc;">
+                                                <div class="text-center mb-3">
+                                                    <i class="fas fa-trash-alt fa-3x text-danger"></i>
+                                                </div>
+                                                <p class="text-center">Are you sure you want to delete the year <strong>"{{ year.year }}"</strong>?</p>
+                                                <p class="text-muted text-center">This action cannot be undone.</p>
+                                            </div>
+                                            <div class="modal-footer" style="background-color: #f8f9fc; border-radius: 0 0 15px 15px;">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal" style="border-radius: 20px;">Cancel</button>
+                                                <form method="post" class="d-inline">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="action" value="delete">
+                                                    <input type="hidden" name="year_id" value="{{ year.id }}">
+                                                    <button type="submit" class="btn btn-danger" style="border-radius: 20px;">
+                                                        <i class="fas fa-trash mr-1"></i>Delete Year
+                                                    </button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endif %}
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="text-center py-5" style="background-color: white; border-radius: 10px;">
+                        <div class="mb-4">
+                            <i class="fas fa-calendar-alt fa-4x text-muted"></i>
+                        </div>
+                        <h5 class="text-muted">No academic years found</h5>
+                        <p class="text-muted">Add your first year using the form above.</p>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom CSS for better styling -->
+<style>
+    .table-hover tbody tr:hover {
+        background-color: #f1f3f4 !important;
+        transform: translateY(-2px);
+        transition: all 0.3s ease;
+    }
+    
+    .card {
+        border: none !important;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    .btn {
+        transition: all 0.3s ease;
+    }
+    
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    .form-control:focus {
+        border-color: #ffc107 !important;
+        box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25) !important;
+    }
+    
+    .modal-content {
+        border: none;
+    }
+    
+    .badge-pill {
+        font-size: 0.9em;
+    }
+    
+    .table td {
+        vertical-align: middle;
+        padding: 1rem 0.75rem;
+    }
+</style>
+
+<!-- Include Bootstrap JS and jQuery if not already included -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+{% endblock body %}
