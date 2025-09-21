@@ -69,6 +69,7 @@ def viewcomplain(request):
     except KeyError:
         return redirect('nouapp:login')
     
+# Update your existing studymaterial view to pass the data
 @cache_control(no_cache=True,must_revalidate=True,no_store=True)
 def studymaterial(request):
     try:
@@ -76,7 +77,20 @@ def studymaterial(request):
             adminid=request.session['adminid']
             courses = Course.objects.all()
             categories = MaterialCategory.objects.all()
-            return render(request, "studymaterial.html", {'adminid': adminid, 'courses': courses, 'categories': categories})
+            
+            # Add these lines to pass the academic data
+            programs = Program.objects.all().order_by('program')
+            branches = Branch.objects.all().order_by('branch') 
+            years = Year.objects.all().order_by('year')
+            
+            return render(request, "studymaterial.html", {
+                'adminid': adminid, 
+                'courses': courses, 
+                'categories': categories,
+                'programs': programs,  # Add this
+                'branches': branches,  # Add this
+                'years': years         # Add this
+            })
     except KeyError:
         return redirect('nouapp:login')
 
@@ -155,12 +169,42 @@ def viewmaterial(request):
     try:
         if request.session['adminid']!=None:
             adminid=request.session['adminid']
-            # Use select_related to avoid N+1 queries
-            mat = Material.objects.select_related('course', 'course__program', 'course__branch', 'course__year', 'category', 'created_by').all()
-            print(f"Found {len(mat)} materials")  # Debug print
-            for m in mat:
-                print(f"Material: {m.title}, Course: {m.course}, File: {m.file}")  # Debug print
-            return render(request,"viewmaterial.html", {'mat': mat, 'adminid': adminid})
+            
+            # Get filter parameters
+            course_filter = request.GET.get('course', '')
+            category_filter = request.GET.get('category', '')
+            search_query = request.GET.get('search', '')
+            
+            # Base queryset with relationships
+            mat = Material.objects.select_related(
+                'course', 'course__program', 'course__branch', 
+                'course__year', 'category', 'created_by'
+            ).all()
+            
+            # Apply filters
+            if course_filter:
+                mat = mat.filter(course_id=course_filter)
+            if category_filter:
+                mat = mat.filter(category_id=category_filter)
+            if search_query:
+                mat = mat.filter(
+                    Q(title__icontains=search_query) |
+                    Q(description__icontains=search_query)
+                )
+            
+            # Order by most recent
+            mat = mat.order_by('-created_at')
+            
+            # Get data for filters
+            courses = Course.objects.all().order_by('title')
+            categories = MaterialCategory.objects.all().order_by('name')
+            
+            return render(request, "viewmaterial.html", {
+                'mat': mat, 
+                'adminid': adminid,
+                'courses': courses,
+                'categories': categories
+            })
     except KeyError:
         return redirect('nouapp:login')
 
@@ -1226,3 +1270,443 @@ def increment_news_view(request, news_id):
             return JsonResponse({'status': 'error', 'message': 'News not found'})
     
     return JsonResponse({'status': 'error', 'message': 'Invalid request'})
+
+def manage_academic_data(request):
+    try:
+        if request.session['adminid'] is not None:
+            adminid = request.session['adminid']
+            
+            programs = Program.objects.all().order_by('program')
+            branches = Branch.objects.all().order_by('branch')
+            years = Year.objects.all().order_by('year')
+            courses = Course.objects.all()  # Add this line
+            
+            return render(request, "manage_academic_data.html", {
+                'adminid': adminid,
+                'programs': programs,
+                'branches': branches,
+                'years': years,
+                'courses': courses  # Add this line
+            })
+    except KeyError:
+        return redirect('nouapp:login')
+    
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def manage_programs(request):
+    """Manage Programs"""
+    try:
+        if request.session['adminid'] is not None:
+            adminid = request.session['adminid']
+            
+            if request.method == 'POST':
+                action = request.POST.get('action')
+                
+                if action == 'add':
+                    program_name = request.POST.get('program_name', '').strip()
+                    if program_name:
+                        if not Program.objects.filter(program=program_name).exists():
+                            Program.objects.create(program=program_name)
+                            messages.success(request, f"Program '{program_name}' added successfully!")
+                        else:
+                            messages.error(request, f"Program '{program_name}' already exists!")
+                    else:
+                        messages.error(request, "Program name cannot be empty!")
+                
+                elif action == 'edit':
+                    program_id = request.POST.get('program_id')
+                    new_name = request.POST.get('new_program_name', '').strip()
+                    if program_id and new_name:
+                        try:
+                            program = Program.objects.get(id=program_id)
+                            if not Program.objects.filter(program=new_name).exclude(id=program_id).exists():
+                                program.program = new_name
+                                program.save()
+                                messages.success(request, f"Program updated to '{new_name}' successfully!")
+                            else:
+                                messages.error(request, f"Program '{new_name}' already exists!")
+                        except Program.DoesNotExist:
+                            messages.error(request, "Program not found!")
+                
+                elif action == 'delete':
+                    program_id = request.POST.get('program_id')
+                    if program_id:
+                        try:
+                            program = Program.objects.get(id=program_id)
+                            # Check if program is used in courses
+                            course_count = Course.objects.filter(program=program).count()
+                            if course_count > 0:
+                                messages.error(request, f"Cannot delete program '{program.program}'. It is used in {course_count} courses.")
+                            else:
+                                program_name = program.program
+                                program.delete()
+                                messages.success(request, f"Program '{program_name}' deleted successfully!")
+                        except Program.DoesNotExist:
+                            messages.error(request, "Program not found!")
+            
+            programs = Program.objects.all().order_by('program')
+            return render(request, "manage_programs.html", {
+                'adminid': adminid,
+                'programs': programs
+            })
+    except KeyError:
+        return redirect('nouapp:login')    
+    
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def manage_branches(request):
+    """Manage Branches"""
+    try:
+        if request.session['adminid'] is not None:
+            adminid = request.session['adminid']
+            
+            if request.method == 'POST':
+                action = request.POST.get('action')
+                
+                if action == 'add':
+                    branch_name = request.POST.get('branch_name', '').strip()
+                    if branch_name:
+                        if not Branch.objects.filter(branch=branch_name).exists():
+                            Branch.objects.create(branch=branch_name)
+                            messages.success(request, f"Branch '{branch_name}' added successfully!")
+                        else:
+                            messages.error(request, f"Branch '{branch_name}' already exists!")
+                    else:
+                        messages.error(request, "Branch name cannot be empty!")
+                
+                elif action == 'edit':
+                    branch_id = request.POST.get('branch_id')
+                    new_name = request.POST.get('new_branch_name', '').strip()
+                    if branch_id and new_name:
+                        try:
+                            branch = Branch.objects.get(id=branch_id)
+                            if not Branch.objects.filter(branch=new_name).exclude(id=branch_id).exists():
+                                branch.branch = new_name
+                                branch.save()
+                                messages.success(request, f"Branch updated to '{new_name}' successfully!")
+                            else:
+                                messages.error(request, f"Branch '{new_name}' already exists!")
+                        except Branch.DoesNotExist:
+                            messages.error(request, "Branch not found!")
+                
+                elif action == 'delete':
+                    branch_id = request.POST.get('branch_id')
+                    if branch_id:
+                        try:
+                            branch = Branch.objects.get(id=branch_id)
+                            # Check if branch is used in courses
+                            course_count = Course.objects.filter(branch=branch).count()
+                            if course_count > 0:
+                                messages.error(request, f"Cannot delete branch '{branch.branch}'. It is used in {course_count} courses.")
+                            else:
+                                branch_name = branch.branch
+                                branch.delete()
+                                messages.success(request, f"Branch '{branch_name}' deleted successfully!")
+                        except Branch.DoesNotExist:
+                            messages.error(request, "Branch not found!")
+            
+            branches = Branch.objects.all().order_by('branch')
+            return render(request, "manage_branches.html", {
+                'adminid': adminid,
+                'branches': branches
+            })
+    except KeyError:
+        return redirect('nouapp:login')
+    
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def manage_years(request):
+    """Manage Years"""
+    try:
+        if request.session['adminid'] is not None:
+            adminid = request.session['adminid']
+            
+            if request.method == 'POST':
+                action = request.POST.get('action')
+                
+                if action == 'add':
+                    year_name = request.POST.get('year_name', '').strip()
+                    if year_name:
+                        if not Year.objects.filter(year=year_name).exists():
+                            Year.objects.create(year=year_name)
+                            messages.success(request, f"Year '{year_name}' added successfully!")
+                        else:
+                            messages.error(request, f"Year '{year_name}' already exists!")
+                    else:
+                        messages.error(request, "Year name cannot be empty!")
+                
+                elif action == 'edit':
+                    year_id = request.POST.get('year_id')
+                    new_name = request.POST.get('new_year_name', '').strip()
+                    if year_id and new_name:
+                        try:
+                            year = Year.objects.get(id=year_id)
+                            if not Year.objects.filter(year=new_name).exclude(id=year_id).exists():
+                                year.year = new_name
+                                year.save()
+                                messages.success(request, f"Year updated to '{new_name}' successfully!")
+                            else:
+                                messages.error(request, f"Year '{new_name}' already exists!")
+                        except Year.DoesNotExist:
+                            messages.error(request, "Year not found!")
+                
+                elif action == 'delete':
+                    year_id = request.POST.get('year_id')
+                    if year_id:
+                        try:
+                            year = Year.objects.get(id=year_id)
+                            # Check if year is used in courses
+                            course_count = Course.objects.filter(year=year).count()
+                            if course_count > 0:
+                                messages.error(request, f"Cannot delete year '{year.year}'. It is used in {course_count} courses.")
+                            else:
+                                year_name = year.year
+                                year.delete()
+                                messages.success(request, f"Year '{year_name}' deleted successfully!")
+                        except Year.DoesNotExist:
+                            messages.error(request, "Year not found!")
+            
+            years = Year.objects.all().order_by('year')
+            return render(request, "manage_years.html", {
+                'adminid': adminid,
+                'years': years
+            })
+    except KeyError:
+        return redirect('nouapp:login')
+# Add these views to your adminapp/views.py
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def manage_courses(request):
+    """Main course management page"""
+    try:
+        if request.session['adminid'] is not None:
+            adminid = request.session['adminid']
+            
+            # Get filter parameters
+            program_filter = request.GET.get('program', '')
+            branch_filter = request.GET.get('branch', '')
+            year_filter = request.GET.get('year', '')
+            search_query = request.GET.get('search', '')
+            
+            # Base queryset
+            courses = Course.objects.select_related('program', 'branch', 'year').all()
+            
+            # Apply filters
+            if program_filter:
+                courses = courses.filter(program_id=program_filter)
+            if branch_filter:
+                courses = courses.filter(branch_id=branch_filter)
+            if year_filter:
+                courses = courses.filter(year_id=year_filter)
+            if search_query:
+                courses = courses.filter(
+                    Q(title__icontains=search_query) |
+                    Q(description__icontains=search_query)
+                )
+            
+            # Order by title
+            courses = courses.order_by('title')
+            
+            # Get data for filters
+            programs = Program.objects.all().order_by('program')
+            branches = Branch.objects.all().order_by('branch')
+            years = Year.objects.all().order_by('year')
+            
+            return render(request, "manage_courses.html", {
+                'adminid': adminid,
+                'courses': courses,
+                'programs': programs,
+                'branches': branches,
+                'years': years,
+                'current_program': program_filter,
+                'current_branch': branch_filter,
+                'current_year': year_filter,
+                'search_query': search_query
+            })
+    except KeyError:
+        return redirect('nouapp:login')
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def create_course(request):
+    """Create new course"""
+    try:
+        if request.session['adminid'] is not None:
+            adminid = request.session['adminid']
+            
+            if request.method == 'POST':
+                title = request.POST.get('title', '').strip()
+                description = request.POST.get('description', '').strip()
+                program_id = request.POST.get('program')
+                branch_id = request.POST.get('branch')
+                year_id = request.POST.get('year')
+                
+                # Validation
+                if not title or not program_id or not branch_id or not year_id:
+                    messages.error(request, "Course title, program, branch, and year are required!")
+                    return redirect('adminapp:create_course')
+                
+                # Check for duplicate
+                if Course.objects.filter(
+                    title=title, 
+                    program_id=program_id, 
+                    branch_id=branch_id, 
+                    year_id=year_id
+                ).exists():
+                    messages.error(request, "A course with this title already exists for this program/branch/year combination!")
+                    return redirect('adminapp:create_course')
+                
+                # Create course
+                Course.objects.create(
+                    title=title,
+                    description=description,
+                    program_id=program_id,
+                    branch_id=branch_id,
+                    year_id=year_id
+                )
+                
+                messages.success(request, f"Course '{title}' created successfully!")
+                return redirect('adminapp:manage_courses')
+            
+            # GET request - show form
+            programs = Program.objects.all().order_by('program')
+            branches = Branch.objects.all().order_by('branch')
+            years = Year.objects.all().order_by('year')
+            
+            return render(request, "create_course.html", {
+                'adminid': adminid,
+                'programs': programs,
+                'branches': branches,
+                'years': years
+            })
+    except KeyError:
+        return redirect('nouapp:login')
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def edit_course(request, course_id):
+    """Edit existing course"""
+    try:
+        if request.session['adminid'] is not None:
+            adminid = request.session['adminid']
+            course = get_object_or_404(Course, id=course_id)
+            
+            if request.method == 'POST':
+                title = request.POST.get('title', '').strip()
+                description = request.POST.get('description', '').strip()
+                program_id = request.POST.get('program')
+                branch_id = request.POST.get('branch')
+                year_id = request.POST.get('year')
+                
+                # Validation
+                if not title or not program_id or not branch_id or not year_id:
+                    messages.error(request, "Course title, program, branch, and year are required!")
+                    return redirect('adminapp:edit_course', course_id=course_id)
+                
+                # Check for duplicate (excluding current course)
+                if Course.objects.filter(
+                    title=title, 
+                    program_id=program_id, 
+                    branch_id=branch_id, 
+                    year_id=year_id
+                ).exclude(id=course_id).exists():
+                    messages.error(request, "A course with this title already exists for this program/branch/year combination!")
+                    return redirect('adminapp:edit_course', course_id=course_id)
+                
+                # Update course
+                course.title = title
+                course.description = description
+                course.program_id = program_id
+                course.branch_id = branch_id
+                course.year_id = year_id
+                course.save()
+                
+                messages.success(request, f"Course '{title}' updated successfully!")
+                return redirect('adminapp:manage_courses')
+            
+            # GET request - show edit form
+            programs = Program.objects.all().order_by('program')
+            branches = Branch.objects.all().order_by('branch')
+            years = Year.objects.all().order_by('year')
+            
+            return render(request, "edit_course.html", {
+                'adminid': adminid,
+                'course': course,
+                'programs': programs,
+                'branches': branches,
+                'years': years
+            })
+    except KeyError:
+        return redirect('nouapp:login')
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def delete_course(request, course_id):
+    """Delete course with confirmation page"""
+    try:
+        if request.session['adminid'] is not None:
+            adminid = request.session['adminid']
+            course = get_object_or_404(Course, id=course_id)
+            
+            if request.method == 'POST':
+                # Check if course has materials
+                material_count = Course.objects.filter(course=course).count()
+                
+                if material_count > 0:
+                    messages.error(request, f"Cannot delete course '{course.title}'. It has {material_count} materials associated with it.")
+                    return redirect('adminapp:manage_courses')
+                else:
+                    course_title = course.title
+                    course.delete()
+                    messages.success(request, f"Course '{course_title}' deleted successfully!")
+                    return redirect('adminapp:manage_courses')
+            
+            # GET request - show confirmation page
+            return render(request, "delete_course.html", {
+                'adminid': adminid,
+                'course': course
+            })
+    except KeyError:
+        return redirect('nouapp:login')@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def delete_course(request, course_id):
+    """Delete course with confirmation page"""
+    try:
+        if request.session['adminid'] is not None:
+            adminid = request.session['adminid']
+            course = get_object_or_404(Course, id=course_id)
+            
+            if request.method == 'POST':
+                # FIXED: Check if course has materials - correct way
+                material_count = Material.objects.filter(course=course).count()
+                
+                if material_count > 0:
+                    messages.error(request, f"Cannot delete course '{course.title}'. It has {material_count} materials associated with it.")
+                    return redirect('adminapp:manage_courses')
+                else:
+                    course_title = course.title
+                    course.delete()
+                    messages.success(request, f"Course '{course_title}' deleted successfully!")
+                    return redirect('adminapp:manage_courses')
+            
+            # GET request - show confirmation page
+            return render(request, "delete_course.html", {
+                'adminid': adminid,
+                'course': course
+            })
+    except KeyError:
+        return redirect('nouapp:login')
+    
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def delete_course_simple(request, course_id):
+    """Simple delete course - called from JavaScript confirmation"""
+    try:
+        if request.session['adminid'] is not None:
+            course = get_object_or_404(Course, id=course_id)
+            
+            # Check if course has materials
+            material_count = Material.objects.filter(course=course).count()
+            
+            if material_count > 0:
+                messages.error(request, f"Cannot delete course '{course.title}'. It has {material_count} materials associated with it.")
+            else:
+                course_title = course.title
+                course.delete()
+                messages.success(request, f"Course '{course_title}' deleted successfully!")
+            
+            return redirect('adminapp:manage_courses')
+    except KeyError:
+        return redirect('nouapp:login')    

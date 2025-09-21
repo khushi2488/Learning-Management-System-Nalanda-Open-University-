@@ -1,17 +1,18 @@
-{% extends "adminparent.html" %} {% block body %}
+{% extends "adminparent.html" %}
+{% block body %}
 <div class="row">
   <div class="col-sm-12">
     <h1 style="text-align: center; color: rgb(6, 6, 106)">
       View All Study Material
     </h1>
     <div class="table-responsive">
-      <table class="table table-bordered text-light align-middle">
+      <table class="table table-bordered align-middle">
         <tr style="color: rgb(6, 6, 106)">
           <th>#</th>
           <th>Program</th>
           <th>Branch</th>
           <th>Year</th>
-          <th>Subject</th>
+          <th>Title</th>
           <th>File Name</th>
           <th>Download</th>
         </tr>
@@ -19,13 +20,13 @@
         {% for m in mat %}
         <tr style="color: steelblue">
           <td>{{forloop.counter}}</td>
-          <td>{{m.program}}</td>
-          <td>{{m.branch}}</td>
-          <td>{{m.year}}</td>
-          <td>{{m.subject}}</td>
-          <td>{{m.file_name}}</td>
+          <td>{{m.course.program.program}}</td>
+          <td>{{m.course.branch.branch}}</td>
+          <td>{{m.course.year.year}}</td>
+          <td>{{m.title}}</td>
+          <td>{{m.file.name}}</td>
           <td>
-            <a href="{{m.my_file.url}}">{{m.my_file}}</a>
+            <a href="{{m.file.url}}">Download</a>
           </td>
         </tr>
         {% endfor %}

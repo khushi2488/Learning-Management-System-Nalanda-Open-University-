@@ -1,0 +1,174 @@
+{% extends "adminparent.html" %}
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 style="color: rgb(6, 6, 106)">
+                    <i class="fas fa-plus-circle mr-3"></i>Create New Course
+                </h1>
+                <a href="{% url 'adminapp:manage_courses' %}" class="btn btn-secondary shadow-sm" style="border-radius: 20px;">
+                    <i class="fas fa-arrow-left"></i> Back to Courses
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-lg" style="border-radius: 20px;">
+                <div class="card-header text-white" style="background: linear-gradient(135deg, #28a745, #20c997); border-radius: 20px 20px 0 0;">
+                    <h5 class="mb-0 font-weight-bold">
+                        <i class="fas fa-info-circle mr-2"></i>Course Information
+                    </h5>
+                </div>
+                <div class="card-body p-4" style="background-color: #f8f9fc;">
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="form-group mb-4">
+                            <label for="title" class="font-weight-bold text-dark mb-2">Course Title *</label>
+                            <input type="text" 
+                                   class="form-control form-control-lg" 
+                                   id="title"
+                                   name="title" 
+                                   required
+                                   placeholder="Enter course title (e.g., Data Structures and Algorithms)"
+                                   style="background-color: white; border: 2px solid #e3e6f0; color: #333; border-radius: 10px;">
+                            <small class="form-text text-muted mt-2">
+                                <i class="fas fa-lightbulb mr-1"></i>Enter a descriptive title for the course
+                            </small>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label for="description" class="font-weight-bold text-dark mb-2">Course Description</label>
+                            <textarea class="form-control" 
+                                      id="description"
+                                      name="description" 
+                                      rows="4"
+                                      placeholder="Enter course description (optional)"
+                                      style="background-color: white; border: 2px solid #e3e6f0; color: #333; border-radius: 10px;"></textarea>
+                            <small class="form-text text-muted mt-2">
+                                <i class="fas fa-pen mr-1"></i>Provide a brief description of what this course covers
+                            </small>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group mb-4">
+                                    <label for="program" class="font-weight-bold text-dark mb-2">
+                                        <i class="fas fa-graduation-cap mr-1"></i>Program *
+                                    </label>
+                                    <select class="form-control form-control-lg" id="program" name="program" required
+                                            style="background-color: white; border: 2px solid #e3e6f0; color: #333; border-radius: 10px;">
+                                        <option value="">Select Program</option>
+                                        {% for program in programs %}
+                                        <option value="{{ program.id }}">{{ program.program }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group mb-4">
+                                    <label for="branch" class="font-weight-bold text-dark mb-2">
+                                        <i class="fas fa-code-branch mr-1"></i>Branch *
+                                    </label>
+                                    <select class="form-control form-control-lg" id="branch" name="branch" required
+                                            style="background-color: white; border: 2px solid #e3e6f0; color: #333; border-radius: 10px;">
+                                        <option value="">Select Branch</option>
+                                        {% for branch in branches %}
+                                        <option value="{{ branch.id }}">{{ branch.branch }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group mb-4">
+                                    <label for="year" class="font-weight-bold text-dark mb-2">
+                                        <i class="fas fa-calendar-alt mr-1"></i>Year *
+                                    </label>
+                                    <select class="form-control form-control-lg" id="year" name="year" required
+                                            style="background-color: white; border: 2px solid #e3e6f0; color: #333; border-radius: 10px;">
+                                        <option value="">Select Year</option>
+                                        {% for year in years %}
+                                        <option value="{{ year.id }}">{{ year.year }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Validation Messages -->
+                        {% if not programs %}
+                        <div class="alert alert-warning border-0 shadow-sm" style="border-radius: 10px;">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            <strong>Warning:</strong> No programs available. 
+                            <a href="{% url 'adminapp:manage_programs' %}" class="alert-link">Add programs first</a>.
+                        </div>
+                        {% endif %}
+
+                        {% if not branches %}
+                        <div class="alert alert-warning border-0 shadow-sm" style="border-radius: 10px;">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            <strong>Warning:</strong> No branches available. 
+                            <a href="{% url 'adminapp:manage_branches' %}" class="alert-link">Add branches first</a>.
+                        </div>
+                        {% endif %}
+
+                        {% if not years %}
+                        <div class="alert alert-warning border-0 shadow-sm" style="border-radius: 10px;">
+                            <i class="fas fa-exclamation-triangle mr-2"></i>
+                            <strong>Warning:</strong> No years available. 
+                            <a href="{% url 'adminapp:manage_years' %}" class="alert-link">Add years first</a>.
+                        </div>
+                        {% endif %}
+
+                        <div class="form-group text-center mt-5">
+                            <button type="submit" class="btn btn-success btn-lg shadow-sm mr-3" style="border-radius: 25px; min-width: 180px;">
+                                <i class="fas fa-plus mr-2"></i>Create Course
+                            </button>
+                            <a href="{% url 'adminapp:manage_courses' %}" class="btn btn-secondary btn-lg shadow-sm" style="border-radius: 25px; min-width: 180px;">
+                                <i class="fas fa-times mr-2"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Custom CSS -->
+<style>
+    .form-control:focus {
+        border-color: #28a745 !important;
+        box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25) !important;
+    }
+
+    .btn {
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .alert {
+        transition: all 0.3s ease;
+    }
+
+    .alert:hover {
+        transform: translateY(-2px);
+    }
+
+    .card {
+        transition: all 0.3s ease;
+    }
+</style>
+
+<!-- Include Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock body %}

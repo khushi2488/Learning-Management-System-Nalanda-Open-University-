@@ -1,0 +1,139 @@
+{% extends "adminparent.html" %}
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 style="color: rgb(6, 6, 106)">Delete Course Confirmation</h1>
+                <a href="{% url 'adminapp:manage_courses' %}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Courses
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-danger">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-exclamation-triangle"></i> Confirm Course Deletion
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <!-- Course Information -->
+                    <div class="alert alert-warning">
+                        <h6><strong>Course to be deleted:</strong></h6>
+                        <p class="mb-1"><strong>Title:</strong> {{ course.title }}</p>
+                        <p class="mb-1"><strong>Program:</strong> {{ course.program.program }}</p>
+                        <p class="mb-1"><strong>Branch:</strong> {{ course.branch.branch }}</p>
+                        <p class="mb-1"><strong>Year:</strong> {{ course.year.year }}</p>
+                        {% if course.description %}
+                        <p class="mb-1"><strong>Description:</strong> {{ course.description }}</p>
+                        {% endif %}
+                        <p class="mb-0"><strong>Materials:</strong> {{ course.material_set.count }}</p>
+                    </div>
+
+                    {% if course.material_set.count > 0 %}
+                    <!-- Cannot delete - has materials -->
+                    <div class="alert alert-danger">
+                        <h5><i class="fas fa-times-circle"></i> Cannot Delete Course</h5>
+                        <p>This course cannot be deleted because it has <strong>{{ course.material_set.count }} material(s)</strong> associated with it.</p>
+                        <p><strong>To delete this course, you must first:</strong></p>
+                        <ol>
+                            <li>Delete or reassign all materials in this course</li>
+                            <li>Then return to delete the course</li>
+                        </ol>
+                    </div>
+
+                    <div class="text-center">
+                        <a href="{% url 'adminapp:viewmaterial' %}?course={{ course.id }}" class="btn btn-info btn-lg">
+                            <i class="fas fa-eye"></i> View Course Materials
+                        </a>
+                        <a href="{% url 'adminapp:manage_courses' %}" class="btn btn-secondary btn-lg ml-3">
+                            <i class="fas fa-arrow-left"></i> Back to Courses
+                        </a>
+                    </div>
+
+                    {% else %}
+                    <!-- Can delete - no materials -->
+                    <div class="alert alert-info">
+                        <h5><i class="fas fa-info-circle"></i> Ready for Deletion</h5>
+                        <p>This course has no materials associated with it and can be safely deleted.</p>
+                        <p><strong>Warning:</strong> This action cannot be undone!</p>
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-danger btn-lg">
+                                <i class="fas fa-trash"></i> Yes, Delete This Course
+                            </button>
+                            <a href="{% url 'adminapp:manage_courses' %}" class="btn btn-secondary btn-lg ml-3">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                        </div>
+                    </form>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Show materials if any exist -->
+    {% if course.material_set.count > 0 %}
+    <div class="row mt-4">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-file-alt"></i> Materials in this Course
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Material Title</th>
+                                    <th>Category</th>
+                                    <th>Upload Date</th>
+                                    <th>File Size</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for material in course.material_set.all %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ material.title }}</td>
+                                    <td>
+                                        {% if material.category %}
+                                        <span class="badge badge-secondary">{{ material.category.name }}</span>
+                                        {% else %}
+                                        <span class="badge badge-light">No Category</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ material.created_at|date:"M d, Y H:i" }}</td>
+                                    <td>
+                                        {% if material.file %}
+                                        {{ material.file.size|filesizeformat }}
+                                        {% else %}
+                                        -
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Include Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock body %}

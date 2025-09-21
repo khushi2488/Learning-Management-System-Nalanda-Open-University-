@@ -54,4 +54,16 @@ urlpatterns = [
     path('news/bulk-action/', views.bulk_news_action, name='bulk_news_action'),
 path('news/<int:news_id>/duplicate/', views.duplicate_news, name='duplicate_news'),
 path('news/<int:news_id>/preview/', views.preview_news, name='preview_news'),
+
+# Academic Data Management URLs
+    path('manage-academic-data/', views.manage_academic_data, name='manage_academic_data'),
+    path('manage-programs/', views.manage_programs, name='manage_programs'),
+    path('manage-branches/', views.manage_branches, name='manage_branches'),
+    path('manage-years/', views.manage_years, name='manage_years'),
+    
+    path('manage-courses/', views.manage_courses, name='manage_courses'),
+    path('create-course/', views.create_course, name='create_course'),
+    path('edit-course/<int:course_id>/', views.edit_course, name='edit_course'),
+#    path('delete-course/<int:course_id>/', views.delete_course, name='delete_course'),
+   path('delete-course/<int:course_id>/', views.delete_course_simple, name='delete_course'),
 ]
