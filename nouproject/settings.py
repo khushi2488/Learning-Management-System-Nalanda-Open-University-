@@ -136,3 +136,5 @@ ALLOWED_MATERIAL_EXTENSIONS = [
 # Preview generation settings
 PREVIEW_IMAGE_SIZE = (300, 300)  # Size for preview images
 PDF_PREVIEW_QUALITY = 200  # DPI for PDF preview generation
+
+
