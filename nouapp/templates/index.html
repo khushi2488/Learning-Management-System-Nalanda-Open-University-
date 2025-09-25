@@ -267,8 +267,6 @@
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
     cursor: pointer;
   }
-
-
   @media (max-width: 600px) {
     .team .row h3 {
       color: rgb(6, 6, 106);
@@ -353,6 +351,22 @@
       padding-left: 5px;
     }
   }
+  .gallery .card {
+    border: none;
+    background: rgb(6, 6, 106);
+    color: white;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .gallery .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+  }
+
+  .gallery img {
+    max-height: 200px;
+    object-fit: cover;
+  }
 </style>
 <!--Home-->
 <!-- <div class="row">
@@ -409,14 +423,23 @@
 </section>
 
 <!--headline-->
-<div class="row" style="background-color: rgb(6, 6, 106); margin-top: 5px; margin-bottom: 5px">
-  <marquee scrollamount="12" onmousemove="this.stop()" onmouseout="this.start()">
-    <p style="
+<div
+  class="row"
+  style="background-color: rgb(6, 6, 106); margin-top: 5px; margin-bottom: 5px"
+>
+  <marquee
+    scrollamount="12"
+    onmousemove="this.stop()"
+    onmouseout="this.start()"
+  >
+    <p
+      style="
         color: white;
         padding-top: 6px;
         font-family: poppins, sans-serif;
         font-weight: bold;
-      ">
+      "
+    >
       The portal is easy to access & highly user friendly for the students &
       study centres.
     </p>
@@ -495,17 +518,23 @@
 </section>
 
 <!--gallery-->
-<div class="row" style="padding-top: 10vh">
-  <section class="gallery">
-    <div class="row">
-      <h3>STUDENT SERVICES</h3>
-    </div>
-    <!--gallery section one-->
 
-    <div class="row" style="padding-top: 25px">
-      <div class="col-sm-3">
-        <div class="card" style="border-color: rgb(6, 6, 106)">
-          <img class="card-img-top" src="{% static 'images/registration.jpg' %}" alt="Card image cap" />
+<div class="container">
+<div class="row justify-content-center" style="padding: 10vh 0">
+  <section class="gallery text-center">
+    <div class="row mb-4">
+      <h3 class="text-black text-center">STUDENT SERVICES</h3>
+    </div>
+
+    <!-- Gallery section one -->
+    <div class="row g-4 justify-content-center">
+      <div class="col-lg-2 col-md-6 col-sm-12 d-flex">
+        <div class="card flex-fill" style="border-color: rgb(6, 6, 106)">
+          <img
+            class="card-img-top"
+            src="{% static 'images/registration.jpg' %}"
+            alt="Login"
+          />
           <div class="card-body">
             <p class="card-text">
               <a href="{% url 'nouapp:login' %}" style="color: white">Login</a>
@@ -513,152 +542,207 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-3">
-        <div class="card" style="border-color: rgb(6, 6, 106)">
-          <img class="card-img-top" src="{% static 'images/dashboard.jpg' %}" alt="Card image cap" />
+
+      <div class="col-lg-2 col-md-6 col-sm-12 d-flex">
+        <div class="card flex-fill" style="border-color: rgb(6, 6, 106)">
+          <img
+            class="card-img-top"
+            src="{% static 'images/dashboard.jpg' %}"
+            alt="Dashboard"
+          />
           <div class="card-body">
             <p class="card-text">
-              <a href="{% url 'studentapp:studenthome' %}" style="color: white">Dashboard</a>
+              <a href="{% url 'studentapp:studenthome' %}" style="color: white"
+                >Dashboard</a
+              >
             </p>
           </div>
         </div>
       </div>
-      <div class="col-sm-3">
-        <div class="card" style="border-color: rgb(6, 6, 106)">
-          <img class="card-img-top" src="{% static 'images/online-courses.jpg' %}" alt="Card image cap" />
+
+      <div class="col-lg-2 col-md-6 col-sm-12 d-flex">
+        <div class="card flex-fill" style="border-color: rgb(6, 6, 106)">
+          <img
+            class="card-img-top"
+            src="{% static 'images/online-courses.jpg' %}"
+            alt="SLM"
+          />
           <div class="card-body">
             <p class="card-text">
-              <a href="{% url 'studentapp:viewmat' %}" style="color: white">Self Learning Material</a>
+              <a href="{% url 'studentapp:viewmat' %}" style="color: white"
+                >Self Learning Material</a
+              >
             </p>
           </div>
         </div>
       </div>
-      <div class="col-sm-3">
-        <div class="card" style="border-color: rgb(6, 6, 106)">
-          <img class="card-img-top" src="{% static 'images/e-lectures.jpg' %}" alt="Card image cap" />
+
+      <div class="col-lg-2 col-md-6 col-sm-12 d-flex">
+        <div class="card flex-fill" style="border-color: rgb(6, 6, 106)">
+          <img
+            class="card-img-top"
+            src="{% static 'images/e-lectures.jpg' %}"
+            alt="e-Books"
+          />
           <div class="card-body">
-            <p class="card-text">e-Books</p>
+            <p class="card-text">
+              <a href="{% url 'studentapp:viewmat' %}" style="color: white"
+                >e-books</a
+              >
+            </p>
           </div>
         </div>
       </div>
     </div>
-    <!--gallery section two-->
-    <div class="row" style="padding-top: 40px">
-      <div class="col-sm-3">
-        <div class="card" style="border-color: rgb(6, 6, 106)">
-          <img class="card-img-top p-5" src="{% static 'images/self-assessment.svg' %}" alt="Card image cap" />
+
+    <!-- Gallery section two -->
+    <div class="row g-4 justify-content-center mt-3 p-10">
+      <div class="col-lg-2 col-md-6 col-sm-12 d-flex">
+        <div class="card flex-fill" style="border-color: rgb(6, 6, 106)">
+          <img
+            class="card-img-top p-10 mx-auto"
+            src="{% static 'images/self-assessment.svg' %}"
+            alt="Self Assessment"
+          />
           <div class="card-body">
-            <p class="card-text">Self Assessment Tools</p>
+            <p class="card-text"><a href="{% url 'studentapp:studenthome' %}" style="color: white"
+                >Self Assessment</a
+              ></p>
           </div>
         </div>
       </div>
-      <div class="col-sm-3">
-        <div class="card" style="border-color: rgb(6, 6, 106)">
-          <img class="card-img-top" src="{% static 'images/performance.jpg' %}" alt="Card image cap" />
+
+      <div class="col-lg-2 col-md-6 col-sm-12 d-flex">
+        <div class="card flex-fill" style="border-color: rgb(6, 6, 106)">
+          <img
+            class="card-img-top"
+            src="{% static 'images/performance.jpg' %}"
+            alt="Performance"
+          />
           <div class="card-body">
             <p class="card-text">
-              <a href="{% url 'studentapp:viewprofile' %}" style="color: white">Performance</a>
+              <a href="{% url 'studentapp:viewprofile' %}" style="color: white"
+                >Performance</a
+              >
             </p>
           </div>
         </div>
       </div>
-      <div class="col-sm-3">
-        <div class="card" style="border-color: rgb(6, 6, 106)">
-          <img class="card-img-top" src="{% static 'images/feedback.jpg' %}" alt="Card image cap" />
+
+      <div class="col-lg-2 col-md-6 col-sm-12 d-flex">
+        <div class="card flex-fill" style="border-color: rgb(6, 6, 106)">
+          <img
+            class="card-img-top"
+            src="{% static 'images/feedback.jpg' %}"
+            alt="Feedback"
+          />
           <div class="card-body">
             <p class="card-text">
-              <a href="{% url 'studentapp:response' %}" style="color: white">Feedback</a>
+              <a href="{% url 'studentapp:response' %}" style="color: white"
+                >Feedback</a
+              >
             </p>
           </div>
         </div>
       </div>
-      <div class="col-sm-3">
-        <div class="card" style="border-color: rgb(6, 6, 106)">
-          <img class="card-img-top" src="{% static 'images/course-catlog.jpg' %}" alt="Card image cap" />
+
+      <div class="col-lg-2 col-md-6 col-sm-12 d-flex">
+        <div class="card flex-fill" style="border-color: rgb(6, 6, 106)">
+          <img
+            class="card-img-top"
+            src="{% static 'images/course-catlog.jpg' %}"
+            alt="Catalogue"
+          />
           <div class="card-body">
             <p class="card-text">
-              <a href="{% url 'nouapp:courses' %}" style="color: white">Course-Catalogue</a>
+              <a href="{% url 'nouapp:courses' %}" style="color: white"
+                >Course-Catalogue</a
+              >
             </p>
           </div>
         </div>
       </div>
+      </div>
+    </div>
     </div>
   </section>
 </div>
+</div>
+
 <!--administrative setup-->
+
 <div class="row" style="padding-top: 10vh">
   <div class="container p-5" style="background-color: rgb(44, 151, 193)">
     <section class="team">
-      <div class="row">
-        <h3>ADMINISTRATIVE SETUP</h3>
+      <div class="row mb-4">
+        <h3 class="text-center text-white">ADMINISTRATIVE SETUP</h3>
       </div>
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="card">
+      <div class="row g-4">
+        <!-- Card 1 -->
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <div class="card h-100 text-center">
             <img
-              class="card-img-top p-4"
+              class="card-img-top p-4 mx-auto"
               src="{% static 'images/vc.jpg' %}"
-              alt="Card image cap"
-              width="auto"
-              height="auto"
-              style="border-radius: 50%"
+              alt="Vice Chancellor"
+              style="border-radius: 50%; max-width: 200px; height: auto"
             />
-            <div class="card-body" style="text-align: center">
-              <h6 class="card-text" style="color: rgb(6, 6, 106); font-weight: bold">
+            <div class="card-body">
+              <h6 class="card-text fw-bold" style="color: rgb(6, 6, 106)">
                 Prof. (Dr.) K. C. Sinha
               </h6>
               <p class="card-text">VICE CHANCELLOR</p>
             </div>
           </div>
         </div>
-        <div class="col-sm-3">
-          <div class="card">
+
+        <!-- Card 2 -->
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <div class="card h-100 text-center">
             <img
-              class="card-img-top p-4"
+              class="card-img-top p-4 mx-auto"
               src="{% static 'images/pvc.jpg' %}"
-              alt="Card image cap"
-              width="auto"
-              height="auto"
-              style="border-radius: 50%"
+              alt="Pro Vice Chancellor"
+              style="border-radius: 50%; max-width: 200px; height: auto"
             />
-            <div class="card-body" style="text-align: center">
-              <h6 class="card-text" style="color: rgb(6, 6, 106); font-weight: bold">
+            <div class="card-body">
+              <h6 class="card-text fw-bold" style="color: rgb(6, 6, 106)">
                 Prof. (Dr.) Sanjoy Kumar
               </h6>
               <p class="card-text">PRO VICE CHANCELLOR</p>
             </div>
           </div>
         </div>
-        <div class="col-sm-3">
-          <div class="card">
+
+        <!-- Card 3 -->
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <div class="card h-100 text-center">
             <img
-              class="card-img-top p-4"
+              class="card-img-top p-4 mx-auto"
               src="{% static 'images/registrar1.jpeg' %}"
-              alt="Card image cap"
-              width="auto"
-              height="auto"
-              style="border-radius: 50%"
+              alt="Registrar"
+              style="border-radius: 50%; max-width: 200px; height: auto"
             />
-            <div class="card-body" style="text-align: center">
-              <h6 class="card-text" style="color: rgb(6, 6, 106); font-weight: bold">
+            <div class="card-body">
+              <h6 class="card-text fw-bold" style="color: rgb(6, 6, 106)">
                 Dr. Md. Habibur Rahman
               </h6>
               <p class="card-text">REGISTRAR</p>
             </div>
           </div>
         </div>
-        <div class="col-sm-3">
-          <div class="card">
+
+        <!-- Card 4 -->
+        <div class="col-lg-3 col-md-6 col-sm-12">
+          <div class="card h-100 text-center">
             <img
-              class="card-img-top p-4"
+              class="card-img-top p-4 mx-auto"
               src="{% static 'images/examreg.jpg' %}"
-              alt="Card image cap"
-              width="auto"
-              height="auto"
-              style="border-radius: 50%"
+              alt="Registrar Exam"
+              style="border-radius: 50%; max-width: 200px; height: auto"
             />
-            <div class="card-body" style="text-align: center">
-              <h6 class="card-text" style="color: rgb(6, 6, 106); font-weight: bold">
+            <div class="card-body">
+              <h6 class="card-text fw-bold" style="color: rgb(6, 6, 106)">
                 Dr. Neelam Kumari
               </h6>
               <p class="card-text">REGISTRAR (Exam)</p>
@@ -669,6 +753,7 @@
     </section>
   </div>
 </div>
+
 <!--contact section-->
 <div class="row" style="padding-top: 10vh">
   <section class="contact-section">
@@ -690,14 +775,14 @@
           <h4>
             <i class="fa fa-phone" style="color: rgb(6, 6, 106)"></i> +91
             7080102007
-          </h4>
-        </a><br />
+          </h4> </a
+        ><br />
         <a>
           <h4>
             <i class="fa fa-envelope" style="color: rgb(6, 6, 106)"></i>
             nouegyanhelp@gmail.com
-          </h4>
-        </a><br />
+          </h4> </a
+        ><br />
       </div>
     </div>
   </section>
