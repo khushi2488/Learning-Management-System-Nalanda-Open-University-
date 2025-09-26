@@ -29,6 +29,7 @@
   font-weight: bold;
   text-decoration: underline;
 }
+
 /* ================= General Text ================= */
 .about-section,
 .content-section,
@@ -80,7 +81,47 @@
 footer {
   background-color: var(--bs-body-bg);
   color: var(--bs-body-color);
-  padding: 1rem 0; */
-  text-align: center; 
+  padding: 1rem 0;
+  text-align: center;
   border-top: 1px solid var(--bs-border-color);
+}
+
+/* ======================================================= */
+/* ====== HOVER EFFECTS & TRANSITIONS (ADDED) ====== */
+/* ======================================================= */
+
+/* 1. Add smooth transitions to elements for clean animations */
+.navbar-nav .nav-link,
+.card,
+.navbar-brand,
+footer a {
+    transition: all 0.2s ease-in-out;
+}
+
+/* 2. Navbar link hover effect */
+/* Adds a subtle lift and fades slightly when hovered */
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus { /* :focus is for accessibility */
+    transform: translateY(-2px);
+    opacity: 0.8;
+}
+
+/* 3. Card hover effect */
+/* Lifts the card and adds a more prominent shadow */
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* 4. Brand logo hover effect */
+/* Makes the logo slightly larger on hover */
+.navbar-brand:hover {
+    transform: scale(1.05);
+}
+
+/* 5. Footer link hover effect */
+/* Underlines links in the footer on hover */
+footer a:hover {
+    text-decoration: underline;
+    opacity: 0.8;
 }
