@@ -1159,20 +1159,105 @@
       border-color: #555;
     }
 
-    @media (max-width: 576px) {
-      #chat-box {
-        width: 90%;
-        right: 5%;
-        bottom: 80px;
-      }
+    /* Chatbot dark mode improvements */
+    .dark-theme #chat-box,
+    .dark-theme #chat-header,
+    .dark-theme #chat-messages,
+    .dark-theme #user-input,
+    .dark-theme #send-button {
+      background: #23272f !important;
+      color: #f5f5f5 !important;
+      border-color: #444 !important;
+    }
+    .dark-theme #chat-header {
+      background: linear-gradient(135deg, #23272f, #2c3440) !important;
+      color: #f5f5f5 !important;
+    }
+    .dark-theme .chat-message {
+      color: #f5f5f5 !important;
+    }
+    .dark-theme .user-message {
+      background: linear-gradient(135deg, #3a3f4a, #23272f) !important;
+      color: #f5f5f5 !important;
+    }
+    .dark-theme .bot-message {
+      background: #2c3440 !important;
+      color: #f5f5f5 !important;
+    }
+    .dark-theme #chat-toggle {
+      background: linear-gradient(135deg, #23272f, #2c3440) !important;
+      color: #f5f5f5 !important;
+    }
+    .dark-theme #chat-toggle:hover {
+      background: linear-gradient(135deg, #2c3440, #3a3f4a) !important;
+      color: #f5f5f5 !important;
+    }
+    /* Ensure input placeholder is visible in dark mode */
+    .dark-theme #user-input::placeholder {
+      color: #b0b0b0 !important;
+      opacity: 1;
+    }
 
-      #chat-toggle {
-        bottom: 20px;
-        right: 20px;
-        width: 50px;
-        height: 50px;
-        font-size: 20px;
-      }
+    /* Home page dark mode improvements */
+    .dark-theme .hero {
+      background: linear-gradient(135deg, #23272f 60%, #2c3440 100%) !important;
+      color: #f5f5f5 !important;
+    }
+    .dark-theme .hero h1,
+    .dark-theme .hero p,
+    .dark-theme .hero .btn {
+      color: #f5f5f5 !important;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    }
+    .dark-theme .hero .btn {
+      background: linear-gradient(135deg, #3a3f4a, #23272f) !important;
+      border: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .dark-theme .hero .btn:hover {
+      background: linear-gradient(135deg, #2c3440, #3a3f4a) !important;
+      color: #fff !important;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.7);
+    }
+    .dark-theme .about-section,
+    .dark-theme .gallery,
+    .dark-theme .team,
+    .dark-theme .contact-section {
+      background: linear-gradient(135deg, #23272f 60%, #2c3440 100%) !important;
+      color: #f5f5f5 !important;
+    }
+    .dark-theme .about-title,
+    .dark-theme .about-text {
+      color: #f5f5f5 !important;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
+    }
+    .dark-theme .card,
+    .dark-theme .card-body {
+      background: #23272f !important;
+      color: #f5f5f5 !important;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    }
+    .dark-theme .card-title,
+    .dark-theme .card-text {
+      color: #f5f5f5 !important;
+    }
+    .dark-theme .footer-content,
+    .dark-theme .main-footer {
+      background: linear-gradient(135deg, #23272f 60%, #2c3440 100%) !important;
+      color: #f5f5f5 !important;
+    }
+    .dark-theme .footer-link {
+      color: #b0b0b0 !important;
+    }
+    .dark-theme .footer-link:hover {
+      color: #fff !important;
+    }
+    .dark-theme .footer-section-title {
+      color: #f5f5f5 !important;
+    }
+    .dark-theme .copyright-section {
+      background: linear-gradient(135deg, #23272f, #2c3440) !important;
+      color: #b0b0b0 !important;
     }
   </style>
 
@@ -1617,21 +1702,13 @@
     <script>
       const API_URL = "/chat/"; // URL to your chatbot API
 
+      // Remove all hover/auto-open logic for chatbot
+      // Only open/close on click
       function toggleChat() {
         const chatBox = document.getElementById("chat-box");
-        const toggleBtn = document.getElementById("chat-toggle");
+        chatBox.style.display = (chatBox.style.display === "block") ? "none" : "block";
         if (chatBox.style.display === "block") {
-          chatBox.style.display = "none";
-          toggleBtn.innerHTML = "💬";
-          toggleBtn.style.background =
-            "linear-gradient(135deg, var(--chat-primary), var(--chat-primary-hover))";
-        } else {
-          chatBox.style.display = "block";
-          toggleBtn.innerHTML = "✕";
-          toggleBtn.style.background =
-            "linear-gradient(135deg, var(--chat-primary-hover), var(--chat-accent))";
           document.getElementById("user-input").focus();
-          // Initialize with welcome message if chat is empty
           if (document.getElementById("chat-messages").children.length === 0) {
             appendMessage(
               "Bot",
@@ -1726,22 +1803,7 @@
             sendMessage();
           }
         });
-
-      // Auto-open chat after a short delay
-      setTimeout(() => {
-        const chatBox = document.getElementById("chat-box");
-        if (chatBox.style.display !== "block") {
-          toggleChat();
-          // Auto-close after showing welcome message
-          setTimeout(() => {
-            if (
-              document.getElementById("chat-messages").children.length === 1
-            ) {
-              toggleChat();
-            }
-          }, 5000);
-        }
-      }, 3000);
     </script>
+    <script src="{% static 'js/navbar-slide.js' %}"></script>
   </body>
 </html>
