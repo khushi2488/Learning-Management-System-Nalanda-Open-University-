@@ -137,9 +137,10 @@
   }
 
   .about-title {
-    font-size: 24px;
+    font-size: 25px;
     font-weight: bold;
-    color: #003366; /* theme dark blue */
+    margin-left: 45px;
+    color: rgb(6, 6, 106) !important;
     margin-bottom: 15px;
     position: relative;
     display: inline-block;
@@ -165,7 +166,7 @@
   .about-text {
     font-size: 16px;
     line-height: 1.6;
-    color: #333;
+    color: rgb(6, 6, 106);
     margin-bottom: 15px;
     animation: fadeInLeft 1.2s ease forwards;
   }
@@ -173,6 +174,9 @@
   .about-img {
     border-radius: 10px;
     opacity: 0;
+    margin-top: 37px;
+    /* height: auto; */
+    width: 85%;
     animation: fadeInRight 1.2s ease forwards;
     animation-delay: 0.3s;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
@@ -199,8 +203,24 @@
   .gallery .row .col-sm-3 .card {
     width: 16rem;
     margin-left: 20px;
+    border-color: green;
+    border-radius: 25px;
   }
-
+  .custom-card {
+    margin-left: 10px;
+    width: 16rem;
+    /* border-radius: 10px; */
+    /* border: 1px solid black; */
+    border: 1px solid black !important;
+  }
+  .custom-card .card-body {
+    background-color: rgb(6, 6, 106);
+    color: white;
+    font-weight: bold;
+    font-family: open sans, sans-serif;
+    text-align: center;
+    border-radius: 20px;
+  }
   .gallery .row .col-sm-3 .card-body {
     background-color: rgb(6, 6, 106);
     color: white;
@@ -218,7 +238,7 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   }
 
-  @media (max-width: 600px) {
+  @media (max-width: 800px) {
     .gallery .row h3 {
       padding-left: 0px;
       text-align: center;
@@ -325,6 +345,13 @@
     padding: 8px;
     border: 1px solid grey;
     font-family: open sans, sans-serif;
+  }
+  @media screen and (max-width: 900px) {
+    .col-sm-9 .custom-card {
+      width: 100% !important; /* take full width of column */
+      justify-content: center;
+      margin: auto;
+    }
   }
 
   @media (max-width: 600px) {
@@ -483,15 +510,21 @@
   <div class="row align-items-center">
     <!-- Left Column (Text) -->
     <div class="col-sm-7" style="text-align: justify">
-      <h2 class="about-title">ABOUT NOU e-GYAN PORTAL</h2>
-      <p class="about-text">
+      <h3
+        class="about-title sm-text-center"
+        style="color: rgb(6, 6, 106) !important"
+      >
+        ABOUT NOU e-GYAN PORTAL
+      </h3>
+      <br /><br />
+      <p class="about-text" style="margin-left: 15px">
         Nalanda Open University welcomes all our students, faculties & study
         centres to the very new & innovative online study portal
         <strong>NOU e-Gyan</strong>. The portal is a unique initiative by
         Hon’ble Vice-Chancellor Prof. (Dr.) K C Sinha, which is aimed at
         providing online study material to the students of NOU.
       </p>
-      <p class="about-text">
+      <p class="about-text" style="margin-left: 15px">
         The portal is accessible from any nook and corner of the world if the
         system allows permission to its users. It is a web-based solution
         assisting 24×7 to its authorized users. It will resolve the academic
@@ -516,169 +549,197 @@
     </div>
   </div>
 </section>
-
-<!--gallery-->
-
-<div class="container">
-<div class="row justify-content-center" style="padding: 10vh 0">
-  <section class="gallery text-center">
-    <div class="row mb-4">
-      <h3 class="text-black text-center">STUDENT SERVICES</h3>
+<!-- gallery section -->
+<div class="row">
+  <section class="gallery">
+    <div class="row">
+      <h3 style="color: rgb(6, 6, 106)">STUDENT SERVICES</h3>
     </div>
-
-    <!-- Gallery section one -->
-    <div class="row g-4 justify-content-center">
-      <div class="col-lg-2 col-md-6 col-sm-12 d-flex">
-        <div class="card flex-fill" style="border-color: rgb(6, 6, 106)">
-          <img
-            class="card-img-top"
-            src="{% static 'images/registration.jpg' %}"
-            alt="Login"
-          />
-          <div class="card-body">
-            <p class="card-text">
-              <a href="{% url 'nouapp:login' %}" style="color: white">Login</a>
-            </p>
+    <!--gallery section one-->
+    <div class="container mt-4 check">
+      <div class="row justify-content-center g-4" style="padding-top: 25px">
+        <div class="col-lg-3 col-md-6 col-sm-9">
+          <div
+            class="card h-100 custom-card"
+            style="border-color: rgb(6, 6, 106)"
+          >
+            <img
+              class="card-img-top"
+              src="{% static 'images/registration.jpg' %}"
+              alt="Card image cap"
+            />
+            <div class="card-body">
+              <p class="card-text">
+                <a href="{% url 'nouapp:login' %}" style="color: white"
+                  >Login</a
+                >
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="col-lg-2 col-md-6 col-sm-12 d-flex">
-        <div class="card flex-fill" style="border-color: rgb(6, 6, 106)">
-          <img
-            class="card-img-top"
-            src="{% static 'images/dashboard.jpg' %}"
-            alt="Dashboard"
-          />
-          <div class="card-body">
-            <p class="card-text">
-              <a href="{% url 'studentapp:studenthome' %}" style="color: white"
-                >Dashboard</a
-              >
-            </p>
+        <div class="col-lg-3 col-md-6 col-sm-9">
+          <div
+            class="card h-100 custom-card"
+            style="border-color: rgb(6, 6, 106)"
+          >
+            <img
+              class="card-img-top"
+              src="{% static 'images/dashboard.jpg' %}"
+              alt="Card image cap"
+            />
+            <div class="card-body">
+              <p class="card-text">
+                <a
+                  href="{% url 'studentapp:studenthome' %}"
+                  style="color: white"
+                  >Dashboard</a
+                >
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="col-lg-2 col-md-6 col-sm-12 d-flex">
-        <div class="card flex-fill" style="border-color: rgb(6, 6, 106)">
-          <img
-            class="card-img-top"
-            src="{% static 'images/online-courses.jpg' %}"
-            alt="SLM"
-          />
-          <div class="card-body">
-            <p class="card-text">
-              <a href="{% url 'studentapp:viewmat' %}" style="color: white"
-                >Self Learning Material</a
-              >
-            </p>
+        <div class="col-lg-3 col-md-6 col-sm-9">
+          <div
+            class="card h-100 custom-card"
+            style="border-color: rgb(6, 6, 106)"
+          >
+            <img
+              class="card-img-top"
+              src="{% static 'images/online-courses.jpg' %}"
+              alt="Card image cap"
+            />
+            <div class="card-body">
+              <p class="card-text">
+                <a href="{% url 'studentapp:viewmat' %}" style="color: white"
+                  >Self Learning Material</a
+                >
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div class="col-lg-2 col-md-6 col-sm-12 d-flex">
-        <div class="card flex-fill" style="border-color: rgb(6, 6, 106)">
-          <img
-            class="card-img-top"
-            src="{% static 'images/e-lectures.jpg' %}"
-            alt="e-Books"
-          />
-          <div class="card-body">
-            <p class="card-text">
-              <a href="{% url 'studentapp:viewmat' %}" style="color: white"
-                >e-books</a
-              >
-            </p>
+        <div class="col-lg-3 col-md-6 col-sm-9">
+          <div
+            class="card h-100 custom-card"
+            style="border-color: rgb(6, 6, 106)"
+          >
+            <img
+              class="card-img-top"
+              src="{% static 'images/e-lectures.jpg' %}"
+              alt="Card image cap"
+            />
+            <div class="card-body">
+              <p class="card-text">
+                <a
+                  href="{% url 'studentapp:studenthome' %}"
+                  style="color: white"
+                  >e-books</a
+                >
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
-
-    <!-- Gallery section two -->
-    <div class="row g-4 justify-content-center mt-3 p-10">
-      <div class="col-lg-2 col-md-6 col-sm-12 d-flex">
-        <div class="card flex-fill" style="border-color: rgb(6, 6, 106)">
-          <img
-            class="card-img-top p-10 mx-auto"
-            src="{% static 'images/self-assessment.svg' %}"
-            alt="Self Assessment"
-          />
-          <div class="card-body">
-            <p class="card-text"><a href="{% url 'studentapp:studenthome' %}" style="color: white"
-                >Self Assessment</a
-              ></p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-2 col-md-6 col-sm-12 d-flex">
-        <div class="card flex-fill" style="border-color: rgb(6, 6, 106)">
-          <img
-            class="card-img-top"
-            src="{% static 'images/performance.jpg' %}"
-            alt="Performance"
-          />
-          <div class="card-body">
-            <p class="card-text">
-              <a href="{% url 'studentapp:viewprofile' %}" style="color: white"
-                >Performance</a
-              >
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-2 col-md-6 col-sm-12 d-flex">
-        <div class="card flex-fill" style="border-color: rgb(6, 6, 106)">
-          <img
-            class="card-img-top"
-            src="{% static 'images/feedback.jpg' %}"
-            alt="Feedback"
-          />
-          <div class="card-body">
-            <p class="card-text">
-              <a href="{% url 'studentapp:response' %}" style="color: white"
-                >Feedback</a
-              >
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-lg-2 col-md-6 col-sm-12 d-flex">
-        <div class="card flex-fill" style="border-color: rgb(6, 6, 106)">
-          <img
-            class="card-img-top"
-            src="{% static 'images/course-catlog.jpg' %}"
-            alt="Catalogue"
-          />
-          <div class="card-body">
-            <p class="card-text">
-              <a href="{% url 'nouapp:courses' %}" style="color: white"
-                >Course-Catalogue</a
-              >
-            </p>
-          </div>
-        </div>
-      </div>
       </div>
     </div>
+    <!--gallery section two-->
+    <div class="container mt-4 check">
+      <div class="row justify-content-center g-4" style="padding-top: 40px">
+        <div class="col-lg-3 col-md-6 col-sm-9">
+          <div
+            class="card h-100 custom-card"
+            style="border-color: rgb(6, 6, 106)"
+          >
+            <img
+              class="card-img-top p-4 bg-white"
+              src="{% static 'images/self-assessment.svg' %}"
+              alt="Card image cap"
+            />
+            <div class="card-body">
+              <p class="card-text">
+                <a
+                  href="{% url 'studentapp:studenthome' %}"
+                  style="color: white"
+                  >Self Assessment Tools</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-9">
+          <div
+            class="card h-100 custom-card"
+            style="border-color: rgb(6, 6, 106)"
+          >
+            <img
+              class="card-img-top"
+              src="{% static 'images/performance.jpg' %}"
+              alt="Card image cap"
+            />
+            <div class="card-body">
+              <p class="card-text">
+                <a
+                  href="{% url 'studentapp:viewprofile' %}"
+                  style="color: white"
+                  >Performance</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-3 col-md-6 col-sm-9">
+          <div
+            class="card h-100 custom-card"
+            style="border-color: rgb(6, 6, 106)"
+          >
+            <img
+              class="card-img-top"
+              src="{% static 'images/feedback.jpg' %}"
+              alt="Card image cap"
+            />
+            <div class="card-body">
+              <p class="card-text">
+                <a href="{% url 'studentapp:response' %}" style="color: white"
+                  >Feedback</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-3 col-md-6 col-sm-9">
+          <div
+            class="card h-100 custom-card"
+            style="border-color: rgb(6, 6, 106)"
+          >
+            <img
+              class="card-img-top"
+              src="{% static 'images/course-catlog.jpg' %}"
+              alt="Card image cap"
+            />
+            <div class="card-body">
+              <p class="card-text">
+                <a href="{% url 'nouapp:courses' %}" style="color: white"
+                  >Course-Catalogue</a
+                >
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </div>
-</div>
 
-<!--administrative setup-->
+<!-- administrative setup  -->
 
 <div class="row" style="padding-top: 10vh">
   <div class="container p-5" style="background-color: rgb(44, 151, 193)">
     <section class="team">
       <div class="row mb-4">
-        <h3 class="text-center text-white">ADMINISTRATIVE SETUP</h3>
+        <h3 class="text-sm-center text-lg-start" style="color: rgb(6, 6, 106)">
+          ADMINISTRATIVE SETUP
+        </h3>
       </div>
       <div class="row g-4">
-        <!-- Card 1 -->
         <div class="col-lg-3 col-md-6 col-sm-12">
           <div class="card h-100 text-center">
             <img
@@ -696,7 +757,6 @@
           </div>
         </div>
 
-        <!-- Card 2 -->
         <div class="col-lg-3 col-md-6 col-sm-12">
           <div class="card h-100 text-center">
             <img
@@ -714,7 +774,6 @@
           </div>
         </div>
 
-        <!-- Card 3 -->
         <div class="col-lg-3 col-md-6 col-sm-12">
           <div class="card h-100 text-center">
             <img
@@ -732,7 +791,6 @@
           </div>
         </div>
 
-        <!-- Card 4 -->
         <div class="col-lg-3 col-md-6 col-sm-12">
           <div class="card h-100 text-center">
             <img
