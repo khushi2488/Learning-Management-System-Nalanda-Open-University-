@@ -688,28 +688,82 @@
       animation: slideInUp 0.8s ease-out;
     }
 
-    /* Scroll to Top Button Styling */
-    #topBtn {
-      display: none;
-      position: fixed;
-      bottom: 30px;
-      right: 36px;
-      z-index: 999;
-      border: none;
-      outline: none;
-      background-color: var(--primary-color);
-      color: white;
-      cursor: pointer;
-      padding: 12px 16px;
-      border-radius: 50%;
-      font-size: 18px;
-      transition: background-color 0.3s ease;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-    }
+    /* Back to Top Button Styles */
+        #backToTop {
+            position: fixed;
+            bottom: 1.55rem;
+            right: 2.1rem;
+            z-index: 2000;
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            font-size: 2rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s, transform 0.2s;
+        }
 
-    #topBtn:hover {
-      background-color: var(--primary-hover);
-    }
+        body.dark-mode #backToTop {
+            background: #e0e0e0;
+            color: #0d0d0d;
+        }
+
+        #backToTop.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: scale(1.08);
+        }
+
+        #backToTop:hover {
+            background-color: var(--primary-color);
+            transform: scale(1.15);
+        }
+
+        /* Back to Top to Bottom Button Styles */
+        #Toptoback {
+            position: fixed;
+            bottom: 1.1rem;
+            right: 2.1rem;
+            z-index: 2000;
+            background-color: var(--primary-color);
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            width: 56px;
+            height: 56px;
+            font-size: 2rem;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s, transform 0.2s;
+        }
+
+        body.dark-mode #Toptoback {
+            background: #e0e0e0;
+            color: #0d0d0d;
+        }
+
+        #Toptoback.show {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(-10px) scale(1.08);
+        }
+
+        #Toptoback:hover {
+            background-color: var(--primary-color);
+            transform: scale(1.15);
+        }
+
+        body.dark-mode #Toptoback:hover {
+            background: #e0e0e0;
+            transform: scale(1.15);
+        }
 
     /* Large devices */
     @media screen and (max-width: 1500px) {
@@ -797,10 +851,6 @@
 
     /* Extra small devices */
     @media screen and (max-width: 576px) {
-      #topBtn {
-        bottom: 75px;
-        right: 22px;
-      }
       .gallery div.row .col-sm-3 {
         padding: 50px;
       }
@@ -1566,10 +1616,10 @@
       </footer>
     </div>
 
-    <!-- Scroll to Top Button -->
-    <button onclick="scrollToTop()" id="topBtn" title="Go to top">
-      <i class="fa-solid fa-arrow-up"></i>
-    </button>
+   <!-- Back to Top Button -->
+    <button id="backToTop" title="Back to Top">⬆</button>
+    <!-- Top to Bottom Button -->
+    <button id="Toptoback" title="Top To Back">⬇</button>
 
     <!-- JavaScript for Enhanced Functionality -->
     <script>
@@ -1657,10 +1707,31 @@
         }
       };
 
-      // Scroll to top smoothly
-      function scrollToTop() {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      }
+      // Back to Top Button Logic
+        const backToTopBtn = document.getElementById("backToTop");
+        window.addEventListener("scroll", () => {
+            if (window.scrollY > 100) {
+                backToTopBtn.classList.add("show");
+            } else {
+                backToTopBtn.classList.remove("show");
+            }
+        });
+        backToTopBtn.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+
+        //Top to Bottom Button Logic
+        const ToptobackBtn = document.getElementById("Toptoback");
+        window.addEventListener("scroll", () => {
+            if (window.scrollY < 100) {
+                ToptobackBtn.classList.add("show");
+            } else {
+                ToptobackBtn.classList.remove("show");
+            }
+        });
+        ToptobackBtn.addEventListener("click", () => {
+            window.scrollTo({ top: 10000, behavior: "smooth" });
+        });
     </script>
 
     <!-- Chatbot Widget -->
