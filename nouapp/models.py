@@ -1,34 +1,9 @@
-# nouapp/models.py - Updated with ForeignKey options
-
 from django.db import models
 from django.utils import timezone
 from datetime import timedelta
 
-# OPTION 1: Keep existing Student model (recommended for now)
-# class Student(models.Model):
-#     rollno=models.IntegerField(primary_key=True)
-#     name=models.CharField(max_length=50)
-#     fname=models.CharField(max_length=50)
-#     mname=models.CharField(max_length=50)
-#     gender=models.CharField(max_length=6)
-#     address=models.TextField()
-#     program=models.CharField(max_length=50)  # Keep as CharField for now
-#     branch=models.CharField(max_length=50)   # Keep as CharField for now
-#     year=models.CharField(max_length=50)     # Keep as CharField for now
-#     contactno=models.CharField(max_length=10)
-#     emailaddress=models.CharField(max_length=50)
-#     regdate=models.CharField(max_length=30)
-
-    # def __str__(self):
-    #     return f"{self.name} ({self.rollno})"
-
-# OPTION 2: If you want to update Student model to use ForeignKeys (future migration)
-# Uncomment this and create a migration when ready
-
-# from adminapp.models import Program, Branch, Year
-
 class Student(models.Model):
-    rollno = models.IntegerField(primary_key=True)
+    rollno = models.BigIntegerField(primary_key=True)  # Changed to BigIntegerField for PostgreSQL
     name = models.CharField(max_length=50)
     fname = models.CharField(max_length=50)
     mname = models.CharField(max_length=50)
@@ -44,22 +19,21 @@ class Student(models.Model):
     def __str__(self):
         return f"{self.name} ({self.rollno})"
 
-
 class Login(models.Model):
-    userid=models.CharField(max_length=50,primary_key=True)
-    password=models.CharField(max_length=30)
-    confirmpassword=models.CharField(max_length=30)
-    usertype=models.CharField(max_length=50)
-    status=models.CharField(max_length=10)
+    userid = models.CharField(max_length=50, primary_key=True)
+    password = models.CharField(max_length=30)
+    confirmpassword = models.CharField(max_length=30)
+    usertype = models.CharField(max_length=50)
+    status = models.CharField(max_length=10)
 
 class Enquiry(models.Model):
-    name=models.CharField(max_length=50)
-    gender=models.CharField(max_length=6)
-    address=models.TextField()
-    contactno=models.CharField(max_length=10)
-    emailaddress=models.CharField(max_length=50)
-    enquirytext=models.TextField()
-    enquirydate=models.CharField(max_length=30)
+    name = models.CharField(max_length=50)
+    gender = models.CharField(max_length=6)
+    address = models.TextField()
+    contactno = models.CharField(max_length=10)
+    emailaddress = models.CharField(max_length=50)
+    enquirytext = models.TextField()
+    enquirydate = models.CharField(max_length=30)
 
 # For forgot password / reset password token
 class PasswordResetToken(models.Model):
