@@ -1,13 +1,11 @@
 from django.db import models
-
-# Create your models here.
 from adminapp.models import Program, Branch, Year
 
 class StuResponse(models.Model):
     rollno = models.CharField(max_length=50)
     name = models.CharField(max_length=50)
     
-    # UPDATED: Use ForeignKeys to match Student model
+    # Use ForeignKeys to match Student model
     program = models.ForeignKey(Program, on_delete=models.CASCADE)
     branch = models.ForeignKey(Branch, on_delete=models.CASCADE)  
     year = models.ForeignKey(Year, on_delete=models.CASCADE)
@@ -23,15 +21,14 @@ class StuResponse(models.Model):
         return f"{self.name} - {self.subject}"
 
 class Question(models.Model):
-    qid=models.AutoField(primary_key=True)
-    question=models.TextField()
-    postedby=models.CharField(max_length=50)
-    posteddate=models.CharField(max_length=30)
+    qid = models.AutoField(primary_key=True)
+    question = models.TextField()
+    postedby = models.CharField(max_length=50)
+    posteddate = models.CharField(max_length=30)
     
 class Answer(models.Model):
-    aid=models.AutoField(primary_key=True)
-    answer=models.TextField()
-    answered=models.CharField(max_length=50)
-    posteddate=models.CharField(max_length=30)
-    qid=models.IntegerField()
-    
+    aid = models.AutoField(primary_key=True)
+    answer = models.TextField()
+    answered = models.CharField(max_length=50)
+    posteddate = models.CharField(max_length=30)
+    qid = models.BigIntegerField()  # Changed to BigIntegerField for PostgreSQL compatibility
