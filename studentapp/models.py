@@ -32,3 +32,5 @@ class Answer(models.Model):
     answered = models.CharField(max_length=50)
     posteddate = models.CharField(max_length=30)
     qid = models.BigIntegerField()  # Changed to BigIntegerField for PostgreSQL compatibility
+    
+    

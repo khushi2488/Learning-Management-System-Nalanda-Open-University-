@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.models import User
 from django.contrib import messages
-from nouapp.models import Student, Enquiry, Login
+from nouapp.models import Student, Enquiry, Login, EnquiryReply
 from studentapp.models import StuResponse
 from .models import Program, Branch, Year, Material, News, Course, MaterialCategory,NewsAnnouncement, NewsCategory
 from datetime import date
@@ -1710,3 +1710,84 @@ def delete_course_simple(request, course_id):
             return redirect('adminapp:manage_courses')
     except KeyError:
         return redirect('nouapp:login')    
+    
+    
+# Keep your existing viewenquiry function, and add these:
+
+from django.contrib.auth.decorators import login_required
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def admin_enquiry_dashboard(request):
+    """Enhanced admin enquiry dashboard"""
+    try:
+        adminid = request.session.get('adminid')
+        if not adminid:
+            return redirect('nouapp:login')
+        
+        status_filter = request.GET.get('status', '')
+        priority_filter = request.GET.get('priority', '')
+        
+        enquiries = Enquiry.objects.all().order_by('-id')
+        
+        if status_filter:
+            enquiries = enquiries.filter(status=status_filter)
+        if priority_filter:
+            enquiries = enquiries.filter(priority=priority_filter)
+        
+        context = {
+            'adminid': adminid,
+            'enquiries': enquiries,
+            'total_enquiries': Enquiry.objects.count(),
+            'pending_enquiries': Enquiry.objects.filter(status='pending').count(),
+            'resolved_enquiries': Enquiry.objects.filter(status='resolved').count(),
+        }
+        return render(request, 'admin_enquiry_dashboard.html', context)
+        
+    except Exception as e:
+        print(f"Error in admin_enquiry_dashboard: {e}")
+        messages.error(request, "An error occurred.")
+        return redirect('adminapp:adminhome')
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def admin_enquiry_detail(request, enquiry_id):
+    """Admin view enquiry details and reply"""
+    try:
+        if request.session['adminid'] is not None:
+            adminid = request.session['adminid']
+            enquiry = get_object_or_404(Enquiry, id=enquiry_id)
+            
+            if request.method == 'POST':
+                action = request.POST.get('action')
+                
+                if action == 'reply':
+                    reply_message = request.POST.get('reply_message')
+                    if reply_message:
+                        admin_user, _ = User.objects.get_or_create(
+                            username=f'admin_{adminid}',
+                            defaults={'is_staff': True, 'email': f'admin_{adminid}@nou.edu'}  # Add email
+                        )
+                        
+                        EnquiryReply.objects.create(
+                            enquiry=enquiry,
+                            user=admin_user,
+                            message=reply_message,
+                            is_admin=True
+                        )
+                        messages.success(request, 'Reply sent successfully!')
+                
+                elif action == 'update_status':
+                    new_status = request.POST.get('status')
+                    enquiry.status = new_status
+                    enquiry.save()
+                    messages.success(request, f'Status updated to {new_status}!')
+                
+                return redirect('adminapp:admin_enquiry_detail', enquiry_id=enquiry_id)
+            
+            context = {
+                'adminid': adminid,
+                'enquiry': enquiry,
+                'replies': enquiry.replies.all().order_by('created_at')
+            }
+            return render(request, 'admin_enquiry_detail.html', context)
+    except KeyError:
+        return redirect('nouapp:login')
