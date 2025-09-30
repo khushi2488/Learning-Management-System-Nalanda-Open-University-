@@ -26,14 +26,14 @@ class Login(models.Model):
     usertype = models.CharField(max_length=50)
     status = models.CharField(max_length=10)
 
-class Enquiry(models.Model):
-    name = models.CharField(max_length=50)
-    gender = models.CharField(max_length=6)
-    address = models.TextField()
-    contactno = models.CharField(max_length=10)
-    emailaddress = models.CharField(max_length=50)
-    enquirytext = models.TextField()
-    enquirydate = models.CharField(max_length=30)
+# class Enquiry(models.Model):
+#     name = models.CharField(max_length=50)
+#     gender = models.CharField(max_length=6)
+#     address = models.TextField()
+#     contactno = models.CharField(max_length=10)
+#     emailaddress = models.CharField(max_length=50)
+#     enquirytext = models.TextField()
+#     enquirydate = models.CharField(max_length=30)
 
 # For forgot password / reset password token
 class PasswordResetToken(models.Model):
@@ -48,3 +48,63 @@ class PasswordResetToken(models.Model):
         
     def __str__(self):
         return f"Reset token for {self.userid}"
+    
+from django.db import models
+from django.contrib.auth.models import User
+
+from django.db import models
+from django.contrib.auth.models import User
+
+class Enquiry(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('in_progress', 'In Progress'),
+        ('resolved', 'Resolved'),
+        ('closed', 'Closed'),
+    ]
+    
+    PRIORITY_CHOICES = [
+        ('low', 'Low'),
+        ('medium', 'Medium'),
+        ('high', 'High'),
+    ]
+    
+    # Basic fields
+    name = models.CharField(max_length=100)
+    emailaddress = models.CharField(max_length=50)  # Changed from 'email' to match Student
+    contactno = models.CharField(max_length=20)
+    address = models.TextField(blank=True)
+    
+    # New fields
+    student = models.ForeignKey(User, on_delete=models.CASCADE, related_name='enquiries', null=True, blank=True)
+    subject = models.CharField(max_length=200, default='General Enquiry')
+    message = models.TextField(default='')
+    enquirytext = models.TextField(blank=True)  # Keep for backward compatibility
+    enquirydate = models.CharField(max_length=30, blank=True)  # Keep for backward compatibility
+    category = models.CharField(max_length=100, blank=True)
+    priority = models.CharField(max_length=20, choices=PRIORITY_CHOICES, default='low')
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
+    created_at = models.DateTimeField(auto_now_add=True, null=True)
+    updated_at = models.DateTimeField(auto_now=True, null=True)
+    
+    class Meta:
+        verbose_name_plural = "Enquiries"
+        ordering = ['-id']
+    
+    def __str__(self):
+        return f"{self.name} - {self.subject}"
+    
+# ADD THIS MODEL - It was missing!
+class EnquiryReply(models.Model):
+    enquiry = models.ForeignKey(Enquiry, on_delete=models.CASCADE, related_name='replies')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    message = models.TextField()
+    is_admin = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    
+    class Meta:
+        verbose_name_plural = "Enquiry Replies"
+        ordering = ['created_at']
+    
+    def __str__(self):
+        return f"Reply by {self.user.username} on {self.enquiry.subject}"    

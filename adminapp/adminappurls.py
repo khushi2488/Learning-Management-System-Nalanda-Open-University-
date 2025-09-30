@@ -66,4 +66,6 @@ path('news/<int:news_id>/preview/', views.preview_news, name='preview_news'),
     path('edit-course/<int:course_id>/', views.edit_course, name='edit_course'),
 #    path('delete-course/<int:course_id>/', views.delete_course, name='delete_course'),
    path('delete-course/<int:course_id>/', views.delete_course_simple, name='delete_course'),
+    path('enquiries/', views.admin_enquiry_dashboard, name='admin_enquiry_dashboard'),
+    path('enquiries/<int:enquiry_id>/', views.admin_enquiry_detail, name='admin_enquiry_detail'),
 ]

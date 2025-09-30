@@ -1,0 +1,322 @@
+{% extends 'adminhome.html' %}
+
+{% block body %}
+<style>
+    /* Professional Color Scheme */
+    .admin-dashboard-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 40px 0;
+        margin: -20px;
+    }
+    
+    .page-title {
+        color: #ffffff;
+        font-weight: 700;
+        font-size: 32px;
+        margin-bottom: 30px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    /* Stats Cards */
+    .stats-card {
+        background: #ffffff;
+        border-radius: 12px;
+        border: none;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+    }
+    
+    .stats-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .stats-card .card-body {
+        padding: 30px 20px;
+    }
+    
+    .stats-card h5 {
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: #718096;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .stats-card h2 {
+        font-size: 42px;
+        font-weight: 700;
+        margin: 0;
+    }
+    
+    .stats-card h2.text-dark {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .stats-card h2.text-warning {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    .stats-card h2.text-success {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    
+    /* Main Card */
+    .main-card {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        border: none;
+        overflow: hidden;
+    }
+    
+    .main-card .card-body {
+        padding: 32px;
+    }
+    
+    .card-title {
+        color: #2d3748;
+        font-weight: 700;
+        font-size: 24px;
+        margin-bottom: 24px;
+        border-bottom: 3px solid #667eea;
+        padding-bottom: 12px;
+    }
+    
+    /* Table Styling */
+    .table-responsive {
+        border-radius: 12px;
+        overflow: hidden;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .table {
+        margin-bottom: 0;
+    }
+    
+    .table thead {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .table thead th {
+        border: none;
+        padding: 16px;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-size: 13px;
+        color: #ffffff;
+    }
+    
+    .table tbody td {
+        padding: 16px;
+        vertical-align: middle;
+        color: #4a5568;
+        border-bottom: 1px solid #e2e8f0;
+        background-color: #ffffff;
+    }
+    
+    .table tbody tr {
+        transition: none;
+    }
+    
+    /* Remove all hover effects */
+    .table tbody tr:hover,
+    .table-hover tbody tr:hover,
+    .table-striped tbody tr:hover {
+        background-color: inherit !important;
+        transform: none !important;
+    }
+    
+    .table-striped tbody tr:nth-of-type(odd) {
+        background-color: #f7fafc;
+    }
+    
+    .table-striped tbody tr:nth-of-type(odd):hover {
+        background-color: #f7fafc !important;
+    }
+    
+    .table-striped tbody tr:nth-of-type(even):hover {
+        background-color: #ffffff !important;
+    }
+    
+    /* Badge Styling */
+    .badge {
+        padding: 6px 14px;
+        font-size: 12px;
+        font-weight: 600;
+        border-radius: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .badge-low {
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        color: #744210;
+    }
+    
+    .badge-medium {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: #ffffff;
+    }
+    
+    .badge-high {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: #ffffff;
+    }
+    
+    .badge-info {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #ffffff;
+    }
+    
+    /* Button Styling */
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 8px 20px;
+        font-weight: 600;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+        color: #ffffff;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        color: #ffffff;
+    }
+    
+    /* Empty State */
+    .text-center.text-muted {
+        color: #718096 !important;
+        font-size: 16px;
+        padding: 40px 0;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .admin-dashboard-container {
+            padding: 20px 10px;
+        }
+        
+        .page-title {
+            font-size: 24px;
+        }
+        
+        .stats-card h2 {
+            font-size: 32px;
+        }
+        
+        .main-card .card-body {
+            padding: 20px;
+        }
+        
+        .table thead th,
+        .table tbody td {
+            padding: 12px 8px;
+            font-size: 13px;
+        }
+    }
+</style>
+
+<div class="admin-dashboard-container">
+    <div class="row">
+        <div class="col-12">
+            <h3 class="page-title">Student Enquiry Dashboard</h3>
+            
+            <!-- Statistics Cards -->
+            <div class="row mb-4">
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card stats-card">
+                        <div class="card-body text-center">
+                            <h5>Total Enquiries</h5>
+                            <h2 class="text-dark">{{ total_enquiries }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3 mb-md-0">
+                    <div class="card stats-card">
+                        <div class="card-body text-center">
+                            <h5>Pending</h5>
+                            <h2 class="text-warning">{{ pending_enquiries }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card stats-card">
+                        <div class="card-body text-center">
+                            <h5>Resolved</h5>
+                            <h2 class="text-success">{{ resolved_enquiries }}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Enquiries Table -->
+            <div class="card main-card">
+                <div class="card-body">
+                    <h5 class="card-title">All Enquiries</h5>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Subject</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for enquiry in enquiries %}
+                                <tr>
+                                    <td>{{ enquiry.id }}</td>
+                                    <td>{{ enquiry.name }}</td>
+                                    <td>{{ enquiry.subject }}</td>
+                                    <td>
+                                        <span class="badge badge-{{ enquiry.priority }}">
+                                            {{ enquiry.get_priority_display }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-info">
+                                            {{ enquiry.get_status_display }}
+                                        </span>
+                                    </td>
+                                    <td>{{ enquiry.created_at|date:"d M Y" }}</td>
+                                    <td>
+                                        <a href="{% url 'adminapp:admin_enquiry_detail' enquiry.id %}" 
+                                           class="btn btn-sm btn-primary">View</a>
+                                    </td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="7" class="text-center text-muted">No enquiries found</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

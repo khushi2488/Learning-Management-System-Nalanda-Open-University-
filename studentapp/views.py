@@ -1,7 +1,7 @@
 # studentapp/views.py - FIXED VERSION
 
 from django.shortcuts import render, redirect
-from nouapp.models import Student, Login
+# from nouapp.models import Student, Login 
 from django.views.decorators.cache import cache_control
 from .models import StuResponse, Question, Answer
 from datetime import date
@@ -10,7 +10,8 @@ from adminapp.models import Material, Course, Program, Branch, Year, NewsAnnounc
 from django.db.models import Q
 from adminapp.analytics_utils import log_student_activity
 from django.utils import timezone
-
+from nouapp.models import Enquiry, Student, EnquiryReply  # Add EnquiryReply here
+from django.shortcuts import render, get_object_or_404
 
 # Create your views here.
 # FIXED: All other views that use student data
@@ -480,3 +481,130 @@ def submit_feedback(request):  # or whatever your function is called
             messages.error(request, f'Error: {str(e)}')
             
     return render(request, "feedback_form.html")  # your template    
+
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def student_enquiry_dashboard(request):
+    """Display all enquiries for the logged-in student"""
+    try:
+        rollno = request.session.get('rollno')
+        if not rollno:
+            return redirect('nouapp:login')
+        
+        stu = Student.objects.get(rollno=rollno)
+        
+        # Query using emailaddress field
+        enquiries = Enquiry.objects.filter(emailaddress=stu.emailaddress).order_by('-id')
+        
+        context = {
+            'stu': stu,
+            'enquiries': enquiries,
+            'total_enquiries': enquiries.count(),
+            'pending_enquiries': enquiries.filter(status='pending').count(),
+            'resolved_enquiries': enquiries.filter(status='resolved').count(),
+        }
+        return render(request, 'enquiry_dashboard.html', context)
+        
+    except Student.DoesNotExist:
+        messages.error(request, "Student record not found.")
+        return redirect('nouapp:login')
+    except Exception as e:
+        # print(f"Error in student_enquiry_dashboard: {e}")
+        # messages.error(request, "An error occurred. Please try again.")
+        # return redirect('studentapp:studenthome')
+        print(f"CRITICAL ERROR TYPE: {type(e).__name__} - MESSAGE: {e}")
+        # !!! RAISE THE EXCEPTION TO GET THE FULL TRACEBACK !!!
+        raise e 
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def create_enquiry(request):
+    """Create a new enquiry"""
+    try:
+        rollno = request.session.get('rollno')
+        if not rollno:
+            return redirect('nouapp:login')
+        
+        stu = Student.objects.get(rollno=rollno)
+        
+        if request.method == 'POST':
+            subject = request.POST.get('subject', '').strip()
+            message = request.POST.get('message', '').strip()
+            category = request.POST.get('category', '')
+            priority = request.POST.get('priority', 'low')
+            
+            if not subject or not message:
+                messages.error(request, 'Subject and message are required!')
+                return render(request, 'create_enquiry.html', {'stu': stu})
+            
+            Enquiry.objects.create(
+                name=stu.name,
+                emailaddress=stu.emailaddress,  # Use emailaddress
+                contactno=stu.contactno,
+                address='',
+                subject=subject,
+                message=message,
+                category=category,
+                priority=priority,
+                status='pending'
+            )
+            messages.success(request, 'Enquiry submitted successfully!')
+            return redirect('studentapp:student_enquiry_dashboard')
+        
+        return render(request, 'create_enquiry.html', {'stu': stu})
+        
+    except Student.DoesNotExist:
+        messages.error(request, "Student record not found.")
+        return redirect('nouapp:login')
+    except Exception as e:
+        print(f"Error in create_enquiry: {e}")
+        messages.error(request, f"Error creating enquiry: {str(e)}")
+        return redirect('studentapp:studenthome')
+
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def enquiry_detail(request, enquiry_id):
+    """View enquiry details and replies"""
+    try:
+        rollno = request.session.get('rollno')
+        if not rollno:
+            return redirect('nouapp:login')
+        
+        stu = Student.objects.get(rollno=rollno)
+        
+        # Get enquiry and verify ownership
+        enquiry = get_object_or_404(Enquiry, id=enquiry_id, emailaddress=stu.emailaddress)
+        
+        if request.method == 'POST':
+            reply_message = request.POST.get('reply_message', '').strip()
+            if reply_message:
+                from django.contrib.auth.models import User
+                user, _ = User.objects.get_or_create(
+                    username=f'student_{rollno}',
+                    defaults={'email': stu.emailaddress}
+                )
+                
+                EnquiryReply.objects.create(
+                    enquiry=enquiry,
+                    user=user,
+                    message=reply_message,
+                    is_admin=False
+                )
+                messages.success(request, 'Reply added successfully!')
+                return redirect('studentapp:enquiry_detail', enquiry_id=enquiry_id)
+        
+        context = {
+            'stu': stu,
+            'enquiry': enquiry,
+            'replies': enquiry.replies.all().order_by('created_at')
+        }
+        return render(request, 'enquiry_detail.html', context)
+        
+    except Student.DoesNotExist:
+        messages.error(request, "Student record not found.")
+        return redirect('nouapp:login')
+    except Exception as e:
+        print(f"Error in enquiry_detail: {e}")
+        messages.error(request, "An error occurred.")
+        return redirect('studentapp:student_enquiry_dashboard')
