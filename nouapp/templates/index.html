@@ -146,6 +146,25 @@
     display: inline-block;
     animation: fadeInLeft 1s ease forwards;
   }
+  @media screen and (max-width: 991px) {
+    .about-title {
+      font-size: 22px;
+      margin: 0 auto;
+      text-align: center !important;
+      display: block;
+      padding-bottom: 15px;
+    }
+
+    .about-text {
+      font-size: 16px;
+      line-height: 1.6;
+      /* text-align: center !important; center paragraphs */
+      margin: 0 auto !important; /* center block */
+      color: rgb(6, 6, 106);
+      margin-bottom: 15px;
+      animation: fadeInLeft 1.2s ease forwards;
+    }
+  }
 
   /* Hover underline animation */
   .about-title::after {
@@ -174,7 +193,7 @@
   .about-img {
     border-radius: 10px;
     opacity: 0;
-    margin-top: 37px;
+    margin-top: 38px !important;
     /* height: auto; */
     width: 85%;
     animation: fadeInRight 1.2s ease forwards;
@@ -510,10 +529,7 @@
   <div class="row align-items-center">
     <!-- Left Column (Text) -->
     <div class="col-sm-7" style="text-align: justify">
-      <h3
-        class="about-title sm-text-center"
-        style="color: rgb(6, 6, 106) !important"
-      >
+      <h3 class="about-title" style="color: rgb(6, 6, 106) !important">
         ABOUT NOU e-GYAN PORTAL
       </h3>
       <br /><br />
