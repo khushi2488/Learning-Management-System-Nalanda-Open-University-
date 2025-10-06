@@ -4,24 +4,66 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from nouapp.models import Student, Enquiry, Login, EnquiryReply
 from studentapp.models import StuResponse
-from .models import Program, Branch, Year, Material, News, Course, MaterialCategory,NewsAnnouncement, NewsCategory
-from datetime import date
+from .models import Program, Branch, Year, Material, News, Course, MaterialCategory, NewsAnnouncement, NewsCategory
+from datetime import date, datetime
 from django.utils import timezone
 from django.db.models import Q, Count
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from datetime import datetime
 
-
-# Create your views here.
-@cache_control(no_cache=True,must_revalidate=True,no_store=True)
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def adminhome(request):
     try:
-        if request.session['adminid']!=None:
-            adminid=request.session['adminid']
-            return render(request,"adminhome.html",{'adminid':adminid})
+        if request.session['adminid'] is not None:
+            adminid = request.session['adminid']
+            
+            # Get the User object
+            try:
+                user = User.objects.get(username=adminid)
+            except User.DoesNotExist:
+                user = None
+            
+            # Get time-based greeting
+            current_hour = datetime.now().hour
+            if current_hour < 12:
+                greeting = "Good Morning"
+                greeting_icon = "☀️"
+            elif current_hour < 17:
+                greeting = "Good Afternoon"
+                greeting_icon = "🌤️"
+            else:
+                greeting = "Good Evening"
+                greeting_icon = "🌙"
+            
+            # Get admin's first name or username
+            if user and user.first_name:
+                admin_name = user.first_name
+            else:
+                admin_name = adminid
+            
+            # Get last login time
+            last_login = user.last_login if user else None
+            
+            # Get quick stats for dashboard
+            total_students = Student.objects.count()
+            total_materials = Material.objects.count()
+            pending_enquiries = Enquiry.objects.filter(status='pending').count()
+            recent_feedbacks = StuResponse.objects.count()
+            
+            context = {
+                'adminid': adminid,
+                'greeting': greeting,
+                'greeting_icon': greeting_icon,
+                'admin_name': admin_name,
+                'last_login': last_login,
+                'total_students': total_students,
+                'total_materials': total_materials,
+                'pending_enquiries': pending_enquiries,
+                'recent_feedbacks': recent_feedbacks,
+            }
+            
+            return render(request, "adminhome.html", context)
     except KeyError:
         return redirect('nouapp:login')
-
 def adminlogout(request):
     try:
         del request.session['adminid']
