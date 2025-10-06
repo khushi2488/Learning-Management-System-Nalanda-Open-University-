@@ -8,6 +8,30 @@
         </div>
     </div>
 
+    <!-- Date/Time Card -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm border-0" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <div class="card-body py-3">
+                    <div class="row align-items-center">
+                        <div class="col-md-6 text-center text-md-start">
+                            <h6 class="text-white mb-0">
+                                <i class="fas fa-calendar-alt me-2"></i>
+                                {% now "l, F d, Y" %}
+                            </h6>
+                        </div>
+                        <div class="col-md-6 text-center text-md-end">
+                            <h6 class="text-white mb-0">
+                                <i class="fas fa-clock me-2"></i>
+                                {% now "h:i A" %}
+                            </h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
    
     <!-- Analytics Dashboard Access -->
     <div class="row mb-4">
@@ -24,7 +48,7 @@
                             <h6 class="card-title">Comprehensive Analytics & Insights</h6>
                             <p class="card-text">
                                 View detailed analytics including students, course activity, 
-                                material usage statistics,and login activity.
+                                material usage statistics, and login activity.
                             </p>
                         </div>
                         <div class="col-md-4 text-center">
