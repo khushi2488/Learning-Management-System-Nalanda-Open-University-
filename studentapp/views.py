@@ -1,34 +1,125 @@
-# studentapp/views.py - FIXED VERSION
-
-from django.shortcuts import render, redirect
-# from nouapp.models import Student, Login 
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.cache import cache_control
 from .models import StuResponse, Question, Answer
-from datetime import date
+from datetime import date, datetime
 from django.contrib import messages
 from adminapp.models import Material, Course, Program, Branch, Year, NewsAnnouncement, NewsCategory
-from django.db.models import Q
+from django.db.models import Q, Count
 from adminapp.analytics_utils import log_student_activity
 from django.utils import timezone
-from nouapp.models import Enquiry, Student, EnquiryReply  # Add EnquiryReply here
-from django.shortcuts import render, get_object_or_404
+from nouapp.models import Enquiry, Student, EnquiryReply
 
-# Create your views here.
-# FIXED: All other views that use student data
-@cache_control(no_cache=True,must_revalidate=True,no_store=True)
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def studenthome(request):
     try:
-        if request.session['rollno']!=None:
-            rollno=request.session['rollno']
-            stu=Student.objects.select_related('program', 'branch', 'year').get(rollno=rollno)
+        if request.session['rollno'] is not None:
+            rollno = request.session['rollno']
+            stu = Student.objects.select_related('program', 'branch', 'year').get(rollno=rollno)
 
             # Log login activity
-            log_student_activity(rollno, 'login', request)
+            try:
+                log_student_activity(rollno, 'login', request)
+            except:
+                pass  # Continue even if logging fails
 
-            return render(request,"studenthome.html",{'stu':stu})
+            # Get time-based greeting
+            current_hour = datetime.now().hour
+            if current_hour < 12:
+                greeting = "Good Morning"
+                greeting_icon = "☀️"
+                greeting_message = "Start your day with learning!"
+            elif current_hour < 17:
+                greeting = "Good Afternoon"
+                greeting_icon = "🌤️"
+                greeting_message = "Keep up the great work!"
+            else:
+                greeting = "Good Evening"
+                greeting_icon = "🌙"
+                greeting_message = "Evening is perfect for study!"
+
+            # Get student's first name
+            student_name = stu.name.split()[0] if stu.name else rollno
+
+            # Get engagement statistics
+            # FIXED: Material only filters by course, not program/branch/year
+            # Get all materials (or filter by course if student has courses)
+            available_materials = Material.objects.filter(is_public=True).count()
+            
+            # If you want to filter by student's courses, you'd need to:
+            # 1. Get the student's enrolled courses
+            # 2. Filter materials by those courses
+            # Example (uncomment if you have a way to get student's courses):
+            # student_courses = stu.courses.all()  # Adjust based on your model
+            # available_materials = Material.objects.filter(course__in=student_courses).count()
+
+            # Student's questions and answers - with safe defaults
+            my_questions = 0
+            my_answers = 0
+            
+            try:
+                my_questions = Question.objects.filter(student=stu).count()
+            except Exception as e:
+                print(f"Question count error: {e}")
+                
+            try:
+                my_answers = Answer.objects.filter(student=stu).count()
+            except Exception as e:
+                print(f"Answer count error: {e}")
+
+            # Pending enquiries
+            try:
+                pending_enquiries = Enquiry.objects.filter(
+                    rollno=rollno,
+                    status='pending'
+                ).count()
+            except:
+                pending_enquiries = 0
+
+            # Recent news (last 5)
+            try:
+                recent_news = NewsAnnouncement.objects.filter(
+                    is_published=True
+                ).order_by('-created_at')[:5]
+            except:
+                recent_news = []
+
+            # Get latest material uploaded
+            latest_material = None
+            try:
+                # FIXED: Get latest public material or by course
+                latest_material = Material.objects.filter(
+                    is_public=True
+                ).order_by('-created_at').first()
+            except:
+                pass
+
+            # Calculate engagement score (simple metric)
+            engagement_score = min(100, (my_questions * 10) + (my_answers * 5) + 20)
+
+            context = {
+                'stu': stu,
+                'greeting': greeting,
+                'greeting_icon': greeting_icon,
+                'greeting_message': greeting_message,
+                'student_name': student_name,
+                'available_materials': available_materials,
+                'my_questions': my_questions,
+                'my_answers': my_answers,
+                'pending_enquiries': pending_enquiries,
+                'recent_news': recent_news,
+                'latest_material': latest_material,
+                'engagement_score': engagement_score,
+            }
+
+            return render(request, "studenthome.html", context)
     except KeyError:
         return redirect('nouapp:login')
-    
+    except Exception as e:
+        print(f"Error in studenthome view: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        messages.error(request, "An error occurred loading the dashboard")
+        return redirect('nouapp:login')
 def studentlogout(request):
     try:
         rollno = request.session['rollno']
