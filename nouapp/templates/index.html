@@ -413,6 +413,80 @@
     max-height: 200px;
     object-fit: cover;
   }
+
+  /* testimonial design  */
+
+  .testimonial-section {
+  background-color: #ffffff; /* white background */
+  padding: 80px 20px;
+  color: #0a1d69; /* subtle deep blue matching website */
+  text-align: center;
+  font-family: 'Arial', sans-serif;
+}
+
+.testimonial-section h2 {
+  font-size: 2.2em;
+  margin-bottom: 50px;
+  font-weight: bold;
+  color: #0a1d69;
+  letter-spacing: 1px;
+}
+
+/* Cards Container */
+.testimonial-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+/* Individual Card */
+.testimonial-card {
+  background-color: #f8f9fa; /* light subtle card background */
+  color: #0a1d69;
+  border-radius: 15px;
+  padding: 30px 20px;
+  max-width: 350px;
+  flex: 1 1 280px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.12);
+}
+
+.testimonial-text {
+  font-style: italic;
+  font-size: 1em;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.testimonial-name {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 5px;
+}
+
+.testimonial-role {
+  font-size: 0.9em;
+  color: #555;
+  letter-spacing: 0.5px;
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+  .testimonial-cards {
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+  }
+  .testimonial-card {
+    max-width: 90%;
+  }
+}
 </style>
 <!--Home-->
 <!-- <div class="row">
@@ -827,6 +901,35 @@
     </section>
   </div>
 </div>
+
+<!-- testimonial section  -->
+
+<section class="testimonial-section">
+  <div class="container">
+    <h2>What Our Users Say</h2>
+    <div class="testimonial-cards">
+      
+      <div class="testimonial-card">
+        <p class="testimonial-text">"NOU e-Gyan has completely transformed the way I study. The online materials are well-organized and easy to access anytime. I no longer worry about missing classes or notes, and the assessments help me track my progress effectively."</p>
+        <h3 class="testimonial-name">Priya Sharma</h3>
+        <span class="testimonial-role">Student</span>
+      </div>
+
+      <div class="testimonial-card">
+        <p class="testimonial-text">"The portal is very user-friendly and provides everything I need for my courses. I especially love that I can study from anywhere in the world. It has made learning so convenient and flexible."</p>
+        <h3 class="testimonial-name">Rohit Verma</h3>
+        <span class="testimonial-role">Student</span>
+      </div>
+
+      <div class="testimonial-card">
+        <p class="testimonial-text">"As a working student, I found NOU e-Gyan to be a lifesaver. The ability to access study materials online and monitor my progress keeps me motivated. The support from teachers and admins is also excellent."</p>
+        <h3 class="testimonial-name">Anjali Kumar</h3>
+        <span class="testimonial-role">Student</span>
+      </div>
+
+    </div>
+  </div>
+</section>
 
 <!--contact section-->
 <div class="row" style="padding-top: 10vh">
