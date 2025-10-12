@@ -1,22 +1,474 @@
 {% extends "studentparent.html" %}
 {% block body %}
-    <div class="row">
-        <div class="col-sm-12">
-            <h1 style="text-align:center; color:rgb(6,6,106)">Post Answer</h1>   
-              <form class="form-group" action="{% url 'studentapp:postans' %}" method="post">
-                {% csrf_token %}
-                <table class="table" style="width: 70%; margin:auto; background-color: rgb(6,6,106); border: 2px aliceblue">
-                    <tr>
-                        <td style="color: white">Enter Answer</td>
-                        <td><textarea name="answer" class="form-control" style="background-color: aliceblue; color: rgb(6,6,106);"></textarea></td>
-                    </tr>
 
-                    <tr>
-                        <td><input type="hidden" name="qid" value="{{qid}}"/></td>
-                        <td><button type="submit" class="btn btn-info">Post</button></td>
-                    </tr>
-                </table>
-              </form>
-        </div>
+<style>
+  /* CSS Variables */
+  :root {
+    --primary-color: #5b21b6;
+    --secondary-color: #7c3aed;
+    --accent-color: #a78bfa;
+    --success-color: #10b981;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --bg-light: #f9fafb;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+  }
+
+  /* Main Container */
+  .post-answer-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  /* Header Section */
+  .post-answer-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  .page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+  }
+
+  .page-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+  }
+
+  /* Answer Form Card */
+  .answer-form-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    padding: 2.5rem;
+    border: 1px solid rgba(139, 92, 246, 0.1);
+    transition: all 0.3s ease;
+    animation: scaleIn 0.6s ease-out 0.2s backwards;
+  }
+
+  .answer-form-card:hover {
+    box-shadow: 0 20px 40px rgba(139, 92, 246, 0.2);
+  }
+
+  .form-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 2px solid var(--bg-light);
+  }
+
+  .form-icon {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, var(--success-color), #059669);
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1.25rem;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .form-icon svg {
+    width: 28px;
+    height: 28px;
+    fill: white;
+  }
+
+  .form-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+  }
+
+  /* Form Elements */
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+
+  .form-label {
+    display: block;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+  }
+
+  .form-label-required::after {
+    content: '*';
+    color: #ef4444;
+    margin-left: 0.25rem;
+  }
+
+  .answer-textarea {
+    width: 100%;
+    padding: 1.25rem;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    resize: vertical;
+    min-height: 180px;
+    font-family: inherit;
+    line-height: 1.6;
+  }
+
+  .answer-textarea:focus {
+    outline: none;
+    border-color: var(--success-color);
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+  }
+
+  .answer-textarea::placeholder {
+    color: #9ca3af;
+  }
+
+  .char-counter {
+    text-align: right;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-top: 0.5rem;
+  }
+
+  /* Tips Section */
+  .tips-section {
+    background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    border-left: 4px solid #0ea5e9;
+  }
+
+  .tips-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #0c4a6e;
+    margin-bottom: 0.75rem;
+    font-size: 1rem;
+  }
+
+  .tips-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .tips-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .tips-list li {
+    color: #0369a1;
+    padding: 0.35rem 0;
+    padding-left: 1.5rem;
+    position: relative;
+    font-size: 0.9rem;
+  }
+
+  .tips-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #0ea5e9;
+    font-weight: bold;
+  }
+
+  /* Form Actions */
+  .form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+  }
+
+  .submit-btn {
+    flex: 1;
+    background: linear-gradient(135deg, var(--success-color), #059669);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-weight: 700;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+  }
+
+  .submit-btn:active {
+    transform: translateY(0);
+  }
+
+  .cancel-btn {
+    background: white;
+    color: var(--text-primary);
+    border: 2px solid #e5e7eb;
+    padding: 1rem 2rem;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .cancel-btn:hover {
+    background: var(--bg-light);
+    border-color: var(--text-secondary);
+    color: var(--text-primary);
+  }
+
+  /* Question Info Badge */
+  .question-info {
+    background: linear-gradient(135deg, #fef3c7, #fde68a);
+    border-radius: 12px;
+    padding: 1.25rem;
+    margin-bottom: 2rem;
+    border-left: 4px solid #f59e0b;
+  }
+
+  .question-info-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #92400e;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+  }
+
+  .question-id-display {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #78350f;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .post-answer-container {
+      padding: 1rem;
+    }
+
+    .page-title {
+      font-size: 2rem;
+    }
+
+    .answer-form-card {
+      padding: 1.5rem;
+    }
+
+    .form-actions {
+      flex-direction: column;
+    }
+
+    .cancel-btn {
+      order: 2;
+    }
+  }
+
+  /* Success Animation */
+  @keyframes successPulse {
+    0%, 100% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.05);
+    }
+  }
+
+  .submit-btn:hover .btn-icon {
+    animation: successPulse 0.6s ease-in-out;
+  }
+</style>
+
+<div class="post-answer-container">
+  <!-- Header -->
+  <div class="post-answer-header">
+    <h1 class="page-title">Post Your Answer</h1>
+    <p class="page-subtitle">Share your knowledge and help others learn</p>
+  </div>
+
+  <!-- Answer Form Card -->
+  <div class="answer-form-card">
+    <div class="form-header">
+      <div class="form-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+        </svg>
+      </div>
+      <h2 class="form-title">Write Your Answer</h2>
     </div>
+
+    <!-- Question ID Info -->
+    <div class="question-info">
+      <div class="question-info-label">Answering Question</div>
+      <div class="question-id-display">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </svg>
+        Question #{{ qid }}
+      </div>
+    </div>
+
+    <!-- Tips Section -->
+    <div class="tips-section">
+      <div class="tips-title">
+        <svg class="tips-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+        </svg>
+        Tips for a Great Answer
+      </div>
+      <ul class="tips-list">
+        <li>Be clear and concise in your explanation</li>
+        <li>Provide examples or references if applicable</li>
+        <li>Use proper grammar and formatting</li>
+        <li>Be respectful and supportive</li>
+      </ul>
+    </div>
+
+    <!-- Form -->
+    <form action="{% url 'studentapp:postans' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="qid" value="{{ qid }}">
+
+      <div class="form-group">
+        <label for="answer" class="form-label form-label-required">Your Answer</label>
+        <textarea
+          id="answer"
+          name="answer"
+          class="answer-textarea"
+          placeholder="Type your detailed answer here... Share your knowledge and help others understand better."
+          required
+          oninput="updateCharCount(this)"
+        ></textarea>
+        <div class="char-counter">
+          <span id="charCount">0</span> characters
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="submit-btn">
+          <svg class="btn-icon" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+          </svg>
+          Submit Answer
+        </button>
+        <a href="{% url 'studentapp:postquestion' %}" class="cancel-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/>
+          </svg>
+          Cancel
+        </a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Character counter function
+  function updateCharCount(textarea) {
+    const count = textarea.value.length;
+    document.getElementById('charCount').textContent = count;
+  }
+
+  // Form validation
+  document.querySelector('form').addEventListener('submit', function(e) {
+    const answer = document.getElementById('answer').value.trim();
+    
+    if (answer.length < 10) {
+      e.preventDefault();
+      alert('Please provide a more detailed answer (at least 10 characters).');
+      return false;
+    }
+  });
+
+  // Auto-save draft to prevent data loss (using in-memory storage)
+  let draftAnswer = '';
+  const textarea = document.getElementById('answer');
+  
+  // Load draft on page load
+  if (draftAnswer) {
+    textarea.value = draftAnswer;
+    updateCharCount(textarea);
+  }
+  
+  // Save draft while typing
+  textarea.addEventListener('input', function() {
+    draftAnswer = this.value;
+  });
+
+  // Confirm navigation if answer is not empty
+  window.addEventListener('beforeunload', function(e) {
+    const answer = document.getElementById('answer').value.trim();
+    if (answer.length > 0) {
+      e.preventDefault();
+      e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+      return e.returnValue;
+    }
+  });
+</script>
+
 {% endblock body %}

@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 import os
-from nouapp.models import Student
+from django.utils import timezone
 
 # Create your models here.
 class MaterialCategory(models.Model):
@@ -71,8 +71,7 @@ class Material(models.Model):
     # Basic Information
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, default=1)  # assuming course with id=1 exists
-
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True)  # Made nullable for PostgreSQL
     category = models.ForeignKey(MaterialCategory, on_delete=models.SET_NULL, null=True, blank=True)
     
     # File Information
@@ -83,16 +82,16 @@ class Material(models.Model):
             'jpg', 'jpeg', 'png', 'gif', 'zip', 'rar'
         ])]
     )
-    file_size = models.PositiveIntegerField(default=0)  # in bytes
+    file_size = models.PositiveBigIntegerField(default=0)  # Changed to BigIntegerField for PostgreSQL
     file_type = models.CharField(max_length=10, blank=True)
     
     # Preview Information
     preview_image = models.ImageField(upload_to='previews/%Y/%m/%d/', blank=True, null=True)
-    preview_text = models.TextField(blank=True)  # For text-based previews
+    preview_text = models.TextField(blank=True)
     is_previewable = models.BooleanField(default=False)
     
     # Versioning
-    version = models.PositiveIntegerField(default=1)
+    version = models.PositiveBigIntegerField(default=1)  # Changed to BigIntegerField
     parent_material = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='versions')
     is_latest_version = models.BooleanField(default=True)
     version_notes = models.TextField(blank=True)
@@ -100,8 +99,8 @@ class Material(models.Model):
     # Access Control
     is_public = models.BooleanField(default=False)
     requires_enrollment = models.BooleanField(default=True)
-    download_count = models.PositiveIntegerField(default=0)
-    view_count = models.PositiveIntegerField(default=0)
+    download_count = models.PositiveBigIntegerField(default=0)  # Changed to BigIntegerField
+    view_count = models.PositiveBigIntegerField(default=0)  # Changed to BigIntegerField
     
     # Metadata
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_materials')
@@ -215,11 +214,6 @@ class MaterialAccess(models.Model):
     class Meta:
         ordering = ['-accessed_at']    
 
-class News(models.Model):
-    nid = models.AutoField(primary_key=True)
-    newstext = models.TextField()
-    newsdate = models.CharField(max_length=30)
-
 class Admin_table(models.Model):
     Admin_Id = models.BigAutoField(primary_key=True)
     Admin_Name = models.CharField(max_length=100, null=False)
@@ -228,14 +222,14 @@ class Admin_table(models.Model):
     def __str__(self):
         return self.Admin_Name
     
-#___________For the Admin analytic dashboard___________________
+# For the Admin analytic dashboard
 class StudentActivity(models.Model):
-    """Track student activity using rollno instead of FK"""
-    rollno = models.CharField(max_length=50)  # Use rollno like your existing system
+    """Track student activity using ForeignKeys"""
+    rollno = models.CharField(max_length=50)
     student_name = models.CharField(max_length=100)
-    program = models.CharField(max_length=100)
-    branch = models.CharField(max_length=100)
-    year = models.CharField(max_length=100)
+    program = models.ForeignKey(Program, on_delete=models.CASCADE)
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+    year = models.ForeignKey(Year, on_delete=models.CASCADE)
     
     activity_type = models.CharField(max_length=50, choices=[
         ('login', 'Login'),
@@ -249,7 +243,7 @@ class StudentActivity(models.Model):
     ])
     activity_date = models.DateTimeField(auto_now_add=True)
     ip_address = models.GenericIPAddressField(null=True, blank=True)
-    additional_info = models.TextField(blank=True)  # JSON-like string for extra data
+    additional_info = models.TextField(blank=True)
 
     class Meta:
         ordering = ['-activity_date']
@@ -259,39 +253,39 @@ class DailyStats(models.Model):
     date = models.DateField(unique=True)
     
     # Student metrics
-    total_students = models.PositiveIntegerField(default=0)
-    students_logged_in = models.PositiveIntegerField(default=0)
-    unique_active_students = models.PositiveIntegerField(default=0)
+    total_students = models.PositiveBigIntegerField(default=0)  # Changed to BigIntegerField
+    students_logged_in = models.PositiveBigIntegerField(default=0)
+    unique_active_students = models.PositiveBigIntegerField(default=0)
     
     # Activity metrics
-    total_logins = models.PositiveIntegerField(default=0)
-    material_views = models.PositiveIntegerField(default=0)
-    material_downloads = models.PositiveIntegerField(default=0)
-    questions_posted = models.PositiveIntegerField(default=0)
-    answers_posted = models.PositiveIntegerField(default=0)
-    feedback_submitted = models.PositiveIntegerField(default=0)
-    complaints_submitted = models.PositiveIntegerField(default=0)
+    total_logins = models.PositiveBigIntegerField(default=0)
+    material_views = models.PositiveBigIntegerField(default=0)
+    material_downloads = models.PositiveBigIntegerField(default=0)
+    questions_posted = models.PositiveBigIntegerField(default=0)
+    answers_posted = models.PositiveBigIntegerField(default=0)
+    feedback_submitted = models.PositiveBigIntegerField(default=0)
+    complaints_submitted = models.PositiveBigIntegerField(default=0)
     
     # Material metrics
-    materials_uploaded = models.PositiveIntegerField(default=0)
+    materials_uploaded = models.PositiveBigIntegerField(default=0)
     
     class Meta:
         ordering = ['-date']
 
 class ProgramStats(models.Model):
     """Statistics by program"""
-    program = models.CharField(max_length=100)
-    total_students = models.PositiveIntegerField(default=0)
-    active_students_today = models.PositiveIntegerField(default=0)
-    materials_count = models.PositiveIntegerField(default=0)
+    program = models.ForeignKey(Program, on_delete=models.CASCADE)
+    total_students = models.PositiveBigIntegerField(default=0)  # Changed to BigIntegerField
+    active_students_today = models.PositiveBigIntegerField(default=0)
+    materials_count = models.PositiveBigIntegerField(default=0)
     last_updated = models.DateTimeField(auto_now=True)
 
 class BranchStats(models.Model):
     """Statistics by branch"""
-    branch = models.CharField(max_length=100)
-    total_students = models.PositiveIntegerField(default=0)
-    active_students_today = models.PositiveIntegerField(default=0)
-    materials_count = models.PositiveIntegerField(default=0)
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+    total_students = models.PositiveBigIntegerField(default=0)  # Changed to BigIntegerField
+    active_students_today = models.PositiveBigIntegerField(default=0)
+    materials_count = models.PositiveBigIntegerField(default=0)
     last_updated = models.DateTimeField(auto_now=True)
 
 class Assignment(models.Model):

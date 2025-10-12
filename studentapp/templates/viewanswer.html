@@ -1,26 +1,438 @@
 {% extends "studentparent.html" %}
 {% block body %}
-    <div class="row">
-        <div class="col-sm-12">
-            <h1 style="text-align:center; color: rgb(6,6,106)">View Answer</h1> 
-            <table class="table table-bordered text-primary" style="width: 100%; margin:auto;">
-                <tr style="color: rgb(6,6,106);">
-                    <th>A#</th>
-                    <th>Answer</th>
-                    <th>Answered By</th>
-                    <th>Posted Date</th>
-                </tr>
 
-                {% for a in ans %}
-                <tr style="color: steelblue;">
-                    <td>{{a.aid}}</td>
-                    <td>{{a.answer}}</td>
-                    <td>{{a.answered}}</td>
-                    <td>{{a.posteddate}}</td>
-                </tr>
-                {% endfor %}
-            </table>  
-              
+<style>
+  /* CSS Variables */
+  :root {
+    --primary-color: #5b21b6;
+    --secondary-color: #7c3aed;
+    --accent-color: #a78bfa;
+    --success-color: #10b981;
+    --text-primary: #1f2937;
+    --text-secondary: #6b7280;
+    --bg-light: #f9fafb;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes scaleIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes slideInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+
+  /* Main Container */
+  .answer-view-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+    animation: fadeIn 0.6s ease-out;
+  }
+
+  /* Header Section */
+  .answer-header {
+    text-align: center;
+    margin-bottom: 2.5rem;
+    animation: fadeInUp 0.6s ease-out;
+  }
+
+  .answer-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+  }
+
+  .answer-subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+  }
+
+  .answer-count-badge {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  /* Question Context Card */
+  .question-context {
+    background: white;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--shadow-md);
+    border-left: 4px solid var(--secondary-color);
+    animation: scaleIn 0.5s ease-out 0.2s backwards;
+  }
+
+  .context-label {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 0.5rem;
+  }
+
+  .context-question {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    line-height: 1.6;
+  }
+
+  /* Answer Cards */
+  .answers-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .answer-card {
+    background: white;
+    border-radius: 16px;
+    padding: 1.75rem;
+    box-shadow: var(--shadow-md);
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+    animation: slideInLeft 0.5s ease-out backwards;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .answer-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: linear-gradient(180deg, var(--success-color), var(--accent-color));
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+  }
+
+  .answer-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+    border-color: var(--accent-color);
+  }
+
+  .answer-card:hover::before {
+    transform: scaleY(1);
+  }
+
+  .answer-card:nth-child(1) { animation-delay: 0.1s; }
+  .answer-card:nth-child(2) { animation-delay: 0.2s; }
+  .answer-card:nth-child(3) { animation-delay: 0.3s; }
+  .answer-card:nth-child(4) { animation-delay: 0.4s; }
+  .answer-card:nth-child(5) { animation-delay: 0.5s; }
+
+  .answer-header-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--bg-light);
+  }
+
+  .answer-id {
+    background: linear-gradient(135deg, var(--success-color), #059669);
+    color: white;
+    padding: 0.35rem 0.85rem;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 0.875rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .answer-id-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .answer-content {
+    font-size: 1.05rem;
+    color: var(--text-primary);
+    line-height: 1.7;
+    margin-bottom: 1.25rem;
+    padding: 1rem;
+    background: var(--bg-light);
+    border-radius: 10px;
+    border-left: 3px solid var(--accent-color);
+  }
+
+  .answer-meta {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+  }
+
+  .meta-icon {
+    width: 18px;
+    height: 18px;
+    opacity: 0.7;
+  }
+
+  .meta-label {
+    font-weight: 600;
+    color: var(--text-primary);
+  }
+
+  /* Empty State */
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    background: white;
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+    animation: scaleIn 0.6s ease-out;
+  }
+
+  .empty-icon {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto 1.5rem;
+    opacity: 0.3;
+  }
+
+  .empty-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+  }
+
+  .empty-text {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+  }
+
+  .back-btn {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    padding: 0.875rem 2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+    color: white;
+  }
+
+  .back-btn:active {
+    transform: translateY(0);
+  }
+
+  /* Back to Forum Button */
+  .back-to-forum {
+    margin-top: 2rem;
+    text-align: center;
+    animation: fadeInUp 0.6s ease-out 0.6s backwards;
+  }
+
+  /* Verified Badge */
+  .verified-badge {
+    background: #dbeafe;
+    color: #1e40af;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .verified-icon {
+    width: 14px;
+    height: 14px;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .answer-view-container {
+      padding: 1rem;
+    }
+
+    .answer-title {
+      font-size: 2rem;
+    }
+
+    .answer-card {
+      padding: 1.25rem;
+    }
+
+    .answer-meta {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .answer-header-section {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+  }
+
+  /* Pulse Animation for Loading */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .loading {
+    animation: pulse 1.5s ease-in-out infinite;
+  }
+</style>
+
+<div class="answer-view-container">
+  <!-- Header -->
+  <div class="answer-header">
+    <h1 class="answer-title">Question Answers</h1>
+    <p class="answer-subtitle">
+      <span>All responses to this question</span>
+      <span class="answer-count-badge">{{ ans|length }} Answer{{ ans|length|pluralize }}</span>
+    </p>
+  </div>
+
+  {% if ans %}
+    <!-- Answers List -->
+    <div class="answers-list">
+      {% for a in ans %}
+      <div class="answer-card">
+        <div class="answer-header-section">
+          <span class="answer-id">
+            <svg class="answer-id-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41L9 16.17z"/>
+            </svg>
+            A#{{ a.aid }}
+          </span>
+          <span class="verified-badge">
+            <svg class="verified-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+            </svg>
+            Verified Answer
+          </span>
         </div>
+
+        <div class="answer-content">
+          {{ a.answer }}
+        </div>
+
+        <div class="answer-meta">
+          <div class="meta-item">
+            <svg class="meta-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+            </svg>
+            <span><span class="meta-label">Answered by:</span> {{ a.answered }}</span>
+          </div>
+
+          <div class="meta-item">
+            <svg class="meta-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/>
+            </svg>
+            <span><span class="meta-label">Posted:</span> {{ a.posteddate }}</span>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
     </div>
+  {% else %}
+    <!-- Empty State -->
+    <div class="empty-state">
+      <svg class="empty-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 9h12v2H6V9zm8 5H6v-2h8v2zm4-6H6V6h12v2z"/>
+      </svg>
+      <h3 class="empty-title">No Answers Yet</h3>
+      <p class="empty-text">This question hasn't been answered yet. Be the first to help!</p>
+      <a href="{% url 'studentapp:postquestion' %}" class="back-btn">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+        </svg>
+        Back to Forum
+      </a>
+    </div>
+  {% endif %}
+
+  <!-- Back to Forum Button -->
+  {% if ans %}
+  <div class="back-to-forum">
+    <a href="{% url 'studentapp:postquestion' %}" class="back-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+      </svg>
+      Back to Discussion Forum
+    </a>
+  </div>
+  {% endif %}
+</div>
+
 {% endblock body %}

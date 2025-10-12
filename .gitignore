@@ -8,6 +8,9 @@ db.sqlite3
 # Virtual environment
 venv/
 
+# Environment variables
+.env
+
 # Misc files
 *.log
 *.DS_Store

@@ -1,0 +1,303 @@
+{% extends "adminparent.html" %}
+{% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1 style="color: rgb(6, 6, 106)">
+                    <i class="fas fa-edit mr-3"></i>Edit Course
+                </h1>
+                <a href="{% url 'adminapp:manage_courses' %}" class="btn btn-secondary shadow-sm" style="border-radius: 20px;">
+                    <i class="fas fa-arrow-left"></i> Back to Courses
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-lg" style="border-radius: 20px;">
+                <div class="card-header text-dark" style="background: linear-gradient(135deg, #ffc107, #ffca28); border-radius: 20px 20px 0 0;">
+                    <h5 class="mb-0 font-weight-bold">
+                        <i class="fas fa-edit mr-2"></i>Edit Course: {{ course.title }}
+                    </h5>
+                </div>
+                <div class="card-body p-4" style="background-color: #f8f9fc;">
+                    <!-- Display current course info -->
+                    <div class="alert alert-info border-0 shadow-sm mb-4" style="border-radius: 15px; background: linear-gradient(135deg, #e3f2fd, #f8f9fc);">
+                        <h6 class="font-weight-bold text-dark mb-3">
+                            <i class="fas fa-info-circle mr-2"></i>Current Course Information:
+                        </h6>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="mb-2">
+                                    <strong class="text-dark">Title:</strong> 
+                                    <span class="text-muted">{{ course.title }}</span>
+                                </p>
+                                <p class="mb-2">
+                                    <strong class="text-dark">Program:</strong> 
+                                    <span class="badge badge-primary badge-pill px-3 py-2">{{ course.program.program }}</span>
+                                </p>
+                            </div>
+                            <div class="col-md-6">
+                                <p class="mb-2">
+                                    <strong class="text-dark">Branch:</strong> 
+                                    <span class="badge badge-success badge-pill px-3 py-2">{{ course.branch.branch }}</span>
+                                </p>
+                                <p class="mb-2">
+                                    <strong class="text-dark">Year:</strong> 
+                                    <span class="badge badge-warning badge-pill px-3 py-2">{{ course.year.year }}</span>
+                                </p>
+                            </div>
+                        </div>
+                        {% if course.description %}
+                        <p class="mb-3">
+                            <strong class="text-dark">Description:</strong> 
+                            <span class="text-muted">{{ course.description }}</span>
+                        </p>
+                        {% endif %}
+                        <hr class="my-3" style="border-color: #dee2e6;">
+                        <small class="text-muted">
+                            <i class="fas fa-file-alt mr-1"></i>Materials: 
+                            <span class="badge badge-info badge-pill px-2 py-1">{{ course.material_set.count }}</span>
+                        </small>
+                    </div>
+
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="form-group mb-4">
+                            <label for="title" class="font-weight-bold text-dark mb-2">
+                                <i class="fas fa-heading mr-1"></i>Course Title *
+                            </label>
+                            <input type="text" 
+                                   class="form-control form-control-lg" 
+                                   id="title"
+                                   name="title" 
+                                   value="{{ course.title }}"
+                                   required
+                                   placeholder="Enter course title"
+                                   style="background-color: white; border: 2px solid #e3e6f0; color: #333; border-radius: 10px;">
+                            <small class="form-text text-muted mt-2">
+                                <i class="fas fa-lightbulb mr-1"></i>Update the course title if needed
+                            </small>
+                        </div>
+
+                        <div class="form-group mb-4">
+                            <label for="description" class="font-weight-bold text-dark mb-2">
+                                <i class="fas fa-align-left mr-1"></i>Course Description
+                            </label>
+                            <textarea class="form-control" 
+                                      id="description"
+                                      name="description" 
+                                      rows="4"
+                                      placeholder="Enter course description (optional)"
+                                      style="background-color: white; border: 2px solid #e3e6f0; color: #333; border-radius: 10px;">{{ course.description }}</textarea>
+                            <small class="form-text text-muted mt-2">
+                                <i class="fas fa-pen mr-1"></i>Update the course description
+                            </small>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="form-group mb-4">
+                                    <label for="program" class="font-weight-bold text-dark mb-2">
+                                        <i class="fas fa-graduation-cap mr-1"></i>Program *
+                                    </label>
+                                    <select class="form-control form-control-lg" id="program" name="program" required
+                                            style="background-color: white; border: 2px solid #e3e6f0; color: #333; border-radius: 10px;">
+                                        <option value="">Select Program</option>
+                                        {% for program in programs %}
+                                        <option value="{{ program.id }}" 
+                                                {% if program.id == course.program.id %}selected{% endif %}>
+                                            {{ program.program }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group mb-4">
+                                    <label for="branch" class="font-weight-bold text-dark mb-2">
+                                        <i class="fas fa-code-branch mr-1"></i>Branch *
+                                    </label>
+                                    <select class="form-control form-control-lg" id="branch" name="branch" required
+                                            style="background-color: white; border: 2px solid #e3e6f0; color: #333; border-radius: 10px;">
+                                        <option value="">Select Branch</option>
+                                        {% for branch in branches %}
+                                        <option value="{{ branch.id }}" 
+                                                {% if branch.id == course.branch.id %}selected{% endif %}>
+                                            {{ branch.branch }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="form-group mb-4">
+                                    <label for="year" class="font-weight-bold text-dark mb-2">
+                                        <i class="fas fa-calendar-alt mr-1"></i>Year *
+                                    </label>
+                                    <select class="form-control form-control-lg" id="year" name="year" required
+                                            style="background-color: white; border: 2px solid #e3e6f0; color: #333; border-radius: 10px;">
+                                        <option value="">Select Year</option>
+                                        {% for year in years %}
+                                        <option value="{{ year.id }}" 
+                                                {% if year.id == course.year.id %}selected{% endif %}>
+                                            {{ year.year }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Warning about materials -->
+                        {% if course.material_set.count > 0 %}
+                        <div class="alert alert-warning border-0 shadow-sm" style="border-radius: 15px; background: linear-gradient(135deg, #fff3cd, #f8f9fc);">
+                            <i class="fas fa-exclamation-triangle mr-2 text-warning"></i>
+                            <strong>Notice:</strong> This course has {{ course.material_set.count }} material(s) associated with it. 
+                            Changing the program, branch, or year will affect how materials are categorized.
+                        </div>
+                        {% endif %}
+
+                        <div class="form-group text-center mt-5">
+                            <button type="submit" class="btn btn-warning btn-lg shadow-sm mr-3" style="border-radius: 25px; min-width: 180px;">
+                                <i class="fas fa-save mr-2"></i>Update Course
+                            </button>
+                            <a href="{% url 'adminapp:manage_courses' %}" class="btn btn-secondary btn-lg shadow-sm" style="border-radius: 25px; min-width: 180px;">
+                                <i class="fas fa-times mr-2"></i>Cancel
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Course Materials Section -->
+    {% if course.material_set.count > 0 %}
+    <div class="row mt-5">
+        <div class="col-12">
+            <div class="card border-0 shadow-lg" style="border-radius: 20px;">
+                <div class="card-header text-white" style="background: linear-gradient(135deg, #17a2b8, #20c997); border-radius: 20px 20px 0 0;">
+                    <h5 class="mb-0 font-weight-bold">
+                        <i class="fas fa-file-alt mr-2"></i>Materials in this Course ({{ course.material_set.count }})
+                    </h5>
+                </div>
+                <div class="card-body p-4" style="background-color: #f8f9fc;">
+                    <div class="table-responsive">
+                        <table class="table table-hover" style="background-color: white; border-radius: 8px; overflow: hidden;">
+                            <thead style="background: linear-gradient(135deg, #e3e6f0, #d1d3e2);">
+                                <tr>
+                                    <th class="text-dark font-weight-bold">#</th>
+                                    <th class="text-dark font-weight-bold">Material Title</th>
+                                    <th class="text-dark font-weight-bold">Category</th>
+                                    <th class="text-dark font-weight-bold">Upload Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for material in course.material_set.all|slice:":10" %}
+                                <tr style="border-bottom: 1px solid #e3e6f0;">
+                                    <td class="align-middle">
+                                        <span class="badge badge-light text-dark">{{ forloop.counter }}</span>
+                                    </td>
+                                    <td class="align-middle">
+                                        <div class="d-flex align-items-center">
+                                            <div class="bg-info rounded-circle d-flex align-items-center justify-content-center mr-3" 
+                                                 style="width: 35px; height: 35px;">
+                                                <i class="fas fa-file text-white" style="font-size: 0.9rem;"></i>
+                                            </div>
+                                            <div>
+                                                <strong class="text-dark">{{ material.title }}</strong>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle">
+                                        {% if material.category %}
+                                        <span class="badge badge-secondary badge-pill px-3 py-2">{{ material.category.name }}</span>
+                                        {% else %}
+                                        <span class="badge badge-light badge-pill px-3 py-2">No Category</span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="align-middle">
+                                        <small class="text-muted">
+                                            <i class="fas fa-calendar-plus mr-1"></i>{{ material.created_at|date:"M d, Y" }}
+                                        </small>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                {% if course.material_set.count > 10 %}
+                                <tr>
+                                    <td colspan="4" class="text-center text-muted py-4">
+                                        <div class="py-2">
+                                            <i class="fas fa-ellipsis-h mr-2 text-info"></i>
+                                            <strong>... and {{ course.material_set.count|add:"-10" }} more materials</strong>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-center mt-4">
+                        <a href="{% url 'adminapp:viewmaterial' %}?course={{ course.id }}" class="btn btn-info btn-lg shadow-sm" style="border-radius: 20px;">
+                            <i class="fas fa-eye mr-2"></i>View All Materials
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Custom CSS for better styling -->
+<style>
+    .form-control:focus {
+        border-color: #ffc107 !important;
+        box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.25) !important;
+    }
+
+    .btn {
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .alert {
+        transition: all 0.3s ease;
+    }
+
+    .alert:hover {
+        transform: translateY(-2px);
+    }
+
+    .card {
+        transition: all 0.3s ease;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: #f1f3f4 !important;
+        transform: translateY(-2px);
+        transition: all 0.3s ease;
+    }
+
+    .table td {
+        vertical-align: middle;
+        padding: 1rem 0.75rem;
+    }
+
+    .badge-pill {
+        font-size: 0.9em;
+    }
+</style>
+
+<!-- Include Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock body %}

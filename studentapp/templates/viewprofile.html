@@ -1,59 +1,771 @@
 {% extends "studentparent.html" %}
+{% load static %}
+
 {% block body %}
-    <div class="row">
-        <div class="col-sm-12">
-            <h1 style="text-align:center; color: rgb(6,6,106)">Student Profile</h1>   
-              <table class="table table-bordered" style="margin: auto; width: 50%; color: steelblue;">
-            <tr>
-                <td>Roll No</td>
-                <td>{{stu.rollno}}</td>
-                
-            </tr>
-            <tr>
-                <td>Student Name</td>
-                <td>{{stu.name}}</td>
-            </tr>
-             <tr>
-                <td>Father Name</td>
-                <td>{{stu.fname}}</td>
-             </tr>
-             <tr>
-                <td>Mother Name</td>
-                <td>{{stu.mname}}</td>
-             </tr>
-             <tr>
-                <td>Gender</td>
-                <td>{{stu.gender}}</td>
-             </tr>
-             <tr>
-                <td>Address</td>
-                <td>{{stu.address}}</td>
-             </tr>
-             <tr>
-                <td>Program</td>
-                <td>{{stu.program}}</td>
-             </tr>
-             <tr>
-                <td>Branch</td>
-                <td>{{stu.branch}}</td>
-             </tr>
-             <tr>
-                <td>Year</td>
-                <td>{{stu.year}}</td>
-             </tr>
-             <tr>
-                <td>Contact No</td>
-                <td>{{stu.contactno}}</td>
-             </tr>
-             <tr>
-                <td>Email Address</td>
-                <td>{{stu.emailaddress}}</td>
-             </tr>
-             <tr>
-                <td>Registration Date</td>
-                <td>{{stu.regdate}}</td>
-             </tr>
-            </table>
+<div class="container-fluid py-4">
+    <!-- Profile Header Card -->
+    <div class="profile-header-card">
+        <div class="profile-header-bg"></div>
+        <div class="profile-header-content">
+            <div class="profile-avatar">
+                <div class="avatar-circle">
+                    <span class="avatar-text">{{ stu.name|slice:":1"|upper }}</span>
+                </div>
+                <div class="avatar-status"></div>
+            </div>
+            <div class="profile-header-info">
+                <h1 class="profile-name">{{ stu.name }}</h1>
+                <p class="profile-subtitle">Roll No: {{ stu.rollno }}</p>
+                <div class="profile-badges">
+                    <span class="badge badge-program">{{ stu.program }}</span>
+                    <span class="badge badge-year">{{ stu.year }}</span>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Profile Details Cards -->
+    <div class="row mt-4">
+        <!-- Personal Information -->
+        <div class="col-lg-6 mb-4">
+            <div class="info-card">
+                <div class="info-card-header">
+                    <i class="mdi mdi-account-circle"></i>
+                    <h5>Personal Information</h5>
+                </div>
+                <div class="info-card-body">
+                    <div class="info-item">
+                        <div class="info-label">
+                            <i class="mdi mdi-account"></i>
+                            <span>Full Name</span>
+                        </div>
+                        <div class="info-value">{{ stu.name }}</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">
+                            <i class="mdi mdi-account-tie"></i>
+                            <span>Father's Name</span>
+                        </div>
+                        <div class="info-value">{{ stu.fname }}</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">
+                            <i class="mdi mdi-account-heart"></i>
+                            <span>Mother's Name</span>
+                        </div>
+                        <div class="info-value">{{ stu.mname }}</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">
+                            <i class="mdi mdi-gender-{{ stu.gender|lower }}"></i>
+                            <span>Gender</span>
+                        </div>
+                        <div class="info-value">{{ stu.gender|title }}</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">
+                            <i class="mdi mdi-map-marker"></i>
+                            <span>Address</span>
+                        </div>
+                        <div class="info-value">{{ stu.address }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Academic Information -->
+        <div class="col-lg-6 mb-4">
+            <div class="info-card">
+                <div class="info-card-header">
+                    <i class="mdi mdi-school"></i>
+                    <h5>Academic Information</h5>
+                </div>
+                <div class="info-card-body">
+                    <div class="info-item">
+                        <div class="info-label">
+                            <i class="mdi mdi-book-education"></i>
+                            <span>Program</span>
+                        </div>
+                        <div class="info-value">{{ stu.program }}</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">
+                            <i class="mdi mdi-source-branch"></i>
+                            <span>Branch</span>
+                        </div>
+                        <div class="info-value">{{ stu.branch }}</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">
+                            <i class="mdi mdi-calendar-clock"></i>
+                            <span>Academic Year</span>
+                        </div>
+                        <div class="info-value">{{ stu.year }}</div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-label">
+                            <i class="mdi mdi-badge-account"></i>
+                            <span>Roll Number</span>
+                        </div>
+                        <div class="info-value">{{ stu.rollno }}</div>
+                    </div>
+                    
+                    {% comment %} <div class="info-item">
+                        <div class="info-label">
+                            <i class="mdi mdi-calendar-check"></i>
+                            <span>Registration Date</span>
+                        </div>
+                        <div class="info-value">{{ stu.regdate|date:"F d, Y" }}</div>
+                    </div> {% endcomment %}
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="col-lg-12 mb-4">
+            <div class="info-card">
+                <div class="info-card-header">
+                    <i class="mdi mdi-contacts"></i>
+                    <h5>Contact Information</h5>
+                </div>
+                <div class="info-card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <div class="info-label">
+                                    <i class="mdi mdi-phone"></i>
+                                    <span>Contact Number</span>
+                                </div>
+                                <div class="info-value">
+                                    <a href="tel:{{ stu.contactno }}" class="contact-link">{{ stu.contactno }}</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6">
+                            <div class="info-item">
+                                <div class="info-label">
+                                    <i class="mdi mdi-email"></i>
+                                    <span>Email Address</span>
+                                </div>
+                                <div class="info-value">
+                                    <a href="mailto:{{ stu.emailaddress }}" class="contact-link">{{ stu.emailaddress }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Profile Actions -->
+        <div class="col-lg-12 mb-4">
+            <div class="profile-actions">
+                <button class="action-btn btn-primary" onclick="window.print()">
+                    <i class="mdi mdi-printer"></i>
+                    <span>Print Profile</span>
+                </button>
+                <button class="action-btn btn-secondary" onclick="downloadProfile()">
+                    <i class="mdi mdi-download"></i>
+                    <span>Download PDF</span>
+                </button>
+                {% comment %} <a href="{% url 'studentapp:changepassword' %}" class="action-btn btn-warning">
+                    <i class="mdi mdi-lock-reset"></i>
+                    <span>Change Password</span>
+                </a> {% endcomment %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Stats -->
+    <div class="row">
+        {% comment %} <div class="col-md-4 mb-3">
+            <div class="stat-card-mini">
+                <div class="stat-icon-mini" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                    <i class="mdi mdi-calendar-today"></i>
+                </div>
+                <div class="stat-content-mini">
+                    <h6>Member Since</h6>
+                    <p>{{ stu.regdate|date:"F Y" }}</p>
+                </div>
+            </div>
+        </div> {% endcomment %}
+        <div class="col-md-4 mb-3">
+            <div class="stat-card-mini">
+                <div class="stat-icon-mini" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <i class="mdi mdi-school"></i>
+                </div>
+                <div class="stat-content-mini">
+                    <h6>Current Branch</h6>
+                    <p>{{ stu.branch }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-3">
+            <div class="stat-card-mini">
+                <div class="stat-icon-mini" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+                    <i class="mdi mdi-school"></i>
+                </div>
+                <div class="stat-content-mini">
+                    <h6>Current Program</h6>
+                    <p>{{ stu.program }}</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-3">
+            <div class="stat-card-mini">
+                <div class="stat-icon-mini" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">
+                    <i class="mdi mdi-book-open-page-variant"></i>
+                </div>
+                <div class="stat-content-mini">
+                    <h6>Academic Year</h6>
+                    <p>{{ stu.year }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+/* Profile Header Card */
+.profile-header-card {
+    position: relative;
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    animation: slideInDown 0.6s ease-out;
+}
+
+.dark-theme .profile-header-card {
+    background: #1e1e1e;
+    border: 1px solid #333;
+}
+
+.profile-header-bg {
+    height: 180px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+}
+
+.profile-header-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') no-repeat bottom;
+    background-size: cover;
+}
+
+.profile-header-content {
+    padding: 0 40px 30px;
+    display: flex;
+    align-items: flex-end;
+    gap: 25px;
+    margin-top: -60px;
+}
+
+.profile-avatar {
+    position: relative;
+    animation: bounceIn 0.8s ease-out 0.2s backwards;
+}
+
+.avatar-circle {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: 6px solid #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+.dark-theme .avatar-circle {
+    border-color: #1e1e1e;
+}
+
+.avatar-text {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.avatar-status {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 24px;
+    height: 24px;
+    background: #10b981;
+    border: 4px solid #ffffff;
+    border-radius: 50%;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.dark-theme .avatar-status {
+    border-color: #1e1e1e;
+}
+
+.profile-header-info {
+    flex: 1;
+    padding-bottom: 10px;
+    animation: fadeInRight 0.8s ease-out 0.3s backwards;
+}
+
+.profile-name {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 0 0 5px 0;
+}
+
+.dark-theme .profile-name {
+    color: #ffffff !important;
+}
+
+.profile-subtitle {
+    color: #64748b;
+    font-size: 1.1rem;
+    margin: 0 0 15px 0;
+}
+
+.dark-theme .profile-subtitle {
+    color: #94a3b8;
+}
+
+.profile-badges {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.badge {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.badge-program {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+}
+
+.badge-year {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: #ffffff;
+}
+
+/* Info Cards */
+.info-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.6s ease-out backwards;
+    height: 100%;
+}
+
+.info-card:nth-child(1) { animation-delay: 0.1s; }
+.info-card:nth-child(2) { animation-delay: 0.2s; }
+.info-card:nth-child(3) { animation-delay: 0.3s; }
+
+.dark-theme .info-card {
+    background: #1e1e1e;
+    border: 1px solid #333;
+}
+
+.info-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.info-card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.info-card-header i {
+    font-size: 1.8rem;
+    color: #ffffff;
+}
+
+.info-card-header h5 {
+    color: #ffffff;
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.info-card-body {
+    padding: 25px;
+}
+
+.info-item {
+    padding: 18px 0;
+    border-bottom: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.3s ease;
+}
+
+.dark-theme .info-item {
+    border-bottom-color: #333;
+}
+
+.info-item:last-child {
+    border-bottom: none;
+}
+
+.info-item:hover {
+    padding-left: 10px;
+    background: rgba(102, 126, 234, 0.05);
+}
+
+.info-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #64748b;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.dark-theme .info-label {
+    color: #94a3b8;
+}
+
+.info-label i {
+    font-size: 1.4rem;
+    color: #667eea;
+}
+
+.info-value {
+    color: #1e293b;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: right;
+}
+
+.dark-theme .info-value {
+    color: #ffffff;
+}
+
+.contact-link {
+    color: #667eea;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.contact-link:hover {
+    color: #764ba2;
+    text-decoration: underline;
+}
+
+/* Profile Actions */
+.profile-actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    animation: fadeIn 0.8s ease-out 0.4s backwards;
+}
+
+.dark-theme .profile-actions {
+    background: #1e1e1e;
+    border: 1px solid #333;
+}
+
+.action-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+.action-btn i {
+    font-size: 1.3rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
+}
+
+.btn-secondary {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(79, 172, 254, 0.4);
+}
+
+.btn-warning {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+}
+
+.btn-warning:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(251, 191, 36, 0.4);
+    color: #ffffff;
+}
+
+/* Stat Cards Mini */
+.stat-card-mini {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.6s ease-out backwards;
+}
+
+.stat-card-mini:nth-child(1) { animation-delay: 0.5s; }
+.stat-card-mini:nth-child(2) { animation-delay: 0.6s; }
+.stat-card-mini:nth-child(3) { animation-delay: 0.7s; }
+
+.dark-theme .stat-card-mini {
+    background: #1e1e1e;
+    border: 1px solid #333;
+}
+
+.stat-card-mini:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.stat-icon-mini {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+.stat-content-mini h6 {
+    color: #64748b;
+    font-size: 0.85rem;
+    margin: 0 0 5px 0;
+    font-weight: 500;
+}
+
+.dark-theme .stat-content-mini h6 {
+    color: #94a3b8;
+}
+
+.stat-content-mini p {
+    color: #1e293b;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.dark-theme .stat-content-mini p {
+    color: #ffffff;
+}
+
+/* Animations */
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes bounceIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.05);
+    }
+    70% {
+        transform: scale(0.9);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.5;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .profile-actions,
+    .sidebar,
+    .navbar,
+    .footer,
+    #theme-toggle {
+        display: none !important;
+    }
+    
+    .profile-header-card,
+    .info-card,
+    .stat-card-mini {
+        box-shadow: none !important;
+        break-inside: avoid;
+    }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .profile-header-content {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 0 20px 20px;
+    }
+    
+    .profile-name {
+        font-size: 2rem;
+    }
+    
+    .avatar-circle {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .avatar-text {
+        font-size: 3rem;
+    }
+    
+    .info-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+    
+    .info-value {
+        text-align: left;
+    }
+    
+    .profile-actions {
+        flex-direction: column;
+    }
+    
+    .action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+}
+</style>
+
+<script>
+// Download profile as PDF (placeholder - you'd need a proper PDF library)
+function downloadProfile() {
+    alert('PDF download functionality will be implemented with a PDF generation library like jsPDF or server-side PDF generation.');
+    // In a real implementation, you would:
+    // 1. Use jsPDF or similar library to generate PDF
+    // 2. Or make an AJAX call to a server endpoint that generates PDF
+    // 3. Or use window.print() with specific CSS for PDF output
+}
+
+// Add animation on scroll
+document.addEventListener('DOMContentLoaded', function() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    document.querySelectorAll('.info-card, .stat-card-mini').forEach(el => {
+        observer.observe(el);
+    });
+});
+</script>
+
 {% endblock body %}

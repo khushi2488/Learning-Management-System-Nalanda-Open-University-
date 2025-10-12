@@ -9,16 +9,60 @@ from .models import Program, Branch, Year, Material, News, Course, MaterialCateg
 from .forms import AssignmentForm
 from datetime import date
 
-# Create your views here.
-@cache_control(no_cache=True,must_revalidate=True,no_store=True)
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def adminhome(request):
     try:
-        if request.session['adminid']!=None:
-            adminid=request.session['adminid']
-            return render(request,"adminhome.html",{'adminid':adminid})
+        if request.session['adminid'] is not None:
+            adminid = request.session['adminid']
+            
+            # Get the User object
+            try:
+                user = User.objects.get(username=adminid)
+            except User.DoesNotExist:
+                user = None
+            
+            # Get time-based greeting
+            current_hour = datetime.now().hour
+            if current_hour < 12:
+                greeting = "Good Morning"
+                greeting_icon = "☀️"
+            elif current_hour < 17:
+                greeting = "Good Afternoon"
+                greeting_icon = "🌤️"
+            else:
+                greeting = "Good Evening"
+                greeting_icon = "🌙"
+            
+            # Get admin's first name or username
+            if user and user.first_name:
+                admin_name = user.first_name
+            else:
+                admin_name = adminid
+            
+            # Get last login time
+            last_login = user.last_login if user else None
+            
+            # Get quick stats for dashboard
+            total_students = Student.objects.count()
+            total_materials = Material.objects.count()
+            pending_enquiries = Enquiry.objects.filter(status='pending').count()
+            recent_feedbacks = StuResponse.objects.count()
+            
+            context = {
+                'adminid': adminid,
+                'greeting': greeting,
+                'greeting_icon': greeting_icon,
+                'admin_name': admin_name,
+                'last_login': last_login,
+                'total_students': total_students,
+                'total_materials': total_materials,
+                'pending_enquiries': pending_enquiries,
+                'recent_feedbacks': recent_feedbacks,
+            }
+            
+            return render(request, "adminhome.html", context)
     except KeyError:
         return redirect('nouapp:login')
-
 def adminlogout(request):
     try:
         del request.session['adminid']
@@ -66,6 +110,7 @@ def viewcomplain(request):
     except KeyError:
         return redirect('nouapp:login')
     
+# Update your existing studymaterial view to pass the data
 @cache_control(no_cache=True,must_revalidate=True,no_store=True)
 def studymaterial(request):
     try:
@@ -73,7 +118,20 @@ def studymaterial(request):
             adminid=request.session['adminid']
             courses = Course.objects.all()
             categories = MaterialCategory.objects.all()
-            return render(request, "studymaterial.html", {'adminid': adminid, 'courses': courses, 'categories': categories})
+            
+            # Add these lines to pass the academic data
+            programs = Program.objects.all().order_by('program')
+            branches = Branch.objects.all().order_by('branch') 
+            years = Year.objects.all().order_by('year')
+            
+            return render(request, "studymaterial.html", {
+                'adminid': adminid, 
+                'courses': courses, 
+                'categories': categories,
+                'programs': programs,  # Add this
+                'branches': branches,  # Add this
+                'years': years         # Add this
+            })
     except KeyError:
         return redirect('nouapp:login')
 
@@ -152,12 +210,42 @@ def viewmaterial(request):
     try:
         if request.session['adminid']!=None:
             adminid=request.session['adminid']
-            # Use select_related to avoid N+1 queries
-            mat = Material.objects.select_related('course', 'course__program', 'course__branch', 'course__year', 'category', 'created_by').all()
-            print(f"Found {len(mat)} materials")  # Debug print
-            for m in mat:
-                print(f"Material: {m.title}, Course: {m.course}, File: {m.file}")  # Debug print
-            return render(request,"viewmaterial.html", {'mat': mat, 'adminid': adminid})
+            
+            # Get filter parameters
+            course_filter = request.GET.get('course', '')
+            category_filter = request.GET.get('category', '')
+            search_query = request.GET.get('search', '')
+            
+            # Base queryset with relationships
+            mat = Material.objects.select_related(
+                'course', 'course__program', 'course__branch', 
+                'course__year', 'category', 'created_by'
+            ).all()
+            
+            # Apply filters
+            if course_filter:
+                mat = mat.filter(course_id=course_filter)
+            if category_filter:
+                mat = mat.filter(category_id=category_filter)
+            if search_query:
+                mat = mat.filter(
+                    Q(title__icontains=search_query) |
+                    Q(description__icontains=search_query)
+                )
+            
+            # Order by most recent
+            mat = mat.order_by('-created_at')
+            
+            # Get data for filters
+            courses = Course.objects.all().order_by('title')
+            categories = MaterialCategory.objects.all().order_by('name')
+            
+            return render(request, "viewmaterial.html", {
+                'mat': mat, 
+                'adminid': adminid,
+                'courses': courses,
+                'categories': categories
+            })
     except KeyError:
         return redirect('nouapp:login')
 
@@ -192,6 +280,8 @@ from PIL import Image
 import pdf2image
 from .models import Material, MaterialCategory, MaterialAccess, Course
 from .forms import MaterialForm, MaterialCategoryForm
+from datetime import datetime, timedelta
+
 from django.db.models import F
 
 

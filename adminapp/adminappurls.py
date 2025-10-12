@@ -16,7 +16,7 @@ urlpatterns = [
     path('studymaterial/', views.studymaterial, name='studymaterial'),
     path('move/', views.move, name='move'),
     path('viewmaterial/', views.viewmaterial, name='viewmaterial'),
-    path('news/', views.news, name='news'),
+    # path('news/', views.news, name='news'),
     
     # Analytics URLs - FIXED
     path('dashboard/', analytics_views.admin_dashboard, name='admin_dashboard'),

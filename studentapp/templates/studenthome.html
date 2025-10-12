@@ -1,9 +1,838 @@
 {% extends "studentparent.html" %}
+{% load static %}
+
 {% block body %}
-    <div class="row">
-        <div class="col-sm-12">
-            <h1 style="text-align:center; color: rgb(6,6,106);">Student Home</h1>   
-              
+<div class="container-fluid">
+    
+    <!-- Welcome Section with Animation -->
+    <div class="student-welcome-section">
+        <div class="welcome-wave"></div>
+        <div class="welcome-content">
+            <div class="welcome-text">
+                <div class="welcome-greeting-header">
+                    <span class="greeting-icon-student">{{ greeting_icon }}</span>
+                    <div>
+                        <h1 class="welcome-title">
+                            <span class="greeting-time-student">{{ greeting }}</span>, 
+                            <span class="student-name-highlight">{{ student_name }}</span>!
+                        </h1>
+                        <p class="welcome-subtitle">{{ greeting_message }}</p>
+                    </div>
+                </div>
+                <p class="welcome-description-student">
+                    Welcome to your personalized learning dashboard. Track your progress, access study materials, 
+                    and stay connected with the Nalanda Open University community.
+                </p>
+                
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <a href="{% url 'studentapp:viewmat' %}" class="quick-action-btn">
+                        <i class="mdi mdi-book-open-variant"></i>
+                        <span>Study Materials</span>
+                    </a>
+                    <a href="{% url 'studentapp:postquestion' %}" class="quick-action-btn">
+                        <i class="mdi mdi-forum"></i>
+                        <span>Discussion</span>
+                    </a>
+                    <a href="{% url 'studentapp:student_news' %}" class="quick-action-btn">
+                        <i class="mdi mdi-newspaper"></i>
+                        <span>News</span>
+                    </a>
+                    <a href="{% url 'studentapp:viewprofile' %}" class="quick-action-btn">
+                        <i class="mdi mdi-account"></i>
+                        <span>Profile</span>
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Engagement Circle -->
+            <div class="engagement-circle-container">
+                <div class="engagement-circle">
+                    <svg class="progress-ring" width="160" height="160">
+                        <circle class="progress-ring-circle-bg" stroke="#e0e7ff" stroke-width="12" fill="transparent" r="70" cx="80" cy="80"/>
+                        <circle class="progress-ring-circle" stroke="url(#gradient)" stroke-width="12" fill="transparent" r="70" cx="80" cy="80" 
+                                style="stroke-dasharray: 439.6; stroke-dashoffset: {{ engagement_score|add:'-100'|floatformat:0 }};" />
+                        <defs>
+                            <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <div class="engagement-score">
+                        <span class="score-number">{{ engagement_score }}</span>
+                        <span class="score-label">Engagement</span>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Date/Time Banner -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="datetime-banner-student">
+                <div class="datetime-content-student">
+                    <div class="datetime-item-student">
+                        <i class="mdi mdi-calendar"></i>
+                        <span>{% now "l, F d, Y" %}</span>
+                    </div>
+                    <div class="datetime-item-student">
+                        <i class="mdi mdi-clock-outline"></i>
+                        <span id="current-time-student">{% now "h:i:s A" %}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="stat-card stat-card-blue">
+                <div class="stat-icon">
+                    <i class="mdi mdi-book-multiple"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>{{ available_materials }}</h3>
+                    <p>Study Materials</p>
+                </div>
+                <div class="stat-footer">
+                    <a href="{% url 'studentapp:viewmat' %}">View All <i class="mdi mdi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="stat-card stat-card-purple">
+                <div class="stat-icon">
+                    <i class="mdi mdi-message-text"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>{{ my_questions }}</h3>
+                    <p>My Questions</p>
+                </div>
+                <div class="stat-footer">
+                    <a href="{% url 'studentapp:postquestion' %}">Ask Question <i class="mdi mdi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="stat-card stat-card-green">
+                <div class="stat-icon">
+                    <i class="mdi mdi-comment-check"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>{{ my_answers }}</h3>
+                    <p>Contributions</p>
+                </div>
+                <div class="stat-footer">
+                    <a href="{% url 'studentapp:postquestion' %}">Contribute <i class="mdi mdi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="stat-card stat-card-orange">
+                <div class="stat-icon">
+                    <i class="mdi mdi-help-circle"></i>
+                </div>
+                <div class="stat-content">
+                    <h3>{{ pending_enquiries }}</h3>
+                    <p>Pending Enquiries</p>
+                </div>
+                <div class="stat-footer">
+                    <a href="{% url 'studentapp:student_enquiry_dashboard' %}">Check Status <i class="mdi mdi-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Latest Content -->
+    <div class="row">
+        <!-- Latest Material -->
+        {% if latest_material %}
+        <div class="col-md-6 mb-4">
+            <div class="content-card">
+                <div class="content-card-header">
+                    <i class="mdi mdi-file-document"></i>
+                    <h5>Latest Study Material</h5>
+                </div>
+                <div class="content-card-body">
+                    <div class="material-preview">
+                        <div class="material-icon">
+                            {% if latest_material.file_type == 'pdf' %}
+                            <i class="mdi mdi-file-pdf-box"></i>
+                            {% elif latest_material.file_type == 'video' %}
+                            <i class="mdi mdi-video"></i>
+                            {% else %}
+                            <i class="mdi mdi-file"></i>
+                            {% endif %}
+                        </div>
+                        <div class="material-info">
+                            <h6>{{ latest_material.title }}</h6>
+                            <p class="text-muted">{{ latest_material.description|truncatewords:15 }}</p>
+                            <span class="badge badge-primary">{{ latest_material.course.coursename }}</span>
+                        </div>
+                    </div>
+                    <a href="{% url 'studentapp:viewmat' %}" class="btn btn-primary btn-block mt-3">
+                        <i class="mdi mdi-download"></i> Access Material
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- Recent News -->
+        <div class="col-md-6 mb-4">
+            <div class="content-card">
+                <div class="content-card-header">
+                    <i class="mdi mdi-newspaper"></i>
+                    <h5>Recent Announcements</h5>
+                </div>
+                <div class="content-card-body">
+                    {% if recent_news %}
+                    <div class="news-list">
+                        {% for news in recent_news %}
+                        <div class="news-item">
+                            <span class="news-category">{{ news.category.name }}</span>
+                            <h6>{{ news.title|truncatewords:8 }}</h6>
+                            <p class="news-date">
+                                <i class="mdi mdi-clock-outline"></i>
+                                {{ news.created_at|timesince }} ago
+                            </p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <a href="{% url 'studentapp:student_news' %}" class="btn btn-outline-primary btn-block mt-3">
+                        View All News <i class="mdi mdi-arrow-right"></i>
+                    </a>
+                    {% else %}
+                    <p class="text-muted text-center py-4">No recent announcements</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Motivational Quote -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="motivation-card">
+                <i class="mdi mdi-format-quote-open quote-icon"></i>
+                <p class="motivation-text">"Education is the most powerful weapon which you can use to change the world."</p>
+                <p class="motivation-author">- Nelson Mandela</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<style>
+/* Student Welcome Section */
+.student-welcome-section {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 20px;
+    padding: 40px;
+    margin-bottom: 30px;
+    box-shadow: 0 15px 35px rgba(102, 126, 234, 0.3);
+    position: relative;
+    overflow: hidden;
+    animation: slideInDown 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.welcome-wave {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="rgba(255,255,255,0.1)"/></svg>') repeat-x;
+    opacity: 0.5;
+    animation: wave 10s cubic-bezier(0.36, 0.45, 0.63, 0.53) infinite;
+}
+
+@keyframes wave {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+}
+
+.welcome-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+    z-index: 2;
+}
+
+.welcome-text {
+    flex: 1;
+}
+
+.welcome-greeting-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.greeting-icon-student {
+    font-size: 4rem;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+.welcome-title {
+    color: #ffffff;
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 10px 0;
+    line-height: 1.2;
+}
+
+.greeting-time-student {
+    display: inline-block;
+    animation: fadeInLeft 0.8s ease-out;
+}
+
+.student-name-highlight {
+    display: inline-block;
+    animation: fadeInRight 0.8s ease-out 0.2s backwards;
+    background: linear-gradient(45deg, #ffd700, #ffa500);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.welcome-subtitle {
+    color: #e0e7ff;
+    font-size: 1.1rem;
+    margin: 0;
+    animation: fadeIn 0.8s ease-out 0.3s backwards;
+}
+
+.welcome-description-student {
+    color: #e0e7ff;
+    font-size: 1rem;
+    line-height: 1.7;
+    margin: 20px 0 30px 0;
+    animation: fadeIn 1s ease-out 0.5s backwards;
+}
+
+/* Quick Actions */
+.quick-actions {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    animation: fadeInUp 1s ease-out 0.7s backwards;
+}
+
+.quick-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
+    padding: 12px 20px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: 500;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.quick-action-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    color: #ffffff;
+}
+
+.quick-action-btn i {
+    font-size: 1.3rem;
+}
+
+/* Engagement Circle */
+.engagement-circle-container {
+    flex-shrink: 0;
+}
+
+.engagement-circle {
+    position: relative;
+    width: 160px;
+    height: 160px;
+}
+
+.progress-ring {
+    transform: rotate(-90deg);
+}
+
+.progress-ring-circle {
+    transition: stroke-dashoffset 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: progress 2s ease-out forwards;
+}
+
+@keyframes progress {
+    from {
+        stroke-dashoffset: 439.6;
+    }
+}
+
+.engagement-score {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.score-number {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.score-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #e0e7ff;
+    margin-top: 5px;
+}
+
+/* DateTime Banner */
+.datetime-banner-student {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    border-radius: 12px;
+    padding: 15px 25px;
+    box-shadow: 0 4px 15px rgba(79, 70, 229, 0.2);
+    animation: fadeIn 0.8s ease-out 0.3s backwards;
+}
+
+.datetime-content-student {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.datetime-item-student {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.datetime-item-student i {
+    font-size: 1.3rem;
+}
+
+/* Stat Cards */
+.stat-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: fadeInUp 0.8s ease-out backwards;
+    position: relative;
+    overflow: hidden;
+}
+
+.stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--card-color), var(--card-color-light));
+}
+
+.stat-card-blue { --card-color: #3b82f6; --card-color-light: #60a5fa; animation-delay: 0.2s; }
+.stat-card-purple { --card-color: #8b5cf6; --card-color-light: #a78bfa; animation-delay: 0.3s; }
+.stat-card-green { --card-color: #10b981; --card-color-light: #34d399; animation-delay: 0.4s; }
+.stat-card-orange { --card-color: #f59e0b; --card-color-light: #fbbf24; animation-delay: 0.5s; }
+
+.dark-theme .stat-card {
+    background: #1e1e1e;
+    border: 1px solid #333;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+
+.stat-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: var(--card-color);
+    background: linear-gradient(135deg, rgba(var(--card-color-rgb), 0.1), rgba(var(--card-color-light-rgb), 0.1));
+    margin-bottom: 15px;
+}
+
+.stat-card-blue .stat-icon { background: rgba(59, 130, 246, 0.1); }
+.stat-card-purple .stat-icon { background: rgba(139, 92, 246, 0.1); }
+.stat-card-green .stat-icon { background: rgba(16, 185, 129, 0.1); }
+.stat-card-orange .stat-icon { background: rgba(245, 158, 11, 0.1); }
+
+.stat-content h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--card-color);
+    margin: 0 0 5px 0;
+    line-height: 1;
+}
+
+.dark-theme .stat-content h3 {
+    color: var(--card-color-light) !important;
+}
+
+.stat-content p {
+    color: #64748b;
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+.dark-theme .stat-content p {
+    color: #94a3b8;
+}
+
+.stat-footer {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #e2e8f0;
+}
+
+.dark-theme .stat-footer {
+    border-top-color: #333;
+}
+
+.stat-footer a {
+    color: var(--card-color);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s ease;
+}
+
+.stat-footer a:hover {
+    gap: 10px;
+}
+
+/* Content Cards */
+.content-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    animation: fadeInUp 0.8s ease-out 0.6s backwards;
+}
+
+.dark-theme .content-card {
+    background: #1e1e1e;
+    border: 1px solid #333;
+}
+
+.content-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+}
+
+.content-card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.content-card-header i {
+    font-size: 1.5rem;
+    color: #ffffff;
+}
+
+.content-card-header h5 {
+    color: #ffffff;
+    margin: 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.content-card-body {
+    padding: 25px;
+}
+
+.material-preview {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.material-icon {
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #ffffff;
+    flex-shrink: 0;
+}
+
+.material-info h6 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #1e293b;
+}
+
+.dark-theme .material-info h6 {
+    color: #ffffff !important;
+}
+
+.news-list {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.news-item {
+    padding: 15px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.dark-theme .news-item {
+    border-bottom-color: #333;
+}
+
+.news-item:last-child {
+    border-bottom: none;
+}
+
+.news-category {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.news-item h6 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 5px 0;
+    color: #1e293b;
+}
+
+.dark-theme .news-item h6 {
+    color: #ffffff !important;
+}
+
+.news-date {
+    color: #94a3b8;
+    font-size: 0.85rem;
+    margin: 0;
+}
+
+/* Motivation Card */
+.motivation-card {
+    background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+    border-radius: 16px;
+    padding: 35px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    animation: fadeIn 1s ease-out 0.8s backwards;
+}
+
+.quote-icon {
+    font-size: 3rem;
+    color: rgba(255, 255, 255, 0.3);
+    position: absolute;
+    top: 20px;
+    left: 30px;
+}
+
+.motivation-text {
+    color: #ffffff;
+    font-size: 1.3rem;
+    font-weight: 500;
+    font-style: italic;
+    margin: 0 0 15px 0;
+    position: relative;
+    z-index: 2;
+}
+
+.motivation-author {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+/* Animations */
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+/* Responsive Design */
+@media (max-width: 992px) {
+    .welcome-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .welcome-greeting-header {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .quick-actions {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .student-welcome-section {
+        padding: 25px;
+    }
+    
+    .welcome-title {
+        font-size: 2rem;
+      }
+    
+    .greeting-icon-student {
+        font-size: 3rem;
+    }
+    
+    .welcome-description-student {
+        font-size: 0.95rem;
+    }
+    
+    .quick-actions {
+        gap: 10px;
+    }
+    
+    .quick-action-btn {
+        font-size: 0.9rem;
+        padding: 10px 16px;
+    }
+    
+    .engagement-circle-container {
+        order: -1;
+        margin-bottom: 20px;
+    }
+    
+    .datetime-content-student {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+</style>
+
+<script>
+// Update time every second
+function updateTimeStudent() {
+    const now = new Date();
+    const timeString = now.toLocaleTimeString('en-US', { 
+        hour: '2-digit', 
+        minute: '2-digit', 
+        second: '2-digit',
+        hour12: true 
+    });
+    const timeElement = document.getElementById('current-time-student');
+    if (timeElement) {
+        timeElement.textContent = timeString;
+    }
+}
+
+// Update immediately and then every second
+updateTimeStudent();
+setInterval(updateTimeStudent, 1000);
+
+// Animate engagement score on page load
+document.addEventListener('DOMContentLoaded', function() {
+    const circle = document.querySelector('.progress-ring-circle');
+    if (circle) {
+        const score = {{ engagement_score }};
+        const circumference = 2 * Math.PI * 70;
+        const offset = circumference - (score / 100) * circumference;
+        setTimeout(() => {
+            circle.style.strokeDashoffset = offset;
+        }, 500);
+    }
+});
+</script>
+
 {% endblock body %}

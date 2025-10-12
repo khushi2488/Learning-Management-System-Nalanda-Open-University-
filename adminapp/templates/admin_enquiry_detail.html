@@ -1,0 +1,400 @@
+{% extends 'adminhome.html' %}
+
+{% block body %}
+<style>
+    /* Professional Color Scheme */
+    .admin-detail-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 40px 0;
+        margin: -20px;
+    }
+    
+    /* Back Button */
+    .btn-secondary {
+        background-color: #f7fafc;
+        border: 2px solid #e2e8f0;
+        color: #4a5568;
+        padding: 10px 24px;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-secondary:hover {
+        background-color: #e2e8f0;
+        border-color: #cbd5e0;
+        color: #2d3748;
+        transform: translateY(-2px);
+    }
+    
+    /* Main Card */
+    .detail-card {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        border: none;
+        overflow: hidden;
+    }
+    
+    /* Card Header */
+    .card-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 24px 32px;
+    }
+    
+    .card-header h4 {
+        color: #ffffff;
+        margin: 0;
+        font-weight: 700;
+        font-size: 22px;
+    }
+    
+    /* Card Body */
+    .card-body {
+        padding: 32px;
+    }
+    
+    .card-body p {
+        color: #4a5568;
+        font-size: 15px;
+        margin-bottom: 12px;
+    }
+    
+    .card-body p strong {
+        color: #2d3748;
+        font-weight: 600;
+    }
+    
+    .card-body h5 {
+        color: #2d3748;
+        font-weight: 700;
+        font-size: 18px;
+        margin-top: 24px;
+        margin-bottom: 16px;
+        border-bottom: 2px solid #667eea;
+        padding-bottom: 8px;
+    }
+    
+    /* Badges */
+    .badge {
+        padding: 6px 14px;
+        font-size: 12px;
+        font-weight: 600;
+        border-radius: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .badge-low {
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        color: #744210;
+    }
+    
+    .badge-medium {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: #ffffff;
+    }
+    
+    .badge-high {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: #ffffff;
+    }
+    
+    .badge-info {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #ffffff;
+    }
+    
+    /* Form Styling */
+    .form-control {
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 12px 16px;
+        font-size: 15px;
+        color: #2d3748;
+        background-color: #f7fafc;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: #667eea;
+        background-color: #ffffff;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        color: #2d3748;
+        outline: none;
+    }
+    
+    select.form-control {
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 16px center;
+        background-size: 12px;
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+    }
+    
+    textarea.form-control {
+        background-color: #f7fafc;
+        color: #2d3748;
+        resize: vertical;
+        min-height: 120px;
+    }
+    
+    textarea.form-control:focus {
+        background-color: #ffffff;
+        color: #2d3748;
+    }
+    
+    label {
+        color: #4a5568;
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    /* Buttons */
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 12px 28px;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        color: #ffffff;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        color: #ffffff;
+    }
+    
+    .btn-success {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        border: none;
+        padding: 12px 28px;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+        color: #ffffff;
+    }
+    
+    .btn-success:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(79, 172, 254, 0.6);
+        background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
+        color: #ffffff;
+    }
+    
+    /* Replies Section */
+    .replies {
+        max-height: 500px;
+        overflow-y: auto;
+        padding-right: 10px;
+    }
+    
+    .replies .card {
+        border-radius: 12px;
+        border: 2px solid #e2e8f0;
+        transition: all 0.3s ease;
+        overflow: hidden;
+    }
+    
+    .replies .card:hover {
+        transform: translateX(4px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
+    
+    .replies .card.bg-light {
+        background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 100%) !important;
+        border-left: 4px solid #667eea;
+    }
+    
+    .replies .card:not(.bg-light) {
+        background: #f7fafc !important;
+        border-left: 4px solid #cbd5e0;
+    }
+    
+    .replies .card-body {
+        padding: 20px;
+    }
+    
+    .replies .card-body strong {
+        color: #2d3748;
+        font-size: 15px;
+        font-weight: 700;
+    }
+    
+    .replies .card-body p {
+        color: #2d3748;
+        margin-top: 8px;
+        margin-bottom: 8px;
+        line-height: 1.7;
+    }
+    
+    .replies .card-body small {
+        color: #718096;
+        font-size: 12px;
+    }
+    
+    /* Scrollbar Styling */
+    .replies::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    .replies::-webkit-scrollbar-track {
+        background: #f7fafc;
+        border-radius: 10px;
+    }
+    
+    .replies::-webkit-scrollbar-thumb {
+        background: #cbd5e0;
+        border-radius: 10px;
+    }
+    
+    .replies::-webkit-scrollbar-thumb:hover {
+        background: #a0aec0;
+    }
+    
+    /* Form Groups */
+    .form-group {
+        margin-bottom: 24px;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .admin-detail-container {
+            padding: 20px 10px;
+        }
+        
+        .card-body {
+            padding: 20px;
+        }
+        
+        .card-header {
+            padding: 20px;
+        }
+        
+        .card-header h4 {
+            font-size: 18px;
+        }
+    }
+</style>
+
+<div class="admin-detail-container">
+    <div class="row">
+        <div class="col-12">
+            <a href="{% url 'adminapp:admin_enquiry_dashboard' %}" class="btn btn-secondary mb-3">
+                <i class="mdi mdi-arrow-left"></i> Back
+            </a>
+            
+            <div class="card detail-card">
+                <div class="card-header">
+                    <h4>Enquiry #{{ enquiry.id }} - {{ enquiry.subject }}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>Name:</strong> {{ enquiry.name }}</p>
+                            <p><strong>Email:</strong> {{ enquiry.email }}</p>
+                            <p><strong>Contact:</strong> {{ enquiry.contactno }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Priority:</strong> 
+                                <span class="badge badge-{{ enquiry.priority }}">{{ enquiry.get_priority_display }}</span>
+                            </p>
+                            <p><strong>Status:</strong> 
+                                <span class="badge badge-info">{{ enquiry.get_status_display }}</span>
+                            </p>
+                            <p><strong>Date:</strong> {{ enquiry.created_at|date:"d M Y H:i" }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <h5>Message:</h5>
+                        <div style="background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%); padding: 20px; border-radius: 8px; border-left: 4px solid #667eea; color: #2d3748; line-height: 1.8;">
+                            {{ enquiry.message|default:enquiry.address|linebreaks }}
+                        </div>
+                    </div>
+                    
+                    <!-- Update Status Form -->
+                    <form method="POST" class="mb-4" style="background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%); padding: 24px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="update_status">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label>Update Status:</label>
+                                <select name="status" class="form-control">
+                                    <option value="pending" {% if enquiry.status == 'pending' %}selected{% endif %}>Pending</option>
+                                    <option value="in_progress" {% if enquiry.status == 'in_progress' %}selected{% endif %}>In Progress</option>
+                                    <option value="resolved" {% if enquiry.status == 'resolved' %}selected{% endif %}>Resolved</option>
+                                    <option value="closed" {% if enquiry.status == 'closed' %}selected{% endif %}>Closed</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 align-self-end">
+                                <button type="submit" class="btn btn-primary w-100">Update Status</button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                    <!-- Replies Section -->
+                    <h5>Replies:</h5>
+                    <div class="replies mb-3">
+                        {% for reply in replies %}
+                        <div class="card mb-2 {% if reply.is_admin %}bg-light{% endif %}">
+                            <div class="card-body">
+                                <strong>
+                                    {% if reply.is_admin %}
+                                        <i class="mdi mdi-shield-account"></i> Admin
+                                    {% else %}
+                                        <i class="mdi mdi-account-circle"></i> Student
+                                    {% endif %}
+                                </strong>
+                                <p>{{ reply.message|linebreaks }}</p>
+                                <small><i class="mdi mdi-clock-outline"></i> {{ reply.created_at|date:"d M Y H:i" }}</small>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <div class="text-center" style="padding: 40px; color: #718096;">
+                            <i class="mdi mdi-comment-outline" style="font-size: 48px; opacity: 0.5;"></i>
+                            <p>No replies yet</p>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                    <!-- Reply Form -->
+                    <form method="POST" style="background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%); padding: 24px; border-radius: 12px; border: 2px solid #e2e8f0;">
+                        {% csrf_token %}
+                        <input type="hidden" name="action" value="reply">
+                        <div class="form-group">
+                            <label>Reply to Student:</label>
+                            <textarea name="reply_message" class="form-control" rows="4" placeholder="Type your reply here..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-success">
+                            <i class="mdi mdi-send"></i> Send Reply
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Auto-scroll to bottom of replies on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const repliesContainer = document.querySelector('.replies');
+        if (repliesContainer) {
+            repliesContainer.scrollTop = repliesContainer.scrollHeight;
+        }
+    });
+</script>
+{% endblock %}

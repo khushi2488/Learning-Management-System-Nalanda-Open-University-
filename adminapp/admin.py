@@ -1,12 +1,14 @@
 from django.contrib import admin
 from django.utils.html import format_html
-from .models import Program, Branch, Year, Material, News, Admin_table, MaterialCategory, MaterialAccess , Course
+from .models import Program, Branch, Year, Material, News, Admin_table, MaterialCategory, MaterialAccess , Course , NewsCategory ,NewsAnnouncement
 
 # Register simple models directly
 admin.site.register(Program)
 admin.site.register(Branch)
 admin.site.register(Year)
 admin.site.register(News)
+admin.site.register(NewsCategory)
+admin.site.register(NewsAnnouncement)
 admin.site.register(Admin_table)
 @admin.register(Course)
 class CourseAdmin(admin.ModelAdmin):
@@ -87,3 +89,10 @@ class MaterialAccessAdmin(admin.ModelAdmin):
     
     def has_change_permission(self, request, obj=None):
         return False  # Don't allow editing of access logs
+# --- Add this at the end of your admin.py ---
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
+
+# Unregister first in case it was already registered
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)

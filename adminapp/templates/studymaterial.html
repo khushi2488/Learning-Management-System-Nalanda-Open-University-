@@ -1,61 +1,255 @@
-{% extends "adminparent.html" %}
+{% extends "adminparent.html" %} 
 {% block body %}
-<div class="row">
-    <h1 style="text-align:center; color: rgb(6,6,106)">Upload Study Material</h1>
-    <form action="{% url 'adminapp:move' %}" method="post" class="form-group" enctype="multipart/form-data">
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1 style="text-align: center; color: rgb(6, 6, 106)">
+          Upload Study Material
+        </h1>
+        <!-- Add link to manage academic data -->
+        <a href="{% url 'adminapp:manage_academic_data' %}" class="btn btn-info">
+          <i class="fas fa-cogs"></i> Manage Academic Data
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+      <form
+        action="{% url 'adminapp:move' %}"
+        method="post"
+        class="form-group"
+        enctype="multipart/form-data"
+      >
         {% csrf_token %}
-        <table class="table table-bordered text-light" style="background-color:rgb(6,6,106); border: 2px aliceblue;">
-            
-            <!-- Select Course -->
-            <tr>
-                <td><label for="course-select">Select Course: </label></td>
-                <td>
-                    <select name="course" id="course-select" class="form-control" style="background-color: aliceblue; color: rgb(6,6,106);">
-                        <option selected>--Select Course--</option>
-                        {% for c in courses %}
-                            <option value="{{ c.id }}">{{ c.title }} - {{ c.program.program }} {{ c.branch.branch }} {{ c.year.year }}</option>
-                        {% endfor %}
-                    </select>
-                </td>
-            </tr>
+        
+        <!-- Display any messages -->
+        {% if messages %}
+          <div class="mb-3">
+            {% for message in messages %}
+              <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert">
+                  <span>&times;</span>
+                </button>
+              </div>
+            {% endfor %}
+          </div>
+        {% endif %}
 
-            <!-- Title -->
-            <tr>
-                <td><label for="title-input">Material Title :</label></td>
-                <td><input type="text" name="title" id="title-input" class="form-control" style="background-color: aliceblue; color: rgb(6,6,106);" required></td>
-            </tr>
-
-            <!-- Description -->
-            <tr>
-                <td><label for="description-input">Description :</label></td>
-                <td><textarea name="description" id="description-input" class="form-control" style="background-color: aliceblue; color: rgb(6,6,106);"></textarea></td>
-            </tr>
-
-            <!-- Category (Optional) -->
-            <tr>
-                <td><label for="category-select">Category :</label></td>
-                <td>
-                    <select name="category" id="category-select" class="form-control" style="background-color: aliceblue; color: rgb(6,6,106);">
-                        <option selected>--Select Category--</option>
-                        {% for cat in categories %}
-                            <option value="{{ cat.id }}">{{ cat.name }}</option>
-                        {% endfor %}
-                    </select>
-                </td>
-            </tr>
-
-            <!-- File Upload -->
-            <tr>
-                <td><label for="file-upload">Select File :</label></td>
-                <td><input type="file" name="my_file" id="file-upload" class="form-control" style="background-color: aliceblue; color: rgb(6,6,106);" required></td>
-            </tr>
-
-            <!-- Submit Button -->
-            <tr>
-                <td></td>
-                <td><button type="submit" class="btn btn-success">Upload</button></td>
-            </tr>
+        <table
+          class="table table-bordered text-light"
+          style="background-color: rgb(6, 6, 106); border: 2px aliceblue"
+        >
+          <tr>
+            <td><label for="program-select">Select Program: </label></td>
+            <td>
+              <select
+                name="program"
+                id="program-select"
+                class="form-control"
+                style="background-color: aliceblue; color: rgb(6, 6, 106)"
+                required
+              >
+                <option value="">--Select Program--</option>
+                {% for p in programs %}
+                <option value="{{p.id}}">{{p.program}}</option>
+                {% endfor %}
+              </select>
+              {% if not programs %}
+                <small class="text-warning">No programs available. <a href="{% url 'adminapp:manage_programs' %}" class="text-warning">Add programs here</a></small>
+              {% endif %}
+            </td>
+          </tr>
+          
+          <tr>
+            <td><label for="branch-select">Select Branch: </label></td>
+            <td>
+              <select
+                name="branch"
+                id="branch-select"
+                class="form-control"
+                style="background-color: aliceblue; color: rgb(6, 6, 106)"
+                required
+              >
+                <option value="">--Select Branch--</option>
+                {% for b in branches %}
+                <option value="{{b.id}}">{{b.branch}}</option>
+                {% endfor %}
+              </select>
+              {% if not branches %}
+                <small class="text-warning">No branches available. <a href="{% url 'adminapp:manage_branches' %}" class="text-warning">Add branches here</a></small>
+              {% endif %}
+            </td>
+          </tr>
+          
+          <tr>
+            <td><label for="year-select">Select Year: </label></td>
+            <td>
+              <select
+                name="year"
+                id="year-select"
+                class="form-control"
+                style="background-color: aliceblue; color: rgb(6, 6, 106)"
+                required
+              >
+                <option value="">--Select Year--</option>
+                {% for y in years %}
+                <option value="{{y.id}}">{{y.year}}</option>
+                {% endfor %}
+              </select>
+              {% if not years %}
+                <small class="text-warning">No years available. <a href="{% url 'adminapp:manage_years' %}" class="text-warning">Add years here</a></small>
+              {% endif %}
+            </td>
+          </tr>
+          
+          <tr>
+            <td><label for="course-select">Select Course: </label></td>
+            <td>
+              <select
+                name="course"
+                id="course-select"
+                class="form-control"
+                style="background-color: aliceblue; color: rgb(6, 6, 106)"
+                required
+              >
+                <option value="">--Select Course--</option>
+                {% for c in courses %}
+                <option value="{{c.id}}">{{c.title}} - {{c.program.program}} {{c.branch.branch}} {{c.year.year}}</option>
+                {% endfor %}
+              </select>
+              {% if not courses %}
+                <small class="text-warning">No courses available. Create courses first.</small>
+              {% endif %}
+            </td>
+          </tr>
+          
+          <tr>
+            <td><label for="category-select">Select Category (Optional): </label></td>
+            <td>
+              <select
+                name="category"
+                id="category-select"
+                class="form-control"
+                style="background-color: aliceblue; color: rgb(6, 6, 106)"
+              >
+                <option value="">--Select Category--</option>
+                {% for cat in categories %}
+                <option value="{{cat.id}}">{{cat.name}}</option>
+                {% endfor %}
+              </select>
+            </td>
+          </tr>
+          
+          <tr>
+            <td><label for="title-input">Material Title: </label></td>
+            <td>
+              <input
+                type="text"
+                name="title"
+                id="title-input"
+                class="form-control"
+                style="background-color: aliceblue; color: rgb(6, 6, 106)"
+                placeholder="Enter material title (e.g., Chapter 1 - Introduction)"
+                required
+              />
+            </td>
+          </tr>
+          
+          <tr>
+            <td><label for="description-input">Description (Optional): </label></td>
+            <td>
+              <textarea
+                name="description"
+                id="description-input"
+                class="form-control"
+                style="background-color: aliceblue; color: rgb(6, 6, 106)"
+                rows="3"
+                placeholder="Enter material description..."
+              ></textarea>
+            </td>
+          </tr>
+          
+          <tr>
+            <td><label for="file-upload">Select File: </label></td>
+            <td>
+              <input
+                type="file"
+                name="my_file"
+                id="file-upload"
+                class="form-control-file"
+                style="background-color: aliceblue; color: rgb(6, 6, 106)"
+                accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.mp4,.mp3,.jpg,.jpeg,.png,.gif,.zip,.rar"
+                required
+              />
+              <small class="text-light">
+                Supported formats: PDF, DOC, DOCX, PPT, PPTX, TXT, MP4, MP3, JPG, PNG, GIF, ZIP, RAR
+              </small>
+            </td>
+          </tr>
+          
+          <tr>
+            <td></td>
+            <td>
+              <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-success">
+                  <i class="fas fa-upload"></i> Upload Material
+                </button>
+                <a href="{% url 'adminapp:viewmaterial' %}" class="btn btn-info">
+                  <i class="fas fa-eye"></i> View All Materials
+                </a>
+              </div>
+            </td>
+          </tr>
         </table>
-    </form>
+      </form>
+    </div>
+  </div>
 </div>
+
+<!-- JavaScript for dynamic course filtering -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const programSelect = document.getElementById('program-select');
+    const branchSelect = document.getElementById('branch-select');
+    const yearSelect = document.getElementById('year-select');
+    const courseSelect = document.getElementById('course-select');
+    
+    function filterCourses() {
+        const selectedProgram = programSelect.value;
+        const selectedBranch = branchSelect.value;
+        const selectedYear = yearSelect.value;
+        
+        // Clear course options
+        courseSelect.innerHTML = '<option value="">--Select Course--</option>';
+        
+        // Filter courses based on selected program, branch, and year
+        {% for c in courses %}
+        if ((!selectedProgram || '{{c.program.id}}' === selectedProgram) &&
+            (!selectedBranch || '{{c.branch.id}}' === selectedBranch) &&
+            (!selectedYear || '{{c.year.id}}' === selectedYear)) {
+            
+            const option = document.createElement('option');
+            option.value = '{{c.id}}';
+            option.textContent = '{{c.title}} - {{c.program.program}} {{c.branch.branch}} {{c.year.year}}';
+            courseSelect.appendChild(option);
+        }
+        {% endfor %}
+    }
+    
+    // Add event listeners
+    programSelect.addEventListener('change', filterCourses);
+    branchSelect.addEventListener('change', filterCourses);
+    yearSelect.addEventListener('change', filterCourses);
+    
+    // Initial filter
+    filterCourses();
+});
+</script>
+
+<!-- Include Font Awesome for icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 {% endblock body %}

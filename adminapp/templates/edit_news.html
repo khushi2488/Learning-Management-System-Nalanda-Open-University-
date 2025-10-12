@@ -1,0 +1,309 @@
+{% extends "adminparent.html" %}
+{% block body %}
+<div class="container-fluid mt-4">
+    <div class="row">
+        <div class="col-lg-10 mx-auto">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h3 class="mb-0"><i class="fas fa-edit"></i> Edit News/Announcement</h3>
+                    <a href="{% url 'adminapp:manage_news' %}" class="btn btn-secondary">
+                        <i class="fas fa-arrow-left"></i> Back to List
+                    </a>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        <!-- Title & Category -->
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <label for="title" class="form-label fw-bold">Title *</label>
+                                <input type="text" name="title" id="title" class="form-control"
+                                       value="{{news.title}}" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="category" class="form-label fw-bold">Category</label>
+                                <select name="category" id="category" class="form-control">
+                                    <option value="">Select Category</option>
+                                    {% for cat in categories %}
+                                        <option value="{{cat.id}}" {% if news.category and news.category.id == cat.id %}selected{% endif %}>{{cat.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Content -->
+                        <div class="mb-3">
+                            <label for="newstext" class="form-label fw-bold">Content *</label>
+                            <textarea name="newstext" id="newstext" class="form-control"
+                                      rows="6" required>{{news.newstext}}</textarea>
+                        </div>
+
+                        <!-- Priority, Publish & Expiry -->
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="priority" class="form-label fw-bold">Priority</label>
+                                <select name="priority" id="priority" class="form-control">
+                                    <option value="low" {% if news.priority == 'low' %}selected{% endif %}>Low</option>
+                                    <option value="normal" {% if news.priority == 'normal' %}selected{% endif %}>Normal</option>
+                                    <option value="high" {% if news.priority == 'high' %}selected{% endif %}>High</option>
+                                    <option value="urgent" {% if news.priority == 'urgent' %}selected{% endif %}>Urgent</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="publish_date" class="form-label fw-bold">Publish Date</label>
+                                <input type="datetime-local" name="publish_date" id="publish_date" 
+                                       class="form-control"
+                                       value="{{news.publish_date|date:'Y-m-d\TH:i'}}">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="expiry_date" class="form-label fw-bold">Expiry Date</label>
+                                <input type="datetime-local" name="expiry_date" id="expiry_date"
+                                       class="form-control"
+                                       value="{% if news.expiry_date %}{{news.expiry_date|date:'Y-m-d\TH:i'}}{% endif %}">
+                                <small class="text-muted">Leave empty for no expiry</small>
+                            </div>
+                        </div>
+
+                        <!-- UPDATED: Target Audience -->
+                        <div class="mb-3">
+                            <label for="target_audience" class="form-label fw-bold">Target Audience</label>
+                            <select name="target_audience" id="target_audience" class="form-control" onchange="toggleTargeting()">
+                                <option value="all" {% if news.target_audience == 'all' %}selected{% endif %}>Everyone</option>
+                                <option value="students" {% if news.target_audience == 'students' %}selected{% endif %}>All Students</option>
+                                <option value="specific_program" {% if news.target_audience == 'specific_program' %}selected{% endif %}>Specific Programs</option>
+                                <option value="specific_branch" {% if news.target_audience == 'specific_branch' %}selected{% endif %}>Specific Branches</option>
+                                <option value="specific_year" {% if news.target_audience == 'specific_year' %}selected{% endif %}>Specific Years</option>
+                            </select>
+                        </div>
+
+                        <!-- UPDATED: Program Targeting with Selected Values -->
+                        <div id="program-targeting" class="mb-3 p-3 rounded bg-light" 
+                             style="{% if news.target_audience == 'specific_program' %}display:block;{% else %}display:none;{% endif %}">
+                            <label for="target_programs" class="form-label fw-bold">Select Target Programs</label>
+                            <select name="target_programs" id="target_programs" class="form-control" multiple size="4">
+                                {% for program in programs %}
+                                    <option value="{{ program.id }}" 
+                                        {% if program in news.target_programs.all %}selected{% endif %}>
+                                        {{ program.program }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <small class="form-text text-muted">Hold Ctrl (Cmd on Mac) to select multiple programs</small>
+                        </div>
+
+                        <!-- UPDATED: Branch Targeting with Selected Values -->
+                        <div id="branch-targeting" class="mb-3 p-3 rounded bg-light" 
+                             style="{% if news.target_audience == 'specific_branch' %}display:block;{% else %}display:none;{% endif %}">
+                            <label for="target_branches" class="form-label fw-bold">Select Target Branches</label>
+                            <select name="target_branches" id="target_branches" class="form-control" multiple size="4">
+                                {% for branch in branches %}
+                                    <option value="{{ branch.id }}" 
+                                        {% if branch in news.target_branches.all %}selected{% endif %}>
+                                        {{ branch.branch }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <small class="form-text text-muted">Hold Ctrl (Cmd on Mac) to select multiple branches</small>
+                        </div>
+
+                        <!-- UPDATED: Year Targeting with Selected Values -->
+                        <div id="year-targeting" class="mb-3 p-3 rounded bg-light" 
+                             style="{% if news.target_audience == 'specific_year' %}display:block;{% else %}display:none;{% endif %}">
+                            <label for="target_years" class="form-label fw-bold">Select Target Years</label>
+                            <select name="target_years" id="target_years" class="form-control" multiple size="4">
+                                {% for year in years %}
+                                    <option value="{{ year.id }}" 
+                                        {% if year in news.target_years.all %}selected{% endif %}>
+                                        {{ year.year }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <small class="form-text text-muted">Hold Ctrl (Cmd on Mac) to select multiple years</small>
+                        </div>
+
+                        <!-- Attachment + Options -->
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Attachment</label>
+                                {% if news.attachment %}
+                                    <div class="mb-2 text-info">
+                                        Current: <a href="{{news.attachment.url}}" target="_blank" class="text-primary">{{news.attachment.name}}</a>
+                                    </div>
+                                {% endif %}
+                                <input type="file" name="attachment" id="attachment" class="form-control">
+                            </div>
+                            <div class="col-md-6 d-flex flex-column justify-content-center">
+                                <div class="form-check mb-2">
+                                    <input type="checkbox" name="is_pinned" class="form-check-input" id="pinCheck" {% if news.is_pinned %}checked{% endif %}>
+                                    <label class="form-check-label" for="pinCheck">Pin this announcement</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" name="is_active" class="form-check-input" id="activeCheck" {% if news.is_active %}checked{% endif %}>
+                                    <label class="form-check-label" for="activeCheck">Active (visible to users)</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Current Status Info with Target Details -->
+                        <div class="alert alert-info">
+                            <strong>Current Status:</strong>
+                            <span class="badge {{ news.get_status_class }}">
+                                {{ news.get_status_display }}
+                            </span>
+                            <br>
+                            <strong>Target Audience:</strong> {{ news.get_target_display }}
+                            <br>
+                            <small>
+                                Created: {{news.newsdate|date:"M d, Y H:i"}} | 
+                                Views: {{news.view_count|default:0}} |
+                                Current Time: {% now "M d, Y H:i" %}
+                            </small>
+                        </div>
+
+                        <!-- Buttons -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="fas fa-save"></i> Update News
+                            </button>
+                            <a href="{% url 'adminapp:manage_news' %}" class="btn btn-secondary px-4 mx-2">
+                                <i class="fas fa-times"></i> Cancel
+                            </a>
+                            <button type="button" class="btn btn-info px-4" onclick="previewNews()">
+                                <i class="fas fa-eye"></i> Preview
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Preview Modal -->
+<div class="modal fade" id="previewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">News Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="previewContent"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleTargeting() {
+    const audience = document.getElementById('target_audience').value;
+    const programDiv = document.getElementById('program-targeting');
+    const branchDiv = document.getElementById('branch-targeting');
+    const yearDiv = document.getElementById('year-targeting');
+    
+    // Hide all targeting divs first
+    programDiv.style.display = 'none';
+    branchDiv.style.display = 'none';
+    yearDiv.style.display = 'none';
+    
+    // Show relevant targeting div
+    if (audience === 'specific_program') {
+        programDiv.style.display = 'block';
+    } else if (audience === 'specific_branch') {
+        branchDiv.style.display = 'block';
+    } else if (audience === 'specific_year') {
+        yearDiv.style.display = 'block';
+    }
+}
+
+function previewNews() {
+    const title = document.getElementById('title').value;
+    const content = document.getElementById('newstext').value;
+    const priority = document.getElementById('priority').value;
+    const category = document.getElementById('category');
+    const categoryText = category.options[category.selectedIndex]?.text || 'No Category';
+    
+    // Get selected targeting information
+    const audience = document.getElementById('target_audience').value;
+    let targetInfo = '';
+    
+    if (audience === 'specific_program') {
+        const programSelect = document.getElementById('target_programs');
+        const selectedPrograms = Array.from(programSelect.selectedOptions).map(opt => opt.text);
+        if (selectedPrograms.length > 0) {
+            targetInfo = `<br><small><strong>Target Programs:</strong> ${selectedPrograms.join(', ')}</small>`;
+        }
+    } else if (audience === 'specific_branch') {
+        const branchSelect = document.getElementById('target_branches');
+        const selectedBranches = Array.from(branchSelect.selectedOptions).map(opt => opt.text);
+        if (selectedBranches.length > 0) {
+            targetInfo = `<br><small><strong>Target Branches:</strong> ${selectedBranches.join(', ')}</small>`;
+        }
+    } else if (audience === 'specific_year') {
+        const yearSelect = document.getElementById('target_years');
+        const selectedYears = Array.from(yearSelect.selectedOptions).map(opt => opt.text);
+        if (selectedYears.length > 0) {
+            targetInfo = `<br><small><strong>Target Years:</strong> ${selectedYears.join(', ')}</small>`;
+        }
+    }
+
+    const previewHtml = `
+        <div class="card shadow">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-1">${title}</h5>
+                    ${category.value ? `<span class="badge bg-primary">${categoryText}</span>` : ''}
+                </div>
+                <span class="badge bg-${priority === 'urgent' ? 'danger' : priority === 'high' ? 'warning' : priority === 'low' ? 'secondary' : 'info'}">${priority.toUpperCase()}</span>
+            </div>
+            <div class="card-body">
+                <div class="news-content">${content.replace(/\n/g, '<br>')}</div>
+                <hr>
+                <small class="text-muted">
+                    <i class="fas fa-clock"></i> Updated: {% now "M d, Y H:i" %}
+                    <br><strong>Target:</strong> ${audience.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                    ${targetInfo}
+                </small>
+            </div>
+        </div>
+    `;
+    document.getElementById('previewContent').innerHTML = previewHtml;
+    
+    // Use Bootstrap modal
+    var modal = new bootstrap.Modal(document.getElementById('previewModal'));
+    modal.show();
+}
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    toggleTargeting(); // Set initial state based on current selection
+});
+</script>
+
+<!-- Custom Styles -->
+<style>
+.card {
+    background-color: #b1b2ddff !important;
+    color: #171718ff !important;
+    border: 1px solid #e5e7eb;
+    border-radius: 10px;
+}
+
+.form-control {
+    background-color: #ffffff !important;
+    color: #1e293b !important;
+    border: 1px solid #d1d5db !important;
+}
+
+.form-control:focus {
+    background-color: #ffffff !important;
+    color: #1e293b !important;
+    border-color: #2563eb !important;
+}
+
+#program-targeting, #branch-targeting, #year-targeting {
+    background-color: #f8f9fa !important;
+    border: 1px solid #dee2e6;
+}
+</style>
+
+{% endblock %}
