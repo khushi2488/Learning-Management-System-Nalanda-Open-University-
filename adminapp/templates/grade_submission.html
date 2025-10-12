@@ -1,0 +1,79 @@
+{% extends 'adminapp/adminparent.html' %}
+{% load static %}
+
+{% block body %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Grade Submission</h4>
+                <a href="{% url 'adminapp:view_submissions' submission.assignment.id %}" class="btn btn-secondary btn-sm">
+                    <i class="mdi mdi-arrow-left"></i> Back to Submissions
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h5>Assignment: {{ submission.assignment.title }}</h5>
+                        <p><strong>Student:</strong> {{ submission.student.name }} ({{ submission.student.rollno }})</p>
+                        <p><strong>Submitted:</strong> {{ submission.submitted_at|date:"M d, Y H:i" }}</p>
+                        {% if submission.is_late %}
+                            <p class="text-danger"><strong>Late Submission</strong></p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Total Marks:</strong> {{ submission.assignment.total_marks }}</p>
+                        {% if submission.submitted_file %}
+                            <p><strong>Submitted File:</strong>
+                                <a href="{{ submission.submitted_file.url }}" target="_blank" class="btn btn-info btn-sm">
+                                    <i class="mdi mdi-download"></i> Download Submission
+                                </a>
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.grade.id_for_label }}">Grade (out of {{ submission.assignment.total_marks }})</label>
+                                {{ form.grade }}
+                                {% if form.grade.errors %}
+                                    <div class="text-danger">{{ form.grade.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.feedback.id_for_label }}">Feedback</label>
+                        {{ form.feedback }}
+                        {% if form.feedback.errors %}
+                            <div class="text-danger">{{ form.feedback.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="mdi mdi-content-save"></i> Save Grade & Feedback
+                        </button>
+                        <a href="{% url 'adminapp:view_submissions' submission.assignment.id %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

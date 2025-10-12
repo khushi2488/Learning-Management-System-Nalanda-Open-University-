@@ -1,13 +1,14 @@
+
 from django.shortcuts import render, redirect, get_object_or_404
+from nouapp.models import Student, Login
 from django.views.decorators.cache import cache_control
-from .models import StuResponse, Question, Answer
-from datetime import date, datetime
+from .models import StuResponse, Question, Answer, Submission
+from datetime import date
 from django.contrib import messages
-from adminapp.models import Material, Course, Program, Branch, Year, NewsAnnouncement, NewsCategory
-from django.db.models import Q, Count
+from adminapp.models import Material, Course, Program, Branch, Year, Assignment
+from django.db.models import Q
 from adminapp.analytics_utils import log_student_activity
-from django.utils import timezone
-from nouapp.models import Enquiry, Student, EnquiryReply
+from .forms import SubmissionForm
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def studenthome(request):
@@ -355,347 +356,72 @@ def viewprofile(request):
             return render(request,"viewprofile.html" , {'stu':stu})
     except KeyError:
         return redirect('nouapp:login')
-    
 
-# FIXED: Enhanced student news view - removed incorrect select_related
+#____________Assignment Views______________________
+
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def student_news(request):
-    """Enhanced view for students to see news with proper ForeignKey filtering"""
-    try:
-        if request.session['rollno'] is not None:
-            rollno = request.session['rollno']
-            # FIXED: Use select_related to efficiently get related objects
-            stu = Student.objects.select_related('program', 'branch', 'year').get(rollno=rollno)
-
-            # Get category filter if provided
-            category_filter = request.GET.get('category', '')
-
-            # Get all active news that are currently published and not expired
-            now = timezone.now()
-            news_query = NewsAnnouncement.objects.filter(
-                is_active=True,
-                publish_date__lte=now
-            ).exclude(
-                expiry_date__lt=now
-            ).select_related('category').prefetch_related(
-                'target_programs', 'target_branches', 'target_years'
-            ).order_by('-is_pinned', '-publish_date')
-
-            # Apply category filter if specified
-            if category_filter:
-                news_query = news_query.filter(category_id=category_filter)
-
-            # Filter news based on target audience
-            visible_news = []
-            for news in news_query:
-                should_show = False
-
-                if news.target_audience == 'all':
-                    should_show = True
-
-                elif news.target_audience == 'students':
-                    should_show = True
-
-                elif news.target_audience == 'specific_program':
-                    # FIXED: Check if student's program object is in target_programs
-                    if news.target_programs.filter(id=stu.program.id).exists():
-                        should_show = True
-
-                elif news.target_audience == 'specific_branch':
-                    # FIXED: Check if student's branch object is in target_branches
-                    if news.target_branches.filter(id=stu.branch.id).exists():
-                        should_show = True
-
-                elif news.target_audience == 'specific_year':
-                    # FIXED: Check if student's year object is in target_years
-                    if news.target_years.filter(id=stu.year.id).exists():
-                        should_show = True
-
-                if should_show:
-                    visible_news.append(news)
-
-            # Get active categories for filter dropdown
-            categories = NewsCategory.objects.filter(is_active=True).order_by('name')
-
-            return render(request, "student_news.html", {
-                'stu': stu,
-                'news_list': visible_news,
-                'categories': categories,
-                'current_category': category_filter
-            })
-    except KeyError:
-        return redirect('nouapp:login')
-    except Student.DoesNotExist:
-        return redirect('nouapp:login')
-    except Exception as e:
-        print(f"ERROR in student_news: {e}")
-        return redirect('nouapp:login')
-    
-# Optional: Simple view to increment news view count when student reads news
-def increment_news_view(request, news_id):
-    """Increment view count when student views news"""
-    if request.method == 'POST':
-        try:
-            news = NewsAnnouncement.objects.get(nid=news_id)
-            news.view_count = (news.view_count or 0) + 1
-            news.save()
-            
-            from django.http import JsonResponse
-            return JsonResponse({'status': 'success'})
-        except NewsAnnouncement.DoesNotExist:
-            pass
-    
-    from django.http import JsonResponse
-    return JsonResponse({'status': 'error'})
-
-# Alternative simple view if you don't have enhanced NewsAnnouncement model yet
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def simple_student_news(request):
-    """Very simple news view using basic News model"""
+def list_assignments(request):
+    """List assignments for the student"""
     try:
         if request.session['rollno'] is not None:
             rollno = request.session['rollno']
             stu = Student.objects.get(rollno=rollno)
-            
-            # If you're still using the old News model
-            from adminapp.models import News
-            news_list = News.objects.all().order_by('-nid')  # Latest first
-            
-            return render(request, "simple_student_news.html", {
-                'stu': stu,
-                'news_list': news_list
+            assignments = Assignment.objects.select_related('course').filter(is_active=True)
+            return render(request, 'studentapp/assignment_list.html', {
+                'assignments': assignments,
+                'stu': stu
             })
     except KeyError:
         return redirect('nouapp:login')
-    except Student.DoesNotExist:
-        return redirect('nouapp:login')
-
-# FIXED: Student news view with proper audience filtering - removed incorrect select_related
-def get_student_news(request, student_id=None):
-    """Get news for students with proper ManyToMany audience filtering"""
-    try:
-        now = timezone.now()
-        
-        # Get active, published, non-expired news
-        base_queryset = NewsAnnouncement.objects.filter(
-            is_active=True,
-            publish_date__lte=now
-        ).filter(
-            Q(expiry_date__isnull=True) | Q(expiry_date__gt=now)
-        ).select_related('category').prefetch_related(
-            'target_programs', 'target_branches', 'target_years'
-        ).order_by('-is_pinned', '-newsdate')
-        
-        if student_id:
-            # Get student details for targeted filtering
-            try:
-                student = Student.objects.get(id=student_id)  # REMOVED select_related
-                
-                # Filter based on target audience
-                filtered_news = []
-                
-                for news in base_queryset:
-                    should_show = False
-                    
-                    if news.target_audience == 'all':
-                        # Show to everyone
-                        should_show = True
-                    
-                    elif news.target_audience == 'students':
-                        # Show to ALL students
-                        should_show = True
-                    
-                    elif news.target_audience == 'specific_program':
-                        # Check if student's program matches any target programs
-                        target_programs = news.target_programs.values_list('program', flat=True)
-                        if student.program in target_programs:
-                            should_show = True
-                    
-                    elif news.target_audience == 'specific_branch':
-                        # Check if student's branch matches any target branches
-                        target_branches = news.target_branches.values_list('branch', flat=True)
-                        if student.branch in target_branches:
-                            should_show = True
-                    
-                    elif news.target_audience == 'specific_year':
-                        # Check if student's year matches any target years
-                        target_years = news.target_years.values_list('year', flat=True)
-                        if student.year in target_years:
-                            should_show = True
-                    
-                    if should_show:
-                        filtered_news.append(news)
-                
-                return filtered_news
-                
-            except Student.DoesNotExist:
-                # If student not found, show general news only
-                return base_queryset.filter(target_audience__in=['all', 'students'])
-        
-        else:
-            # No specific student, show all public news
-            return base_queryset.filter(target_audience__in=['all', 'students'])
-            
-    except Exception as e:
-        print(f"Error in get_student_news: {e}")
-        return []
-# Example fix for creating StuResponse objects in studentapp views
-
-def submit_feedback(request):  # or whatever your function is called
-    if request.method == "POST":
-        rollno = request.session['rollno']
-        
-        try:
-            # Get the student object to access ForeignKey relationships
-            student = Student.objects.get(rollno=rollno)
-            
-            # Create StuResponse with ForeignKey objects
-            sturesponse = StuResponse(
-                rollno=rollno,
-                name=student.name,
-                program=student.program,      # ForeignKey object
-                branch=student.branch,        # ForeignKey object  
-                year=student.year,            # ForeignKey object
-                contactno=student.contactno,
-                emailaddress=student.emailaddress,
-                responsetype=request.POST['responsetype'],  # 'feedback' or 'complain'
-                subject=request.POST['subject'],
-                responsetext=request.POST['responsetext'],
-                responsedate=date.today()
-            )
-            sturesponse.save()
-            messages.success(request, 'Response submitted successfully!')
-            
-        except Student.DoesNotExist:
-            messages.error(request, 'Student not found')
-        except Exception as e:
-            messages.error(request, f'Error: {str(e)}')
-            
-    return render(request, "feedback_form.html")  # your template    
-
-
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def student_enquiry_dashboard(request):
-    """Display all enquiries for the logged-in student"""
+def submit_assignment(request, assignment_id):
+    """Submit assignment"""
     try:
-        rollno = request.session.get('rollno')
-        if not rollno:
-            return redirect('nouapp:login')
-        
-        stu = Student.objects.get(rollno=rollno)
-        
-        # Query using emailaddress field
-        enquiries = Enquiry.objects.filter(emailaddress=stu.emailaddress).order_by('-id')
-        
-        context = {
-            'stu': stu,
-            'enquiries': enquiries,
-            'total_enquiries': enquiries.count(),
-            'pending_enquiries': enquiries.filter(status='pending').count(),
-            'resolved_enquiries': enquiries.filter(status='resolved').count(),
-        }
-        return render(request, 'enquiry_dashboard.html', context)
-        
-    except Student.DoesNotExist:
-        messages.error(request, "Student record not found.")
-        return redirect('nouapp:login')
-    except Exception as e:
-        # print(f"Error in student_enquiry_dashboard: {e}")
-        # messages.error(request, "An error occurred. Please try again.")
-        # return redirect('studentapp:studenthome')
-        print(f"CRITICAL ERROR TYPE: {type(e).__name__} - MESSAGE: {e}")
-        # !!! RAISE THE EXCEPTION TO GET THE FULL TRACEBACK !!!
-        raise e 
+        if request.session['rollno'] is not None:
+            rollno = request.session['rollno']
+            stu = Student.objects.get(rollno=rollno)
+            assignment = get_object_or_404(Assignment, id=assignment_id)
 
+            # Check if already submitted
+            existing_submission = Submission.objects.filter(assignment=assignment, student=stu).first()
+            if existing_submission:
+                messages.warning(request, 'You have already submitted this assignment.')
+                return redirect('studentapp:view_submission_status', assignment_id=assignment_id)
+
+            if request.method == 'POST':
+                form = SubmissionForm(request.POST, request.FILES)
+                if form.is_valid():
+                    submission = form.save(commit=False)
+                    submission.assignment = assignment
+                    submission.student = stu
+                    submission.save()
+                    messages.success(request, 'Assignment submitted successfully!')
+                    return redirect('studentapp:view_submission_status', assignment_id=assignment_id)
+            else:
+                form = SubmissionForm()
+
+            return render(request, 'studentapp/submit_assignment.html', {
+                'form': form,
+                'assignment': assignment,
+                'stu': stu
+            })
+    except KeyError:
+        return redirect('nouapp:login')
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def create_enquiry(request):
-    """Create a new enquiry"""
+def view_submission_status(request, assignment_id):
+    """View submission status"""
     try:
-        rollno = request.session.get('rollno')
-        if not rollno:
-            return redirect('nouapp:login')
-        
-        stu = Student.objects.get(rollno=rollno)
-        
-        if request.method == 'POST':
-            subject = request.POST.get('subject', '').strip()
-            message = request.POST.get('message', '').strip()
-            category = request.POST.get('category', '')
-            priority = request.POST.get('priority', 'low')
-            
-            if not subject or not message:
-                messages.error(request, 'Subject and message are required!')
-                return render(request, 'create_enquiry.html', {'stu': stu})
-            
-            Enquiry.objects.create(
-                name=stu.name,
-                emailaddress=stu.emailaddress,  # Use emailaddress
-                contactno=stu.contactno,
-                address='',
-                subject=subject,
-                message=message,
-                category=category,
-                priority=priority,
-                status='pending'
-            )
-            messages.success(request, 'Enquiry submitted successfully!')
-            return redirect('studentapp:student_enquiry_dashboard')
-        
-        return render(request, 'create_enquiry.html', {'stu': stu})
-        
-    except Student.DoesNotExist:
-        messages.error(request, "Student record not found.")
+        if request.session['rollno'] is not None:
+            rollno = request.session['rollno']
+            stu = Student.objects.get(rollno=rollno)
+            assignment = get_object_or_404(Assignment, id=assignment_id)
+            submission = Submission.objects.filter(assignment=assignment, student=stu).first()
+            return render(request, 'studentapp/submission_status.html', {
+                'assignment': assignment,
+                'submission': submission,
+                'stu': stu
+            })
+    except KeyError:
         return redirect('nouapp:login')
-    except Exception as e:
-        print(f"Error in create_enquiry: {e}")
-        messages.error(request, f"Error creating enquiry: {str(e)}")
-        return redirect('studentapp:studenthome')
-
-
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def enquiry_detail(request, enquiry_id):
-    """View enquiry details and replies"""
-    try:
-        rollno = request.session.get('rollno')
-        if not rollno:
-            return redirect('nouapp:login')
-        
-        stu = Student.objects.get(rollno=rollno)
-        
-        # Get enquiry and verify ownership
-        enquiry = get_object_or_404(Enquiry, id=enquiry_id, emailaddress=stu.emailaddress)
-        
-        if request.method == 'POST':
-            reply_message = request.POST.get('reply_message', '').strip()
-            if reply_message:
-                from django.contrib.auth.models import User
-                user, _ = User.objects.get_or_create(
-                    username=f'student_{rollno}',
-                    defaults={'email': stu.emailaddress}
-                )
-                
-                EnquiryReply.objects.create(
-                    enquiry=enquiry,
-                    user=user,
-                    message=reply_message,
-                    is_admin=False
-                )
-                messages.success(request, 'Reply added successfully!')
-                return redirect('studentapp:enquiry_detail', enquiry_id=enquiry_id)
-        
-        context = {
-            'stu': stu,
-            'enquiry': enquiry,
-            'replies': enquiry.replies.all().order_by('created_at')
-        }
-        return render(request, 'enquiry_detail.html', context)
-        
-    except Student.DoesNotExist:
-        messages.error(request, "Student record not found.")
-        return redirect('nouapp:login')
-    except Exception as e:
-        print(f"Error in enquiry_detail: {e}")
-        messages.error(request, "An error occurred.")
-        return redirect('studentapp:student_enquiry_dashboard')
