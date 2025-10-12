@@ -50,8 +50,10 @@
 
   .hero img:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 25px rgba(0, 86, 179, 0.6); /* blue glow */
-    border: 3px solid #0056b3; /* theme blue border */
+    box-shadow: 0 0 25px rgba(0, 86, 179, 0.6);
+    /* blue glow */
+    border: 3px solid #0056b3;
+    /* theme blue border */
   }
 
   /*Home end*/
@@ -114,6 +116,7 @@
       opacity: 0;
       transform: translateX(-50px);
     }
+
     to {
       opacity: 1;
       transform: translateX(0);
@@ -125,6 +128,7 @@
       opacity: 0;
       transform: translateX(50px);
     }
+
     to {
       opacity: 1;
       transform: translateX(0);
@@ -146,6 +150,7 @@
     display: inline-block;
     animation: fadeInLeft 1s ease forwards;
   }
+
   @media screen and (max-width: 991px) {
     .about-title {
       font-size: 22px;
@@ -159,7 +164,8 @@
       font-size: 16px;
       line-height: 1.6;
       /* text-align: center !important; center paragraphs */
-      margin: 0 auto !important; /* center block */
+      margin: 0 auto !important;
+      /* center block */
       color: rgb(6, 6, 106);
       margin-bottom: 15px;
       animation: fadeInLeft 1.2s ease forwards;
@@ -174,7 +180,8 @@
     bottom: -5px;
     width: 0;
     height: 3px;
-    background: #0056b3; /* theme blue */
+    background: #0056b3;
+    /* theme blue */
     transition: width 0.4s ease;
   }
 
@@ -225,6 +232,7 @@
     border-color: green;
     border-radius: 25px;
   }
+
   .custom-card {
     margin-left: 10px;
     width: 16rem;
@@ -232,6 +240,7 @@
     /* border: 1px solid black; */
     border: 1px solid black !important;
   }
+
   .custom-card .card-body {
     background-color: rgb(6, 6, 106);
     color: white;
@@ -240,6 +249,7 @@
     text-align: center;
     border-radius: 20px;
   }
+
   .gallery .row .col-sm-3 .card-body {
     background-color: rgb(6, 6, 106);
     color: white;
@@ -306,6 +316,7 @@
     box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
     cursor: pointer;
   }
+
   @media (max-width: 600px) {
     .team .row h3 {
       color: rgb(6, 6, 106);
@@ -365,9 +376,11 @@
     border: 1px solid grey;
     font-family: open sans, sans-serif;
   }
+
   @media screen and (max-width: 900px) {
     .col-sm-9 .custom-card {
-      width: 100% !important; /* take full width of column */
+      width: 100% !important;
+      /* take full width of column */
       justify-content: center;
       margin: auto;
     }
@@ -397,6 +410,7 @@
       padding-left: 5px;
     }
   }
+
   .gallery .card {
     border: none;
     background: rgb(6, 6, 106);
@@ -412,6 +426,102 @@
   .gallery img {
     max-height: 200px;
     object-fit: cover;
+  }
+
+  /* testimonial design  */
+
+  .testimonial-section {
+    all: reset;
+    background-color: #fff;
+    padding: 50px 10px;
+    color: #0a1d69;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    overflow: hidden;
+    width: 100%;
+    background-color: rgb(44, 151, 193);
+    margin-right: 0px !important;
+
+  }
+
+  .testimonial-section h2 {
+    font-size: 2.2em;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: #0a1d69;
+    letter-spacing: 1px;
+    text-align: left;
+  }
+
+  /* Slider Container */
+
+  .testimonial-wrapper {
+    width: 100%;
+    max-width: 1100px;
+    margin: auto;
+    overflow: hidden;
+    position: relative;
+  }
+
+
+  .testimonial-slider {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+    gap: 30px;
+  }
+
+
+  /* Individual Card */
+  .testimonial-card {
+    flex: 0 0 calc((100% - 60px)/3);
+    /* 3 visible cards minus gaps */
+    box-sizing: border-box;
+    padding: 20px;
+    border-radius: 20px;
+    background: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0.8;
+    transition: transform 0.5s, box-shadow 0.5s;
+  }
+
+  /* Highlighted Card (center focus) */
+  .testimonial-card.active {
+
+    opacity: 1;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+
+  }
+
+  /* Card Text Styling */
+  .testimonial-text {
+    font-style: italic;
+    font-size: 1em;
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+
+  .testimonial-name {
+    font-weight: bold;
+    font-size: 1.1em;
+    margin-bottom: 5px;
+  }
+
+  .testimonial-role {
+    font-size: 0.9em;
+    color: #555;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 900px) {
+    .testimonial-card {
+      flex: 0 0 calc((100% - 30px)/2);
+    }
+  }
+
+  @media (max-width: 600px) {
+    .testimonial-card {
+      flex: 0 0 100%;
+    }
   }
 </style>
 <!--Home-->
@@ -447,45 +557,28 @@
 
         <!-- Search Box -->
         <div class="input-group shadow-sm" style="max-width: 400px">
-          <input
-            type="text"
-            class="form-control"
-            placeholder="Search courses here..."
-          />
+          <input type="text" class="form-control" placeholder="Search courses here..." />
           <button class="btn btn-primary">Search</button>
         </div>
       </div>
 
       <!-- Right Column -->
       <div class="col-lg-6 text-center mt-4 mt-lg-0">
-        <img
-          src="{% static 'images/bg4.jpg' %}"
-          class="img-fluid rounded"
-          alt="Hero Image"
-        />
+        <img src="{% static 'images/bg4.jpg' %}" class="img-fluid rounded" alt="Hero Image" />
       </div>
     </div>
   </div>
 </section>
 
 <!--headline-->
-<div
-  class="row"
-  style="background-color: rgb(6, 6, 106); margin-top: 5px; margin-bottom: 5px"
->
-  <marquee
-    scrollamount="12"
-    onmousemove="this.stop()"
-    onmouseout="this.start()"
-  >
-    <p
-      style="
+<div class="row" style="background-color: rgb(6, 6, 106); margin-top: 5px; margin-bottom: 5px">
+  <marquee scrollamount="12" onmousemove="this.stop()" onmouseout="this.start()">
+    <p style="
         color: white;
         padding-top: 6px;
         font-family: poppins, sans-serif;
         font-weight: bold;
-      "
-    >
+      ">
       The portal is easy to access & highly user friendly for the students &
       study centres.
     </p>
@@ -545,10 +638,8 @@
         system allows permission to its users. It is a web-based solution
         assisting 24×7 to its authorized users. It will resolve the academic
         issues such as
-        <em
-          >e-Content Distribution, Delivery, Tracking, Assessment, Progress
-          Monitoring</em
-        >
+        <em>e-Content Distribution, Delivery, Tracking, Assessment, Progress
+          Monitoring</em>
         & <em>Controlling of all stakeholders</em> of the system i.e. students,
         teachers, study centre administrators as well as Nalanda Open University
         Admins when they are at a distance.
@@ -557,11 +648,7 @@
 
     <!-- Right Column (Image) -->
     <div class="col-sm-5 text-center">
-      <img
-        src="{% static 'images/contactimg.jpeg' %}"
-        alt="NOU Campus"
-        class="img-fluid about-img"
-      />
+      <img src="{% static 'images/contactimg.jpeg' %}" alt="NOU Campus" class="img-fluid about-img" />
     </div>
   </div>
 </section>
@@ -575,81 +662,41 @@
     <div class="container mt-4 check">
       <div class="row justify-content-center g-4" style="padding-top: 25px">
         <div class="col-lg-3 col-md-6 col-sm-9">
-          <div
-            class="card h-100 custom-card"
-            style="border-color: rgb(6, 6, 106)"
-          >
-            <img
-              class="card-img-top"
-              src="{% static 'images/registration.jpg' %}"
-              alt="Card image cap"
-            />
+          <div class="card h-100 custom-card" style="border-color: rgb(6, 6, 106)">
+            <img class="card-img-top" src="{% static 'images/registration.jpg' %}" alt="Card image cap" />
             <div class="card-body">
               <p class="card-text">
-                <a href="{% url 'nouapp:login' %}" style="color: white"
-                  >Login</a
-                >
+                <a href="{% url 'nouapp:login' %}" style="color: white">Login</a>
               </p>
             </div>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-9">
-          <div
-            class="card h-100 custom-card"
-            style="border-color: rgb(6, 6, 106)"
-          >
-            <img
-              class="card-img-top"
-              src="{% static 'images/dashboard.jpg' %}"
-              alt="Card image cap"
-            />
+          <div class="card h-100 custom-card" style="border-color: rgb(6, 6, 106)">
+            <img class="card-img-top" src="{% static 'images/dashboard.jpg' %}" alt="Card image cap" />
             <div class="card-body">
               <p class="card-text">
-                <a
-                  href="{% url 'studentapp:studenthome' %}"
-                  style="color: white"
-                  >Dashboard</a
-                >
+                <a href="{% url 'studentapp:studenthome' %}" style="color: white">Dashboard</a>
               </p>
             </div>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-9">
-          <div
-            class="card h-100 custom-card"
-            style="border-color: rgb(6, 6, 106)"
-          >
-            <img
-              class="card-img-top"
-              src="{% static 'images/online-courses.jpg' %}"
-              alt="Card image cap"
-            />
+          <div class="card h-100 custom-card" style="border-color: rgb(6, 6, 106)">
+            <img class="card-img-top" src="{% static 'images/online-courses.jpg' %}" alt="Card image cap" />
             <div class="card-body">
               <p class="card-text">
-                <a href="{% url 'studentapp:viewmat' %}" style="color: white"
-                  >Self Learning Material</a
-                >
+                <a href="{% url 'studentapp:viewmat' %}" style="color: white">Self Learning Material</a>
               </p>
             </div>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-9">
-          <div
-            class="card h-100 custom-card"
-            style="border-color: rgb(6, 6, 106)"
-          >
-            <img
-              class="card-img-top"
-              src="{% static 'images/e-lectures.jpg' %}"
-              alt="Card image cap"
-            />
+          <div class="card h-100 custom-card" style="border-color: rgb(6, 6, 106)">
+            <img class="card-img-top" src="{% static 'images/e-lectures.jpg' %}" alt="Card image cap" />
             <div class="card-body">
               <p class="card-text">
-                <a
-                  href="{% url 'studentapp:studenthome' %}"
-                  style="color: white"
-                  >e-books</a
-                >
+                <a href="{% url 'studentapp:studenthome' %}" style="color: white">e-books</a>
               </p>
             </div>
           </div>
@@ -660,82 +707,43 @@
     <div class="container mt-4 check">
       <div class="row justify-content-center g-4" style="padding-top: 40px">
         <div class="col-lg-3 col-md-6 col-sm-9">
-          <div
-            class="card h-100 custom-card"
-            style="border-color: rgb(6, 6, 106)"
-          >
-            <img
-              class="card-img-top p-4 bg-white"
-              src="{% static 'images/self-assessment.svg' %}"
-              alt="Card image cap"
-            />
+          <div class="card h-100 custom-card" style="border-color: rgb(6, 6, 106)">
+            <img class="card-img-top p-4 bg-white" src="{% static 'images/self-assessment.svg' %}"
+              alt="Card image cap" />
             <div class="card-body">
               <p class="card-text">
-                <a
-                  href="{% url 'studentapp:studenthome' %}"
-                  style="color: white"
-                  >Self Assessment Tools</a
-                >
+                <a href="{% url 'studentapp:studenthome' %}" style="color: white">Self Assessment Tools</a>
               </p>
             </div>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-9">
-          <div
-            class="card h-100 custom-card"
-            style="border-color: rgb(6, 6, 106)"
-          >
-            <img
-              class="card-img-top"
-              src="{% static 'images/performance.jpg' %}"
-              alt="Card image cap"
-            />
+          <div class="card h-100 custom-card" style="border-color: rgb(6, 6, 106)">
+            <img class="card-img-top" src="{% static 'images/performance.jpg' %}" alt="Card image cap" />
             <div class="card-body">
               <p class="card-text">
-                <a
-                  href="{% url 'studentapp:viewprofile' %}"
-                  style="color: white"
-                  >Performance</a
-                >
+                <a href="{% url 'studentapp:viewprofile' %}" style="color: white">Performance</a>
               </p>
             </div>
           </div>
         </div>
         <div class="col-lg-3 col-md-6 col-sm-9">
-          <div
-            class="card h-100 custom-card"
-            style="border-color: rgb(6, 6, 106)"
-          >
-            <img
-              class="card-img-top"
-              src="{% static 'images/feedback.jpg' %}"
-              alt="Card image cap"
-            />
+          <div class="card h-100 custom-card" style="border-color: rgb(6, 6, 106)">
+            <img class="card-img-top" src="{% static 'images/feedback.jpg' %}" alt="Card image cap" />
             <div class="card-body">
               <p class="card-text">
-                <a href="{% url 'studentapp:response' %}" style="color: white"
-                  >Feedback</a
-                >
+                <a href="{% url 'studentapp:response' %}" style="color: white">Feedback</a>
               </p>
             </div>
           </div>
         </div>
 
         <div class="col-lg-3 col-md-6 col-sm-9">
-          <div
-            class="card h-100 custom-card"
-            style="border-color: rgb(6, 6, 106)"
-          >
-            <img
-              class="card-img-top"
-              src="{% static 'images/course-catlog.jpg' %}"
-              alt="Card image cap"
-            />
+          <div class="card h-100 custom-card" style="border-color: rgb(6, 6, 106)">
+            <img class="card-img-top" src="{% static 'images/course-catlog.jpg' %}" alt="Card image cap" />
             <div class="card-body">
               <p class="card-text">
-                <a href="{% url 'nouapp:courses' %}" style="color: white"
-                  >Course-Catalogue</a
-                >
+                <a href="{% url 'nouapp:courses' %}" style="color: white">Course-Catalogue</a>
               </p>
             </div>
           </div>
@@ -758,12 +766,8 @@
       <div class="row g-4">
         <div class="col-lg-3 col-md-6 col-sm-12">
           <div class="card h-100 text-center">
-            <img
-              class="card-img-top p-4 mx-auto"
-              src="{% static 'images/vc.jpg' %}"
-              alt="Vice Chancellor"
-              style="border-radius: 50%; max-width: 200px; height: auto"
-            />
+            <img class="card-img-top p-4 mx-auto" src="{% static 'images/vc.jpg' %}" alt="Vice Chancellor"
+              style="border-radius: 50%; max-width: 200px; height: auto" />
             <div class="card-body">
               <h6 class="card-text fw-bold" style="color: rgb(6, 6, 106)">
                 Prof. (Dr.) K. C. Sinha
@@ -775,12 +779,8 @@
 
         <div class="col-lg-3 col-md-6 col-sm-12">
           <div class="card h-100 text-center">
-            <img
-              class="card-img-top p-4 mx-auto"
-              src="{% static 'images/pvc.jpg' %}"
-              alt="Pro Vice Chancellor"
-              style="border-radius: 50%; max-width: 200px; height: auto"
-            />
+            <img class="card-img-top p-4 mx-auto" src="{% static 'images/pvc.jpg' %}" alt="Pro Vice Chancellor"
+              style="border-radius: 50%; max-width: 200px; height: auto" />
             <div class="card-body">
               <h6 class="card-text fw-bold" style="color: rgb(6, 6, 106)">
                 Prof. (Dr.) Sanjoy Kumar
@@ -792,12 +792,8 @@
 
         <div class="col-lg-3 col-md-6 col-sm-12">
           <div class="card h-100 text-center">
-            <img
-              class="card-img-top p-4 mx-auto"
-              src="{% static 'images/registrar1.jpeg' %}"
-              alt="Registrar"
-              style="border-radius: 50%; max-width: 200px; height: auto"
-            />
+            <img class="card-img-top p-4 mx-auto" src="{% static 'images/registrar1.jpeg' %}" alt="Registrar"
+              style="border-radius: 50%; max-width: 200px; height: auto" />
             <div class="card-body">
               <h6 class="card-text fw-bold" style="color: rgb(6, 6, 106)">
                 Dr. Md. Habibur Rahman
@@ -809,12 +805,8 @@
 
         <div class="col-lg-3 col-md-6 col-sm-12">
           <div class="card h-100 text-center">
-            <img
-              class="card-img-top p-4 mx-auto"
-              src="{% static 'images/examreg.jpg' %}"
-              alt="Registrar Exam"
-              style="border-radius: 50%; max-width: 200px; height: auto"
-            />
+            <img class="card-img-top p-4 mx-auto" src="{% static 'images/examreg.jpg' %}" alt="Registrar Exam"
+              style="border-radius: 50%; max-width: 200px; height: auto" />
             <div class="card-body">
               <h6 class="card-text fw-bold" style="color: rgb(6, 6, 106)">
                 Dr. Neelam Kumari
@@ -826,6 +818,68 @@
       </div>
     </section>
   </div>
+</div>
+
+<!-- testimonial section  -->
+<div class="row" style="margin-top: 5rem;">
+<div class="testimonial-section container ">
+  <div class="container">
+    <h2>What Our Users Say</h2>
+    <div class="testimonial-wrapper">
+      <div class="testimonial-slider" id="testimonialcards">
+
+        <div class="testimonial-card">
+          <p class="testimonial-text">"NOU e-Gyan has completely transformed the way I study. The online materials are
+            well-organized and easy to access anytime. I no longer worry about missing classes or notes, and the
+            assessments help me track my progress effectively."</p>
+          <h3 class="testimonial-name">Priya Sharma</h3>
+          <span class="testimonial-role">Student</span>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="testimonial-text">"The portal is very user-friendly and provides everything I need for my courses. I
+            especially love that I can study from anywhere in the world. It has made learning so convenient and
+            flexible."</p>
+          <h3 class="testimonial-name">Rohit Verma</h3>
+          <span class="testimonial-role">Student</span>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="testimonial-text">"As a working student, I found NOU e-Gyan to be a lifesaver. The ability to access
+            study materials online and monitor my progress keeps me motivated. The support from teachers and admins is
+            also excellent."</p>
+          <h3 class="testimonial-name">Anjali Kumar</h3>
+          <span class="testimonial-role">Student</span>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="testimonial-text">"Earlier, managing assignments and tracking performance was difficult, but with
+            NOU e-Gyan, everything is just a click away. The portal is fast, reliable, and keeps me connected with my
+            teachers anytime."</p>
+          <h3 class="testimonial-name">Arjun Mehata</h3>
+          <span class="testimonial-role">Student</span>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="testimonial-text">"I really appreciate how well-structured the NOU e-Gyan platform is. The content
+            quality is excellent, and it’s available 24×7, which helps me study at my own pace. It has made online
+            learning simple and effective."</p>
+          <h3 class="testimonial-name">Sneha Singh</h3>
+          <span class="testimonial-role">Student</span>
+        </div>
+
+        <div class="testimonial-card">
+          <p class="testimonial-text">"The NOU e-Gyan portal has made distance learning truly interactive. I can easily
+            download study materials, watch lectures, and take assessments from home. It’s a big step towards digital
+            education!"</p>
+          <h3 class="testimonial-name">Neha Ranjan</h3>
+          <span class="testimonial-role">Student</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
 </div>
 
 <!--contact section-->
@@ -849,16 +903,86 @@
           <h4>
             <i class="fa fa-phone" style="color: rgb(6, 6, 106)"></i> +91
             7080102007
-          </h4> </a
-        ><br />
+          </h4>
+        </a><br />
         <a>
           <h4>
             <i class="fa fa-envelope" style="color: rgb(6, 6, 106)"></i>
             nouegyanhelp@gmail.com
-          </h4> </a
-        ><br />
+          </h4>
+        </a><br />
       </div>
     </div>
   </section>
 </div>
+<script>
+  const slider = document.querySelector('.testimonial-slider');
+  const cards = Array.from(document.querySelectorAll('.testimonial-card'));
+  let visibleCards = 3;
+  let index = visibleCards; // start at first real card
+
+  function updateVisibleCards() {
+    if (window.innerWidth <= 600) visibleCards = 1;
+    else if (window.innerWidth <= 900) visibleCards = 2;
+    else visibleCards = 3;
+  }
+  updateVisibleCards();
+  window.addEventListener('resize', updateVisibleCards);
+
+  const gap = 30;
+  function getCardWidth() {
+    return cards[0].offsetWidth + gap;
+  }
+
+  // Clone last visibleCards and prepend
+  for (let i = cards.length - visibleCards; i < cards.length; i++) {
+    const clone = cards[i].cloneNode(true);
+    slider.insertBefore(clone, slider.firstChild);
+  }
+
+  // Clone first visibleCards and append
+  for (let i = 0; i < visibleCards; i++) {
+    const clone = cards[i].cloneNode(true);
+    slider.appendChild(clone);
+  }
+
+  // Update cards list after cloning
+  const allCards = slider.querySelectorAll('.testimonial-card');
+
+  // Position slider at first original card
+  slider.style.transform = `translateX(-${index * getCardWidth()}px)`;
+
+  // Set active card
+  function setActiveCard() {
+    allCards.forEach(card => card.classList.remove('active'));
+    allCards[index].classList.add('active');
+  }
+  setActiveCard();
+
+  // Slide function
+  function slide() {
+    index++;
+    slider.style.transition = "transform 1.2s ease-in-out";
+    slider.style.transform = `translateX(-${index * getCardWidth()}px)`;
+    setActiveCard();
+
+    // Loop seamlessly
+    if (index === allCards.length - visibleCards) {
+      setTimeout(() => {
+        slider.style.transition = "none";
+        index = visibleCards; // jump to first real card
+        slider.style.transform = `translateX(-${index * getCardWidth()}px)`;
+        setActiveCard();
+        setTimeout(() => slider.style.transition = "transform 1.2s ease-in-out", 50);
+      }, 1200);
+    }
+  }
+
+  // Auto-slide
+  let slideInterval = setInterval(slide, 4000);
+  slider.addEventListener('mouseenter', () => clearInterval(slideInterval));
+  slider.addEventListener('mouseleave', () => slideInterval = setInterval(slide, 3000));
+
+
+</script>
 {% endblock %}
