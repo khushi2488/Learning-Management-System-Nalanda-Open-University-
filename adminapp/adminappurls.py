@@ -41,4 +41,10 @@ urlpatterns = [
     # Category Management URLs
     path('materials/categories/', views.material_categories, name='material_categories'),
     path('debug-analytics/', analytics_views.debug_analytics, name='debug_analytics'),
+
+    # Assignment Management URLs
+    path('assignments/', views.list_assignments, name='list_assignments'),
+    path('assignments/create/', views.create_assignment, name='create_assignment'),
+    path('assignments/<int:assignment_id>/submissions/', views.view_submissions, name='view_submissions'),
+    path('submissions/<int:submission_id>/grade/', views.grade_submission, name='grade_submission'),
 ]

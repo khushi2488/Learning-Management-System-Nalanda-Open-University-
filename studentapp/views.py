@@ -1,13 +1,14 @@
 
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from nouapp.models import Student, Login
 from django.views.decorators.cache import cache_control
-from .models import StuResponse, Question, Answer
+from .models import StuResponse, Question, Answer, Submission
 from datetime import date
 from django.contrib import messages
-from adminapp.models import Material, Course, Program, Branch, Year
+from adminapp.models import Material, Course, Program, Branch, Year, Assignment
 from django.db.models import Q
 from adminapp.analytics_utils import log_student_activity
+from .forms import SubmissionForm
 
 
 # Create your views here.
@@ -261,5 +262,74 @@ def viewprofile(request):
             rollno=request.session['rollno']
             stu=Student.objects.get(rollno=rollno)
             return render(request,"viewprofile.html" , {'stu':stu})
+    except KeyError:
+        return redirect('nouapp:login')
+
+#____________Assignment Views______________________
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def list_assignments(request):
+    """List assignments for the student"""
+    try:
+        if request.session['rollno'] is not None:
+            rollno = request.session['rollno']
+            stu = Student.objects.get(rollno=rollno)
+            assignments = Assignment.objects.select_related('course').filter(is_active=True)
+            return render(request, 'studentapp/assignment_list.html', {
+                'assignments': assignments,
+                'stu': stu
+            })
+    except KeyError:
+        return redirect('nouapp:login')
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def submit_assignment(request, assignment_id):
+    """Submit assignment"""
+    try:
+        if request.session['rollno'] is not None:
+            rollno = request.session['rollno']
+            stu = Student.objects.get(rollno=rollno)
+            assignment = get_object_or_404(Assignment, id=assignment_id)
+
+            # Check if already submitted
+            existing_submission = Submission.objects.filter(assignment=assignment, student=stu).first()
+            if existing_submission:
+                messages.warning(request, 'You have already submitted this assignment.')
+                return redirect('studentapp:view_submission_status', assignment_id=assignment_id)
+
+            if request.method == 'POST':
+                form = SubmissionForm(request.POST, request.FILES)
+                if form.is_valid():
+                    submission = form.save(commit=False)
+                    submission.assignment = assignment
+                    submission.student = stu
+                    submission.save()
+                    messages.success(request, 'Assignment submitted successfully!')
+                    return redirect('studentapp:view_submission_status', assignment_id=assignment_id)
+            else:
+                form = SubmissionForm()
+
+            return render(request, 'studentapp/submit_assignment.html', {
+                'form': form,
+                'assignment': assignment,
+                'stu': stu
+            })
+    except KeyError:
+        return redirect('nouapp:login')
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def view_submission_status(request, assignment_id):
+    """View submission status"""
+    try:
+        if request.session['rollno'] is not None:
+            rollno = request.session['rollno']
+            stu = Student.objects.get(rollno=rollno)
+            assignment = get_object_or_404(Assignment, id=assignment_id)
+            submission = Submission.objects.filter(assignment=assignment, student=stu).first()
+            return render(request, 'studentapp/submission_status.html', {
+                'assignment': assignment,
+                'submission': submission,
+                'stu': stu
+            })
     except KeyError:
         return redirect('nouapp:login')

@@ -1,0 +1,121 @@
+{% extends 'adminapp/adminparent.html' %}
+{% load static %}
+
+{% block body %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Submissions for: {{ assignment.title }}</h4>
+                <a href="{% url 'adminapp:list_assignments' %}" class="btn btn-secondary btn-sm">
+                    <i class="mdi mdi-arrow-left"></i> Back to Assignments
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <h5>{{ total_submissions }}</h5>
+                                <p class="mb-0">Total Submissions</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-success">
+                            <div class="card-body text-center">
+                                <h5>{{ graded_submissions }}</h5>
+                                <p class="mb-0 text-white">Graded</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-warning">
+                            <div class="card-body text-center">
+                                <h5>{{ pending_submissions }}</h5>
+                                <p class="mb-0 text-white">Pending</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card bg-danger">
+                            <div class="card-body text-center">
+                                <h5>{{ late_submissions }}</h5>
+                                <p class="mb-0 text-white">Late</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Student</th>
+                                <th>Roll No</th>
+                                <th>Submitted At</th>
+                                <th>Status</th>
+                                <th>Grade</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for submission in submissions %}
+                                <tr>
+                                    <td>{{ submission.student.name }}</td>
+                                    <td>{{ submission.student.rollno }}</td>
+                                    <td>
+                                        {{ submission.submitted_at|date:"M d, Y H:i" }}
+                                        {% if submission.is_late %}
+                                            <br><small class="text-danger">Late</small>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if submission.status == 'graded' %}
+                                            <span class="badge bg-success">Graded</span>
+                                        {% elif submission.status == 'submitted' %}
+                                            <span class="badge bg-warning">Submitted</span>
+                                        {% else %}
+                                            <span class="badge bg-secondary">Pending</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if submission.grade %}
+                                            {{ submission.grade }}/{{ assignment.total_marks }}
+                                        {% else %}
+                                            -
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if submission.submitted_file %}
+                                            <a href="{{ submission.submitted_file.url }}" class="btn btn-info btn-sm" target="_blank">
+                                                <i class="mdi mdi-download"></i> Download
+                                            </a>
+                                        {% endif %}
+                                        <a href="{% url 'adminapp:grade_submission' submission.id %}" class="btn btn-primary btn-sm">
+                                            <i class="mdi mdi-pencil"></i> {% if submission.grade %}Edit Grade{% else %}Grade{% endif %}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% empty %}
+                                <tr>
+                                    <td colspan="6" class="text-center">No submissions yet.</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

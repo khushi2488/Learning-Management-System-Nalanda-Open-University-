@@ -293,4 +293,33 @@ class BranchStats(models.Model):
     active_students_today = models.PositiveIntegerField(default=0)
     materials_count = models.PositiveIntegerField(default=0)
     last_updated = models.DateTimeField(auto_now=True)
+
+class Assignment(models.Model):
+    """Assignment model for course assignments"""
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='assignments')
+    due_date = models.DateTimeField()
+    total_marks = models.PositiveIntegerField(default=100)
+    file = models.FileField(
+        upload_to='assignments/%Y/%m/%d/',
+        validators=[FileExtensionValidator(allowed_extensions=[
+            'pdf', 'doc', 'docx', 'ppt', 'pptx', 'txt', 'zip', 'rar'
+        ])],
+        blank=True,
+        null=True
+    )
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_assignments')
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ['-due_date']
+
+    def __str__(self):
+        return f"{self.title} - {self.course.title}"
+
+    def is_overdue(self):
+        from django.utils import timezone
+        return timezone.now() > self.due_date
     

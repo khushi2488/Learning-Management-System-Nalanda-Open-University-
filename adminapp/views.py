@@ -2,9 +2,11 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.models import User
 from django.contrib import messages
+from django.utils import timezone
 from nouapp.models import Student, Enquiry, Login
-from studentapp.models import StuResponse
-from .models import Program, Branch, Year, Material, News, Course, MaterialCategory
+from studentapp.models import StuResponse, Submission
+from .models import Program, Branch, Year, Material, News, Course, MaterialCategory, Assignment
+from .forms import AssignmentForm
 from datetime import date
 
 # Create your views here.
@@ -488,3 +490,121 @@ def delete_material(request, material_id):
     
     messages.success(request, 'Material deleted successfully!')
     return redirect('material_list', course_id=course_id)
+
+#____________Assignment Management Views______________________
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def list_assignments(request):
+    """List all assignments"""
+    try:
+        if request.session['adminid'] is not None:
+            adminid = request.session['adminid']
+            assignments = Assignment.objects.select_related('course', 'created_by').filter(is_active=True)
+            return render(request, 'adminapp/assignment_list.html', {
+                'assignments': assignments,
+                'adminid': adminid
+            })
+    except KeyError:
+        return redirect('nouapp:login')
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def create_assignment(request):
+    """Create new assignment"""
+    try:
+        if request.session['adminid'] is not None:
+            adminid = request.session['adminid']
+
+            if request.method == 'POST':
+                form = AssignmentForm(request.POST, request.FILES)
+                if form.is_valid():
+                    assignment = form.save(commit=False)
+                    # Get admin user
+                    try:
+                        user = User.objects.get(id=adminid)
+                    except (User.DoesNotExist, ValueError):
+                        user, created = User.objects.get_or_create(
+                            username='admin',
+                            defaults={
+                                'is_staff': True,
+                                'is_superuser': True
+                            }
+                        )
+                    assignment.created_by = user
+                    assignment.save()
+                    messages.success(request, 'Assignment created successfully!')
+                    return redirect('adminapp:list_assignments')
+            else:
+                form = AssignmentForm()
+
+            return render(request, 'adminapp/create_assignment.html', {
+                'form': form,
+                'adminid': adminid
+            })
+    except KeyError:
+        return redirect('nouapp:login')
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def view_submissions(request, assignment_id):
+    """View submissions for an assignment"""
+    try:
+        if request.session['adminid'] is not None:
+            adminid = request.session['adminid']
+            assignment = get_object_or_404(Assignment, id=assignment_id)
+            submissions = Submission.objects.select_related('student').filter(assignment=assignment)
+            return render(request, 'adminapp/view_submissions.html', {
+                'assignment': assignment,
+                'submissions': submissions,
+                'adminid': adminid
+            })
+    except KeyError:
+        return redirect('nouapp:login')
+
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+def grade_submission(request, submission_id):
+    """Grade a submission"""
+    try:
+        if request.session['adminid'] is not None:
+            adminid = request.session['adminid']
+            submission = get_object_or_404(Submission, id=submission_id)
+
+            if request.method == 'POST':
+                grade = request.POST.get('grade')
+                feedback = request.POST.get('feedback', '')
+
+                if grade:
+                    try:
+                        grade_val = int(grade)
+                        if 0 <= grade_val <= submission.assignment.total_marks:
+                            submission.grade = grade_val
+                            submission.feedback = feedback
+                            submission.status = 'graded'
+                            submission.graded_at = timezone.now()
+                            # Get admin user
+                            try:
+                                user = User.objects.get(id=adminid)
+                            except (User.DoesNotExist, ValueError):
+                                user, created = User.objects.get_or_create(
+                                    username='admin',
+                                    defaults={
+                                        'is_staff': True,
+                                        'is_superuser': True
+                                    }
+                                )
+                            submission.graded_by = user
+                            submission.save()
+                            messages.success(request, 'Submission graded successfully!')
+                        else:
+                            messages.error(request, f'Grade must be between 0 and {submission.assignment.total_marks}')
+                    except ValueError:
+                        messages.error(request, 'Invalid grade value')
+                else:
+                    messages.error(request, 'Grade is required')
+
+                return redirect('adminapp:view_submissions', assignment_id=submission.assignment.id)
+
+            return render(request, 'adminapp/grade_submission.html', {
+                'submission': submission,
+                'adminid': adminid
+            })
+    except KeyError:
+        return redirect('nouapp:login')
