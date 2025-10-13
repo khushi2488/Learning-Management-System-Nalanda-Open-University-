@@ -3,9 +3,7 @@
 {% block body %}
 
 <style>
-  /* ========================
-     HERO SECTION
-  ===========================*/
+ /* hero section */
   .hero {
     background: linear-gradient(rgba(10, 29, 105, 0.7), rgba(10, 29, 105, 0.7)),
     url("{% static 'images/bookslibrary.jpg' %}") center/cover no-repeat;
@@ -13,7 +11,7 @@
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding-bottom: 30px;
+    padding-bottom: 3.5rem;
     align-items: center;
     color: white;
     text-align: center;
@@ -57,9 +55,9 @@
     }
   }
 
-  /* ========================
+  /*
      COURSES INFO SECTION
-  ===========================*/
+  */
   .courses-info {
     background: #f4f6fb;
     border-radius: 12px;
@@ -118,9 +116,8 @@
     font-size: 1.2rem;
   }
 
-  /* ========================
-     TABS SECTION
-  ===========================*/
+  /* 
+     TABS SECTION*/
   .tabs {
     text-align: center;
     margin: 10px 0 10px;
@@ -145,9 +142,9 @@
     transform: scale(1.05);
   }
 
-  /* ========================
+  /*
      COURSE GRID
-  ===========================*/
+  */
   .course-section {
     padding: 30px 5% 60px;
   }
@@ -159,9 +156,9 @@
     margin-top: 30px;
   }
 
-  /* ========================
+  /*
      COURSE CARD DESIGN - MATERIAL STYLE
-  ===========================*/
+*/
   .course-card {
     background: #ffffff;
     border-radius: 12px;
@@ -246,17 +243,17 @@
   }
 </style>
 
-<!-- =========================
+<!-- 
      HERO SECTION
-============================== -->
+ -->
 <section class="hero">
   <h2>From Our Content For Distance Learning</h2>
   <p>NOU-e-Gyan PORTAL, CONCEPT BY NALANDA OPEN UNIVERSITY</p>
 </section>
 
-<!-- =========================
+<!--
      COURSES INFO SECTION
-============================== -->
+ -->
 <section class="courses-info">
   <h3>Your Path to Knowledge Starts Here</h3>
   <p>At Nalanda Open University, we offer a variety of UG, PG, and diploma courses to help you grow academically and professionally. Each program is designed to give you practical knowledge, develop your skills, and prepare you for real-world challenges.</p>
@@ -268,15 +265,15 @@
   </ul>
 </section>
 
-<!-- =========================
+<!-- 
      COURSES HEADING
-============================== -->
+ --> 
 <h2 style="text-align:center; font-weight: bold; margin-top: 40px; color:#0a1d69; font-size: 40px;">Our Courses</h2>
 <hr>
 
-<!-- =========================
+<!--
      COURSE TABS
-============================== -->
+ -->
 <div class="tabs">
   <button class="tab-btn active" onclick="showTab('all', event)">All Courses</button>
   <button class="tab-btn" onclick="showTab('ug', event)">UG Courses</button>
@@ -284,9 +281,9 @@
   <button class="tab-btn" onclick="showTab('diploma', event)">Diploma Courses</button>
 </div>
 
-<!-- =========================
+<!--
      COURSE SECTIONS
-============================== -->
+-->
 <section class="course-section">
 
   <!-- ALL COURSES -->
@@ -528,9 +525,9 @@
 
 </section>
 
-<!-- =========================
+<!--
      JAVASCRIPT
-============================== -->
+ -->
 <script>
   function showTab(tabName, event) {
     document.querySelectorAll('.course-grid').forEach(div => {
