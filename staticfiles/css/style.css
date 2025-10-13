@@ -76,6 +76,29 @@
   width: auto;
   object-fit: contain;
 }
+/* ================= Fix Unequal Height in UG COURSE Cards ================= */
+.ug-courses-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch; /* make all columns same height */
+}
+
+.ug-courses-row > [class*="col-"] {
+  display: flex;
+}
+
+.ug-courses-row .card {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.ug-courses-row .card-body {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
 
 /* ================= Footer ================= */
 footer {
