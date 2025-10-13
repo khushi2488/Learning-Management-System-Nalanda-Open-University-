@@ -148,9 +148,9 @@ def response(request):
                 sr=StuResponse(
                     rollno=stu.rollno,
                     name=stu.name,
-                    program=stu.program.program,  # Get string value from Program object
-                    branch=stu.branch.branch,     # Get string value from Branch object
-                    year=stu.year.year,           # Get string value from Year object
+                   program=stu.program,      # Pass the Program object
+                    branch=stu.branch,        # Pass the Branch object
+                    year=stu.year,           # Get string value from Year object
                     contactno=stu.contactno,
                     emailaddress=stu.emailaddress,
                     responsetype=responsetype,

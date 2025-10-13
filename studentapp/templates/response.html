@@ -1,85 +1,487 @@
-{% extends "studentparent.html" %} {% block body %}
+{% extends "studentparent.html" %}
+{% block body %}
+<style>
+  .feedback-page {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 2rem 0;
+  }
 
-<div class="row">
-  <div class="col-sm-12">
-    {% if messages %} {% for message in messages %}
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-      <strong>{{message}}</strong>
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-      ></button>
+  .feedback-header {
+    text-align: center;
+    color: white;
+    margin-bottom: 2.5rem;
+    padding: 2rem 1rem;
+  }
+
+  .feedback-header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.75rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  }
+
+  .feedback-header p {
+    font-size: 1.125rem;
+    opacity: 0.95;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .feedback-icon {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    animation: float 3s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  .form-container {
+    max-width: 700px;
+    margin: 0 auto;
+  }
+
+  .feedback-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .feedback-card:hover {
+    transform: translateY(-5px);
+  }
+
+  .card-header-custom {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  .card-header-custom h3 {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+
+  .card-header-custom p {
+    margin: 0.5rem 0 0 0;
+    opacity: 0.9;
+    font-size: 0.938rem;
+  }
+
+  .form-body {
+    padding: 2.5rem;
+  }
+
+  .form-group-modern {
+    margin-bottom: 1.75rem;
+  }
+
+  .form-label-modern {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    color: #2d3748;
+    margin-bottom: 0.75rem;
+    font-size: 0.938rem;
+  }
+
+  .form-label-icon {
+    font-size: 1.25rem;
+  }
+
+  .required-star {
+    color: #e53e3e;
+    margin-left: 0.25rem;
+  }
+
+  .form-control-modern,
+  .form-select-modern {
+    border: 2px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 0.875rem 1rem;
+    font-size: 0.938rem;
+    transition: all 0.3s ease;
+    background: #f8fafc;
+    width: 100%;
+  }
+
+  .form-control-modern:focus,
+  .form-select-modern:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+    background: white;
+    outline: none;
+  }
+
+  .form-control-modern::placeholder {
+    color: #a0aec0;
+  }
+
+  textarea.form-control-modern {
+    resize: vertical;
+    min-height: 140px;
+  }
+
+  .char-counter {
+    text-align: right;
+    font-size: 0.813rem;
+    color: #718096;
+    margin-top: 0.5rem;
+  }
+
+  .type-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .type-option {
+    position: relative;
+  }
+
+  .type-option input[type="radio"] {
+    position: absolute;
+    opacity: 0;
+  }
+
+  .type-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1.5rem;
+    border: 3px solid #e2e8f0;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #f8fafc;
+  }
+
+  .type-option input[type="radio"]:checked + .type-label {
+    border-color: #667eea;
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+    transform: scale(1.05);
+  }
+
+  .type-icon {
+    font-size: 2.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .type-title {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 1rem;
+  }
+
+  .type-description {
+    font-size: 0.813rem;
+    color: #718096;
+    margin-top: 0.25rem;
+    text-align: center;
+  }
+
+  .submit-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 2.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    width: 100%;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    cursor: pointer;
+  }
+
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+  }
+
+  .submit-btn:active {
+    transform: translateY(0);
+  }
+
+  .help-text {
+    background: #edf2f7;
+    border-left: 4px solid #667eea;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 1.75rem;
+  }
+
+  .help-text p {
+    margin: 0;
+    font-size: 0.875rem;
+    color: #4a5568;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .alert-modern {
+    border-radius: 12px;
+    border: none;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .alert-modern.alert-success {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    color: white;
+  }
+
+  .alert-modern.alert-warning {
+    background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+    color: white;
+  }
+
+  .alert-modern.alert-error {
+    background: linear-gradient(135deg, #f56565 0%, #e53e3e 100%);
+    color: white;
+  }
+
+  .alert-icon {
+    font-size: 1.75rem;
+  }
+
+  .alert-content {
+    flex: 1;
+  }
+
+  .alert-close {
+    background: transparent;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+  }
+
+  .alert-close:hover {
+    opacity: 1;
+  }
+
+  @media (max-width: 768px) {
+    .feedback-header h1 {
+      font-size: 1.875rem;
+    }
+
+    .form-body {
+      padding: 1.75rem;
+    }
+
+    .type-selector {
+      grid-template-columns: 1fr;
+    }
+
+    .feedback-icon {
+      font-size: 3rem;
+    }
+  }
+</style>
+
+<div class="feedback-page">
+  <div class="container">
+    <!-- Messages -->
+    {% if messages %}
+      {% for message in messages %}
+      <div class="alert-modern alert-{{ message.tags|default:'warning' }}">
+        <span class="alert-icon">
+          {% if message.tags == 'success' %}✅
+          {% elif message.tags == 'error' %}❌
+          {% else %}⚠️{% endif %}
+        </span>
+        <div class="alert-content">
+          <strong>{{ message }}</strong>
+        </div>
+        <button type="button" class="alert-close" onclick="this.parentElement.remove()">×</button>
+      </div>
+      {% endfor %}
+    {% endif %}
+
+    <!-- Header -->
+    <div class="feedback-header">
+      <div class="feedback-icon">💬</div>
+      <h1>We Value Your Voice</h1>
+      <p>Share your feedback or raise a concern. We're here to listen and improve.</p>
     </div>
-    {% endfor %} {% endif %}
-    <h1
-      class="text-center fs-2 fs-md-1"
-      style="color: #060564; margin-top: 10px"
-    >
-      Submit Your Feedback/Complaint
-    </h1>
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-lg-6 col-md-8 col-sm-10">
-          <form action="{% url 'studentapp:response' %}" method="post">
+
+    <!-- Form Container -->
+    <div class="form-container">
+      <div class="feedback-card">
+        <div class="card-header-custom">
+          <h3>Submit Your Response</h3>
+          <p>Help us serve you better</p>
+        </div>
+
+        <div class="form-body">
+          <!-- Help Text -->
+          <div class="help-text">
+            <p>
+              <span>💡</span>
+              <span>Your feedback helps us improve our services. All submissions are reviewed by our team.</span>
+            </p>
+          </div>
+
+          <form action="{% url 'studentapp:response' %}" method="post" id="feedbackForm">
             {% csrf_token %}
-            <div class="container-lg my-4">
-              <div
-                class="card shadow-lg"
-                style="background-color: #4d4f56; color: white"
-              >
-                <div class="card-body">
-                  <!-- Select Response Type -->
-                  <div class="mb-3">
-                    <label class="form-label">Select Response Type</label>
-                    <select
-                      name="responsetype"
-                      class="form-select text-dark bg-light"
-                    >
-                      <option selected>Select Response Type</option>
-                      <option value="complain">Complain</option>
-                      <option value="feedback">Feedback</option>
-                    </select>
-                  </div>
 
-                  <!-- Subject -->
-                  <div class="mb-3">
-                    <label class="form-label">Enter Subject</label>
-                    <input
-                      type="text"
-                      name="subject"
-                      class="form-control text-dark bg-light"
-                    />
-                  </div>
-
-                  <!-- Response Text -->
-                  <div class="mb-3">
-                    <label class="form-label">Enter Response Text</label>
-                    <textarea
-                      name="responsetext"
-                      class="form-control text-dark bg-light"
-                      rows="4"
-                    ></textarea>
-                  </div>
-
-                  <!-- Submit Button -->
-                  <div class="text-end">
-                    <button
-                      type="submit"
-                      class="btn btn-success px-4"
-                      style="background-color: rgb(14, 211, 14)"
-                    >
-                      Submit
-                    </button>
-                  </div>
+            <!-- Response Type Selector -->
+            <div class="form-group-modern">
+              <label class="form-label-modern">
+                <span class="form-label-icon">📋</span>
+                Select Response Type
+                <span class="required-star">*</span>
+              </label>
+              <div class="type-selector">
+                <div class="type-option">
+                  <input type="radio" name="responsetype" id="complaint" value="complain" required>
+                  <label for="complaint" class="type-label">
+                    <span class="type-icon">😟</span>
+                    <span class="type-title">Complaint</span>
+                    <span class="type-description">Report an issue or concern</span>
+                  </label>
+                </div>
+                <div class="type-option">
+                  <input type="radio" name="responsetype" id="feedback" value="feedback" required>
+                  <label for="feedback" class="type-label">
+                    <span class="type-icon">😊</span>
+                    <span class="type-title">Feedback</span>
+                    <span class="type-description">Share your suggestions</span>
+                  </label>
                 </div>
               </div>
             </div>
+
+            <!-- Subject -->
+            <div class="form-group-modern">
+              <label class="form-label-modern" for="subject">
+                <span class="form-label-icon">✏️</span>
+                Subject
+                <span class="required-star">*</span>
+              </label>
+              <input
+                type="text"
+                name="subject"
+                id="subject"
+                class="form-control-modern"
+                placeholder="Brief summary of your response"
+                required
+                maxlength="200"
+              />
+            </div>
+
+            <!-- Response Text -->
+            <div class="form-group-modern">
+              <label class="form-label-modern" for="responsetext">
+                <span class="form-label-icon">📝</span>
+                Detailed Message
+                <span class="required-star">*</span>
+              </label>
+              <textarea
+                name="responsetext"
+                id="responsetext"
+                class="form-control-modern"
+                placeholder="Please provide detailed information about your feedback or complaint..."
+                required
+                maxlength="1000"
+                rows="6"
+              ></textarea>
+              <div class="char-counter">
+                <span id="charCount">0</span> / 1000 characters
+              </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">
+              <span>📤</span>
+              <span>Submit Response</span>
+            </button>
           </form>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+// Character counter
+const textarea = document.getElementById('responsetext');
+const charCount = document.getElementById('charCount');
+
+if (textarea && charCount) {
+  textarea.addEventListener('input', function() {
+    charCount.textContent = this.value.length;
+    
+    if (this.value.length > 900) {
+      charCount.style.color = '#e53e3e';
+    } else {
+      charCount.style.color = '#718096';
+    }
+  });
+}
+
+// Form validation
+const form = document.getElementById('feedbackForm');
+if (form) {
+  form.addEventListener('submit', function(e) {
+    const responseType = document.querySelector('input[name="responsetype"]:checked');
+    const subject = document.getElementById('subject');
+    const responseText = document.getElementById('responsetext');
+
+    if (!responseType) {
+      e.preventDefault();
+      alert('⚠️ Please select a response type (Complaint or Feedback)');
+      return;
+    }
+
+    if (!subject.value.trim()) {
+      e.preventDefault();
+      alert('⚠️ Please enter a subject');
+      subject.focus();
+      return;
+    }
+
+    if (!responseText.value.trim() || responseText.value.trim().length < 10) {
+      e.preventDefault();
+      alert('⚠️ Please provide a detailed message (at least 10 characters)');
+      responseText.focus();
+      return;
+    }
+  });
+}
+
+// Auto-dismiss alerts after 5 seconds
+document.addEventListener('DOMContentLoaded', function() {
+  const alerts = document.querySelectorAll('.alert-modern');
+  alerts.forEach(function(alert) {
+    setTimeout(function() {
+      alert.style.transition = 'opacity 0.5s ease';
+      alert.style.opacity = '0';
+      setTimeout(function() {
+        alert.remove();
+      }, 500);
+    }, 5000);
+  });
+});
+</script>
 {% endblock body %}
