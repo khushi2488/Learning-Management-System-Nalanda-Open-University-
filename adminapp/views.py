@@ -2,26 +2,67 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.models import User
 from django.contrib import messages
-from nouapp.models import Student, Enquiry, Login
-from studentapp.models import StuResponse
-from .models import Program, Branch, Year, Material, News, Course, MaterialCategory,NewsAnnouncement, NewsCategory
-from datetime import date
 from django.utils import timezone
-from django.db.models import Q, Count
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from datetime import datetime
+from nouapp.models import Student, Enquiry, Login
+from studentapp.models import StuResponse, Submission
+from .models import Program, Branch, Year, Material, News, Course, MaterialCategory, Assignment
+from .forms import AssignmentForm
+from datetime import date
 
-
-# Create your views here.
-@cache_control(no_cache=True,must_revalidate=True,no_store=True)
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def adminhome(request):
     try:
-        if request.session['adminid']!=None:
-            adminid=request.session['adminid']
-            return render(request,"adminhome.html",{'adminid':adminid})
+        if request.session['adminid'] is not None:
+            adminid = request.session['adminid']
+            
+            # Get the User object
+            try:
+                user = User.objects.get(username=adminid)
+            except User.DoesNotExist:
+                user = None
+            
+            # Get time-based greeting
+            current_hour = datetime.now().hour
+            if current_hour < 12:
+                greeting = "Good Morning"
+                greeting_icon = "☀️"
+            elif current_hour < 17:
+                greeting = "Good Afternoon"
+                greeting_icon = "🌤️"
+            else:
+                greeting = "Good Evening"
+                greeting_icon = "🌙"
+            
+            # Get admin's first name or username
+            if user and user.first_name:
+                admin_name = user.first_name
+            else:
+                admin_name = adminid
+            
+            # Get last login time
+            last_login = user.last_login if user else None
+            
+            # Get quick stats for dashboard
+            total_students = Student.objects.count()
+            total_materials = Material.objects.count()
+            pending_enquiries = Enquiry.objects.filter(status='pending').count()
+            recent_feedbacks = StuResponse.objects.count()
+            
+            context = {
+                'adminid': adminid,
+                'greeting': greeting,
+                'greeting_icon': greeting_icon,
+                'admin_name': admin_name,
+                'last_login': last_login,
+                'total_students': total_students,
+                'total_materials': total_materials,
+                'pending_enquiries': pending_enquiries,
+                'recent_feedbacks': recent_feedbacks,
+            }
+            
+            return render(request, "adminhome.html", context)
     except KeyError:
         return redirect('nouapp:login')
-
 def adminlogout(request):
     try:
         del request.session['adminid']
@@ -69,6 +110,7 @@ def viewcomplain(request):
     except KeyError:
         return redirect('nouapp:login')
     
+# Update your existing studymaterial view to pass the data
 @cache_control(no_cache=True,must_revalidate=True,no_store=True)
 def studymaterial(request):
     try:
@@ -76,7 +118,20 @@ def studymaterial(request):
             adminid=request.session['adminid']
             courses = Course.objects.all()
             categories = MaterialCategory.objects.all()
-            return render(request, "studymaterial.html", {'adminid': adminid, 'courses': courses, 'categories': categories})
+            
+            # Add these lines to pass the academic data
+            programs = Program.objects.all().order_by('program')
+            branches = Branch.objects.all().order_by('branch') 
+            years = Year.objects.all().order_by('year')
+            
+            return render(request, "studymaterial.html", {
+                'adminid': adminid, 
+                'courses': courses, 
+                'categories': categories,
+                'programs': programs,  # Add this
+                'branches': branches,  # Add this
+                'years': years         # Add this
+            })
     except KeyError:
         return redirect('nouapp:login')
 
@@ -155,12 +210,42 @@ def viewmaterial(request):
     try:
         if request.session['adminid']!=None:
             adminid=request.session['adminid']
-            # Use select_related to avoid N+1 queries
-            mat = Material.objects.select_related('course', 'course__program', 'course__branch', 'course__year', 'category', 'created_by').all()
-            print(f"Found {len(mat)} materials")  # Debug print
-            for m in mat:
-                print(f"Material: {m.title}, Course: {m.course}, File: {m.file}")  # Debug print
-            return render(request,"viewmaterial.html", {'mat': mat, 'adminid': adminid})
+            
+            # Get filter parameters
+            course_filter = request.GET.get('course', '')
+            category_filter = request.GET.get('category', '')
+            search_query = request.GET.get('search', '')
+            
+            # Base queryset with relationships
+            mat = Material.objects.select_related(
+                'course', 'course__program', 'course__branch', 
+                'course__year', 'category', 'created_by'
+            ).all()
+            
+            # Apply filters
+            if course_filter:
+                mat = mat.filter(course_id=course_filter)
+            if category_filter:
+                mat = mat.filter(category_id=category_filter)
+            if search_query:
+                mat = mat.filter(
+                    Q(title__icontains=search_query) |
+                    Q(description__icontains=search_query)
+                )
+            
+            # Order by most recent
+            mat = mat.order_by('-created_at')
+            
+            # Get data for filters
+            courses = Course.objects.all().order_by('title')
+            categories = MaterialCategory.objects.all().order_by('name')
+            
+            return render(request, "viewmaterial.html", {
+                'mat': mat, 
+                'adminid': adminid,
+                'courses': courses,
+                'categories': categories
+            })
     except KeyError:
         return redirect('nouapp:login')
 
@@ -496,689 +581,120 @@ def delete_material(request, material_id):
     messages.success(request, 'Material deleted successfully!')
     return redirect('material_list', course_id=course_id)
 
-#for news extend
-# Enhanced news management view
+#____________Assignment Management Views______________________
+
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def manage_news(request):
-    """Enhanced news management with categories and filtering"""
+def list_assignments(request):
+    """List all assignments"""
     try:
         if request.session['adminid'] is not None:
             adminid = request.session['adminid']
-            
-            # Get filter parameters
-            category_filter = request.GET.get('category', '')
-            status_filter = request.GET.get('status', 'all')  # all, active, expired
-            
-            # Base queryset
-            news_list = NewsAnnouncement.objects.all().select_related('category')
-            
-            # Apply filters
-            if category_filter:
-                news_list = news_list.filter(category_id=category_filter)
-                
-            if status_filter == 'active':
-                now = timezone.now()
-                news_list = news_list.filter(
-                    is_active=True,
-                    publish_date__lte=now
-                ).exclude(
-                    expiry_date__lt=now
-                )
-            elif status_filter == 'expired':
-                news_list = news_list.filter(
-                    expiry_date__lt=timezone.now()
-                )
-            
-            # Get categories for filter dropdown
-            categories = NewsCategory.objects.filter(is_active=True)
-            
-            return render(request, "manage_news.html", {
-                'adminid': adminid,
-                'news_list': news_list,
-                'categories': categories,
-                'current_category': category_filter,
-                'current_status': status_filter
+            assignments = Assignment.objects.select_related('course', 'created_by').filter(is_active=True)
+            return render(request, 'adminapp/assignment_list.html', {
+                'assignments': assignments,
+                'adminid': adminid
             })
     except KeyError:
         return redirect('nouapp:login')
 
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def create_news(request):
-    """Create new news/announcement with proper date handling"""
+def create_assignment(request):
+    """Create new assignment"""
     try:
         if request.session['adminid'] is not None:
             adminid = request.session['adminid']
-            
+
             if request.method == 'POST':
-                # Get form data
-                title = request.POST.get('title')
-                newstext = request.POST.get('newstext')
-                category_id = request.POST.get('category')
-                priority = request.POST.get('priority', 'normal')
-                target_audience = request.POST.get('target_audience', 'all')
-                
-                # Date fields - FIXED: Handle timezone-aware datetime
-                publish_date_str = request.POST.get('publish_date')
-                expiry_date_str = request.POST.get('expiry_date')
-                
-                # Target specific groups
-                target_programs = request.POST.get('target_programs', '')
-                target_branches = request.POST.get('target_branches', '')
-                target_years = request.POST.get('target_years', '')
-                
-                # Validation
-                if not title or not newstext:
-                    messages.error(request, "Title and content are required!")
-                    return render(request, "create_news.html", {
-                        'adminid': adminid,
-                        'categories': NewsCategory.objects.filter(is_active=True)
-                    })
-                
-                # Parse dates properly with timezone
-                publish_date = timezone.now()  # Default to now
-                if publish_date_str:
+                form = AssignmentForm(request.POST, request.FILES)
+                if form.is_valid():
+                    assignment = form.save(commit=False)
+                    # Get admin user
                     try:
-                        # Parse the datetime string and make it timezone aware
-                        naive_dt = datetime.strptime(publish_date_str, '%Y-%m-%dT%H:%M')
-                        publish_date = timezone.make_aware(naive_dt)
-                    except ValueError:
-                        messages.error(request, "Invalid publish date format!")
-                        return render(request, "create_news.html", {
-                            'adminid': adminid,
-                            'categories': NewsCategory.objects.filter(is_active=True)
-                        })
-                
-                expiry_date = None
-                if expiry_date_str:
-                    try:
-                        naive_dt = datetime.strptime(expiry_date_str, '%Y-%m-%dT%H:%M')
-                        expiry_date = timezone.make_aware(naive_dt)
-                    except ValueError:
-                        messages.error(request, "Invalid expiry date format!")
-                        return render(request, "create_news.html", {
-                            'adminid': adminid,
-                            'categories': NewsCategory.objects.filter(is_active=True)
-                        })
-                
-                # Create news item
-                news = NewsAnnouncement.objects.create(
-                    title=title,
-                    newstext=newstext,
-                    category_id=category_id if category_id else None,
-                    priority=priority,
-                    target_audience=target_audience,
-                    target_programs=target_programs,
-                    target_branches=target_branches, 
-                    target_years=target_years,
-                    publish_date=publish_date,
-                    expiry_date=expiry_date,
-                    created_by=f"Admin_{adminid}",
-                    is_pinned=bool(request.POST.get('is_pinned')),
-                    attachment=request.FILES.get('attachment'),
-                    is_active=True  # Make sure it's active by default
-                )
-                
-                messages.success(request, "News/Announcement created successfully!")
-                return redirect('adminapp:manage_news')
-            
-            # GET request - show form
-            categories = NewsCategory.objects.filter(is_active=True)
-            programs = Program.objects.all()  # Add programs for dropdown
-            branches = Branch.objects.all()   # Add branches for dropdown
-            years = Year.objects.all()        # Add years for dropdown
-            
-            return render(request, "create_news.html", {
-                'adminid': adminid,
-                'categories': categories,
-                'programs': programs,
-                'branches': branches,
-                'years': years
-            })
-    except KeyError:
-        return redirect('nouapp:login')
-
-
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def edit_news(request, news_id):
-    """Edit existing news/announcement"""
-    try:
-        if request.session['adminid'] is not None:
-            adminid = request.session['adminid']
-            news = get_object_or_404(NewsAnnouncement, nid=news_id)
-            
-            if request.method == 'POST':
-                # Update news item
-                news.title = request.POST.get('title')
-                news.newstext = request.POST.get('newstext')
-                news.category_id = request.POST.get('category') or None
-                news.priority = request.POST.get('priority', 'normal')
-                news.target_audience = request.POST.get('target_audience', 'all')
-                news.target_programs = request.POST.get('target_programs', '')
-                news.target_branches = request.POST.get('target_branches', '')
-                news.target_years = request.POST.get('target_years', '')
-                news.is_pinned = bool(request.POST.get('is_pinned'))
-                
-                # Handle dates
-                publish_date = request.POST.get('publish_date')
-                if publish_date:
-                    news.publish_date = datetime.strptime(publish_date, '%Y-%m-%dT%H:%M')
-                
-                expiry_date = request.POST.get('expiry_date')
-                news.expiry_date = datetime.strptime(expiry_date, '%Y-%m-%dT%H:%M') if expiry_date else None
-                
-                # Handle file upload
-                if request.FILES.get('attachment'):
-                    news.attachment = request.FILES.get('attachment')
-                
-                news.save()
-                messages.success(request, "News/Announcement updated successfully!")
-                return redirect('adminapp:manage_news')
-            
-            # GET request - show edit form
-            categories = NewsCategory.objects.filter(is_active=True)
-            return render(request, "edit_news.html", {
-                'adminid': adminid,
-                'news': news,
-                'categories': categories
-            })
-    except KeyError:
-        return redirect('nouapp:login')
-
-# @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def manage_categories(request):
-    """Manage news categories"""
-    try:
-        if request.session['adminid'] is not None:
-            adminid = request.session['adminid']
-            
-            if request.method == 'POST':
-                # Check if it's editing an existing category
-                if 'edit_category' in request.POST:
-                    category_id = request.POST.get('edit_category')
-                    category = get_object_or_404(NewsCategory, id=category_id)
-                    
-                    category.name = request.POST.get('edit_name')
-                    category.description = request.POST.get('edit_description', '')
-                    category.icon = request.POST.get('edit_icon', '')
-                    category.color_code = request.POST.get('edit_color_code', '#007bff')
-                    category.is_active = bool(request.POST.get('edit_is_active'))
-                    category.save()
-                    
-                    messages.success(request, "Category updated successfully!")
-                else:
-                    # Create new category
-                    name = request.POST.get('name')
-                    description = request.POST.get('description', '')
-                    icon = request.POST.get('icon', '')
-                    color_code = request.POST.get('color_code', '#007bff')
-                    
-                    if name:
-                        NewsCategory.objects.create(
-                            name=name,
-                            description=description,
-                            icon=icon,
-                            color_code=color_code
+                        user = User.objects.get(id=adminid)
+                    except (User.DoesNotExist, ValueError):
+                        user, created = User.objects.get_or_create(
+                            username='admin',
+                            defaults={
+                                'is_staff': True,
+                                'is_superuser': True
+                            }
                         )
-                        messages.success(request, "Category created successfully!")
-                    else:
-                        messages.error(request, "Category name is required!")
-                
-            categories = NewsCategory.objects.all().order_by('name')
-            return render(request, "manage_categories.html", {
-                'adminid': adminid,
-                'categories': categories
+                    assignment.created_by = user
+                    assignment.save()
+                    messages.success(request, 'Assignment created successfully!')
+                    return redirect('adminapp:list_assignments')
+            else:
+                form = AssignmentForm()
+
+            return render(request, 'adminapp/create_assignment.html', {
+                'form': form,
+                'adminid': adminid
             })
     except KeyError:
         return redirect('nouapp:login')
 
-
-# Utility views
-def toggle_news_status(request, news_id):
-    """Toggle active/inactive status of news"""
-    try:
-        if request.session['adminid'] is not None:
-            news = get_object_or_404(NewsAnnouncement, nid=news_id)
-            news.is_active = not news.is_active
-            news.save()
-            
-            status = "activated" if news.is_active else "deactivated"
-            messages.success(request, f"News {status} successfully!")
-    except KeyError:
-        pass
-    
-    return redirect('adminapp:manage_news')
-
-def delete_news(request, news_id):
-    """Delete news item"""
-    try:
-        if request.session['adminid'] is not None:
-            news = get_object_or_404(NewsAnnouncement, nid=news_id)
-            news.delete()
-            messages.success(request, "News deleted successfully!")
-    except KeyError:
-        pass
-    
-    return redirect('adminapp:manage_news')
-
-def pin_news(request, news_id):
-    """Toggle pin status of news"""
-    try:
-        if request.session['adminid'] is not None:
-            news = get_object_or_404(NewsAnnouncement, nid=news_id)
-            news.is_pinned = not news.is_pinned
-            news.save()
-            
-            status = "pinned" if news.is_pinned else "unpinned"
-            messages.success(request, f"News {status} successfully!")
-    except KeyError:
-        pass
-    
-    return redirect('adminapp:manage_news')
-
-def get_news_stats():
-    """Get news statistics for dashboard"""
-    from django.utils import timezone
-    from datetime import timedelta
-    
-    today = timezone.now().date()
-    week_ago = today - timedelta(days=7)
-    
-    total_news = NewsAnnouncement.objects.count()
-    active_news = NewsAnnouncement.objects.filter(
-        is_active=True,
-        publish_date__lte=timezone.now()
-    ).exclude(expiry_date__lt=timezone.now()).count()
-    
-    news_this_week = NewsAnnouncement.objects.filter(
-        newsdate__date__gte=week_ago
-    ).count()
-    
-    expired_news = NewsAnnouncement.objects.filter(
-        expiry_date__lt=timezone.now()
-    ).count()
-    
-    return {
-        'total_news': total_news,
-        'active_news': active_news,
-        'news_this_week': news_this_week,
-        'expired_news': expired_news
-    }
-
-def cleanup_expired_news():
-    """Cleanup function to handle expired news"""
-    from django.utils import timezone
-    
-    # Option 1: Mark as inactive
-    expired_count = NewsAnnouncement.objects.filter(
-        expiry_date__lt=timezone.now(),
-        is_active=True
-    ).update(is_active=False)
-
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def enhanced_admin_dashboard(request):
-    """Enhanced admin dashboard with news stats"""
+def view_submissions(request, assignment_id):
+    """View submissions for an assignment"""
     try:
         if request.session['adminid'] is not None:
             adminid = request.session['adminid']
-            
-            # Get news statistics
-            news_stats = get_news_stats()
-            
-            # Get recent news
-            recent_news = NewsAnnouncement.objects.filter(
-                is_active=True
-            ).order_by('-newsdate')[:5]
-            
-            
-            
-            # Get urgent announcements
-            urgent_news = NewsAnnouncement.objects.filter(
-                is_active=True,
-                priority='urgent',
-                publish_date__lte=timezone.now()
-            ).exclude(expiry_date__lt=timezone.now())
-            
-            return render(request, "enhanced_admin_dashboard.html", {
-                'adminid': adminid,
-                'news_stats': news_stats,
-                'recent_news': recent_news,
-                'urgent_news': urgent_news
+            assignment = get_object_or_404(Assignment, id=assignment_id)
+            submissions = Submission.objects.select_related('student').filter(assignment=assignment)
+            return render(request, 'adminapp/view_submissions.html', {
+                'assignment': assignment,
+                'submissions': submissions,
+                'adminid': adminid
             })
     except KeyError:
         return redirect('nouapp:login')
 
-
-#new 
-# Add these views to your adminapp/views.py
-
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def bulk_news_action(request):
-    """Handle bulk actions on multiple news items"""
+def grade_submission(request, submission_id):
+    """Grade a submission"""
     try:
         if request.session['adminid'] is not None:
+            adminid = request.session['adminid']
+            submission = get_object_or_404(Submission, id=submission_id)
+
             if request.method == 'POST':
-                action = request.POST.get('bulk_action')
-                selected_news = request.POST.getlist('selected_news')
-                
-                if not selected_news:
-                    messages.error(request, "No news items selected!")
-                    return redirect('adminapp:manage_news')
-                
-                if not action:
-                    messages.error(request, "No action selected!")
-                    return redirect('adminapp:manage_news')
-                
-                # Get selected news items
-                news_items = NewsAnnouncement.objects.filter(nid__in=selected_news)
-                count = news_items.count()
-                
-                if action == 'activate':
-                    news_items.update(is_active=True)
-                    messages.success(request, f"Activated {count} news items successfully!")
-                    
-                elif action == 'deactivate':
-                    news_items.update(is_active=False)
-                    messages.success(request, f"Deactivated {count} news items successfully!")
-                    
-                elif action == 'delete':
-                    news_items.delete()
-                    messages.success(request, f"Deleted {count} news items successfully!")
-                    
-                elif action == 'pin':
-                    news_items.update(is_pinned=True)
-                    messages.success(request, f"Pinned {count} news items successfully!")
-                    
-                elif action == 'unpin':
-                    news_items.update(is_pinned=False)
-                    messages.success(request, f"Unpinned {count} news items successfully!")
-                    
+                grade = request.POST.get('grade')
+                feedback = request.POST.get('feedback', '')
+
+                if grade:
+                    try:
+                        grade_val = int(grade)
+                        if 0 <= grade_val <= submission.assignment.total_marks:
+                            submission.grade = grade_val
+                            submission.feedback = feedback
+                            submission.status = 'graded'
+                            submission.graded_at = timezone.now()
+                            # Get admin user
+                            try:
+                                user = User.objects.get(id=adminid)
+                            except (User.DoesNotExist, ValueError):
+                                user, created = User.objects.get_or_create(
+                                    username='admin',
+                                    defaults={
+                                        'is_staff': True,
+                                        'is_superuser': True
+                                    }
+                                )
+                            submission.graded_by = user
+                            submission.save()
+                            messages.success(request, 'Submission graded successfully!')
+                        else:
+                            messages.error(request, f'Grade must be between 0 and {submission.assignment.total_marks}')
+                    except ValueError:
+                        messages.error(request, 'Invalid grade value')
                 else:
-                    messages.error(request, "Invalid action selected!")
-                    
-            return redirect('adminapp:manage_news')
-    except KeyError:
-        return redirect('nouapp:login')
+                    messages.error(request, 'Grade is required')
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def duplicate_news(request, news_id):
-    """Duplicate a news item"""
-    try:
-        if request.session['adminid'] is not None:
-            adminid = request.session['adminid']
-            original_news = get_object_or_404(NewsAnnouncement, nid=news_id)
-            
-            # Create a duplicate
-            duplicate = NewsAnnouncement.objects.create(
-                title=f"Copy of {original_news.title}",
-                newstext=original_news.newstext,
-                category=original_news.category,
-                priority=original_news.priority,
-                target_audience=original_news.target_audience,
-                target_programs=original_news.target_programs,
-                target_branches=original_news.target_branches,
-                target_years=original_news.target_years,
-                publish_date=timezone.now(),  # Set to current time
-                expiry_date=original_news.expiry_date,
-                created_by=f"Admin_{adminid}",
-                is_active=False,  # Start as inactive for review
-                is_pinned=False,  # Don't duplicate pinned status
-                # Note: attachment is not duplicated for security reasons
-            )
-            
-            messages.success(request, f"News item duplicated successfully! Please review and activate.")
-            return redirect('adminapp:edit_news', news_id=duplicate.nid)
-            
-    except KeyError:
-        return redirect('nouapp:login')
+                return redirect('adminapp:view_submissions', assignment_id=submission.assignment.id)
 
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def preview_news(request, news_id):
-    """Preview news item (AJAX endpoint)"""
-    try:
-        if request.session['adminid'] is not None:
-            news = get_object_or_404(NewsAnnouncement, nid=news_id)
-            
-            # Return HTML preview
-            preview_html = f"""
-            <div class="news-preview">
-                <div class="mb-3">
-                    <h4>{news.title}</h4>
-                    <div class="mb-2">
-                        <span class="badge badge-{news.get_priority_class().replace('alert-', '')}">{news.get_priority_display()}</span>
-                        {f'<span class="badge ml-1" style="background-color: {news.category.color_code};">{news.category.name}</span>' if news.category else ''}
-                        {'<span class="badge badge-warning ml-1">Pinned</span>' if news.is_pinned else ''}
-                    </div>
-                </div>
-                
-                <div class="mb-3">
-                    <strong>Target Audience:</strong> {news.get_target_audience_display()}
-                    {f'<br><strong>Programs:</strong> {news.target_programs}' if news.target_programs else ''}
-                    {f'<br><strong>Branches:</strong> {news.target_branches}' if news.target_branches else ''}
-                    {f'<br><strong>Years:</strong> {news.target_years}' if news.target_years else ''}
-                </div>
-                
-                <div class="mb-3">
-                    <strong>Content:</strong>
-                    <div class="mt-2 p-3 bg-light border-left border-primary">
-                        {news.newstext.replace(chr(10), '<br>')}
-                    </div>
-                </div>
-                
-                <div class="row">
-                    <div class="col-md-6">
-                        <strong>Publish Date:</strong><br>
-                        {news.publish_date.strftime('%B %d, %Y at %I:%M %p')}
-                    </div>
-                    <div class="col-md-6">
-                        <strong>Expiry Date:</strong><br>
-                        {news.expiry_date.strftime('%B %d, %Y at %I:%M %p') if news.expiry_date else 'Never expires'}
-                    </div>
-                </div>
-                
-                {f'<div class="mt-3"><strong>Attachment:</strong> <a href="{news.attachment.url}" target="_blank">{news.attachment.name}</a></div>' if news.attachment else ''}
-                
-                <div class="mt-3 text-muted">
-                    <small>Created by: {news.created_by} | Views: {news.view_count}</small>
-                </div>
-            </div>
-            """
-            
-            from django.http import HttpResponse
-            return HttpResponse(preview_html)
-            
-    except KeyError:
-        return redirect('nouapp:login')
-
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def news_analytics(request):
-    """News analytics dashboard"""
-    try:
-        if request.session['adminid'] is not None:
-            adminid = request.session['adminid']
-            
-            from django.db.models import Count, Q, Sum
-            from datetime import timedelta
-            
-            # Analytics data
-            total_news = NewsAnnouncement.objects.count()
-            active_news = NewsAnnouncement.objects.filter(is_active=True).count()
-            
-            # News by category
-            category_stats = NewsCategory.objects.annotate(
-                news_count=Count('newsannouncement')
-            ).order_by('-news_count')
-            
-            # News by priority
-            priority_stats = NewsAnnouncement.objects.values('priority').annotate(
-                count=Count('priority')
-            ).order_by('priority')
-            
-            # Recent activity (last 30 days)
-            thirty_days_ago = timezone.now() - timedelta(days=30)
-            recent_news = NewsAnnouncement.objects.filter(
-                newsdate__gte=thirty_days_ago
-            ).count()
-            
-            # Most viewed news
-            popular_news = NewsAnnouncement.objects.filter(
-                is_active=True
-            ).order_by('-view_count')[:10]
-            
-            # Expiring soon (next 7 days)
-            seven_days_later = timezone.now() + timedelta(days=7)
-            expiring_soon = NewsAnnouncement.objects.filter(
-                expiry_date__lte=seven_days_later,
-                expiry_date__gt=timezone.now(),
-                is_active=True
-            ).count()
-            
-            context = {
-                'adminid': adminid,
-                'total_news': total_news,
-                'active_news': active_news,
-                'recent_news': recent_news,
-                'expiring_soon': expiring_soon,
-                'category_stats': category_stats,
-                'priority_stats': priority_stats,
-                'popular_news': popular_news,
-            }
-            
-            return render(request, "news_analytics.html", context)
-            
-    except KeyError:
-        return redirect('nouapp:login')
-
-# Enhanced manage_news view with pagination
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
-def manage_news_enhanced(request):
-    """Enhanced news management with pagination and proper statistics"""
-    try:
-        if request.session['adminid'] is not None:
-            adminid = request.session['adminid']
-            
-            from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-            from django.utils import timezone
-            
-            # Get filter parameters
-            category_filter = request.GET.get('category', '')
-            status_filter = request.GET.get('status', 'all')
-            priority_filter = request.GET.get('priority', '')
-            search_query = request.GET.get('search', '')
-            
-            # Base queryset for display
-            news_list = NewsAnnouncement.objects.all().select_related('category')
-            
-            # Get all news for statistics (before filtering)
-            all_news = NewsAnnouncement.objects.all().select_related('category')
-            
-            # Calculate statistics from all news
-            now = timezone.now()
-            
-            # Count active news
-            active_count = all_news.filter(
-                is_active=True,
-                publish_date__lte=now
-            ).exclude(expiry_date__lt=now).count()
-            
-            # Count scheduled news (publish_date is in the future)
-            scheduled_count = all_news.filter(
-                is_active=True,
-                publish_date__gt=now
-            ).count()
-            
-            # Count expired news
-            expired_count = all_news.filter(
-                expiry_date__lt=now
-            ).count()
-            
-            # Count inactive news (manually set to inactive)
-            inactive_count = all_news.filter(is_active=False).count()
-            
-            # Total count
-            total_count = all_news.count()
-            
-            # Apply search to display queryset
-            if search_query:
-                news_list = news_list.filter(
-                    Q(title__icontains=search_query) |
-                    Q(newstext__icontains=search_query)
-                )
-            
-            # Apply filters to display queryset
-            if category_filter:
-                news_list = news_list.filter(category_id=category_filter)
-                
-            if priority_filter:
-                news_list = news_list.filter(priority=priority_filter)
-                
-            if status_filter == 'active':
-                news_list = news_list.filter(
-                    is_active=True,
-                    publish_date__lte=now
-                ).exclude(expiry_date__lt=now)
-            elif status_filter == 'expired':
-                news_list = news_list.filter(expiry_date__lt=now)
-            elif status_filter == 'scheduled':
-                news_list = news_list.filter(
-                    is_active=True,
-                    publish_date__gt=now
-                )
-            elif status_filter == 'inactive':
-                news_list = news_list.filter(is_active=False)
-            
-            # Order by most recent first
-            news_list = news_list.order_by('-newsdate')
-            
-            # Pagination
-            paginator = Paginator(news_list, 20)  # Show 20 news per page
-            page = request.GET.get('page')
-            
-            try:
-                news_list = paginator.page(page)
-            except PageNotAnInteger:
-                news_list = paginator.page(1)
-            except EmptyPage:
-                news_list = paginator.page(paginator.num_pages)
-            
-            # Get categories for filter dropdown
-            categories = NewsCategory.objects.filter(is_active=True)
-            
-            # Statistics dictionary
-            news_stats = {
-                'total_count': total_count,
-                'active_count': active_count,
-                'scheduled_count': scheduled_count,
-                'expired_count': expired_count,
-                'inactive_count': inactive_count
-            }
-            
-            return render(request, "manage_news.html", {
-                'adminid': adminid,
-                'news_list': news_list,
-                'categories': categories,
-                'current_category': category_filter,
-                'current_status': status_filter,
-                'current_priority': priority_filter,
-                'search_query': search_query,
-                'is_paginated': news_list.has_other_pages(),
-                'page_obj': news_list,
-                'news_stats': news_stats,  # Pass statistics to template
+            return render(request, 'adminapp/grade_submission.html', {
+                'submission': submission,
+                'adminid': adminid
             })
     except KeyError:
         return redirect('nouapp:login')
-
-# View to increment news view count
-def increment_news_view(request, news_id):
-    """Increment view count for news item (AJAX)"""
-    if request.method == 'POST':
-        try:
-            news = NewsAnnouncement.objects.get(nid=news_id)
-            news.view_count += 1
-            news.save()
-            
-            from django.http import JsonResponse
-            return JsonResponse({'status': 'success', 'view_count': news.view_count})
-        except NewsAnnouncement.DoesNotExist:
-            return JsonResponse({'status': 'error', 'message': 'News not found'})
-    
-    return JsonResponse({'status': 'error', 'message': 'Invalid request'})

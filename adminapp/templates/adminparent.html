@@ -309,6 +309,24 @@
               <span class="menu-title" style="color: var(--menu-text);">Upload Study Material</span>
             </a>
           </li>    
+          <!-- Academic Data Management -->
+<li class="nav-item menu-items">
+  <a class="nav-link" href="{% url 'adminapp:manage_academic_data' %}">
+    <span class="menu-icon">
+      <i class="mdi mdi-school"></i>
+    </span>
+    <span class="menu-title" style="color: var(--menu-text);">Manage Academic Data</span>
+  </a>
+</li>
+<!-- Course Management -->
+<li class="nav-item menu-items">
+  <a class="nav-link" href="{% url 'adminapp:manage_courses' %}">
+    <span class="menu-icon">
+      <i class="mdi mdi-book-open"></i>
+    </span>
+    <span class="menu-title" style="color: var(--menu-text);">Manage Courses</span>
+  </a>
+</li>
           <li class="nav-item menu-items">
             <a class="nav-link" href="{% url 'adminapp:viewmaterial' %}">
               <span class="menu-icon">
@@ -338,13 +356,13 @@
             </a>
           </li>    
           <li class="nav-item menu-items">
-            <a class="nav-link" href="{% url 'adminapp:viewenquiry' %}">
-              <span class="menu-icon">
-                <i class="mdi mdi-help-circle"></i>
-              </span>
-              <span class="menu-title" style="color: var(--menu-text);">View Enquiries</span>
-            </a>
-          </li>
+    <a class="nav-link" href="{% url 'adminapp:admin_enquiry_dashboard' %}">
+        <span class="menu-icon">
+            <i class="mdi mdi-help-circle"></i>
+        </span>
+        <span class="menu-title" style="color: var(--menu-text);">View Enquiries</span>
+    </a>
+</li>
 
           <!-- News Management -->
           <li class="nav-item menu-items">

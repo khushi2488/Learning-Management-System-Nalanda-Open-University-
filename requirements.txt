@@ -72,3 +72,7 @@ Pillow>=9.0.0
 pdf2image==1.17.0
 python-magic>=0.4.27
 django-extensions>=3.2.0
+
+dj-database-url>=2.0.0
+psycopg2-binary>=2.9.5
+

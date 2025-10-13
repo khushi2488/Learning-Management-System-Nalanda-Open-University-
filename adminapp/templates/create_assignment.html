@@ -1,0 +1,118 @@
+{% extends 'adminapp/adminparent.html' %}
+{% load static %}
+
+{% block body %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">
+                    {% if edit_assignment %}Edit Assignment{% else %}Create New Assignment{% endif %}
+                </h4>
+                <a href="{% url 'adminapp:list_assignments' %}" class="btn btn-secondary btn-sm">
+                    <i class="mdi mdi-arrow-left"></i> Back to Assignments
+                </a>
+            </div>
+            <div class="card-body">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.title.id_for_label }}">Title</label>
+                                {{ form.title }}
+                                {% if form.title.errors %}
+                                    <div class="text-danger">{{ form.title.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.course.id_for_label }}">Course</label>
+                                {{ form.course }}
+                                {% if form.course.errors %}
+                                    <div class="text-danger">{{ form.course.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.description.id_for_label }}">Description</label>
+                        {{ form.description }}
+                        {% if form.description.errors %}
+                            <div class="text-danger">{{ form.description.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.due_date.id_for_label }}">Due Date</label>
+                                {{ form.due_date }}
+                                {% if form.due_date.errors %}
+                                    <div class="text-danger">{{ form.due_date.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="{{ form.total_marks.id_for_label }}">Total Marks</label>
+                                {{ form.total_marks }}
+                                {% if form.total_marks.errors %}
+                                    <div class="text-danger">{{ form.total_marks.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="{{ form.file.id_for_label }}">Assignment File (Optional)</label>
+                        {{ form.file }}
+                        {% if form.file.errors %}
+                            <div class="text-danger">{{ form.file.errors.0 }}</div>
+                        {% endif %}
+                        <small class="form-text text-muted">
+                            Allowed formats: PDF, DOC, DOCX, PPT, PPTX, TXT, ZIP, RAR
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="mdi mdi-content-save"></i>
+                            {% if edit_assignment %}Update Assignment{% else %}Create Assignment{% endif %}
+                        </button>
+                        <a href="{% url 'adminapp:list_assignments' %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize datetime picker if available
+    const dueDateInput = document.getElementById('{{ form.due_date.id_for_label }}');
+    if (dueDateInput && typeof flatpickr !== 'undefined') {
+        flatpickr(dueDateInput, {
+            enableTime: true,
+            dateFormat: "Y-m-d H:i",
+            minDate: "today"
+        });
+    }
+});
+</script>
+{% endblock %}

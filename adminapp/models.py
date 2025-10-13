@@ -2,7 +2,6 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 import os
-from nouapp.models import Student
 from django.utils import timezone
 
 # Create your models here.
@@ -72,8 +71,7 @@ class Material(models.Model):
     # Basic Information
     title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE, default=1)  # assuming course with id=1 exists
-
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, null=True, blank=True)  # Made nullable for PostgreSQL
     category = models.ForeignKey(MaterialCategory, on_delete=models.SET_NULL, null=True, blank=True)
     
     # File Information
@@ -84,16 +82,16 @@ class Material(models.Model):
             'jpg', 'jpeg', 'png', 'gif', 'zip', 'rar'
         ])]
     )
-    file_size = models.PositiveIntegerField(default=0)  # in bytes
+    file_size = models.PositiveBigIntegerField(default=0)  # Changed to BigIntegerField for PostgreSQL
     file_type = models.CharField(max_length=10, blank=True)
     
     # Preview Information
     preview_image = models.ImageField(upload_to='previews/%Y/%m/%d/', blank=True, null=True)
-    preview_text = models.TextField(blank=True)  # For text-based previews
+    preview_text = models.TextField(blank=True)
     is_previewable = models.BooleanField(default=False)
     
     # Versioning
-    version = models.PositiveIntegerField(default=1)
+    version = models.PositiveBigIntegerField(default=1)  # Changed to BigIntegerField
     parent_material = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='versions')
     is_latest_version = models.BooleanField(default=True)
     version_notes = models.TextField(blank=True)
@@ -101,8 +99,8 @@ class Material(models.Model):
     # Access Control
     is_public = models.BooleanField(default=False)
     requires_enrollment = models.BooleanField(default=True)
-    download_count = models.PositiveIntegerField(default=0)
-    view_count = models.PositiveIntegerField(default=0)
+    download_count = models.PositiveBigIntegerField(default=0)  # Changed to BigIntegerField
+    view_count = models.PositiveBigIntegerField(default=0)  # Changed to BigIntegerField
     
     # Metadata
     created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_materials')
@@ -216,11 +214,6 @@ class MaterialAccess(models.Model):
     class Meta:
         ordering = ['-accessed_at']    
 
-# class News(models.Model):
-#     nid = models.AutoField(primary_key=True)
-#     newstext = models.TextField()
-#     newsdate = models.CharField(max_length=30)
-
 class Admin_table(models.Model):
     Admin_Id = models.BigAutoField(primary_key=True)
     Admin_Name = models.CharField(max_length=100, null=False)
@@ -229,14 +222,14 @@ class Admin_table(models.Model):
     def __str__(self):
         return self.Admin_Name
     
-#___________For the Admin analytic dashboard___________________
+# For the Admin analytic dashboard
 class StudentActivity(models.Model):
-    """Track student activity using rollno instead of FK"""
-    rollno = models.CharField(max_length=50)  # Use rollno like your existing system
+    """Track student activity using ForeignKeys"""
+    rollno = models.CharField(max_length=50)
     student_name = models.CharField(max_length=100)
-    program = models.CharField(max_length=100)
-    branch = models.CharField(max_length=100)
-    year = models.CharField(max_length=100)
+    program = models.ForeignKey(Program, on_delete=models.CASCADE)
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+    year = models.ForeignKey(Year, on_delete=models.CASCADE)
     
     activity_type = models.CharField(max_length=50, choices=[
         ('login', 'Login'),
@@ -250,7 +243,7 @@ class StudentActivity(models.Model):
     ])
     activity_date = models.DateTimeField(auto_now_add=True)
     ip_address = models.GenericIPAddressField(null=True, blank=True)
-    additional_info = models.TextField(blank=True)  # JSON-like string for extra data
+    additional_info = models.TextField(blank=True)
 
     class Meta:
         ordering = ['-activity_date']
@@ -260,275 +253,67 @@ class DailyStats(models.Model):
     date = models.DateField(unique=True)
     
     # Student metrics
-    total_students = models.PositiveIntegerField(default=0)
-    students_logged_in = models.PositiveIntegerField(default=0)
-    unique_active_students = models.PositiveIntegerField(default=0)
+    total_students = models.PositiveBigIntegerField(default=0)  # Changed to BigIntegerField
+    students_logged_in = models.PositiveBigIntegerField(default=0)
+    unique_active_students = models.PositiveBigIntegerField(default=0)
     
     # Activity metrics
-    total_logins = models.PositiveIntegerField(default=0)
-    material_views = models.PositiveIntegerField(default=0)
-    material_downloads = models.PositiveIntegerField(default=0)
-    questions_posted = models.PositiveIntegerField(default=0)
-    answers_posted = models.PositiveIntegerField(default=0)
-    feedback_submitted = models.PositiveIntegerField(default=0)
-    complaints_submitted = models.PositiveIntegerField(default=0)
+    total_logins = models.PositiveBigIntegerField(default=0)
+    material_views = models.PositiveBigIntegerField(default=0)
+    material_downloads = models.PositiveBigIntegerField(default=0)
+    questions_posted = models.PositiveBigIntegerField(default=0)
+    answers_posted = models.PositiveBigIntegerField(default=0)
+    feedback_submitted = models.PositiveBigIntegerField(default=0)
+    complaints_submitted = models.PositiveBigIntegerField(default=0)
     
     # Material metrics
-    materials_uploaded = models.PositiveIntegerField(default=0)
+    materials_uploaded = models.PositiveBigIntegerField(default=0)
     
     class Meta:
         ordering = ['-date']
 
 class ProgramStats(models.Model):
     """Statistics by program"""
-    program = models.CharField(max_length=100)
-    total_students = models.PositiveIntegerField(default=0)
-    active_students_today = models.PositiveIntegerField(default=0)
-    materials_count = models.PositiveIntegerField(default=0)
+    program = models.ForeignKey(Program, on_delete=models.CASCADE)
+    total_students = models.PositiveBigIntegerField(default=0)  # Changed to BigIntegerField
+    active_students_today = models.PositiveBigIntegerField(default=0)
+    materials_count = models.PositiveBigIntegerField(default=0)
     last_updated = models.DateTimeField(auto_now=True)
 
 class BranchStats(models.Model):
     """Statistics by branch"""
-    branch = models.CharField(max_length=100)
-    total_students = models.PositiveIntegerField(default=0)
-    active_students_today = models.PositiveIntegerField(default=0)
-    materials_count = models.PositiveIntegerField(default=0)
+    branch = models.ForeignKey(Branch, on_delete=models.CASCADE)
+    total_students = models.PositiveBigIntegerField(default=0)  # Changed to BigIntegerField
+    active_students_today = models.PositiveBigIntegerField(default=0)
+    materials_count = models.PositiveBigIntegerField(default=0)
     last_updated = models.DateTimeField(auto_now=True)
-    
-class NewsCategory(models.Model):
-    """Categories for organizing news/announcements"""
-    name = models.CharField(max_length=100, unique=True)
+
+class Assignment(models.Model):
+    """Assignment model for course assignments"""
+    title = models.CharField(max_length=200)
     description = models.TextField(blank=True)
-    icon = models.CharField(max_length=50, blank=True)  # CSS icon class
-    color_code = models.CharField(max_length=7, default='#007bff')  # Hex color
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='assignments')
+    due_date = models.DateTimeField()
+    total_marks = models.PositiveIntegerField(default=100)
+    file = models.FileField(
+        upload_to='assignments/%Y/%m/%d/',
+        validators=[FileExtensionValidator(allowed_extensions=[
+            'pdf', 'doc', 'docx', 'ppt', 'pptx', 'txt', 'zip', 'rar'
+        ])],
+        blank=True,
+        null=True
+    )
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_assignments')
+    created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
-    
+
     class Meta:
-        verbose_name_plural = "News Categories"
-        ordering = ['name']
-    
+        ordering = ['-due_date']
+
     def __str__(self):
-        return self.name
+        return f"{self.title} - {self.course.title}"
 
-class NewsAnnouncement(models.Model):
-    """Enhanced News/Announcements model"""
-    
-    # Priority levels
-    PRIORITY_CHOICES = [
-        ('low', 'Low'),
-        ('normal', 'Normal'),
-        ('high', 'High'),
-        ('urgent', 'Urgent'),
-    ]
-    
-    # Target audience
-    AUDIENCE_CHOICES = [
-        ('all', 'All Users'),
-        ('students', 'Students Only'),
-        ('admins', 'Admins Only'),
-        ('specific_program', 'Specific Program'),
-        ('specific_branch', 'Specific Branch'),
-        ('specific_year', 'Specific Year'),
-    ]
-    
-    # Basic fields (keeping compatibility with your existing News model)
-    nid = models.AutoField(primary_key=True)
-    title = models.CharField(max_length=200)  # New: separate title field
-    newstext = models.TextField()
-    newsdate = models.DateTimeField(default=timezone.now)  # Changed to DateTime
-    
-    # Enhanced fields
-    category = models.ForeignKey(NewsCategory, on_delete=models.SET_NULL, null=True, blank=True)
-    priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='normal')
-    
-    # Visibility and expiry
-    is_active = models.BooleanField(default=True)
-    publish_date = models.DateTimeField(default=timezone.now)
-    expiry_date = models.DateTimeField(null=True, blank=True)
-    
-    # Target audience
-    target_audience = models.CharField(max_length=20, choices=AUDIENCE_CHOICES, default='all')
-    target_programs = models.TextField(blank=True, help_text="Comma-separated program names")
-    target_branches = models.TextField(blank=True, help_text="Comma-separated branch names") 
-    target_years = models.TextField(blank=True, help_text="Comma-separated year names")
-    
-    # Additional metadata
-    created_by = models.CharField(max_length=100, blank=True)  # Admin who created it
-    attachment = models.FileField(upload_to='news_attachments/', blank=True, null=True)
-    is_pinned = models.BooleanField(default=False)  # Pin important announcements
-    view_count = models.PositiveIntegerField(default=0)
-    # Add these methods to your NewsAnnouncement model in adminapp/models.py
-# Add them inside the NewsAnnouncement class, before the Meta class
-
-    def get_current_status(self):
-        """Get the current status of this news item"""
+    def is_overdue(self):
         from django.utils import timezone
-        now = timezone.now()
-        
-        if not self.is_active:
-            return 'inactive'
-        elif self.publish_date > now:
-            return 'scheduled'
-        elif self.expiry_date and self.expiry_date < now:
-            return 'expired'
-        else:
-            return 'active'
-
-    def get_status_display(self):
-        """Get human-readable status"""
-        status = self.get_current_status()
-        status_map = {
-            'active': 'Active',
-            'scheduled': 'Scheduled',
-            'expired': 'Expired',
-            'inactive': 'Inactive'
-        }
-        return status_map.get(status, 'Unknown')
-
-    def get_status_class(self):
-        """Get CSS class for status badge"""
-        status = self.get_current_status()
-        class_map = {
-            'active': 'badge-success',
-            'scheduled': 'badge-info',
-            'expired': 'badge-secondary',
-            'inactive': 'badge-danger'
-        }
-        return class_map.get(status, 'badge-secondary')
-
-    def is_visible_to_student(self, student):
-        """Check if this news should be visible to a specific student"""
-        from django.utils import timezone
-        now = timezone.now()
-        
-        # Check if news is currently active
-        if not self.is_active or self.publish_date > now:
-            return False
-        
-        # Check if expired
-        if self.expiry_date and self.expiry_date < now:
-            return False
-        
-        # Check audience targeting
-        if self.target_audience == 'all':
-            return True
-        
-        elif self.target_audience == 'students':
-            # Show to ALL students regardless of program/branch/year
-            return True
-        
-        elif self.target_audience == 'specific':
-            # Check specific targeting criteria
-            program_match = True
-            branch_match = True
-            year_match = True
-            
-            # Check program targeting
-            if self.target_programs:
-                target_programs = [p.strip() for p in self.target_programs.split(',')]
-                program_match = student.program.name in target_programs
-            
-            # Check branch targeting
-            if self.target_branches:
-                target_branches = [b.strip() for b in self.target_branches.split(',')]
-                branch_match = student.branch.name in target_branches
-            
-            # Check year targeting
-            if self.target_years:
-                target_years = [y.strip() for y in self.target_years.split(',')]
-                year_match = student.year.name in target_years
-            
-            return program_match and branch_match and year_match
-        
-        return False
-
-    def get_target_display(self):
-        """Get human-readable target audience"""
-        if self.target_audience == 'all':
-            return 'Everyone'
-        elif self.target_audience == 'students':
-            return 'All Students'
-        elif self.target_audience == 'specific':
-            parts = []
-            if self.target_programs:
-                parts.append(f"Programs: {self.target_programs}")
-            if self.target_branches:
-                parts.append(f"Branches: {self.target_branches}")
-            if self.target_years:
-                parts.append(f"Years: {self.target_years}")
-            return " | ".join(parts) if parts else "Specific (no criteria)"
-        else:
-            return self.get_target_audience_display()
-
-    @property
-    def is_currently_active(self):
-     """Property to check if news is currently active"""
-     return self.get_current_status() == 'active'
-    
-    class Meta:
-        ordering = ['-is_pinned', '-priority', '-publish_date']
-        
-    def __str__(self):
-        return f"{self.title} - {self.newsdate.strftime('%Y-%m-%d')}"
-    
-    def is_expired(self):
-        """Check if the news item has expired"""
-        if self.expiry_date:
-            return timezone.now() > self.expiry_date
-        return False
-    
-    def is_published(self):
-        """Check if the news item should be published"""
-        now = timezone.now()
-        return (self.is_active and 
-                self.publish_date <= now and 
-                not self.is_expired())
-    
-    def get_priority_class(self):
-        """Return CSS class based on priority"""
-        priority_classes = {
-            'low': 'alert-secondary',
-            'normal': 'alert-info', 
-            'high': 'alert-warning',
-            'urgent': 'alert-danger'
-        }
-        return priority_classes.get(self.priority, 'alert-info')
-    
-    
-    def can_view(self, user_type, user_program=None, user_branch=None, user_year=None):
-        """Check if a user can view this news item"""
-        if not self.is_published():
-            return False
-            
-        if self.target_audience == 'all':
-            return True
-        elif self.target_audience == 'students' and user_type == 'student':
-            return True
-        elif self.target_audience == 'admins' and user_type == 'admin':
-            return True
-        elif self.target_audience == 'specific_program':
-            if user_program and self.target_programs:
-                programs = [p.strip() for p in self.target_programs.split(',')]
-                return user_program in programs
-        elif self.target_audience == 'specific_branch':
-            if user_branch and self.target_branches:
-                branches = [b.strip() for b in self.target_branches.split(',')]
-                return user_branch in branches
-        elif self.target_audience == 'specific_year':
-            if user_year and self.target_years:
-                years = [y.strip() for y in self.target_years.split(',')]
-                return user_year in years
-                
-        return False
-     
-
-# Keep your original News model for backward compatibility, or migrate data
-class News(models.Model):
-    """Legacy News model - keep for backward compatibility"""
-    nid = models.AutoField(primary_key=True)
-    newstext = models.TextField()
-    newsdate = models.CharField(max_length=30)
-    
-    class Meta:
-        db_table = 'adminapp_news'  # Keep original table name
+        return timezone.now() > self.due_date
     

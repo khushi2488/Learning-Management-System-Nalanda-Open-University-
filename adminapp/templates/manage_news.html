@@ -195,7 +195,6 @@
                                         <th>Status</th>
                                         <th>Publish Date</th>
                                         <th>Expires</th>
-                                        {% comment %} <th>Views</th> {% endcomment %}
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
@@ -232,8 +231,37 @@
                                                 {{news.get_priority_display}}
                                             </span>
                                         </td>
+                                        <!-- UPDATED: Target Audience with ManyToMany Display -->
                                         <td>
-                                            <small>{{ news.get_target_audience_display|truncatechars:40 }}</small>
+                                            <small>{{ news.get_target_audience_display }}</small>
+                                            
+                                            <!-- UPDATED: Display selected programs/branches/years -->
+                                            {% if news.target_audience == 'specific_program' and news.target_programs.exists %}
+                                                <br><small class="text-info">
+                                                    <i class="fas fa-graduation-cap"></i> 
+                                                    {% for program in news.target_programs.all %}
+                                                        {{ program.program }}{% if not forloop.last %}, {% endif %}
+                                                    {% endfor %}
+                                                </small>
+                                            {% endif %}
+                                            
+                                            {% if news.target_audience == 'specific_branch' and news.target_branches.exists %}
+                                                <br><small class="text-success">
+                                                    <i class="fas fa-code-branch"></i>
+                                                    {% for branch in news.target_branches.all %}
+                                                        {{ branch.branch }}{% if not forloop.last %}, {% endif %}
+                                                    {% endfor %}
+                                                </small>
+                                            {% endif %}
+                                            
+                                            {% if news.target_audience == 'specific_year' and news.target_years.exists %}
+                                                <br><small class="text-warning">
+                                                    <i class="fas fa-calendar-alt"></i>
+                                                    {% for year in news.target_years.all %}
+                                                        {{ year.year }}{% if not forloop.last %}, {% endif %}
+                                                    {% endfor %}
+                                                </small>
+                                            {% endif %}
                                         </td>
                                         <!-- UPDATED STATUS COLUMN -->
                                         <td>
@@ -257,9 +285,6 @@
                                                 <em class="text-muted">Never</em>
                                             {% endif %}
                                         </td>
-                                        {% comment %} <td>
-                                            <span class="badge badge-light">{{ news.view_count|default:0 }}</span>
-                                        </td> {% endcomment %}
                                         <td>
                                             <div class="btn-group-vertical btn-group-sm">
                                                 <a href="{% url 'adminapp:edit_news' news.nid %}" class="btn btn-outline-primary btn-sm mb-1" title="Edit">

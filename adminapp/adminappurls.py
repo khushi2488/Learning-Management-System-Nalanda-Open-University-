@@ -41,17 +41,10 @@ urlpatterns = [
     # Category Management URLs
     path('materials/categories/', views.material_categories, name='material_categories'),
     path('debug-analytics/', analytics_views.debug_analytics, name='debug_analytics'),
-    
-    # Enhanced News URLs
-    # path('news/', views.manage_news, name='manage_news'),
-    path('manage-news/', views.manage_news_enhanced, name='manage_news'),# Replace old news URL
-    path('news/create/', views.create_news, name='create_news'),
-    path('news/<int:news_id>/edit/', views.edit_news, name='edit_news'),
-    path('news/<int:news_id>/toggle/', views.toggle_news_status, name='toggle_news_status'),
-    path('news/<int:news_id>/delete/', views.delete_news, name='delete_news'),
-    path('news/<int:news_id>/pin/', views.pin_news, name='pin_news'),
-    path('categories/', views.manage_categories, name='manage_categories'),
-    path('news/bulk-action/', views.bulk_news_action, name='bulk_news_action'),
-path('news/<int:news_id>/duplicate/', views.duplicate_news, name='duplicate_news'),
-path('news/<int:news_id>/preview/', views.preview_news, name='preview_news'),
+
+    # Assignment Management URLs
+    path('assignments/', views.list_assignments, name='list_assignments'),
+    path('assignments/create/', views.create_assignment, name='create_assignment'),
+    path('assignments/<int:assignment_id>/submissions/', views.view_submissions, name='view_submissions'),
+    path('submissions/<int:submission_id>/grade/', views.grade_submission, name='grade_submission'),
 ]

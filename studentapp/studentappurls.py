@@ -26,7 +26,15 @@ urlpatterns = [
     # Study Materials - Updated
     path('viewmat/', views.viewmat, name='viewmat'),
     path('download/<int:material_id>/', views.download_material, name='download_material'),
-    
+
+    # Assignment URLs
+    path('assignments/', views.list_assignments, name='list_assignments'),
+    path('assignments/<int:assignment_id>/submit/', views.submit_assignment, name='submit_assignment'),
+    path('assignments/<int:assignment_id>/status/', views.view_submission_status, name='view_submission_status'),
+
     # path('download-material/<int:material_id>/', views.download_material, name='download_material'),
     path('news/', views.student_news, name='student_news'),
+     path('enquiries/', views.student_enquiry_dashboard, name='student_enquiry_dashboard'),
+    path('enquiries/create/', views.create_enquiry, name='create_enquiry'),
+    path('enquiries/<int:enquiry_id>/', views.enquiry_detail, name='enquiry_detail'),
 ]

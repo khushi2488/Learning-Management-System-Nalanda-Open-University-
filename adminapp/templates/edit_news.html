@@ -65,37 +65,61 @@
                             </div>
                         </div>
 
-                        <!-- FIXED: Target Audience -->
+                        <!-- UPDATED: Target Audience -->
                         <div class="mb-3">
-                            <label for="audienceSelect" class="form-label fw-bold">Target Audience</label>
-                            <select name="target_audience" id="audienceSelect" class="form-control" onchange="toggleTargeting()">
+                            <label for="target_audience" class="form-label fw-bold">Target Audience</label>
+                            <select name="target_audience" id="target_audience" class="form-control" onchange="toggleTargeting()">
                                 <option value="all" {% if news.target_audience == 'all' %}selected{% endif %}>Everyone</option>
                                 <option value="students" {% if news.target_audience == 'students' %}selected{% endif %}>All Students</option>
-                                <option value="specific" {% if news.target_audience == 'specific' %}selected{% endif %}>Specific Groups</option>
+                                <option value="specific_program" {% if news.target_audience == 'specific_program' %}selected{% endif %}>Specific Programs</option>
+                                <option value="specific_branch" {% if news.target_audience == 'specific_branch' %}selected{% endif %}>Specific Branches</option>
+                                <option value="specific_year" {% if news.target_audience == 'specific_year' %}selected{% endif %}>Specific Years</option>
                             </select>
                         </div>
 
-                        <!-- FIXED: Specific Target Fields -->
-                        <div id="specificTargeting" class="p-3 rounded bg-light" 
-                             style="{% if news.target_audience == 'specific' %}display:block;{% else %}display:none;{% endif %}">
-                            <label class="fw-bold">Specific Targeting</label>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <label for="target_programs" class="form-label">Target Programs</label>
-                                    <input type="text" name="target_programs" id="target_programs" class="form-control"
-                                           value="{{news.target_programs}}" placeholder="e.g., BCA, MCA (comma-separated)">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="target_branches" class="form-label">Target Branches</label>
-                                    <input type="text" name="target_branches" id="target_branches" class="form-control"
-                                           value="{{news.target_branches}}" placeholder="e.g., Computer Science, IT (comma-separated)">
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="target_years" class="form-label">Target Years</label>
-                                    <input type="text" name="target_years" id="target_years" class="form-control"
-                                           value="{{news.target_years}}" placeholder="e.g., 1st Year, 2nd Year (comma-separated)">
-                                </div>
-                            </div>
+                        <!-- UPDATED: Program Targeting with Selected Values -->
+                        <div id="program-targeting" class="mb-3 p-3 rounded bg-light" 
+                             style="{% if news.target_audience == 'specific_program' %}display:block;{% else %}display:none;{% endif %}">
+                            <label for="target_programs" class="form-label fw-bold">Select Target Programs</label>
+                            <select name="target_programs" id="target_programs" class="form-control" multiple size="4">
+                                {% for program in programs %}
+                                    <option value="{{ program.id }}" 
+                                        {% if program in news.target_programs.all %}selected{% endif %}>
+                                        {{ program.program }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <small class="form-text text-muted">Hold Ctrl (Cmd on Mac) to select multiple programs</small>
+                        </div>
+
+                        <!-- UPDATED: Branch Targeting with Selected Values -->
+                        <div id="branch-targeting" class="mb-3 p-3 rounded bg-light" 
+                             style="{% if news.target_audience == 'specific_branch' %}display:block;{% else %}display:none;{% endif %}">
+                            <label for="target_branches" class="form-label fw-bold">Select Target Branches</label>
+                            <select name="target_branches" id="target_branches" class="form-control" multiple size="4">
+                                {% for branch in branches %}
+                                    <option value="{{ branch.id }}" 
+                                        {% if branch in news.target_branches.all %}selected{% endif %}>
+                                        {{ branch.branch }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <small class="form-text text-muted">Hold Ctrl (Cmd on Mac) to select multiple branches</small>
+                        </div>
+
+                        <!-- UPDATED: Year Targeting with Selected Values -->
+                        <div id="year-targeting" class="mb-3 p-3 rounded bg-light" 
+                             style="{% if news.target_audience == 'specific_year' %}display:block;{% else %}display:none;{% endif %}">
+                            <label for="target_years" class="form-label fw-bold">Select Target Years</label>
+                            <select name="target_years" id="target_years" class="form-control" multiple size="4">
+                                {% for year in years %}
+                                    <option value="{{ year.id }}" 
+                                        {% if year in news.target_years.all %}selected{% endif %}>
+                                        {{ year.year }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <small class="form-text text-muted">Hold Ctrl (Cmd on Mac) to select multiple years</small>
                         </div>
 
                         <!-- Attachment + Options -->
@@ -121,12 +145,14 @@
                             </div>
                         </div>
 
-                        <!-- Current Status Info -->
+                        <!-- Current Status Info with Target Details -->
                         <div class="alert alert-info">
                             <strong>Current Status:</strong>
                             <span class="badge {{ news.get_status_class }}">
                                 {{ news.get_status_display }}
                             </span>
+                            <br>
+                            <strong>Target Audience:</strong> {{ news.get_target_display }}
                             <br>
                             <small>
                                 Created: {{news.newsdate|date:"M d, Y H:i"}} | 
@@ -169,13 +195,23 @@
 
 <script>
 function toggleTargeting() {
-    const audience = document.getElementById('audienceSelect').value;
-    const specificDiv = document.getElementById('specificTargeting');
+    const audience = document.getElementById('target_audience').value;
+    const programDiv = document.getElementById('program-targeting');
+    const branchDiv = document.getElementById('branch-targeting');
+    const yearDiv = document.getElementById('year-targeting');
     
-    if (audience === 'specific') {
-        specificDiv.style.display = 'block';
-    } else {
-        specificDiv.style.display = 'none';
+    // Hide all targeting divs first
+    programDiv.style.display = 'none';
+    branchDiv.style.display = 'none';
+    yearDiv.style.display = 'none';
+    
+    // Show relevant targeting div
+    if (audience === 'specific_program') {
+        programDiv.style.display = 'block';
+    } else if (audience === 'specific_branch') {
+        branchDiv.style.display = 'block';
+    } else if (audience === 'specific_year') {
+        yearDiv.style.display = 'block';
     }
 }
 
@@ -185,6 +221,30 @@ function previewNews() {
     const priority = document.getElementById('priority').value;
     const category = document.getElementById('category');
     const categoryText = category.options[category.selectedIndex]?.text || 'No Category';
+    
+    // Get selected targeting information
+    const audience = document.getElementById('target_audience').value;
+    let targetInfo = '';
+    
+    if (audience === 'specific_program') {
+        const programSelect = document.getElementById('target_programs');
+        const selectedPrograms = Array.from(programSelect.selectedOptions).map(opt => opt.text);
+        if (selectedPrograms.length > 0) {
+            targetInfo = `<br><small><strong>Target Programs:</strong> ${selectedPrograms.join(', ')}</small>`;
+        }
+    } else if (audience === 'specific_branch') {
+        const branchSelect = document.getElementById('target_branches');
+        const selectedBranches = Array.from(branchSelect.selectedOptions).map(opt => opt.text);
+        if (selectedBranches.length > 0) {
+            targetInfo = `<br><small><strong>Target Branches:</strong> ${selectedBranches.join(', ')}</small>`;
+        }
+    } else if (audience === 'specific_year') {
+        const yearSelect = document.getElementById('target_years');
+        const selectedYears = Array.from(yearSelect.selectedOptions).map(opt => opt.text);
+        if (selectedYears.length > 0) {
+            targetInfo = `<br><small><strong>Target Years:</strong> ${selectedYears.join(', ')}</small>`;
+        }
+    }
 
     const previewHtml = `
         <div class="card shadow">
@@ -199,7 +259,9 @@ function previewNews() {
                 <div class="news-content">${content.replace(/\n/g, '<br>')}</div>
                 <hr>
                 <small class="text-muted">
-                    <i class="fas fa-clock"></i> Published: {% now "M d, Y H:i" %}
+                    <i class="fas fa-clock"></i> Updated: {% now "M d, Y H:i" %}
+                    <br><strong>Target:</strong> ${audience.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                    ${targetInfo}
                 </small>
             </div>
         </div>
@@ -210,6 +272,11 @@ function previewNews() {
     var modal = new bootstrap.Modal(document.getElementById('previewModal'));
     modal.show();
 }
+
+// Initialize on page load
+document.addEventListener('DOMContentLoaded', function() {
+    toggleTargeting(); // Set initial state based on current selection
+});
 </script>
 
 <!-- Custom Styles -->
@@ -233,7 +300,7 @@ function previewNews() {
     border-color: #2563eb !important;
 }
 
-#specificTargeting {
+#program-targeting, #branch-targeting, #year-targeting {
     background-color: #f8f9fa !important;
     border: 1px solid #dee2e6;
 }

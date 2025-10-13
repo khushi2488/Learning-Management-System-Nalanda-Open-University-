@@ -1,12 +1,10 @@
-{% extends 'parent.html' %} 
-{% load static %} 
-{% block body %}
+{% extends 'parent.html' %} {% load static %} {% block body %}
 <style>
   /*Header Image*/
   .home {
     background-image: url(../static/images/bookslibrary.jpg);
     width: 100%;
-    height: 37vh;
+    height: 38vh;
     background-size: cover;
     background-position: center;
   }
@@ -21,12 +19,12 @@
       font-size: small;
     }
   }
-  
+
   .required::after {
     content: " *";
     color: red;
   }
-  
+
   /* Form styling for theme compatibility */
   .registration-container {
     background-color: var(--card-bg);
@@ -36,15 +34,33 @@
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
     padding: 20px;
   }
-  
+
   .form-heading {
     color: var(--primary-color) !important;
   }
-  
+
   .form-label {
     color: var(--primary-color) !important;
   }
-  
+  @media (min-width: 260px) and (max-width: 530px) {
+    .dist {
+      font-size: 11px;
+      text-align: center;
+      margin-left: 0px;
+      padding-bottom: 15px;
+      justify-content: center;
+      align-content: center;
+    }
+    .dist1 {
+      font-size: 17px;
+      text-align: center;
+      margin-left: 0px;
+      /* padding-bottom: 15px; */
+      justify-content: center;
+      align-content: center;
+    }
+  }
+
   /*Header Image*/
 </style>
 
@@ -61,8 +77,8 @@
         text-align: center;
       "
     >
-      <h3><b>From Our Content For Distance Learning</b></h3>
-      <p style="font-family: poppins; font-weight: bolder">
+      <h3 class="dist1"><b>From Our Content For Distance Learning</b></h3>
+      <p class="dist" style="font-family: poppins; font-weight: bolder">
         NOU-e-Gyan PORTAL, CONCEPT BY NALANDA OPEN UNIVERSITY
       </p>
     </div>
@@ -85,7 +101,7 @@
           var emailexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
           var password = document.getElementById("password");
           var confirmpassword = document.getElementById("confirmPassword");
-          
+
           if (rollno.value == "" || rollno.value == null) {
             alert("Please enter your rollno");
             rollno.focus();
@@ -134,7 +150,10 @@
             alert("Please enter atleast 8 digit password");
             password.focus();
             return false;
-          } else if (confirmpassword.value == "" || confirmpassword.value == null) {
+          } else if (
+            confirmpassword.value == "" ||
+            confirmpassword.value == null
+          ) {
             alert("Please enter confirm password");
             confirmpassword.focus();
             return false;
@@ -148,7 +167,7 @@
             var branch = document.getElementById("branch");
             var year = document.getElementById("year");
             var gender = document.querySelector('input[name="gender"]:checked');
-            
+
             if (!gender) {
               alert("Please select your gender");
               return false;
@@ -168,33 +187,29 @@
               year.focus();
               return false;
             }
-            
+
             document.getElementById("frmregistration").submit();
             return true;
           }
         }
       </script>
-      
-      {% if messages %} 
-        {% for message in messages %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-          <strong>{{message}}</strong>
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          ></button>
-        </div>
-        {% endfor %} 
-      {% endif %}
+
+      {% if messages %} {% for message in messages %}
+      <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>{{message}}</strong>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+          aria-label="Close"
+        ></button>
+      </div>
+      {% endfor %} {% endif %}
 
       <div class="container mt-4">
-        <h2 class="text-center mb-4 form-heading">
-          STUDENT REGISTRATION FORM
-        </h2>
-        <hr style="border-color: var(--primary-color); opacity: 0.3;" />
-        
+        <h2 class="text-center mb-4 form-heading">STUDENT REGISTRATION FORM</h2>
+        <hr style="border-color: var(--primary-color); opacity: 0.3" />
+
         <form
           class="p-3"
           id="frmregistration"
@@ -202,7 +217,7 @@
           onsubmit="event.preventDefault(); return validate();"
         >
           {% csrf_token %}
-          
+
           <!-- Roll No -->
           <div class="row mb-3">
             <label class="col-sm-3 col-form-label required form-label">
@@ -297,7 +312,9 @@
                   value="female"
                   required
                 />
-                <label class="form-check-label" for="genderFemale">Female</label>
+                <label class="form-check-label" for="genderFemale"
+                  >Female</label
+                >
               </div>
               <div class="form-check">
                 <input
@@ -330,7 +347,7 @@
             </div>
           </div>
 
-          <!-- Program -->
+          <!-- Program - UPDATED: Dynamic dropdown from database -->
           <div class="row mb-3">
             <label class="col-sm-3 col-form-label required form-label">
               Select Program :
@@ -338,14 +355,14 @@
             <div class="col-sm-9">
               <select class="form-select" id="program" name="program" required>
                 <option value="">---Select Program---</option>
-                <option value="btech">B.Tech</option>
-                <option value="mtech">M.Tech</option>
-                <option value="mba">MBA</option>
+                {% for prog in program %}
+                <option value="{{ prog.id }}">{{ prog.program }}</option>
+                {% endfor %}
               </select>
             </div>
           </div>
 
-          <!-- Branch -->
+          <!-- Branch - UPDATED: Dynamic dropdown from database -->
           <div class="row mb-3">
             <label class="col-sm-3 col-form-label required form-label">
               Select Branch :
@@ -353,17 +370,14 @@
             <div class="col-sm-9">
               <select class="form-select" id="branch" name="branch" required>
                 <option value="">---Select Branch---</option>
-                <option value="Computer Science">Computer Science</option>
-                <option value="Information Technology">Information Technology</option>
-                <option value="Electonic">Electronic</option>
-                <option value="Electrical">Electrical</option>
-                <option value="Mechanical">Mechanical</option>
-                <option value="Other">Other</option>
+                {% for br in branch %}
+                <option value="{{ br.id }}">{{ br.branch }}</option>
+                {% endfor %}
               </select>
             </div>
           </div>
 
-          <!-- Year -->
+          <!-- Year - UPDATED: Dynamic dropdown from database -->
           <div class="row mb-3">
             <label class="col-sm-3 col-form-label required form-label">
               Select Year :
@@ -371,14 +385,13 @@
             <div class="col-sm-9">
               <select class="form-select" id="year" name="year" required>
                 <option value="">---Select Year---</option>
-                <option value="First Year">First Year</option>
-                <option value="Second Year">Second Year</option>
-                <option value="Third Year">Third Year</option>
-                <option value="Final Year">Final Year</option>
+                {% for yr in year %}
+                <option value="{{ yr.id }}">{{ yr.year }}</option>
+                {% endfor %}
               </select>
             </div>
           </div>
-          
+
           <!-- Contact No -->
           <div class="row mb-3">
             <label class="col-sm-3 col-form-label required form-label">
@@ -395,7 +408,7 @@
               />
             </div>
           </div>
-          
+
           <!-- Email Address -->
           <div class="row mb-3">
             <label class="col-sm-3 col-form-label required form-label">
@@ -412,7 +425,7 @@
               />
             </div>
           </div>
-          
+
           <!-- Password -->
           <div class="row mb-3">
             <label class="col-sm-3 col-form-label required form-label">
@@ -429,7 +442,7 @@
               />
             </div>
           </div>
-          
+
           <!-- Confirm Password -->
           <div class="row mb-3">
             <label class="col-sm-3 col-form-label required form-label">
@@ -450,11 +463,15 @@
           <!-- Submit -->
           <div class="row mt-4">
             <div class="col-sm-12 text-center">
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 class="btn btn-primary"
                 style="
-                  background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+                  background: linear-gradient(
+                    135deg,
+                    var(--primary-color),
+                    var(--accent-color)
+                  );
                   border: none;
                   padding: 10px 30px;
                   font-weight: bold;
@@ -479,23 +496,24 @@
       margin: 20px auto !important;
       padding: 15px !important;
     }
-    
+
     .form-label {
       text-align: left !important;
       margin-bottom: 5px;
     }
-    
-    .col-sm-3, .col-sm-9 {
+
+    .col-sm-3,
+    .col-sm-9 {
       width: 100%;
       max-width: 100%;
       flex: 0 0 100%;
     }
-    
+
     .d-flex.align-items-center {
       flex-direction: column;
       align-items: flex-start !important;
     }
-    
+
     .form-check {
       margin-bottom: 8px;
     }
@@ -506,7 +524,7 @@
       margin-top: 20px !important;
       padding: 10px !important;
     }
-    
+
     .form-heading {
       font-size: 1.5rem !important;
     }

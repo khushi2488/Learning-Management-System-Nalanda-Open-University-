@@ -1,42 +1,668 @@
 {% extends "adminparent.html" %}
 {% block body %}
-    <div class="row">
-        <h1 style="text-align:center; color: rgb(6,6,106)">Students Details</h1>
-        <div class="col-sm-12" style="overflow-x: scroll;">
-               <table class="table table-bordered" style="color: rgb(6,6,106);">
-                <tr>
-                    <th>Roll no</th>
-                    <th>Name</th>
-                    <th>Father Name</th>
-                    <th>Mother Name</th>
-                    <th>Gender</th>
-                    <th>Address</th>
-                    <th>Program</th>
-                    <th>Branch</th>
-                    <th>Year</th>
-                    <th>Contact No</th>
-                    <th>E-mail Address</th>
-                    <th>Reg.Date</th>
-                </tr>
+<style>
+  .students-header {
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    padding: 2.5rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
 
-                {% for s in student%}
-                    <tr style="color: steelblue;">
-                        <td>{{s.rollno}}</td>
-                        <td>{{s.name}}</td>
-                        <td>{{s.fname}}</td>
-                        <td>{{s.mname}}</td>
-                        <td>{{s.gender}}</td>
-                        <td>{{s.address}}</td>
-                        <td>{{s.program}}</td>
-                        <td>{{s.branch}}</td>
-                        <td>{{s.year}}</td>
-                        <td>{{s.contactno}}</td>
-                        <td>{{s.emailaddress}}</td>
-                        <td>{{s.regdate}}</td>
-                    </tr>
-                {% endfor %}
-               </table>
-              
-        </div>
+  .students-header h1 {
+    color: white;
+    font-weight: 700;
+    margin: 0;
+    font-size: 2.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .students-header p {
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0.5rem 0 0 0;
+    font-size: 1rem;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.25rem;
+    margin-bottom: 2rem;
+  }
+
+  .stat-box {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border-left: 5px solid;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .stat-box:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  .stat-box.students { border-left-color: #4f46e5; }
+  .stat-box.male { border-left-color: #3b82f6; }
+  .stat-box.female { border-left-color: #ec4899; }
+  .stat-box.programs { border-left-color: #10b981; }
+
+  .stat-box h6 {
+    color: #64748b;
+    font-size: 0.875rem;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .stat-box .stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .stat-icon {
+    font-size: 2.5rem;
+  }
+
+  .control-panel {
+    background: white;
+    padding: 1.75rem;
+    border-radius: 12px;
+    margin-bottom: 1.75rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  }
+
+  .control-panel .row {
+    align-items: center;
+  }
+
+  .search-box {
+    position: relative;
+  }
+
+  .search-box input {
+    padding-left: 2.75rem;
+    border-radius: 10px;
+    border: 2px solid #e2e8f0;
+    height: 45px;
+    font-size: 0.938rem;
+    transition: all 0.3s ease;
+  }
+
+  .search-box input:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+  }
+
+  .search-box::before {
+    content: "🔍";
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.25rem;
+  }
+
+  .filter-select {
+    border-radius: 10px;
+    border: 2px solid #e2e8f0;
+    height: 45px;
+    font-size: 0.938rem;
+    transition: all 0.3s ease;
+  }
+
+  .filter-select:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: flex-end;
+  }
+
+  .btn-modern {
+    padding: 0.625rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .btn-export {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+  }
+
+  .btn-export:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+    color: white;
+  }
+
+  .btn-reset {
+    background: #f1f5f9;
+    color: #475569;
+  }
+
+  .btn-reset:hover {
+    background: #e2e8f0;
+    color: #1e293b;
+  }
+
+  .table-wrapper {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+  }
+
+  .students-table-container {
+    overflow-x: auto;
+    max-height: 650px;
+  }
+
+  .students-table {
+    margin: 0;
+    width: 100%;
+    border: none;
+    font-size: 0.875rem;
+  }
+
+  .students-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+  }
+
+  .students-table thead th {
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.8px;
+    padding: 1.25rem 1rem;
+    border: none;
+    white-space: nowrap;
+    text-align: left;
+  }
+
+  .students-table tbody tr {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  .students-table tbody tr:hover {
+    background: linear-gradient(to right, #f8fafc, #ffffff);
+    transform: scale(1.005);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .students-table tbody td {
+    padding: 1rem;
+    color: #475569;
+    vertical-align: middle;
+    border: none;
+  }
+
+  .student-roll {
+    font-weight: 700;
+    color: #4f46e5;
+    background: #eef2ff;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    display: inline-block;
+    font-size: 0.813rem;
+  }
+
+  .student-name {
+    font-weight: 600;
+    color: #1e293b;
+    font-size: 0.938rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .student-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 0.875rem;
+  }
+
+  .gender-badge {
+    padding: 0.35rem 0.875rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+    text-transform: uppercase;
+  }
+
+  .gender-badge.male {
+    background: #dbeafe;
+    color: #1e40af;
+  }
+
+  .gender-badge.female {
+    background: #fce7f3;
+    color: #be185d;
+  }
+
+  .gender-badge.other {
+    background: #f3e8ff;
+    color: #7c3aed;
+  }
+
+  .program-badge {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: white;
+    padding: 0.4rem 0.875rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+  }
+
+  .branch-badge {
+    background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+    color: white;
+    padding: 0.4rem 0.875rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+  }
+
+  .year-badge {
+    background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    color: white;
+    padding: 0.4rem 0.875rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+  }
+
+  .contact-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.813rem;
+  }
+
+  .date-display {
+    color: #64748b;
+    font-size: 0.813rem;
+    font-weight: 500;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 5rem 2rem;
+    color: #94a3b8;
+  }
+
+  .empty-state-icon {
+    font-size: 5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .empty-state h3 {
+    color: #475569;
+    margin-bottom: 0.75rem;
+  }
+
+  .pagination-info {
+    padding: 1.25rem 1.75rem;
+    background: #f8fafc;
+    border-top: 1px solid #e2e8f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.875rem;
+    color: #64748b;
+  }
+
+  @media (max-width: 768px) {
+    .students-header h1 {
+      font-size: 1.75rem;
+    }
+
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .action-buttons {
+      flex-direction: column;
+      width: 100%;
+    }
+
+    .btn-modern {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+</style>
+
+<div class="container-fluid">
+  <!-- Header Section -->
+  <div class="students-header">
+    <h1>
+      <span>👥</span>
+      Student Management System
+    </h1>
+    <p>Comprehensive overview of all enrolled students and their details</p>
+  </div>
+
+  <!-- Statistics Section -->
+  <div class="stats-grid">
+    <div class="stat-box students">
+      <h6>Total Students</h6>
+      <div class="stat-number">
+        <span class="stat-icon">📊</span>
+        <span>{{ student|length }}</span>
+      </div>
     </div>
+    <div class="stat-box male">
+      <h6>Male Students</h6>
+      <div class="stat-number">
+        <span class="stat-icon">👨‍🎓</span>
+        <span id="maleCount">--</span>
+      </div>
+    </div>
+    <div class="stat-box female">
+      <h6>Female Students</h6>
+      <div class="stat-number">
+        <span class="stat-icon">👩‍🎓</span>
+        <span id="femaleCount">--</span>
+      </div>
+    </div>
+    <div class="stat-box programs">
+      <h6>Active Programs</h6>
+      <div class="stat-number">
+        <span class="stat-icon">📚</span>
+        <span id="programCount">--</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Control Panel -->
+  <div class="control-panel">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <div class="search-box">
+          <input type="text" class="form-control" id="searchInput" 
+                 placeholder="Search by name, roll no, email...">
+        </div>
+      </div>
+      <div class="col-md-2">
+        <select class="form-select filter-select" id="filterProgram">
+          <option value="">All Programs</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <select class="form-select filter-select" id="filterBranch">
+          <option value="">All Branches</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <select class="form-select filter-select" id="filterYear">
+          <option value="">All Years</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <div class="action-buttons">
+          <button class="btn-modern btn-export" onclick="exportToCSV()">
+            📥 Export
+          </button>
+          <button class="btn-modern btn-reset" onclick="resetFilters()">
+            🔄 Reset
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table Section -->
+  <div class="table-wrapper">
+    {% if student %}
+    <div class="students-table-container">
+      <table class="students-table" id="studentsTable">
+        <thead>
+          <tr>
+            <th>Roll No</th>
+            <th>Student Name</th>
+            <th>Father's Name</th>
+            <th>Mother's Name</th>
+            <th>Gender</th>
+            <th>Address</th>
+            <th>Program</th>
+            <th>Branch</th>
+            <th>Year</th>
+            <th>Contact Details</th>
+            <th>Registration Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for s in student %}
+          <tr data-program="{{s.program}}" data-branch="{{s.branch}}" data-year="{{s.year}}" data-gender="{{s.gender}}">
+            <td>
+              <span class="student-roll">{{s.rollno}}</span>
+            </td>
+            <td>
+              <div class="student-name">
+                <div class="student-avatar">{{s.name|first|upper}}</div>
+                <span>{{s.name}}</span>
+              </div>
+            </td>
+            <td>{{s.fname}}</td>
+            <td>{{s.mname}}</td>
+            <td>
+              <span class="gender-badge {% if s.gender == 'Male' %}male{% elif s.gender == 'Female' %}female{% else %}other{% endif %}">
+                {{s.gender}}
+              </span>
+            </td>
+            <td style="max-width: 200px;">{{s.address}}</td>
+            <td>
+              <span class="program-badge">{{s.program}}</span>
+            </td>
+            <td>
+              <span class="branch-badge">{{s.branch}}</span>
+            </td>
+            <td>
+              <span class="year-badge">{{s.year}}</span>
+            </td>
+            <td>
+              <div class="contact-info">
+                <div class="contact-item">
+                  <span>📱</span>
+                  <span>{{s.contactno}}</span>
+                </div>
+                <div class="contact-item">
+                  <span>✉️</span>
+                  <span>{{s.emailaddress}}</span>
+                </div>
+              </div>
+            </td>
+            <td>
+              <span class="date-display">{{s.regdate|date:"d M, Y"}}</span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    <div class="pagination-info">
+      <span>Showing <strong id="visibleCount">{{ student|length }}</strong> of <strong>{{ student|length }}</strong> students</span>
+      <span>Last updated: <strong>{{ student.0.regdate|date:"d M, Y" }}</strong></span>
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <div class="empty-state-icon">📭</div>
+      <h3>No Students Found</h3>
+      <p>There are currently no students registered in the system.</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const table = document.getElementById('studentsTable');
+  const searchInput = document.getElementById('searchInput');
+  const filterProgram = document.getElementById('filterProgram');
+  const filterBranch = document.getElementById('filterBranch');
+  const filterYear = document.getElementById('filterYear');
+
+  if (!table) return;
+
+  const rows = Array.from(table.getElementsByTagName('tbody')[0].getElementsByTagName('tr'));
+  
+  // Calculate statistics
+  const maleCount = rows.filter(row => row.getAttribute('data-gender') === 'male').length;
+  const femaleCount = rows.filter(row => row.getAttribute('data-gender') === 'female').length;
+  const programs = new Set(rows.map(row => row.getAttribute('data-program')));
+  
+  document.getElementById('maleCount').textContent = maleCount;
+  document.getElementById('femaleCount').textContent = femaleCount;
+  document.getElementById('programCount').textContent = programs.size;
+
+  // Populate filters
+  const programSet = new Set();
+  const branchSet = new Set();
+  const yearSet = new Set();
+  
+  rows.forEach(row => {
+    programSet.add(row.getAttribute('data-program'));
+    branchSet.add(row.getAttribute('data-branch'));
+    yearSet.add(row.getAttribute('data-year'));
+  });
+
+  programSet.forEach(prog => {
+    const option = document.createElement('option');
+    option.value = prog;
+    option.textContent = prog;
+    filterProgram.appendChild(option);
+  });
+
+  branchSet.forEach(branch => {
+    const option = document.createElement('option');
+    option.value = branch;
+    option.textContent = branch;
+    filterBranch.appendChild(option);
+  });
+
+  yearSet.forEach(year => {
+    const option = document.createElement('option');
+    option.value = year;
+    option.textContent = year;
+    filterYear.appendChild(option);
+  });
+
+  // Filter function
+  function applyFilters() {
+    const searchTerm = searchInput.value.toLowerCase();
+    const selectedProgram = filterProgram.value;
+    const selectedBranch = filterBranch.value;
+    const selectedYear = filterYear.value;
+    
+    let visibleCount = 0;
+
+    rows.forEach(row => {
+      const text = row.textContent.toLowerCase();
+      const program = row.getAttribute('data-program');
+      const branch = row.getAttribute('data-branch');
+      const year = row.getAttribute('data-year');
+      
+      const matchesSearch = text.includes(searchTerm);
+      const matchesProgram = !selectedProgram || program === selectedProgram;
+      const matchesBranch = !selectedBranch || branch === selectedBranch;
+      const matchesYear = !selectedYear || year === selectedYear;
+      
+      if (matchesSearch && matchesProgram && matchesBranch && matchesYear) {
+        row.style.display = '';
+        visibleCount++;
+      } else {
+        row.style.display = 'none';
+      }
+    });
+
+    document.getElementById('visibleCount').textContent = visibleCount;
+  }
+
+  searchInput.addEventListener('keyup', applyFilters);
+  filterProgram.addEventListener('change', applyFilters);
+  filterBranch.addEventListener('change', applyFilters);
+  filterYear.addEventListener('change', applyFilters);
+});
+
+function resetFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('filterProgram').value = '';
+  document.getElementById('filterBranch').value = '';
+  document.getElementById('filterYear').value = '';
+  
+  const table = document.getElementById('studentsTable');
+  if (table) {
+    const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+    Array.from(rows).forEach(row => row.style.display = '');
+    document.getElementById('visibleCount').textContent = rows.length;
+  }
+}
+
+function exportToCSV() {
+  const table = document.getElementById('studentsTable');
+  if (!table) return;
+  
+  let csv = [];
+  const rows = table.querySelectorAll('tr:not([style*="display: none"])');
+  
+  for (let row of rows) {
+    const cols = row.querySelectorAll('td, th');
+    const csvRow = [];
+    for (let col of cols) {
+      csvRow.push('"' + col.textContent.trim().replace(/"/g, '""') + '"');
+    }
+    csv.push(csvRow.join(','));
+  }
+  
+  const csvString = csv.join('\n');
+  const blob = new Blob([csvString], { type: 'text/csv' });
+  const url = window.URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'students_data_' + new Date().toISOString().split('T')[0] + '.csv';
+  a.click();
+  window.URL.revokeObjectURL(url);
+}
+</script>
 {% endblock body %}

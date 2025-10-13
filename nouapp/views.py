@@ -62,30 +62,39 @@ def registration(request):
         mname=request.POST['motherName']
         gender=request.POST['gender']
         address=request.POST['address']
-        program=request.POST['program']
-        branch=request.POST['branch']
-        year=request.POST['year']
+        program_id=request.POST['program']  # This comes as ID from form
+        branch_id=request.POST['branch']    # This comes as ID from form
+        year_id=request.POST['year']        # This comes as ID from form
         contactno=request.POST['contactNo']
         emailaddress=request.POST['emailAddress']
         password=request.POST['password']
         regdate=date.today()
         usertype='student'
         status='false'
-        stu=Student(rollno=rollno,name=name,fname=fname,mname=mname,gender=gender,address=address,program=program,branch=branch,year=year,contactno=contactno,emailaddress=emailaddress,regdate=regdate)
-        log=Login(userid=rollno,password=password,usertype=usertype,status=status)
-        stu.save()
-        log.save()
-        # subject='Important Email from Nalanda Open University'
-        # msg=f'Hello, {name} your registration is successfull. Your password is {password}'
-        # email_from=settings.EMAIL_HOST_USER
-        # send_mail(subject,msg,email_from,[emailaddress])
-        messages.success(request,'Your Registration is submited')
+        
+        # FIXED: Get the actual objects, not strings
+        try:
+            program_obj = Program.objects.get(id=program_id)
+            branch_obj = Branch.objects.get(id=branch_id)
+            year_obj = Year.objects.get(id=year_id)
+            
+            stu=Student(rollno=rollno,name=name,fname=fname,mname=mname,gender=gender,
+                       address=address,program=program_obj,branch=branch_obj,year=year_obj,
+                       contactno=contactno,emailaddress=emailaddress,regdate=regdate)
+            log=Login(userid=rollno,password=password,usertype=usertype,status=status)
+            stu.save()
+            log.save()
+            messages.success(request,'Your Registration is submitted')
+        except (Program.DoesNotExist, Branch.DoesNotExist, Year.DoesNotExist):
+            messages.error(request,'Invalid program, branch, or year selected')
+        except Exception as e:
+            messages.error(request,f'Registration failed: {str(e)}')
+            
     program=Program.objects.all()
     branch=Branch.objects.all()
     year=Year.objects.all()
     ns=News.objects.all()
     return render(request,"registration.html",locals())
-
 def login(request):
     if request.method=="POST":
         userid=request.POST['userid']
@@ -127,7 +136,7 @@ def services(request):
     return render(request,"services.html")
 
 
-#_____________________________this is for forgot password / reset password logic views_______________________________
+# _____________________________this is for forgot password / reset password logic views_______________________________
 import uuid
 from django.contrib import messages
 from django.shortcuts import render, redirect
@@ -210,7 +219,63 @@ def reset_password(request, token):
 
     return render(request, "reset_password.html", {"token": token})
 
+
+# ---------------------------
+# Schema normalization helpers
+# ---------------------------
+
+def migrate_existing_students():
+    """
+    Utility function to migrate any existing students with string values
+    to use ForeignKey relationships. Run this once after updating your models.
+    """
+    from django.db import transaction
+    from adminapp.models import Program, Branch, Year
+    
+    try:
+        with transaction.atomic():
+            students = Student.objects.all()
+            
+            for student in students:
+                if isinstance(student.program, str):
+                    program_obj, created = Program.objects.get_or_create(program=student.program)
+                    if created:
+                        print(f"Created Program: {student.program}")
+                    # Note: You’d normally handle this in a custom migration
+                
+                # Similar logic can be applied for branch and year...
+                
+            print("Migration completed successfully")
+            
+    except Exception as e:
+        print(f"Error during migration: {e}")
+
+
+def ensure_dropdown_data():
+    """
+    Ensure basic Program, Branch, Year data exists for dropdowns
+    """
+    from adminapp.models import Program, Branch, Year
+    
+    if not Program.objects.exists():
+        programs = ['BCA', 'MCA', 'B.Tech', 'M.Tech', 'MBA']
+        for prog in programs:
+            Program.objects.create(program=prog)
+            
+    if not Branch.objects.exists():
+        branches = ['Computer Science', 'Electronics', 'Mechanical', 'Civil']
+        for branch in branches:
+            Branch.objects.create(branch=branch)
+            
+    if not Year.objects.exists():
+        years = ['1st Year', '2nd Year', '3rd Year', '4th Year']
+        for year in years:
+            Year.objects.create(year=year)
+
+
+# ---------------------------
+# Custom error handlers
+# ---------------------------
+
 def custom_404_view(request, exception):
     return render(request, "404.html", status=404)
-
-

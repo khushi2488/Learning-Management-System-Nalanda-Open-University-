@@ -1,0 +1,659 @@
+{% extends 'studentparent.html' %}
+
+{% block body %}
+<style>
+    /* Professional Color Scheme */
+    .enquiry-detail-container {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 40px 0;
+    }
+    
+    .detail-card {
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        border: none;
+        overflow: hidden;
+        margin-bottom: 24px;
+    }
+    
+    /* Back Button */
+    .btn-secondary {
+        background-color: #f7fafc;
+        border: 2px solid #e2e8f0;
+        color: #4a5568;
+        padding: 10px 24px;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-secondary:hover {
+        background-color: #e2e8f0;
+        border-color: #cbd5e0;
+        color: #2d3748;
+        transform: translateY(-2px);
+    }
+    
+    /* Alert Messages */
+    .alert {
+        border-radius: 12px;
+        border: none;
+        padding: 16px 20px;
+        margin-bottom: 24px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    }
+    
+    .alert-success {
+        background: linear-gradient(135deg, #d4fc79 0%, #96e6a1 100%);
+        color: #22543d;
+    }
+    
+    .alert-danger {
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        color: #742a2a;
+    }
+    
+    .alert-warning {
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        color: #744210;
+    }
+    
+    .alert-info {
+        background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
+        color: #2c5282;
+    }
+    
+    /* Card Header */
+    .card-header {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 24px 32px;
+    }
+    
+    .card-header h5 {
+        color: #ffffff;
+        margin: 0;
+        font-weight: 700;
+        font-size: 20px;
+    }
+    
+    .card-header .badge {
+        padding: 8px 16px;
+        font-size: 13px;
+        font-weight: 600;
+        border-radius: 8px;
+    }
+    
+    /* Card Body */
+    .card-body {
+        padding: 32px;
+    }
+    
+    .card-body h4 {
+        color: #2d3748;
+        font-weight: 700;
+        margin-bottom: 24px;
+        font-size: 24px;
+    }
+    
+    .card-body h6 {
+        color: #4a5568;
+        font-weight: 600;
+        font-size: 16px;
+        margin-bottom: 16px;
+    }
+    
+    /* Info Box */
+    .info-box {
+        padding: 16px 0;
+    }
+    
+    .info-box small {
+        font-size: 12px;
+        margin-bottom: 6px;
+        color: #718096;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        font-weight: 600;
+    }
+    
+    .info-box strong {
+        color: #2d3748;
+        font-size: 15px;
+    }
+    
+    .info-box .badge {
+        font-size: 13px;
+        padding: 6px 14px;
+    }
+    
+    /* Message Box */
+    .message-box {
+        border-left: 4px solid #667eea;
+        background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+        padding: 24px;
+        border-radius: 8px;
+        color: #2d3748;
+        line-height: 1.8;
+    }
+    
+    /* Replies Container */
+    .replies-container {
+        max-height: 600px;
+        overflow-y: auto;
+    }
+    
+    .reply-item {
+        padding: 20px;
+        border-radius: 12px;
+        transition: all 0.3s ease;
+        margin-bottom: 16px;
+    }
+    
+    .reply-item:hover {
+        transform: translateX(4px);
+    }
+    
+    .admin-reply {
+        background: linear-gradient(135deg, #e0e7ff 0%, #f0f4ff 100%);
+        border-left: 4px solid #667eea;
+    }
+    
+    .student-reply {
+        background: #f7fafc;
+        border-left: 4px solid #cbd5e0;
+    }
+    
+    .avatar-circle {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+    
+    .avatar-circle.bg-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    .avatar-circle.bg-secondary {
+        background: linear-gradient(135deg, #cbd5e0 0%, #a0aec0 100%);
+    }
+    
+    .reply-message {
+        background-color: #ffffff;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 16px;
+        word-wrap: break-word;
+        line-height: 1.7;
+        color: #2d3748;
+    }
+    
+    .admin-reply .reply-message {
+        border-left: 3px solid #667eea;
+    }
+    
+    .reply-header strong {
+        font-size: 15px;
+        color: #2d3748;
+    }
+    
+    .text-primary {
+        color: #667eea !important;
+    }
+    
+    /* Badges */
+    .badge {
+        padding: 6px 14px;
+        font-size: 12px;
+        font-weight: 600;
+        border-radius: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .badge-warning {
+        background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+        color: #744210;
+    }
+    
+    .badge-info {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: #ffffff;
+    }
+    
+    .badge-success {
+        background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        color: #22543d;
+    }
+    
+    .badge-danger {
+        background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        color: #ffffff;
+    }
+    
+    .badge-secondary {
+        background-color: #cbd5e0;
+        color: #4a5568;
+    }
+    
+    .badge-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: #ffffff;
+    }
+    
+    /* Reply Form */
+    .reply-form-section {
+        background: linear-gradient(135deg, #f7fafc 0%, #edf2f7 100%);
+        padding: 28px;
+        border-radius: 12px;
+        border: 2px solid #e2e8f0;
+    }
+    
+    .form-group label {
+        color: #4a5568;
+        font-weight: 600;
+        font-size: 14px;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .form-control {
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        padding: 12px 16px;
+        font-size: 15px;
+        color: #2d3748;
+        background-color: #ffffff;
+        transition: all 0.3s ease;
+    }
+    
+    .form-control:focus {
+        border-color: #667eea;
+        background-color: #ffffff;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        color: #2d3748;
+        outline: none;
+    }
+    
+    .form-control::placeholder {
+        color: #a0aec0;
+    }
+    
+    textarea.form-control {
+        resize: vertical;
+        min-height: 120px;
+        color: #2d3748;
+    }
+    
+    .form-text {
+        color: #718096;
+        font-size: 13px;
+    }
+    
+    /* Buttons */
+    .btn-primary {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border: none;
+        padding: 12px 28px;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        color: #ffffff;
+    }
+    
+    .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        color: #ffffff;
+    }
+    
+    .btn-light {
+        background-color: #f7fafc;
+        border: 2px solid #e2e8f0;
+        color: #4a5568;
+        padding: 12px 28px;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+    
+    .btn-light:hover {
+        background-color: #e2e8f0;
+        border-color: #cbd5e0;
+        color: #2d3748;
+        transform: translateY(-2px);
+    }
+    
+    /* Empty State */
+    .text-center i.mdi {
+        color: #cbd5e0;
+    }
+    
+    .text-muted {
+        color: #718096 !important;
+    }
+    
+    /* Scrollbar Styling */
+    .replies-container::-webkit-scrollbar {
+        width: 8px;
+    }
+    
+    .replies-container::-webkit-scrollbar-track {
+        background: #f7fafc;
+        border-radius: 10px;
+    }
+    
+    .replies-container::-webkit-scrollbar-thumb {
+        background: #cbd5e0;
+        border-radius: 10px;
+    }
+    
+    .replies-container::-webkit-scrollbar-thumb:hover {
+        background: #a0aec0;
+    }
+    
+    /* Horizontal Rule */
+    hr {
+        border-top: 2px solid #e2e8f0;
+        margin: 24px 0;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+        .card-body {
+            padding: 20px;
+        }
+        
+        .reply-item {
+            padding: 16px;
+        }
+        
+        .avatar-circle {
+            width: 40px;
+            height: 40px;
+            font-size: 20px;
+        }
+        
+        .reply-header {
+            flex-direction: column;
+            align-items: flex-start !important;
+        }
+        
+        .reply-header small {
+            margin-top: 8px;
+        }
+        
+        .reply-form-section {
+            padding: 20px;
+        }
+    }
+</style>
+
+<div class="enquiry-detail-container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <!-- Back Button -->
+                <div class="mb-3">
+                    <a href="{% url 'studentapp:student_enquiry_dashboard' %}" class="btn btn-secondary">
+                        <i class="mdi mdi-arrow-left"></i> Back to My Enquiries
+                    </a>
+                </div>
+                
+                <!-- Messages -->
+                {% if messages %}
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    {% endfor %}
+                {% endif %}
+                
+                <!-- Enquiry Details Card -->
+                <div class="card detail-card mb-4">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">
+                                <i class="mdi mdi-ticket-account"></i> Enquiry #{{ enquiry.id }}
+                            </h5>
+                            <div>
+                                {% if enquiry.status == 'pending' %}
+                                    <span class="badge badge-warning" style="font-size: 14px;">Pending</span>
+                                {% elif enquiry.status == 'in_progress' %}
+                                    <span class="badge badge-info" style="font-size: 14px;">In Progress</span>
+                                {% elif enquiry.status == 'resolved' %}
+                                    <span class="badge badge-success" style="font-size: 14px;">Resolved</span>
+                                {% else %}
+                                    <span class="badge badge-secondary" style="font-size: 14px;">{{ enquiry.status|title }}</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <!-- Subject -->
+                        <h4 class="mb-3">{{ enquiry.subject }}</h4>
+                        
+                        <!-- Meta Information -->
+                        <div class="row mb-4">
+                            <div class="col-md-3">
+                                <div class="info-box">
+                                    <small class="d-block">Category</small>
+                                    <span class="badge badge-secondary">
+                                        {{ enquiry.category|default:"General"|title }}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="info-box">
+                                    <small class="d-block">Priority</small>
+                                    {% if enquiry.priority == 'high' %}
+                                        <span class="badge badge-danger">High</span>
+                                    {% elif enquiry.priority == 'medium' %}
+                                        <span class="badge badge-warning">Medium</span>
+                                    {% else %}
+                                        <span class="badge badge-info">Low</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="info-box">
+                                    <small class="d-block">Submitted By</small>
+                                    <strong>{{ enquiry.name }}</strong>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="info-box">
+                                    <small class="d-block">Date</small>
+                                    <strong>
+                                        {% if enquiry.created_at %}
+                                            {{ enquiry.created_at|date:"d M Y, H:i" }}
+                                        {% else %}
+                                            Recently
+                                        {% endif %}
+                                    </strong>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Contact Information -->
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <small class="d-block text-muted" style="text-transform: uppercase; font-weight: 600; font-size: 12px; letter-spacing: 0.5px; margin-bottom: 6px;">Email</small>
+                                <strong style="color: #2d3748;">{{ enquiry.emailaddress }}</strong>
+                            </div>
+                            <div class="col-md-6">
+                                <small class="d-block text-muted" style="text-transform: uppercase; font-weight: 600; font-size: 12px; letter-spacing: 0.5px; margin-bottom: 6px;">Contact Number</small>
+                                <strong style="color: #2d3748;">{{ enquiry.contactno }}</strong>
+                            </div>
+                        </div>
+                        
+                        <hr>
+                        
+                        <!-- Original Message -->
+                        <div class="original-message">
+                            <h6 class="mb-3">
+                                <i class="mdi mdi-message-text"></i> Original Message:
+                            </h6>
+                            <div class="message-box">
+                                {{ enquiry.message|linebreaks }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Replies Section -->
+                <div class="card detail-card">
+                    <div class="card-header" style="background: #ffffff; border-bottom: 2px solid #e2e8f0;">
+                        <h5 class="mb-0" style="color: #2d3748;">
+                            <i class="mdi mdi-comment-multiple-outline"></i> 
+                            Conversation ({{ replies.count }} {% if replies.count == 1 %}reply{% else %}replies{% endif %})
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Replies List -->
+                        {% if replies %}
+                            <div class="replies-container">
+                                {% for reply in replies %}
+                                <div class="reply-item {% if reply.is_admin %}admin-reply{% else %}student-reply{% endif %}">
+                                    <div class="d-flex">
+                                        <!-- Avatar -->
+                                        <div class="reply-avatar mr-3">
+                                            {% if reply.is_admin %}
+                                                <div class="avatar-circle bg-primary text-white">
+                                                    <i class="mdi mdi-shield-account"></i>
+                                                </div>
+                                            {% else %}
+                                                <div class="avatar-circle bg-secondary text-white">
+                                                    <i class="mdi mdi-account-circle"></i>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        
+                                        <!-- Reply Content -->
+                                        <div class="reply-content flex-grow-1">
+                                            <!-- Reply Header -->
+                                            <div class="reply-header d-flex justify-content-between align-items-center mb-2">
+                                                <div>
+                                                    <strong class="{% if reply.is_admin %}text-primary{% endif %}">
+                                                        {% if reply.is_admin %}
+                                                            <i class="mdi mdi-shield-check"></i> Admin Support
+                                                        {% else %}
+                                                            {{ stu.name }} (You)
+                                                        {% endif %}
+                                                    </strong>
+                                                    {% if reply.is_admin %}
+                                                        <span class="badge badge-primary ml-2">Official Response</span>
+                                                    {% endif %}
+                                                </div>
+                                                <small class="text-muted">
+                                                    <i class="mdi mdi-clock-outline"></i>
+                                                    {% if reply.created_at %}
+                                                        {{ reply.created_at|date:"d M Y, H:i" }}
+                                                    {% else %}
+                                                        Just now
+                                                    {% endif %}
+                                                </small>
+                                            </div>
+                                            
+                                            <!-- Reply Message -->
+                                            <div class="reply-message">
+                                                {{ reply.message|linebreaks }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            <div class="text-center py-5">
+                                <i class="mdi mdi-comment-outline text-muted" style="font-size: 64px;"></i>
+                                <p class="text-muted mt-3">No replies yet.</p>
+                                <p class="text-muted">Our support team will respond to your enquiry soon.</p>
+                            </div>
+                        {% endif %}
+                        
+                        <hr class="my-4">
+                        
+                        <!-- Add Reply Form -->
+                        {% if enquiry.status != 'resolved' %}
+                            <div class="reply-form-section">
+                                <h6 class="mb-3">
+                                    <i class="mdi mdi-reply"></i> Add Your Response
+                                </h6>
+                                <form method="POST" class="forms-sample">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="reply_message">Your Message</label>
+                                        <textarea name="reply_message" 
+                                                  id="reply_message"
+                                                  class="form-control" 
+                                                  rows="5" 
+                                                  placeholder="Type your message here..."
+                                                  required></textarea>
+                                        <small class="form-text text-muted">
+                                            Add any additional information or ask questions about your enquiry.
+                                        </small>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="mdi mdi-send"></i> Send Reply
+                                    </button>
+                                    <a href="{% url 'studentapp:student_enquiry_dashboard' %}" class="btn btn-light ml-2">
+                                        Cancel
+                                    </a>
+                                </form>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-success d-flex align-items-center">
+                                <i class="mdi mdi-check-circle mr-2" style="font-size: 24px;"></i>
+                                <div>
+                                    <strong>This enquiry has been resolved.</strong>
+                                    <p class="mb-0">If you need further assistance, please submit a new enquiry.</p>
+                                </div>
+                            </div>
+                            <a href="{% url 'studentapp:create_enquiry' %}" class="btn btn-primary">
+                                <i class="mdi mdi-plus"></i> Create New Enquiry
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Auto-scroll to bottom of replies on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        const repliesContainer = document.querySelector('.replies-container');
+        if (repliesContainer) {
+            repliesContainer.scrollTop = repliesContainer.scrollHeight;
+        }
+    });
+    
+    // Auto-dismiss alerts after 5 seconds
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(function() {
+            const alerts = document.querySelectorAll('.alert');
+            alerts.forEach(function(alert) {
+                const closeButton = alert.querySelector('.close');
+                if (closeButton) {
+                    closeButton.click();
+                }
+            });
+        }, 5000);
+    });
+</script>
+{% endblock %}

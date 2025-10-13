@@ -1,0 +1,82 @@
+{% extends 'studentapp/studentparent.html' %}
+{% load static %}
+
+{% block body %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Submit Assignment</h4>
+                <a href="{% url 'studentapp:list_assignments' %}" class="btn btn-secondary btn-sm">
+                    <i class="mdi mdi-arrow-left"></i> Back to Assignments
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-8">
+                        <h5>{{ assignment.title }}</h5>
+                        <p><strong>Course:</strong> {{ assignment.course.title }}</p>
+                        <p><strong>Due Date:</strong> {{ assignment.due_date|date:"M d, Y H:i" }}</p>
+                        <p><strong>Total Marks:</strong> {{ assignment.total_marks }}</p>
+                        {% if assignment.description %}
+                            <p><strong>Description:</strong></p>
+                            <div class="bg-light p-3 rounded">{{ assignment.description|linebreaks }}</div>
+                        {% endif %}
+                        {% if assignment.file %}
+                            <p><strong>Assignment File:</strong>
+                                <a href="{{ assignment.file.url }}" target="_blank" class="btn btn-info btn-sm">
+                                    <i class="mdi mdi-download"></i> Download Assignment
+                                </a>
+                            </p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                {% if assignment.is_overdue %}
+                                    <h6 class="text-danger">Assignment is Overdue</h6>
+                                    <p class="mb-0">Late submissions may be penalized</p>
+                                {% else %}
+                                    <h6 class="text-success">Assignment is Active</h6>
+                                    <p class="mb-0">Submit before due date</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <div class="form-group">
+                        <label for="{{ form.submitted_file.id_for_label }}">Upload Your Submission</label>
+                        {{ form.submitted_file }}
+                        {% if form.submitted_file.errors %}
+                            <div class="text-danger">{{ form.submitted_file.errors.0 }}</div>
+                        {% endif %}
+                        <small class="form-text text-muted">
+                            Allowed formats: PDF, DOC, DOCX, PPT, PPTX, TXT, ZIP, RAR, JPG, JPEG, PNG
+                        </small>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="mdi mdi-upload"></i> Submit Assignment
+                        </button>
+                        <a href="{% url 'studentapp:list_assignments' %}" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
