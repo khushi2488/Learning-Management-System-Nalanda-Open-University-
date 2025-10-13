@@ -1,37 +1,382 @@
 {% extends "adminparent.html" %}
 {% block body %}
-<div class="row">
-  <div class="col-sm-12">
-    <h1 style="text-align: center; color: rgb(6, 6, 106)">
-      View All Study Material
-    </h1>
-    <div class="table-responsive">
-      <table class="table table-bordered align-middle">
-        <tr style="color: rgb(6, 6, 106)">
-          <th>#</th>
-          <th>Program</th>
-          <th>Branch</th>
-          <th>Year</th>
-          <th>Title</th>
-          <th>File Name</th>
-          <th>Download</th>
-        </tr>
+<style>
+  .material-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
 
-        {% for m in mat %}
-        <tr style="color: steelblue">
-          <td>{{forloop.counter}}</td>
-          <td>{{m.course.program.program}}</td>
-          <td>{{m.course.branch.branch}}</td>
-          <td>{{m.course.year.year}}</td>
-          <td>{{m.title}}</td>
-          <td>{{m.file.name}}</td>
-          <td>
-            <a href="{{m.file.url}}">Download</a>
-          </td>
-        </tr>
-        {% endfor %}
-      </table>
+  .material-header h1 {
+    color: white;
+    font-weight: 600;
+    margin: 0;
+    font-size: 2rem;
+  }
+
+  .material-header p {
+    color: rgba(255, 255, 255, 0.9);
+    margin: 0.5rem 0 0 0;
+    font-size: 0.95rem;
+  }
+
+  .filter-section {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  }
+
+  .filter-section .form-control,
+  .filter-section .form-select {
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+    padding: 0.6rem 1rem;
+  }
+
+  .filter-section .form-control:focus,
+  .filter-section .form-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  }
+
+  .stats-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .stat-card {
+    background: white;
+    padding: 1.25rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-left: 4px solid;
+  }
+
+  .stat-card.total { border-left-color: #667eea; }
+  .stat-card.programs { border-left-color: #48bb78; }
+  .stat-card.branches { border-left-color: #ed8936; }
+  .stat-card.years { border-left-color: #e53e3e; }
+
+  .stat-card h6 {
+    color: #718096;
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+
+  .stat-card .stat-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #2d3748;
+  }
+
+  .table-container {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+  }
+
+  .custom-table {
+    margin: 0;
+    border: none;
+  }
+
+  .custom-table thead {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  .custom-table thead th {
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.813rem;
+    letter-spacing: 0.5px;
+    padding: 1rem;
+    border: none;
+    white-space: nowrap;
+  }
+
+  .custom-table tbody tr {
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #e2e8f0;
+  }
+
+  .custom-table tbody tr:hover {
+    background-color: #f7fafc;
+    transform: scale(1.01);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  .custom-table tbody td {
+    padding: 1rem;
+    color: #4a5568;
+    vertical-align: middle;
+  }
+
+  .badge-program {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.813rem;
+    font-weight: 500;
+    display: inline-block;
+  }
+
+  .badge-branch {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.813rem;
+    font-weight: 500;
+    display: inline-block;
+  }
+
+  .badge-year {
+    background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+    color: white;
+    padding: 0.4rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.813rem;
+    font-weight: 500;
+    display: inline-block;
+  }
+
+  .file-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .file-icon {
+    width: 32px;
+    height: 32px;
+    background: #edf2f7;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #667eea;
+    font-weight: 600;
+    font-size: 0.75rem;
+  }
+
+  .file-name {
+    flex: 1;
+    font-size: 0.875rem;
+    color: #4a5568;
+    word-break: break-word;
+  }
+
+  .download-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border-radius: 8px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    font-size: 0.875rem;
+    transition: all 0.3s ease;
+    border: none;
+  }
+
+  .download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    color: white;
+  }
+
+  .download-btn:active {
+    transform: translateY(0);
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #718096;
+  }
+
+  .empty-state i {
+    font-size: 4rem;
+    color: #cbd5e0;
+    margin-bottom: 1rem;
+  }
+
+  .empty-state h4 {
+    color: #4a5568;
+    margin-bottom: 0.5rem;
+  }
+
+  .serial-number {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.875rem;
+  }
+
+  .title-highlight {
+    font-weight: 600;
+    color: #2d3748;
+    font-size: 0.938rem;
+  }
+
+  @media (max-width: 768px) {
+    .material-header h1 {
+      font-size: 1.5rem;
+    }
+    
+    .stats-cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .filter-section {
+      padding: 1rem;
+    }
+  }
+</style>
+
+<div class="container-fluid">
+  <!-- Header Section -->
+  <div class="material-header">
+    <h1>📚 Study Material Library</h1>
+    <p>Manage and access all study materials across programs and branches</p>
+  </div>
+
+  <!-- Statistics Cards -->
+  <div class="stats-cards">
+    <div class="stat-card total">
+      <h6>Total Materials</h6>
+      <div class="stat-value">{{ mat|length }}</div>
+    </div>
+    <div class="stat-card programs">
+      <h6>Programs</h6>
+      <div class="stat-value">{{ mat|length }}</div>
+    </div>
+    <div class="stat-card branches">
+      <h6>Branches</h6>
+      <div class="stat-value">{{ mat|length }}</div>
+    </div>
+    <div class="stat-card years">
+      <h6>Academic Years</h6>
+      <div class="stat-value">{{ mat|length }}</div>
     </div>
   </div>
+
+
+  <!-- Table Section -->
+  <div class="table-container">
+    {% if mat %}
+    <div class="table-responsive">
+      <table class="table custom-table align-middle" id="materialsTable">
+        <thead>
+          <tr>
+            <th style="width: 60px;">#</th>
+            <th>Program</th>
+            <th>Branch</th>
+            <th>Year</th>
+            <th>Title</th>
+            <th>File Details</th>
+            <th style="width: 120px; text-align: center;">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in mat %}
+          <tr>
+            <td>
+              <div class="serial-number">{{forloop.counter}}</div>
+            </td>
+            <td>
+              <span class="badge-program">{{m.course.program.program}}</span>
+            </td>
+            <td>
+              <span class="badge-branch">{{m.course.branch.branch}}</span>
+            </td>
+            <td>
+              <span class="badge-year">{{m.course.year.year}}</span>
+            </td>
+            <td>
+              <span class="title-highlight">{{m.title}}</span>
+            </td>
+            <td>
+              <div class="file-info">
+                <div class="file-icon">
+                  {% if 'pdf' in m.file.name|lower %}PDF
+                  {% elif 'png' in m.file.name|lower or 'jpg' in m.file.name|lower %}IMG
+                  {% elif 'doc' in m.file.name|lower %}DOC
+                  {% else %}FILE
+                  {% endif %}
+                </div>
+                <span class="file-name">{{m.file.name|slice:"10:"}}</span>
+              </div>
+            </td>
+             <td style="text-align: center;">
+              <a href="{% url 'adminapp:material_download' m.id %}" class="download-btn">
+                ⬇️ Download
+              </a>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <i>📭</i>
+      <h4>No Study Materials Found</h4>
+      <p>There are currently no study materials uploaded to the system.</p>
+    </div>
+    {% endif %}
+  </div>
 </div>
+
+<script>
+// Search and Filter functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const searchInput = document.getElementById('searchInput');
+  const table = document.getElementById('materialsTable');
+  
+  if (searchInput && table) {
+    searchInput.addEventListener('keyup', function() {
+      const searchTerm = this.value.toLowerCase();
+      const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+      
+      Array.from(rows).forEach(row => {
+        const text = row.textContent.toLowerCase();
+        row.style.display = text.includes(searchTerm) ? '' : 'none';
+      });
+    });
+  }
+});
+
+function resetFilters() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('filterProgram').value = '';
+  document.getElementById('filterBranch').value = '';
+  document.getElementById('filterYear').value = '';
+  
+  const table = document.getElementById('materialsTable');
+  if (table) {
+    const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+    Array.from(rows).forEach(row => row.style.display = '');
+  }
+}
+</script>
 {% endblock body %}
