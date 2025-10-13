@@ -430,99 +430,118 @@
 
   /* testimonial design  */
 
-  .testimonial-section {
-    all: reset;
-    background-color: #fff;
-    padding: 50px 10px;
-    color: #0a1d69;
-    text-align: center;
-    font-family: 'Arial', sans-serif;
-    overflow: hidden;
-    width: 100%;
-    background-color: rgb(44, 151, 193);
-    margin-right: 0px !important;
+.testimonial-section {
+  background-color: rgb(44, 151, 193);
+  padding: 50px 10px;
+  color: #0a1d69;
+  font-family: 'Arial', sans-serif;
+  width: 100%;
+}
 
-  }
+.testimonial-section h2 {
+  font-size: 2.2em;
+  margin-bottom: 30px;
+  font-weight: bold;
+  text-align: left;
+  color: #fff;
+}
 
-  .testimonial-section h2 {
-    font-size: 2.2em;
-    margin-bottom: 20px;
-    font-weight: bold;
-    color: #0a1d69;
-    letter-spacing: 1px;
-    text-align: left;
-  }
+.testimonial-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  max-width: 1100px;
+  margin: auto;
+}
 
-  /* Slider Container */
+.arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10;
+  background-color: #f2f2f2;
+  color: #fff;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
 
-  .testimonial-wrapper {
-    width: 100%;
-    max-width: 1100px;
-    margin: auto;
-    overflow: hidden;
-    position: relative;
-  }
+.arrow:hover:not(:disabled) {
+  transform: translateY(-50%) scale(1.1);
+}
+
+.arrow.left { left: -15px; }
+.arrow.right { right: -15px; }
+
+.arrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.testimonial-slider {
+  display: flex;
+  gap: 30px;
+  transition: transform 0.5s ease-in-out;
+  width: max-content;
+}
+
+.testimonial-card {
+  flex: 0 0 calc((100% / 3) - 20px);
+  background: #ffffff;
+  border-radius: 25px;
+  padding: 25px 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
+}
+
+.testimonial-card:hover {
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+  background: #d2eaff;
+}
+
+.testimonial-text {
+  font-style: italic;
+  line-height: 1.6;
+  margin-bottom: 20px;
+  color: #0a1d69;
+}
+
+.testimonial-name {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 5px;
+}
+
+.testimonial-role {
+  font-size: 0.9em;
+  color: #555;
+}
+
+/* Responsive Cards */
+@media (max-width: 900px) {
+  .testimonial-card { flex: 0 0 calc((70% - 10px)/2); }
+  .arrow.left { left: 0; }
+  .arrow.right { right: 0; }
+}
+
+@media (max-width: 600px) {
+  .testimonial-card { flex: 0 0 27%; 
+ }
+  .arrow.left { left: 5px; }
+  .arrow.right { right: 5px; }
+  .arrow { padding: 14px 20px; font-size: 24px; }
+}
 
 
-  .testimonial-slider {
-    display: flex;
-    transition: transform 0.5s ease-in-out;
-    gap: 30px;
-  }
 
-
-  /* Individual Card */
-  .testimonial-card {
-    flex: 0 0 calc((100% - 60px)/3);
-    /* 3 visible cards minus gaps */
-    box-sizing: border-box;
-    padding: 20px;
-    border-radius: 20px;
-    background: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    opacity: 0.8;
-    transition: transform 0.5s, box-shadow 0.5s;
-  }
-
-  /* Highlighted Card (center focus) */
-  .testimonial-card.active {
-
-    opacity: 1;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-
-  }
-
-  /* Card Text Styling */
-  .testimonial-text {
-    font-style: italic;
-    font-size: 1em;
-    margin-bottom: 20px;
-    line-height: 1.6;
-  }
-
-  .testimonial-name {
-    font-weight: bold;
-    font-size: 1.1em;
-    margin-bottom: 5px;
-  }
-
-  .testimonial-role {
-    font-size: 0.9em;
-    color: #555;
-  }
-
-  /* Responsive Design */
-  @media (max-width: 900px) {
-    .testimonial-card {
-      flex: 0 0 calc((100% - 30px)/2);
-    }
-  }
-
-  @media (max-width: 600px) {
-    .testimonial-card {
-      flex: 0 0 100%;
-    }
-  }
 </style>
 <!--Home-->
 <!-- <div class="row">
@@ -822,65 +841,67 @@
 
 <!-- testimonial section  -->
 <div class="row" style="margin-top: 5rem;">
-<div class="testimonial-section container ">
-  <div class="container">
-    <h2>What Our Users Say</h2>
-    <div class="testimonial-wrapper">
-      <div class="testimonial-slider" id="testimonialcards">
+  <div class="testimonial-section container">
+    <div class="container">
+      <h2>What Our Users Say</h2>
 
-        <div class="testimonial-card">
-          <p class="testimonial-text">"NOU e-Gyan has completely transformed the way I study. The online materials are
-            well-organized and easy to access anytime. I no longer worry about missing classes or notes, and the
-            assessments help me track my progress effectively."</p>
-          <h3 class="testimonial-name">Priya Sharma</h3>
-          <span class="testimonial-role">Student</span>
+      <div class="testimonial-wrapper">
+        <!-- Left Arrow -->
+        <button class="arrow left" id="prevBtn">&#10094;</button>
+
+        <!-- Cards Slider -->
+        <div class="testimonial-slider" id="testimonialcards">
+          <div class="testimonial-card">
+            <p class="testimonial-text">"NOU e-Gyan has completely transformed the way I study. The online materials are
+              well-organized and easy to access anytime."</p>
+            <h3 class="testimonial-name">Priya Sharma</h3>
+            <h3 class="testimonial-role">Student</h3>
+          </div>
+
+          <div class="testimonial-card">
+            <p class="testimonial-text">"The portal is very user-friendly and provides everything I need for my courses.
+              It has made learning so convenient and flexible."</p>
+            <h3 class="testimonial-name">Rohit Verma</h3>
+            <h3 class="testimonial-role">Student</h3>
+          </div>
+
+          <div class="testimonial-card">
+            <p class="testimonial-text">"As a working student, I found NOU e-Gyan to be a lifesaver. The support from
+              teachers and admins is also excellent."</p>
+            <h3 class="testimonial-name">Anjali Kumar</h3>
+            <h3 class="testimonial-role">Student</h3>
+          </div>
+
+          <div class="testimonial-card">
+            <p class="testimonial-text">"Earlier, managing assignments was difficult, but with NOU e-Gyan, everything is
+              just a click away."</p>
+            <h3 class="testimonial-name">Arjun Mehata</h3>
+            <h3 class="testimonial-role">Student</h3>
+          </div>
+
+          <div class="testimonial-card">
+            <p class="testimonial-text">"I really appreciate how well-structured the NOU e-Gyan platform is. The content
+              quality is excellent and always available."</p>
+            <h3 class="testimonial-name">Sneha Singh</h3>
+            <h3 class="testimonial-role">Student</h3>
+          </div>
+
+          <div class="testimonial-card">
+            <p class="testimonial-text">"The NOU e-Gyan portal has made distance learning truly interactive and easy to
+              use."</p>
+            <h3 class="testimonial-name">Neha Ranjan</h3>
+            <h3 class="testimonial-role">Student</h3>
+          </div>
         </div>
 
-        <div class="testimonial-card">
-          <p class="testimonial-text">"The portal is very user-friendly and provides everything I need for my courses. I
-            especially love that I can study from anywhere in the world. It has made learning so convenient and
-            flexible."</p>
-          <h3 class="testimonial-name">Rohit Verma</h3>
-          <span class="testimonial-role">Student</span>
-        </div>
-
-        <div class="testimonial-card">
-          <p class="testimonial-text">"As a working student, I found NOU e-Gyan to be a lifesaver. The ability to access
-            study materials online and monitor my progress keeps me motivated. The support from teachers and admins is
-            also excellent."</p>
-          <h3 class="testimonial-name">Anjali Kumar</h3>
-          <span class="testimonial-role">Student</span>
-        </div>
-
-        <div class="testimonial-card">
-          <p class="testimonial-text">"Earlier, managing assignments and tracking performance was difficult, but with
-            NOU e-Gyan, everything is just a click away. The portal is fast, reliable, and keeps me connected with my
-            teachers anytime."</p>
-          <h3 class="testimonial-name">Arjun Mehata</h3>
-          <span class="testimonial-role">Student</span>
-        </div>
-
-        <div class="testimonial-card">
-          <p class="testimonial-text">"I really appreciate how well-structured the NOU e-Gyan platform is. The content
-            quality is excellent, and it’s available 24×7, which helps me study at my own pace. It has made online
-            learning simple and effective."</p>
-          <h3 class="testimonial-name">Sneha Singh</h3>
-          <span class="testimonial-role">Student</span>
-        </div>
-
-        <div class="testimonial-card">
-          <p class="testimonial-text">"The NOU e-Gyan portal has made distance learning truly interactive. I can easily
-            download study materials, watch lectures, and take assessments from home. It’s a big step towards digital
-            education!"</p>
-          <h3 class="testimonial-name">Neha Ranjan</h3>
-          <span class="testimonial-role">Student</span>
-        </div>
-
+        <!-- Right Arrow -->
+        <button class="arrow right" id="nextBtn">&#10095;</button>
       </div>
     </div>
   </div>
 </div>
-</div>
+
+
 
 <!--contact section-->
 <div class="row" style="padding-top: 10vh">
@@ -916,72 +937,72 @@
   </section>
 </div>
 <script>
-  const slider = document.querySelector('.testimonial-slider');
-  const cards = Array.from(document.querySelectorAll('.testimonial-card'));
-  let visibleCards = 3;
-  let index = visibleCards; // start at first real card
+const slider = document.querySelector('.testimonial-slider');
+const cards = document.querySelectorAll('.testimonial-card');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
 
-  function updateVisibleCards() {
-    if (window.innerWidth <= 600) visibleCards = 1;
-    else if (window.innerWidth <= 900) visibleCards = 2;
-    else visibleCards = 3;
+let visibleCards = 3;
+let index = 0;
+
+function updateVisibleCards() {
+  if (window.innerWidth <= 600) visibleCards = 1;
+  else if (window.innerWidth <= 900) visibleCards = 2;
+  else visibleCards = 3;
+
+  if (index > cards.length - visibleCards) {
+    index = Math.max(cards.length - visibleCards, 0);
   }
-  updateVisibleCards();
-  window.addEventListener('resize', updateVisibleCards);
+  updateSlider();
+  updateArrowPosition();
+}
 
-  const gap = 30;
-  function getCardWidth() {
-    return cards[0].offsetWidth + gap;
-  }
+function getCardWidth() {
+  let gap = 30;
+  if(window.innerWidth<=600) gap=0;
+  else if(window.innerWidth<=900) gap=10;
+  return cards[0].offsetWidth + gap;
+}
 
-  // Clone last visibleCards and prepend
-  for (let i = cards.length - visibleCards; i < cards.length; i++) {
-    const clone = cards[i].cloneNode(true);
-    slider.insertBefore(clone, slider.firstChild);
-  }
-
-  // Clone first visibleCards and append
-  for (let i = 0; i < visibleCards; i++) {
-    const clone = cards[i].cloneNode(true);
-    slider.appendChild(clone);
-  }
-
-  // Update cards list after cloning
-  const allCards = slider.querySelectorAll('.testimonial-card');
-
-  // Position slider at first original card
+function updateSlider() {
   slider.style.transform = `translateX(-${index * getCardWidth()}px)`;
+  prevBtn.disabled = index === 0;
+  nextBtn.disabled = index >= cards.length - visibleCards;
+}
 
-  // Set active card
-  function setActiveCard() {
-    allCards.forEach(card => card.classList.remove('active'));
-    allCards[index].classList.add('active');
+// Dynamic arrow placement
+function updateArrowPosition() {
+  if (visibleCards === 1) {
+    prevBtn.style.left = "5px";
+    nextBtn.style.right = "5px";
+  } else if (visibleCards === 2) {
+    prevBtn.style.left = "0";
+    nextBtn.style.right = "0";
+  } else {
+    prevBtn.style.left = "-15px";
+    nextBtn.style.right = "-15px";
   }
-  setActiveCard();
+}
 
-  // Slide function
-  function slide() {
-    index++;
-    slider.style.transition = "transform 1.2s ease-in-out";
-    slider.style.transform = `translateX(-${index * getCardWidth()}px)`;
-    setActiveCard();
+// Next button
+nextBtn.addEventListener('click', () => {
+  index += visibleCards;
+  if (index > cards.length - visibleCards) index = cards.length - visibleCards;
+  updateSlider();
+});
 
-    // Loop seamlessly
-    if (index === allCards.length - visibleCards) {
-      setTimeout(() => {
-        slider.style.transition = "none";
-        index = visibleCards; // jump to first real card
-        slider.style.transform = `translateX(-${index * getCardWidth()}px)`;
-        setActiveCard();
-        setTimeout(() => slider.style.transition = "transform 1.2s ease-in-out", 50);
-      }, 1200);
-    }
-  }
+// Prev button
+prevBtn.addEventListener('click', () => {
+  index -= visibleCards;
+  if (index < 0) index = 0;
+  updateSlider();
+});
 
-  // Auto-slide
-  let slideInterval = setInterval(slide, 4000);
-  slider.addEventListener('mouseenter', () => clearInterval(slideInterval));
-  slider.addEventListener('mouseleave', () => slideInterval = setInterval(slide, 3000));
+window.addEventListener('resize', updateVisibleCards);
+
+// Initialize
+updateVisibleCards();
+
 
 
 </script>

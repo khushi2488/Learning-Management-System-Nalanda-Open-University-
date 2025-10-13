@@ -1,323 +1,548 @@
-{% extends 'parent.html' %} {% load static %} {% block body %}
+{% extends 'parent.html' %}
+{% load static %}
+{% block body %}
+
 <style>
-  .container {
-    width: 100%;
-  }
-  .container h1 {
+ /* hero section */
+  .hero {
+    background: linear-gradient(rgba(10, 29, 105, 0.7), rgba(10, 29, 105, 0.7)),
+    url("{% static 'images/bookslibrary.jpg' %}") center/cover no-repeat;
+    height: 45vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 3.5rem;
+    align-items: center;
+    color: white;
     text-align: center;
-    color: var(--heading-color);
-    font-weight: bold;
-    padding-top: 10vh;
-    font-family: poppins, sans-serif;
-    background-color: transparent;
-  }
-  h4 {
-    text-align: left;
-    color: var(--text-color);
-    font-weight: bold;
-    padding-top: 5vh;
-    padding-left: 5px;
-    font-family: poppins, sans-serif;
+    font-family: 'Poppins', sans-serif;
   }
 
-  @media (max-width: 600px) {
-    .row .col-sm-3 {
-      padding-left: 0px;
-      margin-top: 8vh;
-      padding-top: 0px;
-      padding-bottom: 0px;
-      padding-right: 0px;
-      align-content: center;
-    }
+  .hero h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    animation: fadeInDown 1s ease;
   }
-  @media (max-width: 530px) and (min-width: 350px) {
-    .home h3 {
-      text-align: center;
-      font-size: 17px;
+
+  .hero p {
+    font-size: 1rem;
+    margin-top: 10px;
+    font-weight: 500;
+    animation: fadeInUp 1s ease;
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
     }
-    .home p {
-      text-align: center;
-      font-size: small;
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 
-  /*Header Image*/
-  .home {
-    background-image: url(../static/images/bookslibrary.jpg);
-    width: 100%;
-    height: 38vh;
-    background-size: cover;
-    background-position: center;
-  }
-  /*Header Image End*/
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
 
-  /* Card styling to use theme variables */
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /*
+     COURSES INFO SECTION
+  */
+  .courses-info {
+    background: #f4f6fb;
+    border-radius: 12px;
+    padding: 30px 20px;
+    margin: 30px 5%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .courses-info h3 {
+    color: #0a1d69;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  .courses-info p {
+    color: #0a1d69;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  .courses-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .courses-info ul li {
+    background: #ffffff;
+    padding: 12px 18px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    color: #000;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+   
+  }
+
+  .courses-info ul li:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+  }
+
+  .courses-info ul li span {
+    margin-right: 8px;
+    font-size: 1.2rem;
+  }
+
+  /* 
+     TABS SECTION*/
+  .tabs {
+    text-align: center;
+    margin: 10px 0 10px;
+  }
+
+  .tab-btn {
+    background: #0a1d69;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    margin: 3rem;
+    border-radius: 25px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .tab-btn:hover,
+  .tab-btn.active {
+    background: #2a73cc;
+    transform: scale(1.05);
+  }
+
+  /*
+     COURSE GRID
+  */
+  .course-section {
+    padding: 30px 5% 60px;
+  }
+
+  .course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+  }
+
+  /*
+     COURSE CARD DESIGN - MATERIAL STYLE
+*/
   .course-card {
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);
-    border-radius: 5%;
-    background-color: var(--card-bg);
-    color: var(--card-text);
-    transition: var(--transition);
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    overflow: hidden;
+    color: #0a1d69;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
   }
 
   .course-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.7);
+    transform: translateY(-6px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
   }
 
-  .course-title-text {
-    color: var(--primary-color) !important;
-    font-weight: bold;
+  .course-card img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
   }
-  @media (min-width: 260px) and (max-width: 530px) {
-    .dist {
-      font-size: 11px;
-      text-align: center;
-      margin-left: 0px;
-      padding-bottom: 15px;
-      justify-content: center;
-      align-content: center;
+
+  .course-card-content {
+    padding: 15px 20px;
+  }
+
+  .course-card h5 {
+    margin: 10px 0 5px;
+    color: #2a73cc;
+    font-weight: 600;
+    font-size: 1.1rem;
+  }
+
+  .course-card p {
+    font-size: 14px;
+    margin: 4px 0;
+  }
+
+  .course-card button {
+    margin: 15px 0 15px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 25px;
+    background-color: #0a1d69;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .course-card button:hover {
+    background-color: #2a73cc;
+    transform: scale(1.05);
+  }
+
+  hr {
+    width: 80px;
+    height: 3px;
+    background: #2a73cc;
+    border: none;
+    margin: 15px auto;
+    border-radius: 2px;
+  }
+
+  @media (max-width: 600px) {
+    .hero h2 {
+      font-size: 1.4rem;
     }
-    .dist1 {
-      font-size: 17px;
-      text-align: center;
-      margin-left: 0px;
-      /* padding-bottom: 15px; */
-      justify-content: center;
-      align-content: center;
+
+    .hero p {
+      font-size: 0.9rem;
+    }
+
+    .courses-info ul {
+      flex-direction: column;
     }
   }
 </style>
 
-<!--Header Image-->
-<div class="row">
-  <section class="home">
-    <div
-      class="row"
-      style="
-        color: aliceblue;
-        font-weight: bolder;
-        font-family: poppins, sans-serif;
-        padding-top: 22vh;
-        text-align: center;
-      "
-    >
-      <h3 class="dist1"><b>From Our Content For Distance Learning</b></h3>
-      <p class="dist" style="font-family: poppins; font-weight: bolder">
-        NOU-e-Gyan PORTAL, CONCEPT BY NALANDA OPEN UNIVERSITY
-      </p>
-    </div>
-  </section>
+<!-- 
+     HERO SECTION
+ -->
+<section class="hero">
+  <h2>From Our Content For Distance Learning</h2>
+  <p>NOU-e-Gyan PORTAL, CONCEPT BY NALANDA OPEN UNIVERSITY</p>
+</section>
+
+<!--
+     COURSES INFO SECTION
+ -->
+<section class="courses-info">
+  <h3>Your Path to Knowledge Starts Here</h3>
+  <p>At Nalanda Open University, we offer a variety of UG, PG, and diploma courses to help you grow academically and professionally. Each program is designed to give you practical knowledge, develop your skills, and prepare you for real-world challenges.</p>
+  <ul>
+    <li>Wide Range of Programs</li>
+    <li>Guided Support</li>
+    <li>Career-Oriented Learning</li>
+    <li>Flexible & Accessible</li>
+  </ul>
+</section>
+
+<!-- 
+     COURSES HEADING
+ --> 
+<h2 style="text-align:center; font-weight: bold; margin-top: 40px; color:#0a1d69; font-size: 40px;">Our Courses</h2>
+<hr>
+
+<!--
+     COURSE TABS
+ -->
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('all', event)">All Courses</button>
+  <button class="tab-btn" onclick="showTab('ug', event)">UG Courses</button>
+  <button class="tab-btn" onclick="showTab('pg', event)">PG Courses</button>
+  <button class="tab-btn" onclick="showTab('diploma', event)">Diploma Courses</button>
 </div>
-<!--header image end-->
 
-<div class="container">
-  <div class="course-title">
-    <h1>COURSES</h1>
-    <hr />
-  </div>
-  <!--Row 1-->
-  <h4 style="padding-top: 5vh">UG COURSES</h4>
-  <div class="row ug-courses-row">
-    <div class="col-sm-3">
-      <div class="card course-card">
-        <img
-          class="card-img-top"
-          src="{% static 'images/bba.png' %}"
-          alt="Card image cap"
-        />
-        <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text course-title-text">
-            Bachelor in Business Administrat.
-          </p>
-          <p class="card-text">Under Graduation Course</p>
-          <p class="card-text">Duration: 3 years</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="card course-card">
-        <img
-          class="card-img-top"
-          src="{% static 'images/bca.png' %}"
-          alt="Card image cap"
-        />
-        <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text course-title-text">
-            Bachelor in Computer Application
-          </p>
-          <p class="card-text">Under Graduation Course</p>
-          <p class="card-text">Duration: 3 years</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="card course-card">
-        <img
-          class="card-img-top"
-          src="{% static 'images/bag.png' %}"
-          alt="Card image cap"
-        />
-        <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text course-title-text">Bachelor in Arts(Geography)</p>
-          <p class="card-text">Under Graduation Course</p>
-          <p class="card-text">Duration: 3 years</p>
-        </div>
-      </div>
-    </div>
-    <div class="col-sm-3">
-      <div class="card course-card">
-        <img
-          class="card-img-top"
-          src="{% static 'images/bcom.png' %}"
-          alt="Card image cap"
-        />
-        <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text course-title-text">Bachelor of Commerce</p>
-          <p class="card-text">Under Graduation Course</p>
-          <p class="card-text">Duration: 3 years</p>
-        </div>
-      </div>
-    </div>
-  </div>
+<!--
+     COURSE SECTIONS
+-->
+<section class="course-section">
 
-  <!--ROW 1 END-->
+  <!-- ALL COURSES -->
+  <div id="all" class="course-grid">
+    <!-- UG -->
+    <div class="course-card">
+      <img src="{% static 'images/bba.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Bachelor in Business Administration</h5>
+        <p>Under Graduation Course</p>
+        <p>Duration: 3 years</p>
 
-  <!--ROW 2 -->
-  <h4 style="padding-top: 10vh">PG COURSES</h4>
-  <div class="row">
-    <div class="col-sm-3">
-      <div class="card course-card">
-        <img
-          class="card-img-top"
-          src="{% static 'images/ma(environmental).png' %}"
-          alt="Card image cap"
-        />
-        <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text course-title-text">
-            Master of Arts (Environmental Sci.)
-          </p>
-          <p class="card-text">Post Graduation Course</p>
-          <p class="card-text">Duration: 2 years</p>
-        </div>
       </div>
     </div>
-    <div class="col-sm-3">
-      <div class="card course-card">
-        <img
-          class="card-img-top"
-          src="{% static 'images/ma(sanskrit).png' %}"
-          alt="Card image cap"
-        />
-        <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text course-title-text">Master of Arts (Sanskrit)</p>
-          <p class="card-text">Post Graduation Course</p>
-          <p class="card-text">Duration: 2 years</p>
-        </div>
+    <div class="course-card">
+      <img src="{% static 'images/bca.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Bachelor in Computer Application</h5>
+        <p>Under Graduation Course</p>
+        <p>Duration: 3 years</p>
+
       </div>
     </div>
-    <div class="col-sm-3">
-      <div class="card course-card">
-        <img
-          class="card-img-top"
-          src="{% static 'images/mca.png' %}"
-          alt="Card image cap"
-        />
-        <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text course-title-text">
-            Master in Computer Application
-          </p>
-          <p class="card-text">Post Graduation Course</p>
-          <p class="card-text">Duration: 2 years</p>
-        </div>
+    <div class="course-card">
+      <img src="{% static 'images/bag.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Bachelor of Arts (Geography)</h5>
+        <p>Under Graduation Course</p>
+        <p>Duration: 3 years</p>
+
       </div>
     </div>
-    <div class="col-sm-3">
-      <div class="card course-card">
-        <img
-          class="card-img-top"
-          src="{% static 'images/mcom.png' %}"
-          alt="Card image cap"
-        />
-        <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text course-title-text">Master of Commerce</p>
-          <p class="card-text">Post Graduation Course</p>
-          <p class="card-text">Duration: 2 years</p>
-        </div>
+    <div class="course-card">
+      <img src="{% static 'images/bcom.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Bachelor of Commerce</h5>
+        <p>Under Graduation Course</p>
+        <p>Duration: 3 years</p>
+
+      </div>
+    </div>
+
+    <!-- PG -->
+    <div class="course-card">
+      <img src="{% static 'images/ma(environmental).png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Master of Arts (Environmental Sci.)</h5>
+        <p>Post Graduation Course</p>
+        <p>Duration: 2 years</p>
+
+      </div>
+    </div>
+    <div class="course-card">
+      <img src="{% static 'images/ma(sanskrit).png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Master of Arts (Sanskrit)</h5>
+        <p>Post Graduation Course</p>
+        <p>Duration: 2 years</p>
+
+      </div>
+    </div>
+    <div class="course-card">
+      <img src="{% static 'images/mca.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Master in Computer Application</h5>
+        <p>Post Graduation Course</p>
+        <p>Duration: 2 years</p>
+
+      </div>
+    </div>
+    <div class="course-card">
+      <img src="{% static 'images/mcom.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Master of Commerce</h5>
+        <p>Post Graduation Course</p>
+        <p>Duration: 2 years</p>
+
+      </div>
+    </div>
+
+    <!-- Diploma -->
+    <div class="course-card">
+      <img src="{% static 'images/pgdfm.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>PG Diploma in Financial Management</h5>
+        <p>Diploma Course</p>
+        <p>Duration: 2 years</p>
+
+      </div>
+    </div>
+    <div class="course-card">
+      <img src="{% static 'images/pgdhet.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Post Graduation Diploma (Hindi-English Translate)</h5>
+        <p>Diploma Course</p>
+        <p>Duration: 2 years</p>
+
+      </div>
+    </div>
+    <div class="course-card">
+      <img src="{% static 'images/pgdmm.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Post Graduation Diploma (Marketing Management)</h5>
+        <p>Diploma Course</p>
+        <p>Duration: 2 years</p>
+
+      </div>
+    </div>
+    <div class="course-card">
+      <img src="{% static 'images/pgdys.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Post Graduation Diploma (Yogic Studies)</h5>
+        <p>Diploma Course</p>
+        <p>Duration: 2 years</p>
+
       </div>
     </div>
   </div>
-  <!--ROW2 END-->
 
-  <!--ROW3-->
+  <!-- UG -->
+  <div id="ug" class="course-grid" style="display:none;">
+    <div class="course-card">
+      <img src="{% static 'images/bba.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Bachelor in Business Administration</h5>
+        <p>Under Graduation Course</p>
+        <p>Duration: 3 years</p>
 
-  <h4 style="padding-top: 10vh">DIPLOMA COURSES</h4>
-  <div class="row" style="padding-bottom: 25px">
-    <div class="col-sm-3">
-      <div class="card course-card">
-        <img
-          class="card-img-top"
-          src="{% static 'images/pgdfm.png' %}"
-          alt="Card image cap"
-        />
-        <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text course-title-text">
-            PG Diploma in Financial Management
-          </p>
-          <p class="card-text">Diploma Course</p>
-          <p class="card-text">Duration: 2 years</p>
-        </div>
       </div>
     </div>
-    <div class="col-sm-3">
-      <div class="card course-card">
-        <img
-          class="card-img-top"
-          src="{% static 'images/pgdhet.png' %}"
-          alt="Card image cap"
-        />
-        <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text course-title-text">
-            Post Graduation Diploma (Hindi-English Translate)
-          </p>
-          <p class="card-text">Diploma Course</p>
-          <p class="card-text">Duration: 2 years</p>
-        </div>
+    <div class="course-card">
+      <img src="{% static 'images/bca.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Bachelor in Computer Application</h5>
+        <p>Under Graduation Course</p>
+        <p>Duration: 3 years</p>
+
       </div>
     </div>
-    <div class="col-sm-3">
-      <div class="card course-card">
-        <img
-          class="card-img-top"
-          src="{% static 'images/pgdmm.png' %}"
-          alt="Card image cap"
-        />
-        <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text course-title-text">
-            Post Graduation Diploma (Marketing Management)
-          </p>
-          <p class="card-text">Diploma Course</p>
-          <p class="card-text">Duration: 2 years</p>
-        </div>
+    <div class="course-card">
+      <img src="{% static 'images/bag.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Bachelor of Arts (Geography)</h5>
+        <p>Under Graduation Course</p>
+        <p>Duration: 3 years</p>
+
       </div>
     </div>
-    <div class="col-sm-3">
-      <div class="card course-card">
-        <img
-          class="card-img-top"
-          src="{% static 'images/pgdys.png' %}"
-          alt="Card image cap"
-        />
-        <div class="card-body" style="text-align: center; font-weight: bolder">
-          <p class="card-text course-title-text">
-            Post Graduation Diploma (Yogic Studies)
-          </p>
-          <p class="card-text">Diploma Course</p>
-          <p class="card-text">Duration: 2 years</p>
-        </div>
+    <div class="course-card">
+      <img src="{% static 'images/bcom.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Bachelor of Commerce</h5>
+        <p>Under Graduation Course</p>
+        <p>Duration: 3 years</p>
+
       </div>
     </div>
   </div>
-</div>
+
+  <!-- PG -->
+  <div id="pg" class="course-grid" style="display:none;">
+    <div class="course-card">
+      <img src="{% static 'images/ma(environmental).png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Master of Arts (Environmental Sci.)</h5>
+        <p>Post Graduation Course</p>
+        <p>Duration: 2 years</p>
+
+      </div>
+    </div>
+    <div class="course-card">
+      <img src="{% static 'images/ma(sanskrit).png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Master of Arts (Sanskrit)</h5>
+        <p>Post Graduation Course</p>
+        <p>Duration: 2 years</p>
+
+      </div>
+    </div>
+    <div class="course-card">
+      <img src="{% static 'images/mca.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Master in Computer Application</h5>
+        <p>Post Graduation Course</p>
+        <p>Duration: 2 years</p>
+
+      </div>
+    </div>
+    <div class="course-card">
+      <img src="{% static 'images/mcom.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Master of Commerce</h5>
+        <p>Post Graduation Course</p>
+        <p>Duration: 2 years</p>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- DIPLOMA -->
+  <div id="diploma" class="course-grid" style="display:none;">
+    <div class="course-card">
+      <img src="{% static 'images/pgdfm.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>PG Diploma in Financial Management</h5>
+        <p>Diploma Course</p>
+        <p>Duration: 2 years</p>
+
+      </div>
+    </div>
+    <div class="course-card">
+      <img src="{% static 'images/pgdhet.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Post Graduation Diploma (Hindi-English Translate)</h5>
+        <p>Diploma Course</p>
+        <p>Duration: 2 years</p>
+
+      </div>
+    </div>
+    <div class="course-card">
+      <img src="{% static 'images/pgdmm.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Post Graduation Diploma (Marketing Management)</h5>
+        <p>Diploma Course</p>
+        <p>Duration: 2 years</p>
+
+      </div>
+    </div>
+    <div class="course-card">
+      <img src="{% static 'images/pgdys.png' %}" alt="">
+      <div class="course-card-content">
+        <h5>Post Graduation Diploma (Yogic Studies)</h5>
+        <p>Diploma Course</p>
+        <p>Duration: 2 years</p>
+
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!--
+     JAVASCRIPT
+ -->
+<script>
+  function showTab(tabName, event) {
+    document.querySelectorAll('.course-grid').forEach(div => {
+      div.classList.remove('active');
+      div.style.display = 'none';
+    });
+    document.getElementById(tabName).style.display = 'grid';
+    setTimeout(() => {
+      document.getElementById(tabName).classList.add('active');
+    }, 50);
+
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
+  }
+
+</script>
 
 {% endblock body %}
