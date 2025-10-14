@@ -287,221 +287,33 @@ class BranchStats(models.Model):
     active_students_today = models.PositiveBigIntegerField(default=0)
     materials_count = models.PositiveBigIntegerField(default=0)
     last_updated = models.DateTimeField(auto_now=True)
-    
-class NewsCategory(models.Model):
-    """Categories for organizing news/announcements"""
-    name = models.CharField(max_length=100, unique=True)
-    description = models.TextField(blank=True)
-    icon = models.CharField(max_length=50, blank=True)
-    color_code = models.CharField(max_length=7, default='#007bff')
-    is_active = models.BooleanField(default=True)
-    
-    class Meta:
-        verbose_name_plural = "News Categories"
-        ordering = ['name']
-    
-    def __str__(self):
-        return self.name
 
-class NewsAnnouncement(models.Model):
-    """Enhanced News/Announcements model"""
-    
-    # Priority levels
-    PRIORITY_CHOICES = [
-        ('low', 'Low'),
-        ('normal', 'Normal'),
-        ('high', 'High'),
-        ('urgent', 'Urgent'),
-    ]
-    
-    # Target audience
-    AUDIENCE_CHOICES = [
-        ('all', 'All Users'),
-        ('students', 'Students Only'),
-        ('admins', 'Admins Only'),
-        ('specific_program', 'Specific Program'),
-        ('specific_branch', 'Specific Branch'),
-        ('specific_year', 'Specific Year'),
-    ]
-    
-    # Basic fields
-    nid = models.AutoField(primary_key=True)
+class Assignment(models.Model):
+    """Assignment model for course assignments"""
     title = models.CharField(max_length=200)
-    newstext = models.TextField()
-    newsdate = models.DateTimeField(default=timezone.now)
-    
-    # Enhanced fields
-    category = models.ForeignKey(NewsCategory, on_delete=models.SET_NULL, null=True, blank=True)
-    priority = models.CharField(max_length=10, choices=PRIORITY_CHOICES, default='normal')
-    
-    # Visibility and expiry
+    description = models.TextField(blank=True)
+    course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='assignments')
+    due_date = models.DateTimeField()
+    total_marks = models.PositiveIntegerField(default=100)
+    file = models.FileField(
+        upload_to='assignments/%Y/%m/%d/',
+        validators=[FileExtensionValidator(allowed_extensions=[
+            'pdf', 'doc', 'docx', 'ppt', 'pptx', 'txt', 'zip', 'rar'
+        ])],
+        blank=True,
+        null=True
+    )
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_assignments')
+    created_at = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
-    publish_date = models.DateTimeField(default=timezone.now)
-    expiry_date = models.DateTimeField(null=True, blank=True)
-    
-    # Target audience
-    target_audience = models.CharField(max_length=20, choices=AUDIENCE_CHOICES, default='all')
-    target_programs = models.ManyToManyField(Program, blank=True, related_name='targeted_news')
-    target_branches = models.ManyToManyField(Branch, blank=True, related_name='targeted_news')
-    target_years = models.ManyToManyField(Year, blank=True, related_name='targeted_news')
-    
-    # Additional metadata
-    created_by = models.CharField(max_length=100, blank=True)
-    attachment = models.FileField(upload_to='news_attachments/', blank=True, null=True)
-    is_pinned = models.BooleanField(default=False)
-    view_count = models.PositiveBigIntegerField(default=0)  # Changed to BigIntegerField
 
-    def get_current_status(self):
-        """Get the current status of this news item"""
-        from django.utils import timezone
-        now = timezone.now()
-        
-        if not self.is_active:
-            return 'inactive'
-        elif self.publish_date > now:
-            return 'scheduled'
-        elif self.expiry_date and self.expiry_date < now:
-            return 'expired'
-        else:
-            return 'active'
-
-    def get_status_display(self):
-        """Get human-readable status"""
-        status = self.get_current_status()
-        status_map = {
-            'active': 'Active',
-            'scheduled': 'Scheduled',
-            'expired': 'Expired',
-            'inactive': 'Inactive'
-        }
-        return status_map.get(status, 'Unknown')
-
-    def get_status_class(self):
-        """Get CSS class for status badge"""
-        status = self.get_current_status()
-        class_map = {
-            'active': 'badge-success',
-            'scheduled': 'badge-info',
-            'expired': 'badge-secondary',
-            'inactive': 'badge-danger'
-        }
-        return class_map.get(status, 'badge-secondary')
-
-    def is_visible_to_student(self, student):
-        """Check if this news should be visible to a specific student"""
-        from django.utils import timezone
-        now = timezone.now()
-        
-        # Check if news is currently active
-        if not self.is_active or self.publish_date > now:
-            return False
-        
-        # Check if expired
-        if self.expiry_date and self.expiry_date < now:
-            return False
-        
-        # Check audience targeting
-        if self.target_audience == 'all':
-            return True
-        
-        elif self.target_audience == 'students':
-            return True
-        
-        elif self.target_audience == 'specific_program':
-            # Check if student's program is in target_programs
-            return self.target_programs.filter(id=student.program.id).exists()
-        
-        elif self.target_audience == 'specific_branch':
-            # Check if student's branch is in target_branches
-            return self.target_branches.filter(id=student.branch.id).exists()
-        
-        elif self.target_audience == 'specific_year':
-            # Check if student's year is in target_years
-            return self.target_years.filter(id=student.year.id).exists()
-        
-        return False
-
-    def get_target_display(self):
-        """Get human-readable target audience"""
-        if self.target_audience == 'all':
-            return 'Everyone'
-        elif self.target_audience == 'students':
-            return 'All Students'
-        elif self.target_audience == 'specific_program':
-            programs = list(self.target_programs.values_list('program', flat=True))
-            return f"Programs: {', '.join(programs)}" if programs else "Specific Programs (none selected)"
-        elif self.target_audience == 'specific_branch':
-            branches = list(self.target_branches.values_list('branch', flat=True))
-            return f"Branches: {', '.join(branches)}" if branches else "Specific Branches (none selected)"
-        elif self.target_audience == 'specific_year':
-            years = list(self.target_years.values_list('year', flat=True))
-            return f"Years: {', '.join(years)}" if years else "Specific Years (none selected)"
-        else:
-            return self.get_target_audience_display()
-
-    @property
-    def is_currently_active(self):
-        """Property to check if news is currently active"""
-        return self.get_current_status() == 'active'
-    
     class Meta:
-        ordering = ['-is_pinned', '-priority', '-publish_date']
-        
+        ordering = ['-due_date']
+
     def __str__(self):
-        return f"{self.title} - {self.newsdate.strftime('%Y-%m-%d')}"
-    
-    def is_expired(self):
-        """Check if the news item has expired"""
-        if self.expiry_date:
-            return timezone.now() > self.expiry_date
-        return False
-    
-    def is_published(self):
-        """Check if the news item should be published"""
-        now = timezone.now()
-        return (self.is_active and 
-                self.publish_date <= now and 
-                not self.is_expired())
-    
-    def get_priority_class(self):
-        """Return CSS class based on priority"""
-        priority_classes = {
-            'low': 'alert-secondary',
-            'normal': 'alert-info', 
-            'high': 'alert-warning',
-            'urgent': 'alert-danger'
-        }
-        return priority_classes.get(self.priority, 'alert-info')
-    
-    def can_view(self, user_type, user_program=None, user_branch=None, user_year=None):
-        """Check if a user can view this news item"""
-        if not self.is_published():
-            return False
-            
-        if self.target_audience == 'all':
-            return True
-        elif self.target_audience == 'students' and user_type == 'student':
-            return True
-        elif self.target_audience == 'admins' and user_type == 'admin':
-            return True
-        elif self.target_audience == 'specific_program':
-            if user_program:
-                return self.target_programs.filter(id=user_program.id).exists()
-        elif self.target_audience == 'specific_branch':
-            if user_branch:
-                return self.target_branches.filter(id=user_branch.id).exists()
-        elif self.target_audience == 'specific_year':
-            if user_year:
-                return self.target_years.filter(id=user_year.id).exists()
-                
-        return False
+        return f"{self.title} - {self.course.title}"
 
-# Keep original News model for backward compatibility
-class News(models.Model):
-    """Legacy News model - keep for backward compatibility"""
-    nid = models.AutoField(primary_key=True)
-    newstext = models.TextField()
-    newsdate = models.CharField(max_length=30)
+    def is_overdue(self):
+        from django.utils import timezone
+        return timezone.now() > self.due_date
     
-    class Meta:
-        db_table = 'adminapp_news'

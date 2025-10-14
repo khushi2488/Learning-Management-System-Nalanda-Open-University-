@@ -1,0 +1,122 @@
+{% extends 'studentapp/studentparent.html' %}
+{% load static %}
+
+{% block body %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Submission Status</h4>
+                <a href="{% url 'studentapp:list_assignments' %}" class="btn btn-secondary btn-sm">
+                    <i class="mdi mdi-arrow-left"></i> Back to Assignments
+                </a>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h5>{{ submission.assignment.title }}</h5>
+                        <p><strong>Course:</strong> {{ submission.assignment.course.title }}</p>
+                        <p><strong>Submitted:</strong> {{ submission.submitted_at|date:"M d, Y H:i" }}</p>
+                        {% if submission.is_late %}
+                            <p class="text-danger"><strong>Late Submission</strong></p>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card {% if submission.status == 'graded' %}bg-success{% else %}bg-warning{% endif %}">
+                            <div class="card-body text-center">
+                                <h4 class="{% if submission.status == 'graded' %}text-white{% endif %}">
+                                    {% if submission.status == 'graded' %}
+                                        Graded
+                                    {% elif submission.status == 'submitted' %}
+                                        Submitted
+                                    {% else %}
+                                        Pending
+                                    {% endif %}
+                                </h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {% if submission.status == 'graded' %}
+                    <div class="row mb-4">
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6>Grade</h6>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h2 class="text-primary">{{ submission.grade }}/{{ submission.assignment.total_marks }}</h2>
+                                    <p class="mb-0">Percentage: {{ submission.grade|div:submission.assignment.total_marks|mul:100|floatformat:1 }}%</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h6>Feedback</h6>
+                                </div>
+                                <div class="card-body">
+                                    {% if submission.feedback %}
+                                        <p>{{ submission.feedback|linebreaks }}</p>
+                                    {% else %}
+                                        <p class="text-muted">No feedback provided.</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Submission Details</h6>
+                        <table class="table table-sm">
+                            <tr>
+                                <td><strong>Assignment File:</strong></td>
+                                <td>
+                                    {% if submission.assignment.file %}
+                                        <a href="{{ submission.assignment.file.url }}" target="_blank" class="btn btn-info btn-sm">
+                                            <i class="mdi mdi-download"></i> Download
+                                        </a>
+                                    {% else %}
+                                        No file attached
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Your Submission:</strong></td>
+                                <td>
+                                    {% if submission.submitted_file %}
+                                        <a href="{{ submission.submitted_file.url }}" target="_blank" class="btn btn-success btn-sm">
+                                            <i class="mdi mdi-download"></i> Download Your Submission
+                                        </a>
+                                    {% else %}
+                                        No file submitted
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><strong>Graded By:</strong></td>
+                                <td>
+                                    {% if submission.graded_by %}
+                                        {{ submission.graded_by.get_full_name|default:submission.graded_by.username }}
+                                    {% else %}
+                                        Not graded yet
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% if submission.graded_at %}
+                                <tr>
+                                    <td><strong>Graded At:</strong></td>
+                                    <td>{{ submission.graded_at|date:"M d, Y H:i" }}</td>
+                                </tr>
+                            {% endif %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

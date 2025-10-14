@@ -89,3 +89,10 @@ class MaterialAccessAdmin(admin.ModelAdmin):
     
     def has_change_permission(self, request, obj=None):
         return False  # Don't allow editing of access logs
+# --- Add this at the end of your admin.py ---
+from django.contrib.auth.admin import UserAdmin
+from django.contrib.auth.models import User
+
+# Unregister first in case it was already registered
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
