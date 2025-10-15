@@ -1,1321 +1,1344 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NOU e-Gyan PORTAL</title>
+  <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+  <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
+    integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet" />
   {% load static %}
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NOU e-Gyan PORTAL</title>
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
-    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
-    <script
-      src="https://code.jquery.com/jquery-3.7.1.min.js"
-      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"
-      integrity="sha512-bPs7Ae6pVvhOSiIcyUClR7/q2OAsRiovw4vAkX+zJbw3ShAeeqezq50RIIcIURq7Oa20rW2n2q+fyXBNcU9lrw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
-    <link
-      href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.css"
-      rel="stylesheet"
-    />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.js"></script>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
-  </head>
-  <style>
-    /* Root Variables for Consistent Theming */
-    :root {
-      --primary-color: rgb(6, 6, 106);
-      --primary-hover: #064b89;
-      --accent-color: #4a90e2;
-      --text-white: #ffffff;
-      --bg-light: aliceblue;
-      --transition: all 0.3s ease;
-      --shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-      --shadow-hover: 0 5px 25px rgba(0, 0, 0, 0.15);
-      --text-color: #212529;
-      --bg-color: #ffffff;
-      --nav-bg: aliceblue;
-      --icon-color: rgb(6, 6, 106);
-      --heading-color: rgb(6, 6, 106);
-      --underline-color: rgb(6, 6, 106);
-      --card-bg: white;
-      --card-text: #212529;
-      --footer-bg: linear-gradient(135deg, var(--bg-light) 0%, #f8f9fa 100%);
-      --footer-text: var(--primary-color);
-      --footer-link-color: var(--primary-color);
-      --footer-link-hover: var(--accent-color);
-      --footer-section-title: var(--primary-color);
-      --footer-social-bg: linear-gradient(
-        135deg,
+  <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+<style>
+  /* Root Variables for Consistent Theming */
+  :root {
+    --primary-color: rgb(6, 6, 106);
+    --primary-hover: #064b89;
+    --accent-color: #4a90e2;
+    --text-white: #ffffff;
+    --bg-light: aliceblue;
+    --transition: all 0.3s ease;
+    --shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 5px 25px rgba(0, 0, 0, 0.15);
+    --text-color: #212529;
+    --bg-color: #ffffff;
+    --nav-bg: aliceblue;
+    --icon-color: rgb(6, 6, 106);
+    --heading-color: rgb(6, 6, 106);
+    --underline-color: rgb(6, 6, 106);
+    --card-bg: white;
+    --card-text: #212529;
+    --footer-bg: linear-gradient(135deg, var(--bg-light) 0%, #f8f9fa 100%);
+    --footer-text: var(--primary-color);
+    --footer-link-color: var(--primary-color);
+    --footer-link-hover: var(--accent-color);
+    --footer-section-title: var(--primary-color);
+    --footer-social-bg: linear-gradient(135deg,
         rgba(6, 6, 106, 0.05) 0%,
-        rgba(74, 144, 226, 0.05) 100%
-      );
-      --copyright-bg: linear-gradient(
-        135deg,
+        rgba(74, 144, 226, 0.05) 100%);
+    --copyright-bg: linear-gradient(135deg,
         var(--primary-color) 0%,
-        var(--primary-hover) 100%
-      );
-      --copyright-text: var(--text-white);
-      --chat-primary: rgb(6, 6, 106);
-      --chat-primary-hover: #064b89;
-      --chat-accent: #4a90e2;
+        var(--primary-hover) 100%);
+    --copyright-text: var(--text-white);
+    --chat-primary: rgb(6, 6, 106);
+    --chat-primary-hover: #064b89;
+    --chat-accent: #4a90e2;
+  }
+
+  /* Dark Theme */
+  .dark-theme {
+    --primary-color: #9e9e9e;
+    --primary-hover: #bdbdbd;
+    --accent-color: #64b5f6;
+    --text-white: #f5f5f5;
+    --bg-light: #1e1e1e;
+    --text-color: #f5f5f5;
+    --bg-color: #121212;
+    --nav-bg: #1e1e1e;
+    --icon-color: #f5f5f5;
+    --heading-color: #f5f5f5;
+    --underline-color: #bdbdbd;
+    --card-bg: #2d2d2d;
+    --card-text: #e0e0e0;
+    --footer-bg: #1a1a1a;
+    --footer-text: #e0e0e0;
+    --footer-link-color: #e0e0e0;
+    --footer-link-hover: #64b5f6;
+    --footer-section-title: #e0e0e0;
+    --footer-social-bg: #252525;
+    --copyright-bg: #252525;
+    --copyright-text: #e0e0e0;
+    --chat-primary: #64b5f6;
+    --chat-primary-hover: #90caf9;
+    --chat-accent: #2196f3;
+  }
+
+  body {
+    font-family: "Poppins", sans-serif;
+    padding-top: 120px;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: var(--transition);
+  }
+
+  /* Enhanced Sticky Navigation */
+  .sticky-navigation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1050;
+    transition: var(--transition);
+    box-shadow: var(--shadow);
+  }
+
+  /* Contact Bar Styles */
+  .contact-bar {
+    background: linear-gradient(135deg,
+        var(--primary-color) 0%,
+        var(--primary-hover) 100%);
+    color: var(--text-white);
+    padding: 10px 0;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .contact-bar a {
+    color: var(--text-white);
+    text-decoration: none;
+    transition: var(--transition);
+  }
+
+  .contact-bar a:hover {
+    color: #e3f2fd;
+    transform: translateY(-1px);
+  }
+
+  .contact-bar i {
+    margin-right: 8px;
+    font-size: 16px;
+  }
+
+  /* Enhanced Navbar */
+  .main-navbar {
+    background: var(--nav-bg) !important;
+    backdrop-filter: blur(10px);
+    border-bottom: 2px solid rgba(6, 6, 106, 0.1);
+    padding: 15px 0;
+  }
+
+  .dark-theme .main-navbar {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .navbar-brand img {
+    transition: var(--transition);
+  }
+
+  .navbar-brand:hover img {
+    transform: scale(1.02);
+  }
+
+  /* Enhanced Navigation Links */
+  .navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .navbar-nav>.nav-item {
+    margin: 0 12px;
+  }
+
+  .navbar-nav .nav-link {
+    color: var(--primary-color) !important;
+    font-family: "Poppins", sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    padding: 10px 18px !important;
+    margin: 0;
+    border-radius: 25px;
+    transition: color 0.3s ease, background 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    white-space: nowrap;
+    box-shadow: none;
+  }
+
+  .navbar-nav .nav-link::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg,
+        var(--primary-color),
+        var(--accent-color));
+    transition: left 0.3s ease;
+    z-index: -1;
+    border-radius: 25px;
+  }
+
+  .navbar-nav .nav-link:hover {
+    color: var(--text-white) !important;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .navbar-nav .nav-link:hover::before {
+    left: 0;
+  }
+
+  .navbar-nav .nav-link i {
+    margin-right: 0;
+    transition: var(--transition);
+  }
+
+  .navbar-nav .nav-link:hover i {
+    transform: rotate(360deg);
+  }
+
+  /* Active Link Highlighting */
+  .navbar-nav .nav-link.active {
+    background: linear-gradient(135deg,
+        var(--primary-color),
+        var(--accent-color));
+    color: var(--text-white) !important;
+    font-weight: 600;
+    box-shadow: none;
+    transform: none;
+  }
+
+  .navbar-nav .nav-link.active::before {
+    display: none;
+  }
+
+  .navbar-nav .nav-link:focus,
+  .navbar-nav .nav-link:focus-visible,
+  .navbar-nav .nav-link.active:focus,
+  .navbar-nav .nav-link.active:focus-visible {
+    outline: none;
+    box-shadow: none;
+  }
+
+  .navbar-nav .nav-link.active i {
+    animation: none;
+  }
+
+  @keyframes pulse {
+
+    0%,
+    100% {
+      transform: scale(1);
     }
 
-    /* Dark Theme */
-    .dark-theme {
-      --primary-color: #9e9e9e;
-      --primary-hover: #bdbdbd;
-      --accent-color: #64b5f6;
-      --text-white: #f5f5f5;
-      --bg-light: #1e1e1e;
-      --text-color: #f5f5f5;
-      --bg-color: #121212;
-      --nav-bg: #1e1e1e;
-      --icon-color: #f5f5f5;
-      --heading-color: #f5f5f5;
-      --underline-color: #bdbdbd;
-      --card-bg: #2d2d2d;
-      --card-text: #e0e0e0;
-      --footer-bg: #1a1a1a;
-      --footer-text: #e0e0e0;
-      --footer-link-color: #e0e0e0;
-      --footer-link-hover: #64b5f6;
-      --footer-section-title: #e0e0e0;
-      --footer-social-bg: #252525;
-      --copyright-bg: #252525;
-      --copyright-text: #e0e0e0;
-      --chat-primary: #64b5f6;
-      --chat-primary-hover: #90caf9;
-      --chat-accent: #2196f3;
+    50% {
+      transform: scale(1.1);
     }
+  }
 
+  /* Mobile Navbar Enhancements */
+  @media (max-width: 991px) {
     body {
-      font-family: "Poppins", sans-serif;
-      padding-top: 120px;
-      background-color: var(--bg-color);
-      color: var(--text-color);
-      transition: var(--transition);
+      padding-top: 140px;
     }
 
-    /* Enhanced Sticky Navigation */
-    .sticky-navigation {
-      position: fixed;
-      top: 0;
+    .navbar-collapse {
+      position: absolute;
+      top: 100%;
       left: 0;
-      right: 0;
-      z-index: 1050;
-      transition: var(--transition);
-      box-shadow: var(--shadow);
+      width: 100%;
+      background-color: #fff;
+      /* match navbar */
+      z-index: 9999;
+      box-shadow: none;
+      border: none;
+      color: #064b89;
     }
 
-    /* Contact Bar Styles */
-    .contact-bar {
-      background: linear-gradient(
-        135deg,
-        var(--primary-color) 0%,
-        var(--primary-hover) 100%
-      );
-      color: var(--text-white);
-      padding: 10px 0;
-      font-size: 14px;
-      font-weight: 500;
+    .navbar-nav .nav-link.active {
+      color: #064b89 !important;
     }
 
-    .contact-bar a {
-      color: var(--text-white);
-      text-decoration: none;
-      transition: var(--transition);
-    }
-
-    .contact-bar a:hover {
-      color: #e3f2fd;
-      transform: translateY(-1px);
-    }
-
-    .contact-bar i {
-      margin-right: 8px;
-      font-size: 16px;
-    }
-
-    /* Enhanced Navbar */
-    .main-navbar {
-      background: var(--nav-bg) !important;
-      backdrop-filter: blur(10px);
-      border-bottom: 2px solid rgba(6, 6, 106, 0.1);
-      padding: 15px 0;
-    }
-
-    .dark-theme .main-navbar {
-      border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .navbar-brand img {
-      transition: var(--transition);
-    }
-
-    .navbar-brand:hover img {
-      transform: scale(1.02);
-    }
-
-    /* Enhanced Navigation Links */
     .navbar-nav {
       display: flex;
-      align-items: center;
-      gap: 0;
-    }
-
-    .navbar-nav > .nav-item {
-      margin: 0 12px;
+      flex-direction: column;
+      gap: 8px;
+      /* add space between links */
     }
 
     .navbar-nav .nav-link {
-      color: var(--primary-color) !important;
-      font-family: "Poppins", sans-serif;
-      font-size: 16px;
-      font-weight: 500;
-      padding: 10px 18px !important;
-      margin: 0;
-      border-radius: 25px;
-      transition: color 0.3s ease, background 0.3s ease;
-      position: relative;
-      overflow: hidden;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      white-space: nowrap;
-      box-shadow: none;
+      border-radius: 0 !important;
+      /* remove rounded corners */
+      background: none !important;
+      /* remove gradient hover background */
+      box-shadow: none !important;
     }
 
     .navbar-nav .nav-link::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
+      display: none !important;
+    }
+
+    .navbar-nav .nav-item {
       width: 100%;
-      height: 100%;
-      background: linear-gradient(
-        135deg,
-        var(--primary-color),
-        var(--accent-color)
-      );
-      transition: left 0.3s ease;
-      z-index: -1;
-      border-radius: 25px;
     }
 
-    .navbar-nav .nav-link:hover {
-      color: var(--text-white) !important;
-      transform: none;
-      box-shadow: none;
-    }
-
-    .navbar-nav .nav-link:hover::before {
-      left: 0;
-    }
-
-    .navbar-nav .nav-link i {
-      margin-right: 0;
-      transition: var(--transition);
-    }
-
-    .navbar-nav .nav-link:hover i {
-      transform: rotate(360deg);
-    }
-
-    /* Active Link Highlighting */
-    .navbar-nav .nav-link.active {
-      background: linear-gradient(
-        135deg,
-        var(--primary-color),
-        var(--accent-color)
-      );
-      color: var(--text-white) !important;
-      font-weight: 600;
-      box-shadow: none;
-      transform: none;
-    }
-
-    .navbar-nav .nav-link.active::before {
-      display: none;
-    }
-
-    .navbar-nav .nav-link:focus,
-    .navbar-nav .nav-link:focus-visible,
-    .navbar-nav .nav-link.active:focus,
-    .navbar-nav .nav-link.active:focus-visible {
-      outline: none;
-      box-shadow: none;
-    }
-
-    .navbar-nav .nav-link.active i {
-      animation: none;
-    }
-
-    @keyframes pulse {
-      0%,
-      100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-    }
-
-    /* Mobile Navbar Enhancements */
-    @media (max-width: 991px) {
-      body {
-        padding-top: 140px;
-      }
-
-      .navbar-collapse {
-        background: var(--nav-bg);
-        margin-top: 15px;
-        border-radius: 15px;
-        padding: 20px;
-        box-shadow: var(--shadow);
-      }
-
-      .navbar-nav {
-        gap: 0;
-      }
-
-      .navbar-nav .nav-link {
-        width: 100%;
-        margin: 6px 0;
-        text-align: center;
-        justify-content: center;
-      }
-
-      .contact-bar {
-        font-size: 12px;
-        padding: 8px 0;
-      }
-
-      .contact-bar .col-sm-6 {
-        padding: 5px 8px;
-      }
-    }
-
-    /* Enhanced Footer */
-    .main-footer {
-      background: var(--footer-bg);
-      margin-top: 60px;
-      box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
-      color: var(--footer-text);
-      transition: var(--transition);
-    }
-
-    .footer-social-section {
-      background: var(--footer-social-bg);
-      border-bottom: 2px solid rgba(6, 6, 106, 0.1);
-      padding: 20px 0;
-    }
-
-    .dark-theme .footer-social-section {
-      border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .footer-social-text {
-      color: var(--primary-color);
-      font-family: "Poppins", sans-serif;
-      font-weight: 600;
-      font-size: 16px;
-    }
-
-    /* Enhanced Social Media Icons */
-    .social-icon {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 45px;
-      height: 45px;
-      margin: 0 8px;
-      border-radius: 50%;
-      background: linear-gradient(
-        135deg,
-        var(--primary-color),
-        var(--accent-color)
-      );
-      color: var(--text-white);
-      text-decoration: none;
-      transition: var(--transition);
-      box-shadow: 0 3px 10px rgba(6, 6, 106, 0.3);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .social-icon::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -100%;
+    .navbar-nav .nav-link {
       width: 100%;
-      height: 100%;
-      background: linear-gradient(135deg, var(--accent-color), #64b5f6);
-      transition: left 0.3s ease;
-      z-index: -1;
+      text-align: center;
+      padding: 12px 0;
     }
 
-    .social-icon:hover {
-      color: var(--text-white);
-      transform: translateY(-5px) scale(1.1);
-      box-shadow: var(--shadow-hover);
+    .contact-bar {
+      font-size: 12px;
+      padding: 8px 0;
     }
 
-    .social-icon:hover::before {
-      left: 0;
+    .contact-bar .col-sm-6 {
+      padding: 5px 8px;
+    }
+  }
+
+  /* Enhanced Footer */
+  .main-footer {
+    background: var(--footer-bg);
+    margin-top: 60px;
+    box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.1);
+    color: var(--footer-text);
+    transition: var(--transition);
+  }
+
+  .footer-social-section {
+    background: var(--footer-social-bg);
+    border-bottom: 2px solid rgba(6, 6, 106, 0.1);
+    padding: 20px 0;
+  }
+
+  .dark-theme .footer-social-section {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .footer-social-text {
+    color: var(--primary-color);
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+  }
+
+  /* Enhanced Social Media Icons */
+  .social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    margin: 0 8px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,
+        var(--primary-color),
+        var(--accent-color));
+    color: var(--text-white);
+    text-decoration: none;
+    transition: var(--transition);
+    box-shadow: 0 3px 10px rgba(6, 6, 106, 0.3);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .social-icon::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, var(--accent-color), #64b5f6);
+    transition: left 0.3s ease;
+    z-index: -1;
+  }
+
+  .social-icon:hover {
+    color: var(--text-white);
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .social-icon:hover::before {
+    left: 0;
+  }
+
+  .social-icon i {
+    font-size: 18px;
+    transition: var(--transition);
+  }
+
+  .social-icon:hover i {
+    transform: rotate(360deg);
+  }
+
+  /* Footer Content Sections */
+  .footer-content {
+    padding: 50px 0 30px 0;
+  }
+
+  .footer-logo {
+    display: block;
+    transition: none;
+    filter: none;
+    margin: 0;
+  }
+
+  .footer-logo:hover {
+    transform: none;
+    filter: none;
+  }
+
+  .footer-description {
+    color: var(--footer-text);
+    font-family: "Poppins", sans-serif;
+    line-height: 1.6;
+    margin-top: 20px;
+    font-size: 14px;
+  }
+
+  .footer-section-title {
+    color: var(--footer-section-title);
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 25px;
+    position: relative;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .footer-section-title::after {
+    content: "";
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 50px;
+    height: 3px;
+    background: linear-gradient(135deg,
+        var(--primary-color),
+        var(--accent-color));
+    border-radius: 2px;
+  }
+
+  /* Enhanced Footer Links */
+  .footer-link {
+    display: block;
+    color: var(--footer-link-color);
+    text-decoration: none;
+    font-family: "Poppins", sans-serif;
+    font-size: 15px;
+    padding: 8px 0;
+    transition: var(--transition);
+    position: relative;
+    padding-left: 20px;
+  }
+
+  .footer-link::before {
+    content: "→";
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    transition: var(--transition);
+    color: var(--accent-color);
+    font-weight: bold;
+  }
+
+  .footer-link:hover {
+    color: var(--footer-link-hover);
+    transform: translateX(10px);
+    text-decoration: none;
+  }
+
+  .footer-link:hover::before {
+    opacity: 1;
+    transform: translateX(-5px);
+  }
+
+  /* Add this to your CARD PROTECTION section */
+  .dark-theme .card-title,
+  .dark-theme .service-card h3 {
+    color: var(--primary-color) !important;
+    background-color: transparent !important;
+  }
+
+  /* Also add this to ensure all card content is properly styled */
+  .dark-theme .service-card,
+  .dark-theme .service-card .card-body {
+    background-color: var(--card-bg) !important;
+    color: var(--card-text) !important;
+  }
+
+  /* Specific protection for service card buttons */
+  .dark-theme .btn-info {
+    background-color: var(--primary-color) !important;
+    border-color: var(--primary-color) !important;
+    color: white !important;
+  }
+
+  .dark-theme .btn-info:hover {
+    background-color: var(--primary-hover) !important;
+    border-color: var(--primary-hover) !important;
+  }
+
+  /* Contact Info Styling */
+  .contact-item {
+    color: var(--footer-text);
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: flex-start;
+    line-height: 1.6;
+  }
+
+  .contact-item i {
+    color: var(--accent-color);
+    margin-right: 12px;
+    margin-top: 2px;
+    font-size: 16px;
+    transition: var(--transition);
+  }
+
+  .contact-item:hover i {
+    transform: scale(1.2);
+    color: var(--primary-hover);
+  }
+
+  /* Copyright Section */
+  .copyright-section {
+    background: var(--copyright-bg);
+    color: var(--copyright-text);
+    font-family: "Poppins", sans-serif;
+    padding: 20px 0;
+    font-size: 14px;
+  }
+
+  .copyright-link {
+    color: var(--copyright-text);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+    border-bottom: 2px solid transparent;
+  }
+
+  .copyright-link:hover {
+    color: #e3f2fd;
+    border-bottom-color: #e3f2fd;
+    transform: translateY(-1px);
+  }
+
+  /* Responsive Design Enhancements */
+  @media (max-width: 768px) {
+    .contact-bar {
+      font-size: 12px;
+      padding: 8px 0;
     }
 
-    .social-icon i {
-      font-size: 18px;
-      transition: var(--transition);
+    .contact-bar .col-sm-6 {
+      padding: 5px;
+      font-size: 11px;
     }
 
-    .social-icon:hover i {
-      transform: rotate(360deg);
+    .navbar-brand img {
+      width: 70% !important;
+      height: auto !important;
     }
 
-    /* Footer Content Sections */
     .footer-content {
-      padding: 50px 0 30px 0;
+      padding: 30px 0 20px 0;
     }
 
-    .footer-logo {
-      display: block;
-      transition: none;
-      filter: none;
-      margin: 0;
-    }
-
-    .footer-logo:hover {
-      transform: none;
-      filter: none;
-    }
-
-    .footer-description {
-      color: var(--footer-text);
-      font-family: "Poppins", sans-serif;
-      line-height: 1.6;
-      margin-top: 20px;
-      font-size: 14px;
+    .footer-content .row>[class^="col-"] {
+      margin-bottom: 16px;
     }
 
     .footer-section-title {
-      color: var(--footer-section-title);
-      font-family: "Poppins", sans-serif;
-      font-weight: 700;
-      font-size: 18px;
-      margin-bottom: 25px;
-      position: relative;
-      text-transform: uppercase;
-      letter-spacing: 1px;
+      font-size: 16px;
+      margin-bottom: 20px;
     }
 
-    .footer-section-title::after {
-      content: "";
-      position: absolute;
-      bottom: -8px;
-      left: 0;
-      width: 50px;
-      height: 3px;
-      background: linear-gradient(
-        135deg,
-        var(--primary-color),
-        var(--accent-color)
-      );
-      border-radius: 2px;
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      margin: 0 5px;
     }
 
-    /* Enhanced Footer Links */
-    .footer-link {
-      display: block;
-      color: var(--footer-link-color);
-      text-decoration: none;
-      font-family: "Poppins", sans-serif;
-      font-size: 15px;
-      padding: 8px 0;
-      transition: var(--transition);
-      position: relative;
-      padding-left: 20px;
+    .social-icon i {
+      font-size: 16px;
     }
 
-    .footer-link::before {
-      content: "→";
-      position: absolute;
-      left: 0;
-      opacity: 0;
-      transition: var(--transition);
-      color: var(--accent-color);
-      font-weight: bold;
-    }
-
-    .footer-link:hover {
-      color: var(--footer-link-hover);
-      transform: translateX(10px);
-      text-decoration: none;
-    }
-
-    .footer-link:hover::before {
-      opacity: 1;
-      transform: translateX(-5px);
-    }
-
-    /* Add this to your CARD PROTECTION section */
-    .dark-theme .card-title,
-    .dark-theme .service-card h3 {
-      color: var(--primary-color) !important;
-      background-color: transparent !important;
-    }
-
-    /* Also add this to ensure all card content is properly styled */
-    .dark-theme .service-card,
-    .dark-theme .service-card .card-body {
-      background-color: var(--card-bg) !important;
-      color: var(--card-text) !important;
-    }
-
-    /* Specific protection for service card buttons */
-    .dark-theme .btn-info {
-      background-color: var(--primary-color) !important;
-      border-color: var(--primary-color) !important;
-      color: white !important;
-    }
-
-    .dark-theme .btn-info:hover {
-      background-color: var(--primary-hover) !important;
-      border-color: var(--primary-hover) !important;
-    }
-
-    /* Contact Info Styling */
-    .contact-item {
-      color: var(--footer-text);
-      font-family: "Poppins", sans-serif;
+    .footer-social-text {
       font-size: 14px;
       margin-bottom: 15px;
-      display: flex;
-      align-items: flex-start;
-      line-height: 1.6;
+    }
+  }
+
+  @media (max-width: 576px) {
+    body {
+      padding-top: 130px;
     }
 
-    .contact-item i {
-      color: var(--accent-color);
-      margin-right: 12px;
-      margin-top: 2px;
-      font-size: 16px;
-      transition: var(--transition);
+    .contact-bar .col-sm-6 {
+      text-align: center !important;
+      padding: 8px 5px;
     }
 
-    .contact-item:hover i {
-      transform: scale(1.2);
-      color: var(--primary-hover);
-    }
-
-    /* Copyright Section */
-    .copyright-section {
-      background: var(--copyright-bg);
-      color: var(--copyright-text);
-      font-family: "Poppins", sans-serif;
-      padding: 20px 0;
-      font-size: 14px;
-    }
-
-    .copyright-link {
-      color: var(--copyright-text);
-      text-decoration: none;
-      font-weight: 600;
-      transition: var(--transition);
-      border-bottom: 2px solid transparent;
-    }
-
-    .copyright-link:hover {
-      color: #e3f2fd;
-      border-bottom-color: #e3f2fd;
-      transform: translateY(-1px);
-    }
-
-    /* Responsive Design Enhancements */
-    @media (max-width: 768px) {
-      .contact-bar {
-        font-size: 12px;
-        padding: 8px 0;
-      }
-
-      .contact-bar .col-sm-6 {
-        padding: 5px;
-        font-size: 11px;
-      }
-
-      .navbar-brand img {
-        width: 70% !important;
-        height: auto !important;
-      }
-
-      .footer-content {
-        padding: 30px 0 20px 0;
-      }
-
-      .footer-content .row > [class^="col-"] {
-        margin-bottom: 16px;
-      }
-
-      .footer-section-title {
-        font-size: 16px;
-        margin-bottom: 20px;
-      }
-
-      .social-icon {
-        width: 40px;
-        height: 40px;
-        margin: 0 5px;
-      }
-
-      .social-icon i {
-        font-size: 16px;
-      }
-
-      .footer-social-text {
-        font-size: 14px;
-        margin-bottom: 15px;
-      }
-    }
-
-    @media (max-width: 576px) {
-      body {
-        padding-top: 130px;
-      }
-
-      .contact-bar .col-sm-6 {
-        text-align: center !important;
-        padding: 8px 5px;
-      }
-
-      .navbar-brand img {
-        width: 60% !important;
-      }
-
-      .footer-link {
-        font-size: 14px;
-        padding: 6px 0;
-      }
-
-      .contact-item {
-        font-size: 13px;
-      }
-
-      .footer-content .row > [class^="col-"] {
-        margin-bottom: 14px;
-      }
-
-      .navbar-nav .nav-link {
-        padding: 12px 14px !important;
-        font-size: 15px;
-      }
-    }
-
-    /* Smooth Scrolling */
-    html {
-      scroll-behavior: smooth;
-    }
-
-    /* Loading Animation for Navbar */
     .navbar-brand img {
-      animation: slideInDown 0.8s ease-out;
+      width: 60% !important;
     }
 
-    .navbar-nav {
-      animation: slideInUp 0.8s ease-out;
+    .footer-link {
+      font-size: 14px;
+      padding: 6px 0;
     }
 
-    @keyframes slideInDown {
-      from {
-        opacity: 0;
-        transform: translateY(-30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .contact-item {
+      font-size: 13px;
     }
 
-    @keyframes slideInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    .footer-content .row>[class^="col-"] {
+      margin-bottom: 14px;
     }
 
-    /* Enhanced Mobile Menu */
-    .navbar-toggler {
-      border: 2px solid var(--primary-color);
-      border-radius: 8px;
-      padding: 8px 12px;
-      transition: var(--transition);
+    .navbar-nav .nav-link {
+      padding: 12px 14px !important;
+      font-size: 15px;
+    }
+  }
+
+  /* Smooth Scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Loading Animation for Navbar */
+  .navbar-brand img {
+    animation: slideInDown 0.8s ease-out;
+  }
+
+  .navbar-nav {
+    animation: slideInUp 0.8s ease-out;
+  }
+
+  @keyframes slideInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
     }
 
-    .navbar-toggler:hover {
-      background-color: var(--primary-color);
-      transform: scale(1.05);
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
     }
 
-    .navbar-toggler-icon {
-      background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%286, 6, 106, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Enhanced Mobile Menu */
+  .navbar-toggler {
+   
+    margin-left: auto !important;
+    /* always pushes it to the far right */
+    margin-right: 0 !important;
+    padding: 0.25rem 0.75rem;
+  }
+
+  .navbar-toggler:hover {
+    background-color: #fff;
+    transform: scale(1.05);
+  }
+
+  /* .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%286, 6, 106, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+  } */
+
+  /* Footer Animation on Scroll */
+  .main-footer {
+    animation: slideInUp 0.8s ease-out;
+  }
+
+  /* Back to Top Button Styles */
+  #backToTop {
+    position: fixed;
+    bottom: 1.55rem;
+    right: 2.1rem;
+    z-index: 2000;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    font-size: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s, transform 0.2s;
+  }
+
+  body.dark-mode #backToTop {
+    background: #e0e0e0;
+    color: #0d0d0d;
+  }
+
+  #backToTop.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: scale(1.08);
+  }
+
+  #backToTop:hover {
+    background-color: var(--primary-color);
+    transform: scale(1.15);
+  }
+
+  /* Back to Top to Bottom Button Styles */
+  #Toptoback {
+    position: fixed;
+    bottom: 1.1rem;
+    right: 2.1rem;
+    z-index: 2000;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    font-size: 2rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    cursor: pointer;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s, transform 0.2s;
+  }
+
+  body.dark-mode #Toptoback {
+    background: #e0e0e0;
+    color: #0d0d0d;
+  }
+
+  #Toptoback.show {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(-10px) scale(1.08);
+  }
+
+  #Toptoback:hover {
+    background-color: var(--primary-color);
+    transform: scale(1.15);
+  }
+
+  body.dark-mode #Toptoback:hover {
+    background: #e0e0e0;
+    transform: scale(1.15);
+  }
+
+  /* Large devices */
+  @media screen and (max-width: 1500px) {
+    div.container {
+      flex-direction: column;
     }
 
-    /* Footer Animation on Scroll */
-    .main-footer {
-      animation: slideInUp 0.8s ease-out;
+    .navbar>.container,
+    .navbar>.container-fluid,
+    .navbar>.container-sm,
+    .navbar>.container-md,
+    .navbar>.container-lg,
+    .navbar>.container-xl,
+    .navbar>.container-xxl {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+    }
+  }
+
+  /* Large devices */
+  @media screen and (max-width: 991px) {
+    div.container {
+      flex-direction: column;
     }
 
-    /* Back to Top Button Styles */
-        #backToTop {
-            position: fixed;
-            bottom: 1.55rem;
-            right: 2.1rem;
-            z-index: 2000;
-            background-color: var(--primary-color);
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 56px;
-            height: 56px;
-            font-size: 2rem;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
-            cursor: pointer;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s, transform 0.2s;
-        }
+    .navbar>.container,
+    .navbar>.container-fluid,
+    .navbar>.container-sm,
+    .navbar>.container-md,
+    .navbar>.container-lg,
+    .navbar>.container-xl,
+    .navbar>.container-xxl {
+      display: flex;
+      flex-wrap: nowrap;
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
 
-        body.dark-mode #backToTop {
-            background: #e0e0e0;
-            color: #0d0d0d;
-        }
-
-        #backToTop.show {
-            opacity: 1;
-            pointer-events: auto;
-            transform: scale(1.08);
-        }
-
-        #backToTop:hover {
-            background-color: var(--primary-color);
-            transform: scale(1.15);
-        }
-
-        /* Back to Top to Bottom Button Styles */
-        #Toptoback {
-            position: fixed;
-            bottom: 1.1rem;
-            right: 2.1rem;
-            z-index: 2000;
-            background-color: var(--primary-color);
-            color: #fff;
-            border: none;
-            border-radius: 50%;
-            width: 56px;
-            height: 56px;
-            font-size: 2rem;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
-            cursor: pointer;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.4s, transform 0.2s;
-        }
-
-        body.dark-mode #Toptoback {
-            background: #e0e0e0;
-            color: #0d0d0d;
-        }
-
-        #Toptoback.show {
-            opacity: 1;
-            pointer-events: auto;
-            transform: translateY(-10px) scale(1.08);
-        }
-
-        #Toptoback:hover {
-            background-color: var(--primary-color);
-            transform: scale(1.15);
-        }
-
-        body.dark-mode #Toptoback:hover {
-            background: #e0e0e0;
-            transform: scale(1.15);
-        }
-
-    /* Large devices */
-    @media screen and (max-width: 1500px) {
-      div.container {
-        flex-direction: column;
-      }
-      .navbar > .container,
-      .navbar > .container-fluid,
-      .navbar > .container-sm,
-      .navbar > .container-md,
-      .navbar > .container-lg,
-      .navbar > .container-xl,
-      .navbar > .container-xxl {
-        display: flex;
-        flex-wrap: nowrap;
-        justify-content: center;
-      }
+  /* Medium devices */
+  @media screen and (max-width: 990px) {
+    button.navbar-toggler.collapsed {
+      margin-left: auto;
     }
 
-    /* Large devices */
-    @media screen and (max-width: 991px) {
-      div.container {
-        flex-direction: column;
-      }
-      .navbar > .container,
-      .navbar > .container-fluid,
-      .navbar > .container-sm,
-      .navbar > .container-md,
-      .navbar > .container-lg,
-      .navbar > .container-xl,
-      .navbar > .container-xxl {
-        display: flex;
-        flex-wrap: nowrap;
-        flex-direction: row;
-        justify-content: center;
-      }
+    .navbar>.container,
+    .navbar>.container-fluid,
+    .navbar>.container-sm,
+    .navbar>.container-md,
+    .navbar>.container-lg,
+    .navbar>.container-xl,
+    .navbar>.container-xxl {
+      display: flex;
+      flex-wrap: nowrap;
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+
+  /* Small devices */
+  @media screen and (max-width: 768px) {
+    .navbar-brand img {
+      height: 60px !important;
+      width: 100% !important;
+      object-fit: contain;
     }
 
-    /* Medium devices */
-    @media screen and (max-width: 990px) {
-      button.navbar-toggler.collapsed {
-        margin-left: auto;
-      }
-      .navbar > .container,
-      .navbar > .container-fluid,
-      .navbar > .container-sm,
-      .navbar > .container-md,
-      .navbar > .container-lg,
-      .navbar > .container-xl,
-      .navbar > .container-xxl {
-        display: flex;
-        flex-wrap: nowrap;
-        flex-direction: row;
-        justify-content: center;
-      }
+    .navbar>.container,
+    .navbar>.container-fluid,
+    .navbar>.container-sm,
+    .navbar>.container-md,
+    .navbar>.container-lg,
+    .navbar>.container-xl,
+    .navbar>.container-xxl {
+      display: flex;
+      flex-wrap: nowrap;
+      flex-direction: row;
+      justify-content: center;
     }
+  }
 
-    /* Small devices */
-    @media screen and (max-width: 768px) {
-      .navbar-brand img {
-        height: 60px !important;
-        width: 100% !important;
-        object-fit: contain;
-      }
-      .navbar > .container,
-      .navbar > .container-fluid,
-      .navbar > .container-sm,
-      .navbar > .container-md,
-      .navbar > .container-lg,
-      .navbar > .container-xl,
-      .navbar > .container-xxl {
-        display: flex;
-        flex-wrap: nowrap;
-        flex-direction: row;
-        justify-content: center;
-      }
-    }
-
-    @media screen and (max-width: 600px) {
-      /* .col-sm-7{
+  @media screen and (max-width: 600px) {
+    /* .col-sm-7{
   padding-left: 20px;
   padding-right: 20px;
   } */
+  }
+
+  /* Extra small devices */
+  @media screen and (max-width: 576px) {
+    .gallery div.row .col-sm-3 {
+      padding: 50px;
     }
 
-    /* Extra small devices */
-    @media screen and (max-width: 576px) {
-      .gallery div.row .col-sm-3 {
-        padding: 50px;
-      }
-      .navbar-brand img {
-        height: 60px !important;
-        width: 100% !important;
-        object-fit: contain;
-      }
-      .navbar {
-        display: flex;
-        flex-wrap: nowrap;
-      }
-      .navbar > .container,
-      .navbar > .container-fluid,
-      .navbar > .container-sm,
-      .navbar > .container-md,
-      .navbar > .container-lg,
-      .navbar > .container-xl,
-      .navbar > .container-xxl {
-        display: flex;
-        flex-wrap: nowrap;
-        flex-direction: row;
-        justify-content: center;
-      }
+    .navbar-brand img {
+      height: 60px !important;
+      width: 100% !important;
+      object-fit: contain;
     }
 
-    /* Theme Toggle Button */
-    #theme-toggle {
-      background: var(--primary-color);
-      color: white;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      border: none;
-      cursor: pointer;
-      font-size: 20px;
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 9999;
-      transition: var(--transition);
-    }
-
-    #theme-toggle:hover {
-      transform: scale(1.1);
-    }
-
-    /* CARD PROTECTION - Add these new rules */
-    .dark-theme .card,
-    .dark-theme .card *:not(.fas):not(.fa):not(.nav-link):not(.me-4 i),
-    .dark-theme .card-header,
-    .dark-theme .card-footer,
-    .dark-theme .card-body,
-    .dark-theme .card-title,
-    .dark-theme .card-text,
-    .dark-theme .form-heading,
-    .dark-theme .form-control,
-    .dark-theme .form-label {
-      background-color: var(--card-bg) !important;
-      color: var(--card-text) !important;
-      border-color: #dee2e6 !important;
-    }
-
-    /* Protect form headings specifically */
-    .dark-theme .form-heading,
-    .dark-theme .form-section h2,
-    .dark-theme .form-section h3,
-    .dark-theme .form-section h4 {
-      color: var(--primary-color) !important;
-    }
-
-    .dark-theme .navbar,
-    .dark-theme .naviagation,
-    .dark-theme footer {
-      background-color: var(--nav-bg) !important;
-    }
-
-    .dark-theme .nav-link,
-    .dark-theme .me-4 i,
-    .dark-theme .text-reset,
-    .dark-theme .me-5,
-    .dark-theme p {
-      color: var(--text-color) !important;
-    }
-
-    .dark-theme .me-4:hover i {
-      color: var(--secondary-color) !important;
-    }
-
-    .dark-theme .fas {
-      color: var(--icon-color) !important;
-    }
-
-    /* Heading rules (outside protected areas) */
-    .dark-theme h1:not(.card-title):not(.form-heading),
-    .dark-theme h2:not(.card-title):not(.form-heading),
-    .dark-theme h3:not(.card-title):not(.form-heading),
-    .dark-theme h4:not(.card-title):not(.form-heading),
-    .dark-theme h5:not(.card-title):not(.form-heading),
-    .dark-theme h6:not(.card-title):not(.form-heading),
-    .dark-theme .h1:not(.card-title),
-    .dark-theme .h2:not(.card-title),
-    .dark-theme .h3:not(.card-title),
-    .dark-theme .h4:not(.card-title),
-    .dark-theme .h5:not(.card-title),
-    .dark-theme .h6:not(.card-title),
-    .dark-theme strong:not(.card-title) {
-      color: var(--heading-color) !important;
-    }
-
-    /* Original styles... */
-    .me-4 {
-      text-decoration: none;
-      margin-right: 1rem;
-      transition: transform 0.3s ease, color 0.3s ease;
-    }
-
-    .me-4 i {
-      color: var(--primary-color);
-      font-size: 20px;
-      transition: color 0.3s ease, transform 0.3s ease;
-    }
-
-    .me-4:hover i {
-      color: var(--primary-hover);
-      transform: scale(1.5);
-    }
-
-    .dark-theme .form-container,
-    .dark-theme .form-container h1,
-    .dark-theme .form-container h2,
-    .dark-theme .form-container h3 {
-      background-color: var(--card-bg) !important;
-      color: var(--card-text) !important;
-    }
-
-    /* Specific protection for registration form heading */
-    .dark-theme #frmregistration h2 {
-      color: var(--primary-color) !important;
-      background-color: transparent !important;
-    }
-
-    /* Specific protection for enquiry form heading */
-    .dark-theme #frmcontactus h1 {
-      color: var(--primary-color) !important;
-      background-color: transparent !important;
-    }
-
-    .alert {
-      border-radius: 6px;
-      font-weight: 500;
-    }
-
-    /* Success alert - Light */
-    .alert-success {
-      background-color: #d4edda;
-      color: #155724;
-      border-color: #c3e6cb;
-    }
-
-    /* Dark Theme Alerts */
-    .dark-theme .alert {
-      border-radius: 6px;
-      font-weight: 500;
-      border: none;
-    }
-
-    /* Success alert - Dark */
-    .dark-theme .alert-success {
-      background-color: #006400 !important;
-      color: #ffffff !important;
-    }
-
-    /* Warning alert - Dark */
-    .dark-theme .alert-warning {
-      background-color: #8b8000 !important;
-      color: #ffffff !important;
-    }
-
-    /* Error/Danger alert - Dark */
-    .dark-theme .alert-danger {
-      background-color: #8b0000 !important;
-      color: #ffffff !important;
-    }
-
-    /* Info alert - Dark */
-    .dark-theme .alert-info {
-      background-color: #0c5460 !important;
-      color: #ffffff !important;
-    }
-
-    /* Add this to your CSS to protect radio button labels in dark mode */
-    .dark-theme .form-check-label {
-      color: var(--card-text) !important;
-      background-color: transparent !important;
-    }
-
-    /* Chatbot Styles */
-    #chat-container {
-      font-family: "Poppins", sans-serif;
-      z-index: 1000;
-    }
-
-    #chat-box {
-      width: 320px;
-      height: 400px;
-      position: fixed;
-      bottom: 120px;
-      right: 20px;
-      border: 1px solid #ccc;
-      background: var(--card-bg);
-      z-index: 1000;
-      border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-      display: none;
-      transition: var(--transition);
-    }
-
-    #chat-header {
-      padding: 12px 15px;
-      background: linear-gradient(
-        135deg,
-        var(--chat-primary),
-        var(--chat-primary-hover)
-      );
-      color: var(--text-white);
-      border-top-left-radius: 15px;
-      border-top-right-radius: 15px;
-      font-weight: bold;
+    .navbar {
       display: flex;
+      flex-wrap: nowrap;
+    }
+
+    .navbar .container {
+      padding-right: 15px !important;
+      /* lock consistent right padding */
+      padding-left: 15px !important;
+
+    }
+
+    .navbar>.container,
+    .navbar>.container-fluid,
+    .navbar>.container-sm,
+    .navbar>.container-md,
+    .navbar>.container-lg,
+    .navbar>.container-xl,
+    .navbar>.container-xxl {
+      display: flex;
+      flex-wrap: nowrap;
+      flex-direction: row;
       justify-content: space-between;
-      align-items: center;
     }
+  }
 
-    #chat-messages {
-      height: 280px;
-      padding: 15px;
-      overflow-y: auto;
-      background: var(--bg-light);
-      transition: var(--transition);
-    }
+  /* Theme Toggle Button */
+  #theme-toggle {
+    background: var(--primary-color);
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    border: none;
+    cursor: pointer;
+    font-size: 20px;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    transition: var(--transition);
+  }
 
-    #chat-toggle {
-      position: fixed;
-      bottom: 90px;
-      right: 30px;
-      width: 60px;
-      height: 60px;
-      background: linear-gradient(
-        135deg,
+  #theme-toggle:hover {
+    transform: scale(1.1);
+  }
+
+  /* CARD PROTECTION - Add these new rules */
+  .dark-theme .card,
+  .dark-theme .card *:not(.fas):not(.fa):not(.nav-link):not(.me-4 i),
+  .dark-theme .card-header,
+  .dark-theme .card-footer,
+  .dark-theme .card-body,
+  .dark-theme .card-title,
+  .dark-theme .card-text,
+  .dark-theme .form-heading,
+  .dark-theme .form-control,
+  .dark-theme .form-label {
+    background-color: var(--card-bg) !important;
+    color: var(--card-text) !important;
+    border-color: #dee2e6 !important;
+  }
+
+  /* Protect form headings specifically */
+  .dark-theme .form-heading,
+  .dark-theme .form-section h2,
+  .dark-theme .form-section h3,
+  .dark-theme .form-section h4 {
+    color: var(--primary-color) !important;
+  }
+
+  .dark-theme .navbar,
+  .dark-theme .naviagation,
+  .dark-theme footer {
+    background-color: var(--nav-bg) !important;
+  }
+
+  .dark-theme .nav-link,
+  .dark-theme .me-4 i,
+  .dark-theme .text-reset,
+  .dark-theme .me-5,
+  .dark-theme p {
+    color: var(--text-color) !important;
+  }
+
+  .dark-theme .me-4:hover i {
+    color: var(--secondary-color) !important;
+  }
+
+  .dark-theme .fas {
+    color: var(--icon-color) !important;
+  }
+
+  /* Heading rules (outside protected areas) */
+  .dark-theme h1:not(.card-title):not(.form-heading),
+  .dark-theme h2:not(.card-title):not(.form-heading),
+  .dark-theme h3:not(.card-title):not(.form-heading),
+  .dark-theme h4:not(.card-title):not(.form-heading),
+  .dark-theme h5:not(.card-title):not(.form-heading),
+  .dark-theme h6:not(.card-title):not(.form-heading),
+  .dark-theme .h1:not(.card-title),
+  .dark-theme .h2:not(.card-title),
+  .dark-theme .h3:not(.card-title),
+  .dark-theme .h4:not(.card-title),
+  .dark-theme .h5:not(.card-title),
+  .dark-theme .h6:not(.card-title),
+  .dark-theme strong:not(.card-title) {
+    color: var(--heading-color) !important;
+  }
+
+  /* Original styles... */
+  .me-4 {
+    text-decoration: none;
+    margin-right: 1rem;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+
+  .me-4 i {
+    color: var(--primary-color);
+    font-size: 20px;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+
+  .me-4:hover i {
+    color: var(--primary-hover);
+    transform: scale(1.5);
+  }
+
+  .dark-theme .form-container,
+  .dark-theme .form-container h1,
+  .dark-theme .form-container h2,
+  .dark-theme .form-container h3 {
+    background-color: var(--card-bg) !important;
+    color: var(--card-text) !important;
+  }
+
+  /* Specific protection for registration form heading */
+  .dark-theme #frmregistration h2 {
+    color: var(--primary-color) !important;
+    background-color: transparent !important;
+  }
+
+  /* Specific protection for enquiry form heading */
+  .dark-theme #frmcontactus h1 {
+    color: var(--primary-color) !important;
+    background-color: transparent !important;
+  }
+
+  .alert {
+    border-radius: 6px;
+    font-weight: 500;
+  }
+
+  /* Success alert - Light */
+  .alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+  }
+
+  /* Dark Theme Alerts */
+  .dark-theme .alert {
+    border-radius: 6px;
+    font-weight: 500;
+    border: none;
+  }
+
+  /* Success alert - Dark */
+  .dark-theme .alert-success {
+    background-color: #006400 !important;
+    color: #ffffff !important;
+  }
+
+  /* Warning alert - Dark */
+  .dark-theme .alert-warning {
+    background-color: #8b8000 !important;
+    color: #ffffff !important;
+  }
+
+  /* Error/Danger alert - Dark */
+  .dark-theme .alert-danger {
+    background-color: #8b0000 !important;
+    color: #ffffff !important;
+  }
+
+  /* Info alert - Dark */
+  .dark-theme .alert-info {
+    background-color: #0c5460 !important;
+    color: #ffffff !important;
+  }
+
+  /* Add this to your CSS to protect radio button labels in dark mode */
+  .dark-theme .form-check-label {
+    color: var(--card-text) !important;
+    background-color: transparent !important;
+  }
+
+  /* Chatbot Styles */
+  #chat-container {
+    font-family: "Poppins", sans-serif;
+    z-index: 1000;
+  }
+
+  #chat-box {
+    width: 320px;
+    height: 400px;
+    position: fixed;
+    bottom: 120px;
+    right: 20px;
+    border: 1px solid #ccc;
+    background: var(--card-bg);
+    z-index: 1000;
+    border-radius: 15px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    display: none;
+    transition: var(--transition);
+  }
+
+  #chat-header {
+    padding: 12px 15px;
+    background: linear-gradient(135deg,
         var(--chat-primary),
-        var(--chat-primary-hover)
-      );
-      color: var(--text-white);
-      border: none;
-      border-radius: 50%;
-      cursor: pointer;
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 24px;
-      z-index: 1000;
-      transition: var(--transition);
-    }
+        var(--chat-primary-hover));
+    color: var(--text-white);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
-    #chat-toggle:hover {
-      transform: scale(1.05);
-      background: linear-gradient(
-        135deg,
+  #chat-messages {
+    height: 280px;
+    padding: 15px;
+    overflow-y: auto;
+    background: var(--bg-light);
+    transition: var(--transition);
+  }
+
+  #chat-toggle {
+    position: fixed;
+    bottom: 90px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg,
+        var(--chat-primary),
+        var(--chat-primary-hover));
+    color: var(--text-white);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 24px;
+    z-index: 1000;
+    transition: var(--transition);
+  }
+
+  #chat-toggle:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg,
         var(--chat-primary-hover),
-        var(--chat-accent)
-      );
-    }
+        var(--chat-accent));
+  }
 
-    .chat-message {
-      margin-bottom: 12px;
-      padding: 8px 12px;
-      border-radius: 18px;
-      max-width: 80%;
-      word-wrap: break-word;
-    }
+  .chat-message {
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    border-radius: 18px;
+    max-width: 80%;
+    word-wrap: break-word;
+  }
 
-    .user-message {
-      background: linear-gradient(
-        135deg,
+  .user-message {
+    background: linear-gradient(135deg,
         var(--chat-primary),
-        var(--chat-primary-hover)
-      );
-      color: var(--text-white);
-      margin-left: auto;
-      border-bottom-right-radius: 5px;
-    }
+        var(--chat-primary-hover));
+    color: var(--text-white);
+    margin-left: auto;
+    border-bottom-right-radius: 5px;
+  }
 
-    .bot-message {
-      background: var(--accent-color);
-      color: var(--text-white);
-      margin-right: auto;
-      border-bottom-left-radius: 5px;
-    }
+  .bot-message {
+    background: var(--accent-color);
+    color: var(--text-white);
+    margin-right: auto;
+    border-bottom-left-radius: 5px;
+  }
 
-    #user-input {
-      flex-grow: 1;
-      padding: 10px 15px;
-      border: 1px solid #ddd;
-      border-radius: 25px;
-      margin-right: 8px;
-      outline: none;
-      font-size: 14px;
-      background: var(--card-bg);
-      color: var(--text-color);
-      transition: var(--transition);
-    }
+  #user-input {
+    flex-grow: 1;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 25px;
+    margin-right: 8px;
+    outline: none;
+    font-size: 14px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    transition: var(--transition);
+  }
 
-    #user-input:focus {
-      border-color: var(--chat-primary);
-      box-shadow: 0 0 0 2px rgba(6, 6, 106, 0.2);
-    }
+  #user-input:focus {
+    border-color: var(--chat-primary);
+    box-shadow: 0 0 0 2px rgba(6, 6, 106, 0.2);
+  }
 
-    #send-button {
-      padding: 10px 15px;
-      background: linear-gradient(
-        135deg,
+  #send-button {
+    padding: 10px 15px;
+    background: linear-gradient(135deg,
         var(--chat-primary),
-        var(--chat-primary-hover)
-      );
-      color: var(--text-white);
-      border: none;
-      border-radius: 25px;
-      cursor: pointer;
-      font-size: 14px;
-      font-weight: bold;
-      transition: var(--transition);
-    }
+        var(--chat-primary-hover));
+    color: var(--text-white);
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: var(--transition);
+  }
 
-    #send-button:hover {
-      background: linear-gradient(
-        135deg,
+  #send-button:hover {
+    background: linear-gradient(135deg,
         var(--chat-primary-hover),
-        var(--chat-accent)
-      );
-      transform: scale(1.05);
-    }
+        var(--chat-accent));
+    transform: scale(1.05);
+  }
 
-    .dark-theme #chat-box {
-      border-color: #444;
-    }
+  .dark-theme #chat-box {
+    border-color: #444;
+  }
 
-    .dark-theme #chat-messages {
-      background: #2a2a2a;
-    }
+  .dark-theme #chat-messages {
+    background: #2a2a2a;
+  }
 
-    .dark-theme #user-input {
-      background: #333;
-      color: #f5f5f5;
-      border-color: #555;
-    }
+  .dark-theme #user-input {
+    background: #333;
+    color: #f5f5f5;
+    border-color: #555;
+  }
 
-    /* Chatbot dark mode improvements */
-    .dark-theme #chat-box,
-    .dark-theme #chat-header,
-    .dark-theme #chat-messages,
-    .dark-theme #user-input,
-    .dark-theme #send-button {
-      background: #23272f !important;
-      color: #f5f5f5 !important;
-      border-color: #444 !important;
-    }
-    .dark-theme #chat-header {
-      background: linear-gradient(135deg, #23272f, #2c3440) !important;
-      color: #f5f5f5 !important;
-    }
-    .dark-theme .chat-message {
-      color: #f5f5f5 !important;
-    }
-    .dark-theme .user-message {
-      background: linear-gradient(135deg, #3a3f4a, #23272f) !important;
-      color: #f5f5f5 !important;
-    }
-    .dark-theme .bot-message {
-      background: #2c3440 !important;
-      color: #f5f5f5 !important;
-    }
-    .dark-theme #chat-toggle {
-      background: linear-gradient(135deg, #23272f, #2c3440) !important;
-      color: #f5f5f5 !important;
-    }
-    .dark-theme #chat-toggle:hover {
-      background: linear-gradient(135deg, #2c3440, #3a3f4a) !important;
-      color: #f5f5f5 !important;
-    }
-    /* Ensure input placeholder is visible in dark mode */
-    .dark-theme #user-input::placeholder {
-      color: #b0b0b0 !important;
-      opacity: 1;
-    }
+  /* Chatbot dark mode improvements */
+  .dark-theme #chat-box,
+  .dark-theme #chat-header,
+  .dark-theme #chat-messages,
+  .dark-theme #user-input,
+  .dark-theme #send-button {
+    background: #23272f !important;
+    color: #f5f5f5 !important;
+    border-color: #444 !important;
+  }
 
-    /* Home page dark mode improvements */
-    .dark-theme .hero {
-      background: linear-gradient(135deg, #23272f 60%, #2c3440 100%) !important;
-      color: #f5f5f5 !important;
-    }
-    .dark-theme .hero h1,
-    .dark-theme .hero p,
-    .dark-theme .hero .btn {
-      color: #f5f5f5 !important;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
-    }
-    .dark-theme .hero .btn {
-      background: linear-gradient(135deg, #3a3f4a, #23272f) !important;
-      border: none;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    }
-    .dark-theme .hero .btn:hover {
-      background: linear-gradient(135deg, #2c3440, #3a3f4a) !important;
-      color: #fff !important;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.7);
-    }
-    .dark-theme .about-section,
-    .dark-theme .gallery,
-    .dark-theme .team,
-    .dark-theme .contact-section {
-      background: linear-gradient(135deg, #23272f 60%, #2c3440 100%) !important;
-      color: #f5f5f5 !important;
-    }
-    .dark-theme .about-title,
-    .dark-theme .about-text {
-      color: #f5f5f5 !important;
-      text-shadow: 0 2px 8px rgba(0,0,0,0.7);
-    }
-    .dark-theme .card,
-    .dark-theme .card-body {
-      background: #23272f !important;
-      color: #f5f5f5 !important;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.5);
-    }
-    .dark-theme .card-title,
-    .dark-theme .card-text {
-      color: #f5f5f5 !important;
-    }
-    .dark-theme .footer-content,
-    .dark-theme .main-footer {
-      background: linear-gradient(135deg, #23272f 60%, #2c3440 100%) !important;
-      color: #f5f5f5 !important;
-    }
-    .dark-theme .footer-link {
-      color: #b0b0b0 !important;
-    }
-    .dark-theme .footer-link:hover {
-      color: #fff !important;
-    }
-    .dark-theme .footer-section-title {
-      color: #f5f5f5 !important;
-    }
-    .dark-theme .copyright-section {
-      background: linear-gradient(135deg, #23272f, #2c3440) !important;
-      color: #b0b0b0 !important;
-    }
-  </style>
+  .dark-theme #chat-header {
+    background: linear-gradient(135deg, #23272f, #2c3440) !important;
+    color: #f5f5f5 !important;
+  }
 
-  <body>
-    <div style="position: fixed; top: 20px; right: 20px; z-index: 9999">
-      <button
-        id="theme-toggle"
-        style="
+  .dark-theme .chat-message {
+    color: #f5f5f5 !important;
+  }
+
+  .dark-theme .user-message {
+    background: linear-gradient(135deg, #3a3f4a, #23272f) !important;
+    color: #f5f5f5 !important;
+  }
+
+  .dark-theme .bot-message {
+    background: #2c3440 !important;
+    color: #f5f5f5 !important;
+  }
+
+  .dark-theme #chat-toggle {
+    background: linear-gradient(135deg, #23272f, #2c3440) !important;
+    color: #f5f5f5 !important;
+  }
+
+  .dark-theme #chat-toggle:hover {
+    background: linear-gradient(135deg, #2c3440, #3a3f4a) !important;
+    color: #f5f5f5 !important;
+  }
+
+  /* Ensure input placeholder is visible in dark mode */
+  .dark-theme #user-input::placeholder {
+    color: #b0b0b0 !important;
+    opacity: 1;
+  }
+
+  /* Home page dark mode improvements */
+  .dark-theme .hero {
+    background: linear-gradient(135deg, #23272f 60%, #2c3440 100%) !important;
+    color: #f5f5f5 !important;
+  }
+
+  .dark-theme .hero h1,
+  .dark-theme .hero p,
+  .dark-theme .hero .btn {
+    color: #f5f5f5 !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  }
+
+  .dark-theme .hero .btn {
+    background: linear-gradient(135deg, #3a3f4a, #23272f) !important;
+    border: none;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .dark-theme .hero .btn:hover {
+    background: linear-gradient(135deg, #2c3440, #3a3f4a) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.7);
+  }
+
+  .dark-theme .about-section,
+  .dark-theme .gallery,
+  .dark-theme .team,
+  .dark-theme .contact-section {
+    background: linear-gradient(135deg, #23272f 60%, #2c3440 100%) !important;
+    color: #f5f5f5 !important;
+  }
+
+  .dark-theme .about-title,
+  .dark-theme .about-text {
+    color: #f5f5f5 !important;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  }
+
+  .dark-theme .card,
+  .dark-theme .card-body {
+    background: #23272f !important;
+    color: #f5f5f5 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  }
+
+  .dark-theme .card-title,
+  .dark-theme .card-text {
+    color: #f5f5f5 !important;
+  }
+
+  .dark-theme .footer-content,
+  .dark-theme .main-footer {
+    background: linear-gradient(135deg, #23272f 60%, #2c3440 100%) !important;
+    color: #f5f5f5 !important;
+  }
+
+  .dark-theme .footer-link {
+    color: #b0b0b0 !important;
+  }
+
+  .dark-theme .footer-link:hover {
+    color: #fff !important;
+  }
+
+  .dark-theme .footer-section-title {
+    color: #f5f5f5 !important;
+  }
+
+  .dark-theme .copyright-section {
+    background: linear-gradient(135deg, #23272f, #2c3440) !important;
+    color: #b0b0b0 !important;
+  }
+</style>
+
+<body>
+  <div style="position: fixed; top: 20px; right: 20px; z-index: 9999">
+    <button id="theme-toggle" style="
           background: var(--primary-color);
           color: white;
           border-radius: 50%;
@@ -1324,6 +1347,30 @@
           border: none;
           cursor: pointer;
           font-size: 20px;
+<<<<<<< HEAD
+        ">
+      <span id="theme-icon">🌙</span>
+    </button>
+  </div>
+  <div class="container-fluid">
+    <!-- Enhanced Sticky Navigation -->
+    <div class="sticky-navigation">
+      <!-- Contact Bar -->
+      <div class="contact-bar">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-6 text-center text-sm-start">
+              <a href="tel:+917080102007">
+                <i class="fa-solid fa-phone"></i>
+                <span>+91 7080102007</span>
+              </a>
+            </div>
+            <div class="col-sm-6 text-center text-sm-end">
+              <a href="mailto:nouegyanhelp@gmail.com">
+                <i class="fa-solid fa-envelope"></i>
+                <span>nouegyanhelp@gmail.com</span>
+              </a>
+=======
         "
       >
         <span id="theme-icon">🌙</span>
@@ -1355,533 +1402,463 @@
                   <span>nouegyanhelp@gmail.com</span>
                 </a>
               </div>
+>>>>>>> 57e2cc7425833cac75c7a1cf082a545a76f8809c
             </div>
           </div>
         </div>
-
-        <!-- Main Navigation -->
-        <nav class="navbar navbar-expand-lg main-navbar">
-          <div class="container">
-            <a class="navbar-brand" href="{% url 'nouapp:index' %}">
-              <img
-                src="{% static 'images/NOU.jpg' %}"
-                alt="NOU e-Gyan Portal"
-                class="navbar-logo"
-              />
-            </a>
-            <div class="button-nav">
-              <button
-                class="navbar-toggler ms-auto"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent"
-                aria-expanded="false"
-                aria-label="Toggle navigation"
-              >
-                <span class="navbar-toggler-icon"></span>
-              </button>
-            </div>
-
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav ms-auto">
-                <li class="nav-item">
-                  <a
-                    class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"
-                    href="{% url 'nouapp:index' %}"
-                  >
-                    <i class="fa-solid fa-house"></i>Home
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link {% if request.resolver_match.url_name == 'aboutus' %}active{% endif %}"
-                    href="{% url 'nouapp:aboutus' %}"
-                  >
-                    <i class="fa-solid fa-user"></i>About Us
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link {% if request.resolver_match.url_name == 'courses' %}active{% endif %}"
-                    href="{% url 'nouapp:courses' %}"
-                  >
-                    <i class="fa-solid fa-book"></i>Courses
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% endif %}"
-                    href="{% url 'nouapp:services' %}"
-                  >
-                    <i class="fa-solid fa-list"></i>Services
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link {% if request.resolver_match.url_name == 'login' %}active{% endif %}"
-                    href="{% url 'nouapp:login' %}"
-                  >
-                    <i class="fa-solid fa-key"></i>Login
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link {% if request.resolver_match.url_name == 'registration' %}active{% endif %}"
-                    href="{% url 'nouapp:registration' %}"
-                  >
-                    <i class="fa-solid fa-user-plus"></i>Registration
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a
-                    class="nav-link {% if request.resolver_match.url_name == 'contactus' %}active{% endif %}"
-                    href="{% url 'nouapp:contactus' %}"
-                  >
-                    <i class="fa-solid fa-phone"></i>Contact Us
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </nav>
       </div>
 
-      <!-- Main Content Area -->
-      <main>
-        {% block body %}
-        <!-- Your page content goes here -->
-        {% endblock body %}
-      </main>
+      <!-- Main Navigation -->
+      <nav class="navbar navbar-expand-lg main-navbar">
+        <div class="container">
+          <a class="navbar-brand" href="{% url 'nouapp:index' %}">
+            <img src="{% static 'images/NOU.jpg' %}" alt="NOU e-Gyan Portal" class="navbar-logo" />
+          </a>
+          <div class="button-nav">
+            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+              aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
 
-      <!-- Enhanced Footer -->
-      <footer class="main-footer">
-        <!-- Social Media Section -->
-        <section class="footer-social-section">
-          <div class="container">
-            <div
-              class="d-flex justify-content-center justify-content-lg-between align-items-center flex-wrap"
-            >
-              <div class="footer-social-text mb-3 mb-lg-0">
-                <span>Get connected with us on social networks:</span>
-              </div>
-              <div class="social-icons">
-                <a
-                  href="https://www.linkedin.com/in/shailjaverma18"
-                  class="social-icon"
-                  aria-label="LinkedIn"
-                  title="Connect on LinkedIn"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i class="fab fa-linkedin-in"></i>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'index' %}active{% endif %}"
+                  href="{% url 'nouapp:index' %}">
+                  <i class="fa-solid fa-house"></i>Home
                 </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'aboutus' %}active{% endif %}"
+                  href="{% url 'nouapp:aboutus' %}">
+                  <i class="fa-solid fa-user"></i>About Us
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'courses' %}active{% endif %}"
+                  href="{% url 'nouapp:courses' %}">
+                  <i class="fa-solid fa-book"></i>Courses
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'services' %}active{% endif %}"
+                  href="{% url 'nouapp:services' %}">
+                  <i class="fa-solid fa-list"></i>Services
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'login' %}active{% endif %}"
+                  href="{% url 'nouapp:login' %}">
+                  <i class="fa-solid fa-key"></i>Login
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'registration' %}active{% endif %}"
+                  href="{% url 'nouapp:registration' %}">
+                  <i class="fa-solid fa-user-plus"></i>Registration
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if request.resolver_match.url_name == 'contactus' %}active{% endif %}"
+                  href="{% url 'nouapp:contactus' %}">
+                  <i class="fa-solid fa-phone"></i>Contact Us
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </div>
 
-                <a
-                  href="https://github.com/ShailjaVerma18"
-                  class="social-icon"
-                  aria-label="GitHub"
-                  title="Check out my GitHub"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <i class="fab fa-github"></i>
-                </a>
+    <!-- Main Content Area -->
+    <main>
+      {% block body %}
+      <!-- Your page content goes here -->
+      {% endblock body %}
+    </main>
 
-                <a
-                  href="mailto:vermashailja018@gmail.com"
-                  class="social-icon"
-                  aria-label="Email"
-                  title="Send me an email"
-                >
-                  <i class="fas fa-envelope"></i>
-                </a>
-              </div>
+    <!-- Enhanced Footer -->
+    <footer class="main-footer">
+      <!-- Social Media Section -->
+      <section class="footer-social-section">
+        <div class="container">
+          <div class="d-flex justify-content-center justify-content-lg-between align-items-center flex-wrap">
+            <div class="footer-social-text mb-3 mb-lg-0">
+              <span>Get connected with us on social networks:</span>
+            </div>
+            <div class="social-icons">
+              <a href="https://www.linkedin.com/in/shailjaverma18" class="social-icon" aria-label="LinkedIn"
+                title="Connect on LinkedIn" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+
+              <a href="https://github.com/ShailjaVerma18" class="social-icon" aria-label="GitHub"
+                title="Check out my GitHub" target="_blank" rel="noopener noreferrer">
+                <i class="fab fa-github"></i>
+              </a>
+
+              <a href="mailto:vermashailja018@gmail.com" class="social-icon" aria-label="Email"
+                title="Send me an email">
+                <i class="fas fa-envelope"></i>
+              </a>
             </div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <!-- Main Footer Content -->
-        <section class="footer-content">
-          <div class="container">
-            <div class="row">
-              <!-- About Section -->
-              <div class="text-start col-lg-4 col-md-6 mb-4">
-                <a href="{% url 'nouapp:index' %}">
-                  <img
-                    src="{% static 'images/NOU.jpg' %}"
-                    alt="NOU Logo"
-                    class="footer-logo img-fluid d-block mb-2"
-                    style="height: 80px; width: auto"
-                  />
-                </a>
-                <p class="footer-description">
-                  Nalanda Open University is a State Open University duly
-                  established under the Act of Bihar Government and is also
-                  recognized by Distance Education Council, IGNOU, Maidan Garhi,
-                  New Delhi.
-                </p>
-              </div>
+      <!-- Main Footer Content -->
+      <section class="footer-content">
+        <div class="container">
+          <div class="row">
+            <!-- About Section -->
+            <div class="text-start col-lg-4 col-md-6 mb-4">
+              <a href="{% url 'nouapp:index' %}">
+                <img src="{% static 'images/NOU.jpg' %}" alt="NOU Logo" class="footer-logo img-fluid d-block mb-2"
+                  style="height: 80px; width: auto" />
+              </a>
+              <p class="footer-description">
+                Nalanda Open University is a State Open University duly
+                established under the Act of Bihar Government and is also
+                recognized by Distance Education Council, IGNOU, Maidan Garhi,
+                New Delhi.
+              </p>
+            </div>
 
-              <!-- Quick Links Section -->
-              <div class="text-start col-lg-2 col-md-6 mb-4">
-                <h6 class="text-start footer-section-title">Quick Links</h6>
-                <div class="footer-links">
-                  <a href="{% url 'nouapp:index' %}" class="footer-link"
-                    >Home</a
-                  >
-                  <a href="{% url 'nouapp:aboutus' %}" class="footer-link"
-                    >About Us</a
-                  >
-                  <a href="{% url 'nouapp:courses' %}" class="footer-link"
-                    >Courses</a
-                  >
-                  <a href="{% url 'nouapp:services' %}" class="footer-link"
-                    >Services</a
-                  >
-                  <a href="{% url 'nouapp:login' %}" class="footer-link"
-                    >Login</a
-                  >
-                  <a href="{% url 'nouapp:registration' %}" class="footer-link"
-                    >Registration</a
-                  >
-                  <a href="{% url 'nouapp:contactus' %}" class="footer-link"
-                    >Contact Us</a
-                  >
-                </div>
-              </div>
-
-              <!-- Academic Links -->
-              <div class="text-start col-lg-2 col-md-6 mb-4">
-                <h6 class="footer-section-title">Academic</h6>
-                <div class="footer-links">
-                  <a href="#" class="footer-link">Admissions</a>
-                  <a href="#" class="footer-link">Examination</a>
-                  <a href="#" class="footer-link">Results</a>
-                  <a href="#" class="footer-link">Syllabus</a>
-                  <a href="#" class="footer-link">Study Material</a>
-                  <a href="#" class="footer-link">Student Portal</a>
-                </div>
-              </div>
-
-              <!-- Contact Information -->
-              <div class="text-start col-lg-4 col-md-6 mb-4">
-                <h6 class="footer-section-title">Contact Info</h6>
-                <div class="contact-item">
-                  <i class="fas fa-map-marker-alt"></i>
-                  <span
-                    >NOU 2nd/3rd Floor, Biscomaun Bhawan, Gandhi Maidan, Patna
-                    800 001 (BIHAR)</span
-                  >
-                </div>
-                <div class="contact-item">
-                  <i class="fas fa-envelope"></i>
-                  <span>nouegyanhelp@gmail.com</span>
-                </div>
-                <div class="contact-item">
-                  <i class="fas fa-phone"></i>
-                  <span>+91 7080102007<br /><small>Give us a call</small></span>
-                </div>
-                <div class="contact-item">
-                  <i class="fas fa-clock"></i>
-                  <span
-                    >Mon - Fri: 9:00 AM - 6:00 PM<br /><small
-                      >Office Hours</small
-                    ></span
-                  >
-                </div>
+            <!-- Quick Links Section -->
+            <div class="text-start col-lg-2 col-md-6 mb-4">
+              <h6 class="text-start footer-section-title">Quick Links</h6>
+              <div class="footer-links">
+                <a href="{% url 'nouapp:index' %}" class="footer-link">Home</a>
+                <a href="{% url 'nouapp:aboutus' %}" class="footer-link">About Us</a>
+                <a href="{% url 'nouapp:courses' %}" class="footer-link">Courses</a>
+                <a href="{% url 'nouapp:services' %}" class="footer-link">Services</a>
+                <a href="{% url 'nouapp:login' %}" class="footer-link">Login</a>
+                <a href="{% url 'nouapp:registration' %}" class="footer-link">Registration</a>
+                <a href="{% url 'nouapp:contactus' %}" class="footer-link">Contact Us</a>
               </div>
             </div>
-          </div>
-        </section>
 
-        <!-- Copyright -->
-        <div class="copyright-section text-center">
-          <div class="container">
-            <div class="row align-items-center">
-              <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
-                <span
-                  >© Copyright 2024 NOU e-Gyan Portal. All rights
-                  reserved.</span
-                >
+            <!-- Academic Links -->
+            <div class="text-start col-lg-2 col-md-6 mb-4">
+              <h6 class="footer-section-title">Academic</h6>
+              <div class="footer-links">
+                <a href="#" class="footer-link">Admissions</a>
+                <a href="#" class="footer-link">Examination</a>
+                <a href="#" class="footer-link">Results</a>
+                <a href="#" class="footer-link">Syllabus</a>
+                <a href="#" class="footer-link">Study Material</a>
+                <a href="#" class="footer-link">Student Portal</a>
               </div>
-              <div class="col-md-6 text-center text-md-end">
-                <span
-                  >Designed & Developed By |
-                  <a
-                    class="copyright-link"
-                    href="http://www.softproindia.in/"
-                    target="_blank"
-                  >
-                    Softpro India Computer Technologies (P) Ltd.
-                  </a>
-                </span>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="text-start col-lg-4 col-md-6 mb-4">
+              <h6 class="footer-section-title">Contact Info</h6>
+              <div class="contact-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>NOU 2nd/3rd Floor, Biscomaun Bhawan, Gandhi Maidan, Patna
+                  800 001 (BIHAR)</span>
+              </div>
+              <div class="contact-item">
+                <i class="fas fa-envelope"></i>
+                <span>nouegyanhelp@gmail.com</span>
+              </div>
+              <div class="contact-item">
+                <i class="fas fa-phone"></i>
+                <span>+91 7080102007<br /><small>Give us a call</small></span>
+              </div>
+              <div class="contact-item">
+                <i class="fas fa-clock"></i>
+                <span>Mon - Fri: 9:00 AM - 6:00 PM<br /><small>Office Hours</small></span>
               </div>
             </div>
           </div>
         </div>
-      </footer>
-    </div>
+      </section>
 
-   <!-- Back to Top Button -->
-    <button id="backToTop" title="Back to Top">⬆</button>
-    <!-- Top to Bottom Button -->
-    <button id="Toptoback" title="Top To Back">⬇</button>
+      <!-- Copyright -->
+      <div class="copyright-section text-center">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-2 mb-md-0">
+              <span>© Copyright 2024 NOU e-Gyan Portal. All rights
+                reserved.</span>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+              <span>Designed & Developed By |
+                <a class="copyright-link" href="http://www.softproindia.in/" target="_blank">
+                  Softpro India Computer Technologies (P) Ltd.
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
 
-    <!-- JavaScript for Enhanced Functionality -->
-    <script>
-      $(document).ready(function () {
-        // Smooth scrolling for anchor links
-        $('a[href^="#"]').on("click", function (event) {
-          var target = $(this.getAttribute("href"));
-          if (target.length) {
-            event.preventDefault();
-            $("html, body")
-              .stop()
-              .animate(
-                {
-                  scrollTop: target.offset().top - 120,
-                },
-                1000
-              );
-          }
-        });
+  <!-- Back to Top Button -->
+  <button id="backToTop" title="Back to Top">⬆</button>
+  <!-- Top to Bottom Button -->
+  <button id="Toptoback" title="Top To Back">⬇</button>
 
-        // Mobile menu close on link click
-        $(".navbar-nav .nav-link").on("click", function () {
-          if ($(window).width() < 992) {
-            $(".navbar-collapse").collapse("hide");
-          }
-        });
-
-        // Add hover effect to navbar brand
-        $(".navbar-brand").hover(
-          function () {
-            $(this).find("img").css("transform", "scale(1.05)");
-          },
-          function () {
-            $(this).find("img").css("transform", "scale(1)");
-          }
-        );
-
-        // Theme toggle functionality
-        const themeToggle = document.getElementById("theme-toggle");
-        const themeIcon = document.getElementById("theme-icon");
-
-        // Check for saved theme preference
-        const savedTheme = localStorage.getItem("theme") || "light";
-        if (savedTheme === "dark") {
-          document.body.classList.add("dark-theme");
-          themeIcon.textContent = "☀️";
-        }
-
-        // Toggle theme on button click
-        themeToggle.addEventListener("click", function () {
-          document.body.classList.toggle("dark-theme");
-          const isDark = document.body.classList.contains("dark-theme");
-          localStorage.setItem("theme", isDark ? "dark" : "light");
-          themeIcon.textContent = isDark ? "☀️" : "🌙";
-        });
-      });
-
-      // Navbar background change on scroll
-      $(window).scroll(function () {
-        if ($(this).scrollTop() > 50) {
-          $(".main-navbar").css({
-            background: "rgba(240, 248, 255, 0.95)",
-            "backdrop-filter": "blur(15px)",
-          });
-        } else {
-          $(".main-navbar").css({
-            background: "var(--nav-bg)",
-            "backdrop-filter": "blur(10px)",
-          });
+  <!-- JavaScript for Enhanced Functionality -->
+  <script>
+    $(document).ready(function () {
+      // Smooth scrolling for anchor links
+      $('a[href^="#"]').on("click", function (event) {
+        var target = $(this.getAttribute("href"));
+        if (target.length) {
+          event.preventDefault();
+          $("html, body")
+            .stop()
+            .animate(
+              {
+                scrollTop: target.offset().top - 120,
+              },
+              1000
+            );
         }
       });
 
-      // Get the button
-      let topBtn = document.getElementById("topBtn");
-
-      // Show button when scrolled 100px
-      window.onscroll = function () {
-        if (
-          document.body.scrollTop > 100 ||
-          document.documentElement.scrollTop > 100
-        ) {
-          topBtn.style.display = "block";
-        } else {
-          topBtn.style.display = "none";
+      // Mobile menu close on link click
+      $(".navbar-nav .nav-link").on("click", function () {
+        if ($(window).width() < 992) {
+          $(".navbar-collapse").collapse("hide");
         }
-      };
+      });
 
-      // Back to Top Button Logic
-        const backToTopBtn = document.getElementById("backToTop");
-        window.addEventListener("scroll", () => {
-            if (window.scrollY > 100) {
-                backToTopBtn.classList.add("show");
-            } else {
-                backToTopBtn.classList.remove("show");
-            }
-        });
-        backToTopBtn.addEventListener("click", () => {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-        });
+      // Add hover effect to navbar brand
+      $(".navbar-brand").hover(
+        function () {
+          $(this).find("img").css("transform", "scale(1.05)");
+        },
+        function () {
+          $(this).find("img").css("transform", "scale(1)");
+        }
+      );
 
-        //Top to Bottom Button Logic
-        const ToptobackBtn = document.getElementById("Toptoback");
-        window.addEventListener("scroll", () => {
-            if (window.scrollY < 100) {
-                ToptobackBtn.classList.add("show");
-            } else {
-                ToptobackBtn.classList.remove("show");
-            }
-        });
-        ToptobackBtn.addEventListener("click", () => {
-            window.scrollTo({ top: 10000, behavior: "smooth" });
-        });
-    </script>
+      // Theme toggle functionality
+      const themeToggle = document.getElementById("theme-toggle");
+      const themeIcon = document.getElementById("theme-icon");
 
-    <!-- Chatbot Widget -->
-    <div id="chat-container">
-      <div id="chat-box">
-        <div id="chat-header">
-          <span>NOU Assistant 🤖</span>
-          <button
-            onclick="toggleChat()"
-            style="
+      // Check for saved theme preference
+      const savedTheme = localStorage.getItem("theme") || "light";
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark-theme");
+        themeIcon.textContent = "☀";
+      }
+
+      // Toggle theme on button click
+      themeToggle.addEventListener("click", function () {
+        document.body.classList.toggle("dark-theme");
+        const isDark = document.body.classList.contains("dark-theme");
+        localStorage.setItem("theme", isDark ? "dark" : "light");
+        themeIcon.textContent = isDark ? "☀" : "🌙";
+      });
+    });
+
+    // Navbar background change on scroll
+    $(window).scroll(function () {
+      if ($(this).scrollTop() > 50) {
+        $(".main-navbar").css({
+          background: "rgba(240, 248, 255, 0.95)",
+          "backdrop-filter": "blur(15px)",
+        });
+      } else {
+        $(".main-navbar").css({
+          background: "var(--nav-bg)",
+          "backdrop-filter": "blur(10px)",
+        });
+      }
+    });
+
+    // Get the button
+    let topBtn = document.getElementById("topBtn");
+
+    // Show button when scrolled 100px
+    window.onscroll = function () {
+      if (
+        document.body.scrollTop > 100 ||
+        document.documentElement.scrollTop > 100
+      ) {
+        topBtn.style.display = "block";
+      } else {
+        topBtn.style.display = "none";
+      }
+    };
+
+    // Back to Top Button Logic
+    const backToTopBtn = document.getElementById("backToTop");
+    window.addEventListener("scroll", () => {
+      if (window.scrollY > 100) {
+        backToTopBtn.classList.add("show");
+      } else {
+        backToTopBtn.classList.remove("show");
+      }
+    });
+    backToTopBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    //Top to Bottom Button Logic
+    const ToptobackBtn = document.getElementById("Toptoback");
+    window.addEventListener("scroll", () => {
+      if (window.scrollY < 100) {
+        ToptobackBtn.classList.add("show");
+      } else {
+        ToptobackBtn.classList.remove("show");
+      }
+    });
+    ToptobackBtn.addEventListener("click", () => {
+      window.scrollTo({ top: 10000, behavior: "smooth" });
+    });
+  </script>
+
+  <!-- Chatbot Widget -->
+  <div id="chat-container">
+    <div id="chat-box">
+      <div id="chat-header">
+        <span>NOU Assistant 🤖</span>
+        <button onclick="toggleChat()" style="
               background: transparent;
               border: none;
               color: white;
               cursor: pointer;
               font-size: 18px;
-            "
-          >
-            ×
-          </button>
-        </div>
-        <div id="chat-messages"></div>
-        <div
-          style="
+            ">
+          ×
+        </button>
+      </div>
+      <div id="chat-messages"></div>
+      <div style="
             padding: 12px;
             border-top: 1px solid #eee;
             background: var(--card-bg);
             border-bottom-left-radius: 15px;
             border-bottom-right-radius: 15px;
             display: flex;
-          "
-        >
-          <input type="text" id="user-input" placeholder="Ask about NOU..." />
-          <button id="send-button" onclick="sendMessage()">Send</button>
-        </div>
+          ">
+        <input type="text" id="user-input" placeholder="Ask about NOU..." />
+        <button id="send-button" onclick="sendMessage()">Send</button>
       </div>
-      <button id="chat-toggle" onclick="toggleChat()">💬</button>
     </div>
+    <button id="chat-toggle" onclick="toggleChat()">💬</button>
+  </div>
 
-    <script>
-      const API_URL = "/chat/"; // URL to your chatbot API
+  <script>
+    const API_URL = "/chat/"; // URL to your chatbot API
 
-      // Remove all hover/auto-open logic for chatbot
-      // Only open/close on click
-      function toggleChat() {
-        const chatBox = document.getElementById("chat-box");
-        chatBox.style.display = (chatBox.style.display === "block") ? "none" : "block";
-        if (chatBox.style.display === "block") {
-          document.getElementById("user-input").focus();
-          if (document.getElementById("chat-messages").children.length === 0) {
-            appendMessage(
-              "Bot",
-              "Hello! Welcome to Nalanda Open University. I'm here to help you with information about courses, admissions, and more. How can I assist you today?"
-            );
-          }
-        }
-      }
-
-      function appendMessage(sender, message) {
-        const messageDiv = document.createElement("div");
-        messageDiv.classList.add("chat-message");
-
-        if (sender === "You") {
-          messageDiv.classList.add("user-message");
-        } else {
-          messageDiv.classList.add("bot-message");
-        }
-
-        messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
-        document.getElementById("chat-messages").appendChild(messageDiv);
-
-        // Scroll to bottom
-        const messageContainer = document.getElementById("chat-messages");
-        messageContainer.scrollTop = messageContainer.scrollHeight;
-      }
-
-      async function sendMessage() {
-        const userInput = document.getElementById("user-input");
-        const message = userInput.value.trim();
-        if (message === "") return;
-
-        appendMessage("You", message);
-        userInput.value = ""; // Clear input field
-        userInput.focus();
-
-        try {
-          const response = await fetch(API_URL, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "X-CSRFToken": getCookie("csrftoken"),
-            },
-            body: JSON.stringify({ message: message }),
-          });
-
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-
-          const data = await response.json();
-          if (data.response) {
-            appendMessage("Bot", data.response);
-          } else if (data.error) {
-            appendMessage("Bot", `Sorry, there was an error: ${data.error}`);
-          } else {
-            appendMessage("Bot", "Sorry, I encountered an unexpected error.");
-          }
-        } catch (error) {
-          console.error("Error:", error);
+    // Remove all hover/auto-open logic for chatbot
+    // Only open/close on click
+    function toggleChat() {
+      const chatBox = document.getElementById("chat-box");
+      chatBox.style.display = (chatBox.style.display === "block") ? "none" : "block";
+      if (chatBox.style.display === "block") {
+        document.getElementById("user-input").focus();
+        if (document.getElementById("chat-messages").children.length === 0) {
           appendMessage(
             "Bot",
-            "Oops! Something went wrong. Please try again in a moment."
+            "Hello! Welcome to Nalanda Open University. I'm here to help you with information about courses, admissions, and more. How can I assist you today?"
           );
         }
       }
+    }
 
-      // Helper function to get CSRF token
-      function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== "") {
-          const cookies = document.cookie.split(";");
-          for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.substring(0, name.length + 1) === name + "=") {
-              cookieValue = decodeURIComponent(
-                cookie.substring(name.length + 1)
-              );
-              break;
-            }
+   function appendMessage(sender, message) {
+  const messageDiv = document.createElement("div");
+  messageDiv.classList.add("chat-message");
+
+  if (sender === "You") {
+    messageDiv.classList.add("user-message");
+  } else {
+    messageDiv.classList.add("bot-message");
+  }
+
+  // ✅ Fixed: use backticks for template literals
+  messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+  document.getElementById("chat-messages").appendChild(messageDiv);
+
+  // Scroll to bottom
+  const messageContainer = document.getElementById("chat-messages");
+  messageContainer.scrollTop = messageContainer.scrollHeight;
+}
+
+async function sendMessage() {
+  const userInput = document.getElementById("user-input");
+  const message = userInput.value.trim();
+  if (message === "") return;
+
+  appendMessage("You", message);
+  userInput.value = ""; // Clear input field
+  userInput.focus();
+
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRFToken": getCookie("csrftoken"),
+      },
+      body: JSON.stringify({ message: message }),
+    });
+
+    // ✅ Fixed: wrap string in backticks
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data.response) {
+      appendMessage("Bot", data.response);
+    } else if (data.error) {
+      // ✅ Fixed: use backticks for template literal
+      appendMessage("Bot", `Sorry, there was an error: ${data.error}`);
+    } else {
+      appendMessage("Bot", "Sorry, I encountered an unexpected error.");
+    }
+  } catch (error) {
+    console.error("Error:", error);
+    appendMessage(
+      "Bot",
+      "Oops! Something went wrong. Please try again in a moment."
+    );
+  }
+}
+
+
+    // Helper function to get CSRF token
+    function getCookie(name) {
+      let cookieValue = null;
+      if (document.cookie && document.cookie !== "") {
+        const cookies = document.cookie.split(";");
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i].trim();
+          if (cookie.substring(0, name.length + 1) === name + "=") {
+            cookieValue = decodeURIComponent(
+              cookie.substring(name.length + 1)
+            );
+            break;
           }
         }
-
-        return cookieValue;
       }
 
-      // Allow sending message with Enter key
-      document
-        .getElementById("user-input")
-        .addEventListener("keypress", function (e) {
-          if (e.key === "Enter") {
-            sendMessage();
-          }
-        });
-    </script>
-    <script src="{% static 'js/navbar-slide.js' %}"></script>
-  </body>
+      return cookieValue;
+    }
+
+    // Allow sending message with Enter key
+    document
+      .getElementById("user-input")
+      .addEventListener("keypress", function (e) {
+        if (e.key === "Enter") {
+          sendMessage();
+        }
+      });
+  </script>
+  <script src="{% static 'js/navbar-slide.js' %}"></script>
+</body>
+
 </html>
