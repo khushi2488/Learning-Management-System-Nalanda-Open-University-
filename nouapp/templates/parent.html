@@ -1347,7 +1347,6 @@
           border: none;
           cursor: pointer;
           font-size: 20px;
-<<<<<<< HEAD
         ">
       <span id="theme-icon">🌙</span>
     </button>
@@ -1370,39 +1369,6 @@
                 <i class="fa-solid fa-envelope"></i>
                 <span>nouegyanhelp@gmail.com</span>
               </a>
-=======
-        "
-      >
-        <span id="theme-icon">🌙</span>
-      </button>
-    </div>
-    <div class="container-fluid">
-      <!-- Enhanced Sticky Navigation -->
-      <div class="sticky-navigation">
-        <!-- Contact Bar -->
-        <div class="contact-bar">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-6 text-center text-sm-start">
-                <a href="tel:+917080102007">
-                  <i class="fa-solid fa-phone"></i>
-                  <span>+91 7080102007</span>
-                </a>
-              </div>
-              <div class="col-sm-6 text-center text-sm-end">
-                <form action="{% url 'nouapp:search' %}" method="GET" class="d-inline-flex" style="gap: 8px;">
-                  <input type="text" name="q" class="form-control form-control-sm" placeholder="Search student..." style="width: 160px;">
-                  <button type="submit" class="btn btn-sm btn-primary">
-                    <i class="fa fa-search"></i>
-                  </button>
-                </form>
-
-                <a href="mailto:nouegyanhelp@gmail.com" style="margin-left: 12px;">
-                  <i class="fa-solid fa-envelope"></i>
-                  <span>nouegyanhelp@gmail.com</span>
-                </a>
-              </div>
->>>>>>> 57e2cc7425833cac75c7a1cf082a545a76f8809c
             </div>
           </div>
         </div>
@@ -1767,68 +1733,63 @@
       }
     }
 
-   function appendMessage(sender, message) {
-  const messageDiv = document.createElement("div");
-  messageDiv.classList.add("chat-message");
+    function appendMessage(sender, message) {
+      const messageDiv = document.createElement("div");
+      messageDiv.classList.add("chat-message");
 
-  if (sender === "You") {
-    messageDiv.classList.add("user-message");
-  } else {
-    messageDiv.classList.add("bot-message");
-  }
+      if (sender === "You") {
+        messageDiv.classList.add("user-message");
+      } else {
+        messageDiv.classList.add("bot-message");
+      }
 
-  // ✅ Fixed: use backticks for template literals
-  messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
-  document.getElementById("chat-messages").appendChild(messageDiv);
+      messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+      document.getElementById("chat-messages").appendChild(messageDiv);
 
-  // Scroll to bottom
-  const messageContainer = document.getElementById("chat-messages");
-  messageContainer.scrollTop = messageContainer.scrollHeight;
-}
-
-async function sendMessage() {
-  const userInput = document.getElementById("user-input");
-  const message = userInput.value.trim();
-  if (message === "") return;
-
-  appendMessage("You", message);
-  userInput.value = ""; // Clear input field
-  userInput.focus();
-
-  try {
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRFToken": getCookie("csrftoken"),
-      },
-      body: JSON.stringify({ message: message }),
-    });
-
-    // ✅ Fixed: wrap string in backticks
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      // Scroll to bottom
+      const messageContainer = document.getElementById("chat-messages");
+      messageContainer.scrollTop = messageContainer.scrollHeight;
     }
 
-    const data = await response.json();
+    async function sendMessage() {
+      const userInput = document.getElementById("user-input");
+      const message = userInput.value.trim();
+      if (message === "") return;
 
-    if (data.response) {
-      appendMessage("Bot", data.response);
-    } else if (data.error) {
-      // ✅ Fixed: use backticks for template literal
-      appendMessage("Bot", `Sorry, there was an error: ${data.error}`);
-    } else {
-      appendMessage("Bot", "Sorry, I encountered an unexpected error.");
+      appendMessage("You", message);
+      userInput.value = ""; // Clear input field
+      userInput.focus();
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-CSRFToken": getCookie("csrftoken"),
+          },
+          body: JSON.stringify({ message: message }),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        if (data.response) {
+          appendMessage("Bot", data.response);
+        } else if (data.error) {
+          appendMessage("Bot", `Sorry, there was an error: ${data.error}`);
+        } else {
+          appendMessage("Bot", "Sorry, I encountered an unexpected error.");
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        appendMessage(
+          "Bot",
+          "Oops! Something went wrong. Please try again in a moment."
+        );
+      }
     }
-  } catch (error) {
-    console.error("Error:", error);
-    appendMessage(
-      "Bot",
-      "Oops! Something went wrong. Please try again in a moment."
-    );
-  }
-}
-
 
     // Helper function to get CSRF token
     function getCookie(name) {
