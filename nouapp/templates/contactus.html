@@ -2,960 +2,314 @@
 {% load static %} 
 {% block body %}
 <style>
-  :root {
-    --primary-blue: #1e40af;
-    --secondary-blue: #3b82f6;
-    --accent-blue: #60a5fa;
-    --dark-blue: #1e3a8a;
-    --light-blue: #dbeafe;
-    --success-green: #10b981;
-    --text-dark: #1e293b;
-    --text-light: #64748b;
-    --bg-light: #f8fafc;
+  .container {
+    width: 100%;
+  }
+  .container h1 {
+    text-align: center;
+    color: var(--heading-color);
+    font-weight: bold;
+    padding-top: 10vh;
+    font-family: poppins, sans-serif;
+    background-color: transparent;
+  }
+  h4 {
+    text-align: left;
+    color: var(--text-color);
+    font-weight: bold;
+    padding-top: 5vh;
+    padding-left: 5px;
+    font-family: poppins, sans-serif;
   }
 
-  /* Header Image */
+  @media (max-width: 600px) {
+    .row .col-sm-3 {
+      padding-left: 0px;
+      margin-top: 8vh;
+      padding-top: 0px;
+      padding-bottom: 0px;
+      padding-right: 0px;
+      align-content: center;
+    }
+  }
+  @media (max-width: 530px) and (min-width: 350px) {
+    .home h3 {
+      text-align: center;
+      font-size: 17px;
+    }
+    .home p {
+      text-align: center;
+      font-size: small;
+    }
+  }
+
+  /*Header Image*/
   .home {
-    background-image: linear-gradient(rgba(30, 64, 175, 0.5), rgba(30, 58, 138, 0.6)),
-                  url(../static/images/bookslibrary.jpg);
+    background-image: url(../static/images/bookslibrary.jpg);
     width: 100%;
-    min-height: 40vh;
+    height: 37vh;
     background-size: cover;
     background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-    padding: 3rem 1rem;
   }
-
-  .home::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.2), transparent);
-    animation: pulse 4s ease-in-out infinite;
+  /*Header Image End*/
+  
+  /* Card styling to use theme variables */
+  .course-card {
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);
+    border-radius: 5%;
+    background-color: var(--card-bg);
+    color: var(--card-text);
+    transition: var(--transition);
   }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 0.5; }
-    50% { opacity: 1; }
+  
+  .course-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.7);
   }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    color: white;
-    padding: 1.5rem;
-    max-width: 1000px;
-    width: 100%;
-  }
-
-  .hero-content h3 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin: 0 0 1.5rem 0;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-    animation: fadeInDown 1s ease-out;
-    line-height: 1.4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-  }
-
-  .hero-icon {
-    font-size: 2.5rem;
-    flex-shrink: 0;
-    display: inline-block;
-  }
-
-  .hero-text {
-    display: inline-block;
-  }
-
-  .hero-content p {
-    font-size: 1.25rem;
-    font-weight: 500;
-    opacity: 0.95;
-    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
-    animation: fadeInUp 1s ease-out 0.3s both;
-    line-height: 1.6;
-    margin: 0;
-  }
-
-  @keyframes fadeInDown {
-    from {
-      opacity: 0;
-      transform: translateY(-30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  /* Main Container */
-  .enquiry-wrapper {
-    background: linear-gradient(135deg, var(--light-blue) 0%, #e0f2fe 100%);
-    padding: 4rem 0;
-    min-height: 100vh;
-  }
-
-  /* Info Banner */
-  .info-banner {
-    max-width: 900px;
-    margin: -3rem auto 2rem;
-    background: white;
-    border-radius: 16px;
-    padding: 2rem;
-    box-shadow: 0 10px 30px rgba(30, 64, 175, 0.15);
-    border-left: 6px solid var(--primary-blue);
-    position: relative;
-    z-index: 10;
-  }
-
-  .info-banner h4 {
-    color: var(--primary-blue);
-    font-size: 1.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-  }
-
-  .info-banner-icon {
-    font-size: 2rem;
-    flex-shrink: 0;
-  }
-
-  .info-banner p {
-    color: var(--text-light);
-    line-height: 1.7;
-    margin-bottom: 0.75rem;
-  }
-
-  .info-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 1.5rem;
-  }
-
-  .info-list li {
-    color: var(--text-dark);
-    padding: 0.5rem 0;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-weight: 500;
-  }
-
-  .info-list li::before {
-    content: '✓';
-    background: var(--primary-blue);
-    color: white;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  
+  .course-title-text {
+    color: var(--primary-color) !important;
     font-weight: bold;
-    flex-shrink: 0;
-  }
-
-  /* Form Container */
-  .enquiry-container {
-    max-width: 900px;
-    margin: 0 auto;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 20px 60px rgba(30, 64, 175, 0.2);
-    overflow: hidden;
-  }
-
-  .form-header {
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-    color: white;
-    padding: 2.5rem;
-    text-align: center;
-    position: relative;
-  }
-
-  .form-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="rgba(255,255,255,0.1)"/></svg>') no-repeat bottom;
-    background-size: cover;
-    opacity: 0.1;
-  }
-
-  .form-header h1 {
-    font-size: 2.25rem;
-    font-weight: 700;
-    margin: 0 0 0.75rem 0;
-    position: relative;
-  }
-
-  .form-header p {
-    font-size: 1.063rem;
-    opacity: 0.95;
-    margin: 0;
-    position: relative;
-  }
-
-  .form-body {
-    padding: 3rem 2.5rem;
-  }
-
-  /* Form Groups */
-  .form-group-modern {
-    margin-bottom: 2rem;
-  }
-
-  .form-label-modern {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-weight: 600;
-    color: var(--primary-blue);
-    margin-bottom: 0.75rem;
-    font-size: 0.938rem;
-  }
-
-  .label-icon {
-    font-size: 1.25rem;
-    color: var(--secondary-blue);
-  }
-
-  .required-indicator {
-    color: #ef4444;
-    margin-left: 0.25rem;
-  }
-
-  .form-control-modern {
-    border: 2px solid #e2e8f0;
-    border-radius: 12px;
-    padding: 0.875rem 1rem;
-    font-size: 0.938rem;
-    transition: all 0.3s ease;
-    background: var(--bg-light);
-    width: 100%;
-  }
-
-  .form-control-modern:focus {
-    border-color: var(--secondary-blue);
-    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
-    background: white;
-    outline: none;
-  }
-
-  .form-control-modern::placeholder {
-    color: #94a3b8;
-  }
-
-  textarea.form-control-modern {
-    resize: none;
-    min-height: 120px;
-    line-height: 1.6;
-  }
-
-  /* Gender Selector */
-  .gender-options {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
-    margin-top: 0.75rem;
-  }
-
-  .gender-option {
-    position: relative;
-  }
-
-  .gender-option input[type="radio"] {
-    position: absolute;
-    opacity: 0;
-  }
-
-  .gender-label {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    border: 2px solid #e2e8f0;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    background: var(--bg-light);
-    font-weight: 500;
-    color: var(--text-dark);
-  }
-
-  .gender-option input[type="radio"]:checked + .gender-label {
-    border-color: var(--primary-blue);
-    background: linear-gradient(135deg, rgba(30, 64, 175, 0.1) 0%, rgba(59, 130, 246, 0.1) 100%);
-    color: var(--primary-blue);
-    transform: scale(1.05);
-    font-weight: 600;
-  }
-
-  .gender-label:hover {
-    border-color: var(--secondary-blue);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(30, 64, 175, 0.15);
-  }
-
-  .gender-icon {
-    font-size: 1.5rem;
-    margin-right: 0.5rem;
-  }
-
-  /* Submit Button */
-  .submit-btn {
-    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
-    color: white;
-    border: none;
-    border-radius: 12px;
-    padding: 1.125rem 2.5rem;
-    font-size: 1.063rem;
-    font-weight: 600;
-    width: 100%;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    margin-top: 1rem;
-  }
-
-  .submit-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 12px 30px rgba(30, 64, 175, 0.4);
-  }
-
-  .submit-btn:active {
-    transform: translateY(-1px);
-  }
-
-  /* Alert Messages */
-  .alert-modern {
-    border-radius: 12px;
-    border: none;
-    padding: 1.25rem;
-    margin-bottom: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    animation: slideInDown 0.5s ease-out;
-  }
-
-  @keyframes slideInDown {
-    from {
-      opacity: 0;
-      transform: translateY(-20px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  .alert-modern.alert-success {
-    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-    color: white;
-  }
-
-  .alert-icon {
-    font-size: 1.75rem;
-  }
-
-  .alert-content {
-    flex: 1;
-  }
-
-  .alert-close {
-    background: transparent;
-    border: none;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-    opacity: 0.8;
-    transition: opacity 0.3s;
-  }
-
-  .alert-close:hover {
-    opacity: 1;
-  }
-
-  /* Help Text */
-  .help-text {
-    font-size: 0.813rem;
-    color: var(--text-light);
-    margin-top: 0.5rem;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  /* Responsive */
-  @media (max-width: 992px) {
-    .home {
-      min-height: 35vh;
-      padding: 2.5rem 1rem;
-    }
-
-    .hero-content h3 {
-      font-size: 2rem;
-    }
-
-    .hero-icon {
-      font-size: 2rem;
-    }
-
-    .hero-content p {
-      font-size: 1.125rem;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .home {
-      min-height: 30vh;
-      padding: 2rem 1rem;
-    }
-
-    .hero-content {
-      padding: 1rem;
-    }
-
-    .hero-content h3 {
-      font-size: 1.5rem;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .hero-icon {
-      font-size: 1.5rem;
-    }
-
-    .hero-content p {
-      font-size: 0.938rem;
-      line-height: 1.5;
-    }
-
-    .enquiry-wrapper {
-      padding: 2rem 1rem;
-    }
-
-    .info-banner {
-      margin: -2rem 1rem 1.5rem;
-      padding: 1.5rem;
-    }
-
-    .info-banner h4 {
-      font-size: 1.25rem;
-      flex-wrap: wrap;
-    }
-
-    .form-header {
-      padding: 2rem 1.5rem;
-    }
-
-    .form-header h1 {
-      font-size: 1.75rem;
-    }
-
-    .form-header p {
-      font-size: 0.938rem;
-    }
-
-    .form-body {
-      padding: 2rem 1.5rem;
-    }
-
-    .gender-options {
-      grid-template-columns: 1fr;
-    }
-
-    .gender-label {
-      padding: 0.875rem;
-    }
-
-    .submit-btn {
-      padding: 1rem 2rem;
-      font-size: 1rem;
-    }
-  }
-
-  @media (max-width: 576px) {
-    .home {
-      min-height: 28vh;
-      padding: 1.5rem 0.75rem;
-    }
-
-    .hero-content {
-      padding: 0.75rem 0.5rem;
-    }
-
-    .hero-content h3 {
-      font-size: 1.25rem;
-      gap: 0.4rem;
-      line-height: 1.3;
-      margin-bottom: 0.875rem;
-    }
-
-    .hero-icon {
-      font-size: 1.25rem;
-    }
-
-    .hero-text {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .hero-content p {
-      font-size: 0.813rem;
-      line-height: 1.4;
-    }
-
-    .info-banner {
-      margin: -1.5rem 0.75rem 1rem;
-      padding: 1.25rem;
-      border-radius: 12px;
-    }
-
-    .info-banner h4 {
-      font-size: 1.125rem;
-    }
-
-    .info-banner p {
-      font-size: 0.875rem;
-    }
-
-    .info-list li {
-      font-size: 0.875rem;
-      padding: 0.375rem 0;
-    }
-
-    .enquiry-container {
-      border-radius: 16px;
-    }
-
-    .form-header {
-      padding: 1.5rem 1rem;
-    }
-
-    .form-header h1 {
-      font-size: 1.5rem;
-    }
-
-    .form-header p {
-      font-size: 0.875rem;
-    }
-
-    .form-body {
-      padding: 1.5rem 1rem;
-    }
-
-    .form-group-modern {
-      margin-bottom: 1.5rem;
-    }
-
-    .form-label-modern {
-      font-size: 0.875rem;
-    }
-
-    .form-control-modern {
-      padding: 0.75rem 0.875rem;
-      font-size: 0.875rem;
-    }
-
-    .gender-label {
-      padding: 0.75rem;
-      font-size: 0.875rem;
-    }
-
-    .gender-icon {
-      font-size: 1.25rem;
-      margin-right: 0.375rem;
-    }
-
-    .submit-btn {
-      padding: 0.875rem 1.5rem;
-      font-size: 0.938rem;
-    }
-
-    .help-text {
-      font-size: 0.75rem;
-    }
-  }
-
-  @media (max-width: 400px) {
-    .home {
-      min-height: 26vh;
-      padding: 1.25rem 0.5rem;
-    }
-
-    .hero-content h3 {
-      font-size: 1.125rem;
-      gap: 0.35rem;
-    }
-
-    .hero-icon {
-      font-size: 1.125rem;
-    }
-
-    .hero-content p {
-      font-size: 0.75rem;
-    }
-
-    .info-banner {
-      margin: -1rem 0.5rem 1rem;
-      padding: 1rem;
-    }
-  }
-
-  @media (max-width: 360px) {
-    .hero-content h3 {
-      font-size: 1rem;
-    }
-
-    .hero-icon {
-      font-size: 1rem;
-    }
-
-    .hero-content p {
-      font-size: 0.688rem;
-    }
   }
 </style>
 
-<!-- Header Section -->
+<!--Header Image-->
 <div class="row">
   <section class="home">
-    <div class="hero-content">
-      <h3>
-        <span class="hero-icon">📚</span>
-        <span class="hero-text">From Our Content For Distance Learning</span>
-      </h3>
-      <p>NOU-e-Gyan PORTAL | NALANDA OPEN UNIVERSITY</p>
+    <div
+      class="row"
+      style="
+        color: aliceblue;
+        font-weight: bolder;
+        font-family: poppins, sans-serif;
+        padding-top: 22vh;
+        text-align: center;
+      "
+    >
+      <h3><b>From Our Content For Distance Learning</b></h3>
+      <p style="font-family: poppins; font-weight: bolder">
+        NOU-e-Gyan PORTAL, CONCEPT BY NALANDA OPEN UNIVERSITY
+      </p>
     </div>
   </section>
 </div>
+<!--header image end-->
 
-<!-- Enquiry Section -->
-<div class="enquiry-wrapper">
-  <div class="container">
-    <!-- Info Banner -->
-    <div class="info-banner">
-      <h4>
-        <span class="info-banner-icon">💡</span>
-        <span>Have Questions? We're Here to Help!</span>
-      </h4>
-      <p>
-        Fill out the enquiry form below and our team will get back to you within 24-48 hours. 
-        Whether you have questions about courses, admissions, or general information, we're here to assist you.
-      </p>
-      <ul class="info-list">
-        <li>Quick response within 24-48 hours</li>
-        <li>Dedicated support team</li>
-        <li>Comprehensive course information</li>
-        <li>Personalized guidance</li>
-      </ul>
-    </div>
-
-    <!-- Form Container -->
-    <div class="enquiry-container">
-      <div class="form-header">
-        <h1>📋 ENQUIRY FORM</h1>
-        <p>Please fill in your details and we'll get back to you soon</p>
+<div class="container">
+  <div class="course-title">
+    <h1>COURSES</h1>
+    <hr />
+  </div>
+  <!--Row 1-->
+  <h4 style="padding-top: 5vh">UG COURSES</h4>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="card course-card">
+        <img
+          class="card-img-top"
+          src="{% static 'images/bba.png' %}"
+          alt="Card image cap"
+        />
+        <div class="card-body" style="text-align: center; font-weight: bolder">
+          <p class="card-text course-title-text">
+            Bachelor in Business Administrat.
+          </p>
+          <p class="card-text">Under Graduation Course</p>
+          <p class="card-text">Duration: 3 years</p>
+        </div>
       </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card course-card">
+        <img
+          class="card-img-top"
+          src="{% static 'images/bca.png' %}"
+          alt="Card image cap"
+        />
+        <div class="card-body" style="text-align: center; font-weight: bolder">
+          <p class="card-text course-title-text">
+            Bachelor in Computer Application
+          </p>
+          <p class="card-text">Under Graduation Course</p>
+          <p class="card-text">Duration: 3 years</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card course-card">
+        <img
+          class="card-img-top"
+          src="{% static 'images/bag.png' %}"
+          alt="Card image cap"
+        />
+        <div class="card-body" style="text-align: center; font-weight: bolder">
+          <p class="card-text course-title-text">
+            Bachelor in Arts(Geography)
+          </p>
+          <p class="card-text">Under Graduation Course</p>
+          <p class="card-text">Duration: 3 years</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card course-card">
+        <img
+          class="card-img-top"
+          src="{% static 'images/bcom.png' %}"
+          alt="Card image cap"
+        />
+        <div class="card-body" style="text-align: center; font-weight: bolder">
+          <p class="card-text course-title-text">
+            Bachelor of Commerce
+          </p>
+          <p class="card-text">Under Graduation Course</p>
+          <p class="card-text">Duration: 3 years</p>
+        </div>
+      </div>
+    </div>
+  </div>
 
-      <div class="form-body">
-        <!-- Success Messages -->
-        {% if messages %} 
-          {% for message in messages %}
-          <div class="alert-modern alert-success">
-            <span class="alert-icon">✅</span>
-            <div class="alert-content">
-              <strong>{{ message }}</strong>
-            </div>
-            <button type="button" class="alert-close" data-bs-dismiss="alert" aria-label="Close">×</button>
-          </div>
-          {% endfor %} 
-        {% endif %}
+  <!--ROW 1 END-->
 
-        <form id="frmcontactus" action="{% url 'nouapp:contactus' %}" method="post">
-          {% csrf_token %}
+  <!--ROW 2 -->
+  <h4 style="padding-top: 10vh">PG COURSES</h4>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="card course-card">
+        <img
+          class="card-img-top"
+          src="{% static 'images/ma(environmental).png' %}"
+          alt="Card image cap"
+        />
+        <div class="card-body" style="text-align: center; font-weight: bolder">
+          <p class="card-text course-title-text">
+            Master of Arts (Environmental Sci.)
+          </p>
+          <p class="card-text">Post Graduation Course</p>
+          <p class="card-text">Duration: 2 years</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card course-card">
+        <img
+          class="card-img-top"
+          src="{% static 'images/ma(sanskrit).png' %}"
+          alt="Card image cap"
+        />
+        <div class="card-body" style="text-align: center; font-weight: bolder">
+          <p class="card-text course-title-text">
+            Master of Arts (Sanskrit)
+          </p>
+          <p class="card-text">Post Graduation Course</p>
+          <p class="card-text">Duration: 2 years</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card course-card">
+        <img
+          class="card-img-top"
+          src="{% static 'images/mca.png' %}"
+          alt="Card image cap"
+        />
+        <div class="card-body" style="text-align: center; font-weight: bolder">
+          <p class="card-text course-title-text">
+            Master in Computer Application
+          </p>
+          <p class="card-text">Post Graduation Course</p>
+          <p class="card-text">Duration: 2 years</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card course-card">
+        <img
+          class="card-img-top"
+          src="{% static 'images/mcom.png' %}"
+          alt="Card image cap"
+        />
+        <div class="card-body" style="text-align: center; font-weight: bolder">
+          <p class="card-text course-title-text">
+            Master of Commerce
+          </p>
+          <p class="card-text">Post Graduation Course</p>
+          <p class="card-text">Duration: 2 years</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--ROW2 END-->
 
-          <!-- Name -->
-          <div class="form-group-modern">
-            <label for="name" class="form-label-modern">
-              <span class="label-icon">👤</span>
-              Full Name
-              <span class="required-indicator">*</span>
-            </label>
-            <input
-              type="text"
-              name="name"
-              id="name"
-              class="form-control-modern"
-              pattern="[a-zA-Z\s]+"
-              title="Enter name using alphabet only (a-z)"
-              placeholder="Enter your full name"
-              required
-            />
-            <div class="help-text">
-              <span>ℹ️</span>
-              <span>Please enter your complete name</span>
-            </div>
-          </div>
+  <!--ROW3-->
 
-          <!-- Gender -->
-          <div class="form-group-modern">
-            <label class="form-label-modern">
-              <span class="label-icon">⚧</span>
-              Gender
-              <span class="required-indicator">*</span>
-            </label>
-            <div class="gender-options">
-              <div class="gender-option">
-                <input
-                  type="radio"
-                  name="gender"
-                  id="genderMale"
-                  value="Male"
-                  required
-                />
-                <label class="gender-label" for="genderMale">
-                  <span class="gender-icon">👨</span>
-                  Male
-                </label>
-              </div>
-              <div class="gender-option">
-                <input
-                  type="radio"
-                  name="gender"
-                  id="genderFemale"
-                  value="Female"
-                />
-                <label class="gender-label" for="genderFemale">
-                  <span class="gender-icon">👩</span>
-                  Female
-                </label>
-              </div>
-              <div class="gender-option">
-                <input
-                  type="radio"
-                  name="gender"
-                  id="genderOther"
-                  value="Other"
-                />
-                <label class="gender-label" for="genderOther">
-                  <span class="gender-icon">🧑</span>
-                  Other
-                </label>
-              </div>
-            </div>
-          </div>
-
-          <!-- Address -->
-          <div class="form-group-modern">
-            <label for="address" class="form-label-modern">
-              <span class="label-icon">🏠</span>
-              Address
-            </label>
-            <textarea
-              name="address"
-              id="address"
-              class="form-control-modern"
-              placeholder="Enter your complete address"
-              rows="3"
-            ></textarea>
-            <div class="help-text">
-              <span>ℹ️</span>
-              <span>Optional - Include city and state for better assistance</span>
-            </div>
-          </div>
-
-          <!-- Contact Number -->
-          <div class="form-group-modern">
-            <label for="contactno" class="form-label-modern">
-              <span class="label-icon">📱</span>
-              Contact Number
-              <span class="required-indicator">*</span>
-            </label>
-            <input
-              type="tel"
-              name="contactno"
-              id="contactno"
-              class="form-control-modern"
-              placeholder="Enter 10-digit mobile number"
-              pattern="[0-9]{10}"
-              maxlength="10"
-              required
-            />
-            <div class="help-text">
-              <span>ℹ️</span>
-              <span>We'll contact you on this number</span>
-            </div>
-          </div>
-
-          <!-- Email -->
-          <div class="form-group-modern">
-            <label for="emailaddress" class="form-label-modern">
-              <span class="label-icon">✉️</span>
-              Email Address
-              <span class="required-indicator">*</span>
-            </label>
-            <input
-              type="email"
-              name="emailaddress"
-              id="emailaddress"
-              class="form-control-modern"
-              placeholder="example@example.com"
-              required
-            />
-            <div class="help-text">
-              <span>ℹ️</span>
-              <span>We'll send confirmation and updates to this email</span>
-            </div>
-          </div>
-
-          <!-- Enquiry -->
-          <div class="form-group-modern">
-            <label for="enquirytext" class="form-label-modern">
-              <span class="label-icon">📝</span>
-              Your Enquiry
-              <span class="required-indicator">*</span>
-            </label>
-            <textarea
-              name="enquirytext"
-              id="enquirytext"
-              class="form-control-modern"
-              placeholder="Please describe your enquiry in detail..."
-              rows="5"
-              required
-            ></textarea>
-            <div class="help-text">
-              <span>ℹ️</span>
-              <span>Be specific about courses, admissions, or any questions you have</span>
-            </div>
-          </div>
-
-          <!-- Submit Button -->
-          <button type="submit" class="submit-btn">
-            <span>📤</span>
-            <span>Submit Enquiry</span>
-          </button>
-        </form>
+  <h4 style="padding-top: 10vh">DIPLOMA COURSES</h4>
+  <div class="row" style="padding-bottom: 25px">
+    <div class="col-sm-3">
+      <div class="card course-card">
+        <img
+          class="card-img-top"
+          src="{% static 'images/pgdfm.png' %}"
+          alt="Card image cap"
+        />
+        <div class="card-body" style="text-align: center; font-weight: bolder">
+          <p class="card-text course-title-text">
+            PG Diploma in Financial Management
+          </p>
+          <p class="card-text">Diploma Course</p>
+          <p class="card-text">Duration: 2 years</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card course-card">
+        <img
+          class="card-img-top"
+          src="{% static 'images/pgdhet.png' %}"
+          alt="Card image cap"
+        />
+        <div class="card-body" style="text-align: center; font-weight: bolder">
+          <p class="card-text course-title-text">
+            Post Graduation Diploma (Hindi-English Translate)
+          </p>
+          <p class="card-text">Diploma Course</p>
+          <p class="card-text">Duration: 2 years</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card course-card">
+        <img
+          class="card-img-top"
+          src="{% static 'images/pgdmm.png' %}"
+          alt="Card image cap"
+        />
+        <div class="card-body" style="text-align: center; font-weight: bolder">
+          <p class="card-text course-title-text">
+            Post Graduation Diploma (Marketing Management)
+          </p>
+          <p class="card-text">Diploma Course</p>
+          <p class="card-text">Duration: 2 years</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="card course-card">
+        <img
+          class="card-img-top"
+          src="{% static 'images/pgdys.png' %}"
+          alt="Card image cap"
+        />
+        <div class="card-body" style="text-align: center; font-weight: bolder">
+          <p class="card-text course-title-text">
+            Post Graduation Diploma (Yogic Studies)
+          </p>
+          <p class="card-text">Diploma Course</p>
+          <p class="card-text">Duration: 2 years</p>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<script>
-// Enhanced validation
-document.getElementById('frmcontactus').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  const name = document.getElementById('name');
-  const contactno = document.getElementById('contactno');
-  const emailaddress = document.getElementById('emailaddress');
-  const enquirytext = document.getElementById('enquirytext');
-  const gender = document.querySelector('input[name="gender"]:checked');
-  
-  // Name validation
-  if (!name.value.trim()) {
-    alert('⚠️ Please enter your name');
-    name.focus();
-    return false;
-  }
-  
-  // Gender validation
-  if (!gender) {
-    alert('⚠️ Please select your gender');
-    return false;
-  }
-  
-  // Contact number validation
-  if (!contactno.value.trim()) {
-    alert('⚠️ Please enter your contact number');
-    contactno.focus();
-    return false;
-  }
-  
-  if (!/^\d{10}$/.test(contactno.value)) {
-    alert('⚠️ Please enter a valid 10-digit mobile number');
-    contactno.focus();
-    return false;
-  }
-  
-  // Email validation
-  const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-  if (!emailaddress.value.trim()) {
-    alert('⚠️ Please enter your email address');
-    emailaddress.focus();
-    return false;
-  }
-  
-  if (!emailPattern.test(emailaddress.value)) {
-    alert('⚠️ Please enter a valid email address');
-    emailaddress.focus();
-    return false;
-  }
-  
-  // Enquiry validation
-  if (!enquirytext.value.trim() || enquirytext.value.trim().length < 10) {
-    alert('⚠️ Please provide detailed information about your enquiry (minimum 10 characters)');
-    enquirytext.focus();
-    return false;
-  }
-  
-  // If all validation passes, submit the form
-  this.submit();
-});
-
-// Auto-dismiss alerts
-document.addEventListener('DOMContentLoaded', function() {
-  const alerts = document.querySelectorAll('.alert-modern');
-  alerts.forEach(function(alert) {
-    setTimeout(function() {
-      alert.style.transition = 'opacity 0.5s ease';
-      alert.style.opacity = '0';
-      setTimeout(function() {
-        alert.remove();
-      }, 500);
-    }, 5000);
-  });
-});
-
-// Real-time phone number formatting
-document.getElementById('contactno').addEventListener('input', function(e) {
-  this.value = this.value.replace(/\D/g, '').slice(0, 10);
-});
-</script>
 {% endblock body %}

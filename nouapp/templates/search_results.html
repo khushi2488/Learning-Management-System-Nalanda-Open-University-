@@ -1,0 +1,32 @@
+{% extends 'parent.html' %}
+{% block content %}
+<div class="container mt-5">
+  <h3>Search Results for "{{ query }}"</h3>
+
+  <!-- Message -->
+  {% if message %}
+    <div class="alert alert-info">{{ message }}</div>
+  {% endif %}
+
+  <!-- Results -->
+  {% if results %}
+    <div class="row">
+      {% for student in results %}
+      <div class="col-sm-3 mb-4">
+        <div class="card h-100">
+          <div class="card-body text-center">
+            <h5 class="card-title">{{ student.name }}</h5>
+            <p class="card-text"><strong>Roll No:</strong> {{ student.rollno }}</p>
+            <p class="card-text"><strong>Program:</strong> {{ student.program }}</p>
+            <p class="card-text"><strong>Branch:</strong> {{ student.branch }}</p>
+            <p class="card-text"><strong>Contact:</strong> {{ student.contactno }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="alert alert-warning">No students found for "{{ query }}".</div>
+  {% endif %}
+</div>
+{% endblock %}
