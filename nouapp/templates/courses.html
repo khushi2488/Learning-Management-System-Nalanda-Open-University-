@@ -93,13 +93,13 @@
   }
 
   .courses-info ul li {
-    background: #ffffff;
+    background: #0a1d69;
     padding: 12px 18px;
     border-radius: 25px;
     display: flex;
     align-items: center;
     font-weight: 500;
-    color: #000;
+    color: #fff;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: default;
@@ -119,175 +119,210 @@
   /* 
      TABS SECTION*/
   .tabs {
-    text-align: center;
-    margin: 10px 0 10px;
-  }
-
-  .tab-btn {
-    background: #0a1d69;
-    color: white;
-    border: none;
-    padding: 10px 25px;
-    margin: 3rem;
-    border-radius: 25px;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-    transition: all 0.3s ease;
-    cursor: pointer;
-  }
-
-  .tab-btn:hover,
-  .tab-btn.active {
-    background: #2a73cc;
-    transform: scale(1.05);
-  }
-
-  /* dropdown styling for mobile view  */
-  .course-dropdown {
-    display: none;
-    /* hidden by default */
-    text-align: center;
-    margin: 20px 0;
-  }
-
- .course-dropdown select {
-  width: 90%;            
-  max-width: 250px;      
-  padding: 10px 15px;   
-  border-radius: 20px;   
-  border: 1px solid #0a1d69;
-  background: #0a1d69;
-  color: #fff;
-  font-weight: 500;
-  cursor: pointer;
-  outline: none;
-  transition: all 0.3s ease;
-  box-sizing: border-box; /* ensure padding doesn’t overflow */
+  text-align: center;
+  margin: 10px 0 10px;
 }
 
-  .course-dropdown select:hover {
-    background: #0a1d69;
-  }
+.tab-btn {
+  background: #0a1d69;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  margin: 0 15px; /* adjusted margin for better spacing */
+  border-radius: 25px;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
 
+.tab-btn:hover,
+.tab-btn.active {
+  background: #2a73cc;
+  transform: scale(1.05);
+}
 
+/*  DROPDOWN FOR MOBILE */
+.course-dropdown {
+  display: none; /* hidden on desktop */
+  width: 250px;
+  margin: 20px auto;
+  position: relative;
+  font-family: sans-serif;
+  cursor: pointer;
+}
 
+.course-dropdown .selected {
+  background: white;
+  border: 1px solid #0a1d69;
+  color: #0a1d69;
+  padding: 10px 15px;
+  border-radius: 20px;
+  text-align: center;
+  position: relative;
+  user-select: none;
+}
 
-  /* for responsive mobile view  */
-  @media screen and (max-width: 768px) {
+.course-dropdown .options {
+  display: none;
+  position: absolute;
+  top: 100%; /* exactly below selected */
+  left: 0;
+  width: 100%;
+  background: white;
+  color:#0a1d69 !important;
+  border-radius: 0 0 12px 12px;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.course-dropdown .options div {
+  padding: 10px 15px;
+  color: #0a1d69;
+  text-align: center;
+  cursor: pointer;
+}
+
+.course-dropdown .options div:hover {
+  background: #1944a3;
+}
+
+/* COURSE GRID */
+.course-section {
+  padding: 30px 5% 60px;
+}
+
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+}
+
+/* COURSE CARD DESIGN */
+.course-card {
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  color: #0a1d69;
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.course-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.course-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+.course-card-content {
+  padding: 15px 20px;
+}
+
+.course-card h5 {
+  margin: 10px 0 5px;
+  color: #2a73cc;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.course-card p {
+  font-size: 14px;
+  margin: 4px 0;
+}
+
+.course-card button {
+  margin: 15px 0 15px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 25px;
+  background-color: #0a1d69;
+  color: white;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.course-card button:hover {
+  background-color: #2a73cc;
+  transform: scale(1.05);
+}
+
+hr {
+  width: 80px;
+  height: 3px;
+  background: #2a73cc;
+  border: none;
+  margin: 15px auto;
+  border-radius: 2px;
+}
+
+/* HERO & INFO */
+.hero h2 {
+  font-size: 2rem;
+}
+
+.hero p {
+  font-size: 1rem;
+}
+
+.courses-info ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  padding: 0;
+  list-style: none;
+}
+
+.courses-info ul li {
+  background: #0a1d69;
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+/* MOBILE RESPONSIVE */
+@media screen and (max-width: 768px) {
   .tabs {
-    display: none; /* hide tabs */
+    display: none; /* hide tabs on mobile */
   }
 
   .course-dropdown {
     display: block; /* show dropdown */
   }
 
-  .course-dropdown select {
-    width: 90%;
-    max-width: 300px;
+  .course-card img {
+    height: 150px;
+  }
+
+  .hero h2 {
+    font-size: 1.6rem;
+  }
+
+  .hero p {
+    font-size: 0.9rem;
+  }
+
+  .courses-info ul {
+    flex-direction: column;
+    gap: 10px;
   }
 }
 
-
-  /*
-     COURSE GRID
-  */
-  .course-section {
-    padding: 30px 5% 60px;
-  }
-
-  .course-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 25px;
-    margin-top: 30px;
-  }
-
-  /*
-     COURSE CARD DESIGN - MATERIAL STYLE
-*/
-  .course-card {
-    background: #ffffff;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    overflow: hidden;
-    color: #0a1d69;
-    font-family: 'Poppins', sans-serif;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-
-  .course-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-  }
-
-  .course-card img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    border-top-left-radius: 12px;
-    border-top-right-radius: 12px;
-  }
-
-  .course-card-content {
-    padding: 15px 20px;
-  }
-
-  .course-card h5 {
-    margin: 10px 0 5px;
-    color: #2a73cc;
-    font-weight: 600;
-    font-size: 1.1rem;
-  }
-
-  .course-card p {
-    font-size: 14px;
-    margin: 4px 0;
-  }
-
-  .course-card button {
-    margin: 15px 0 15px;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 25px;
-    background-color: #0a1d69;
-    color: white;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .course-card button:hover {
-    background-color: #2a73cc;
-    transform: scale(1.05);
-  }
-
-  hr {
-    width: 80px;
-    height: 3px;
-    background: #2a73cc;
-    border: none;
-    margin: 15px auto;
-    border-radius: 2px;
-  }
-
-  @media (max-width: 600px) {
-    .hero h2 {
-      font-size: 1.4rem;
-    }
-
-    .hero p {
-      font-size: 0.9rem;
-    }
-
-    .courses-info ul {
-      flex-direction: column;
-    }
-  }
 </style>
 
 <!-- 
@@ -333,12 +368,13 @@
 
 <!-- dropdown for mobile  -->
 <div class="course-dropdown">
-  <select id="courseSelect" onchange="showDropdownTab(this.value)">
-    <option value="all">All Courses</option>
-    <option value="ug">UG Courses</option>
-    <option value="pg">PG Courses</option>
-    <option value="diploma">Diploma Courses</option>
-  </select>
+  <div class="selected">All Courses ▼</div>
+  <div class="options">
+    <div data-tab="all">All Courses</div>
+    <div data-tab="ug">UG Courses</div>
+    <div data-tab="pg">PG Courses</div>
+    <div data-tab="diploma">Diploma</div>
+  </div>
 </div>
 
 
@@ -590,38 +626,54 @@
      JAVASCRIPT
  -->
 <script>
-  
-  function showTab(tabName, event) {
-    document.querySelectorAll('.course-grid').forEach(div => {
-      div.classList.remove('active');
-      div.style.display = 'none';
-    });
-    document.getElementById(tabName).style.display = 'grid';
-    setTimeout(() => {
-      document.getElementById(tabName).classList.add('active');
-    }, 50);
 
-    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-    event.target.classList.add('active');
-  }
-
-  function showDropdownTab(tabName) {
+// TAB FUNCTIONALITY
+function showTab(tabName, event) {
   document.querySelectorAll('.course-grid').forEach(div => {
-    div.classList.remove('active');
     div.style.display = 'none';
   });
+  document.getElementById(tabName).style.display = 'grid';
 
-  const selectedDiv = document.getElementById(tabName);
-  selectedDiv.style.display = 'grid';
-  setTimeout(() => {
-    selectedDiv.classList.add('active');
-  }, 50);
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  if(event) event.target.classList.add('active');
 }
 
-// Initialize default view
+function showDropdownTab(tabName) {
+  document.querySelectorAll('.course-grid').forEach(div => div.style.display = 'none');
+  document.getElementById(tabName).style.display = 'grid';
+}
+
+// CUSTOM DROPDOWN FUNCTIONALITY
+const dropdown = document.querySelector('.course-dropdown');
+const selected = dropdown.querySelector('.selected');
+const optionsContainer = dropdown.querySelector('.options');
+const options = optionsContainer.querySelectorAll('div');
+
+selected.addEventListener('click', () => {
+  optionsContainer.style.display = optionsContainer.style.display === 'block' ? 'none' : 'block';
+});
+
+options.forEach(option => {
+  option.addEventListener('click', () => {
+    selected.textContent = option.textContent + " ▼";
+    optionsContainer.style.display = 'none';
+    showDropdownTab(option.getAttribute('data-tab'));
+  });
+});
+
+document.addEventListener('click', e => {
+  if (!dropdown.contains(e.target)) {
+    optionsContainer.style.display = 'none';
+  }
+});
+
+// INITIAL VIEW
 document.addEventListener('DOMContentLoaded', () => {
   showTab('all', { target: document.querySelector('.tab-btn.active') });
 });
+
+
+
 
 </script>
 
