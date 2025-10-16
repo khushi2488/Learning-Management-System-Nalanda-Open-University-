@@ -126,33 +126,118 @@
       box-shadow: var(--shadow);
     }
 
-    /* Contact Bar Styles */
+    /* Professional Contact Bar Styles */
     .contact-bar {
-      background: linear-gradient(
-        135deg,
-        var(--primary-color) 0%,
-        var(--primary-hover) 100%
-      );
+      background: linear-gradient(135deg, var(--primary-color) 0%, var(--primary-hover) 100%);
       color: var(--text-white);
-      padding: 10px 0;
+      padding: 12px 0;
       font-size: 14px;
       font-weight: 500;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      position: relative;
+      z-index: 1051;
     }
 
-    .contact-bar a {
+    .contact-bar-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .contact-left {
+      display: flex;
+      align-items: center;
+      gap: 35px;
+    }
+
+    .contact-item-inline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       color: var(--text-white);
       text-decoration: none;
       transition: var(--transition);
+      font-weight: 500;
     }
 
-    .contact-bar a:hover {
-      color: #e3f2fd;
+    .contact-item-inline i {
+      font-size: 16px;
+      color: #ffd700;
+    }
+
+    .contact-item-inline:hover {
+      color: #ffd700;
       transform: translateY(-1px);
     }
 
-    .contact-bar i {
-      margin-right: 8px;
-      font-size: 16px;
+    .contact-right {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    /* Live Time Display - Professional Style */
+    .live-time-display {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 20px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(10px);
+      border-radius: 25px;
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .live-time-display .clock-icon {
+      font-size: 18px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .live-time-display #liveTime {
+      color: #ffd700;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      font-family: 'Courier New', monospace;
+      font-size: 15px;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.1);
+        opacity: 0.8;
+      }
+    }
+
+    /* Theme Toggle Button - Enhanced */
+    #theme-toggle {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+      border-radius: 50%;
+      width: 38px;
+      height: 38px;
+      border: 2px solid rgba(255, 215, 0, 0.5);
+      cursor: pointer;
+      font-size: 18px;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      z-index: 10000;
+    }
+
+    #theme-toggle:hover {
+      transform: scale(1.1) rotate(15deg);
+      background: rgba(255, 215, 0, 0.3);
+      border-color: #ffd700;
     }
 
     /* Enhanced Navbar */
@@ -269,20 +354,26 @@
       animation: none;
     }
 
-    @keyframes pulse {
-      0%,
-      100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.1);
-      }
-    }
-
     /* Mobile Navbar Enhancements */
     @media (max-width: 991px) {
       body {
         padding-top: 140px;
+      }
+
+      .contact-bar-container {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 15px;
+      }
+
+      .contact-left {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+      }
+
+      .contact-right {
+        justify-content: center;
       }
 
       .navbar-collapse {
@@ -306,11 +397,63 @@
 
       .contact-bar {
         font-size: 12px;
-        padding: 8px 0;
+        padding: 10px 0;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .contact-bar {
+        font-size: 12px;
+        padding: 10px 0;
       }
 
-      .contact-bar .col-sm-6 {
-        padding: 5px 8px;
+      .contact-item-inline {
+        font-size: 12px;
+      }
+
+      .contact-item-inline i {
+        font-size: 14px;
+      }
+
+      .live-time-display {
+        padding: 6px 15px;
+      }
+
+      .live-time-display #liveTime {
+        font-size: 13px;
+      }
+
+      .live-time-display .clock-icon {
+        font-size: 16px;
+      }
+
+      #theme-toggle {
+        width: 34px;
+        height: 34px;
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 576px) {
+      body {
+        padding-top: 160px;
+      }
+
+      .contact-left {
+        gap: 5px;
+      }
+
+      .contact-item-inline {
+        font-size: 11px;
+      }
+
+      .live-time-display {
+        padding: 5px 12px;
+      }
+
+      .live-time-display #liveTime {
+        font-size: 12px;
+        letter-spacing: 1px;
       }
     }
 
@@ -478,21 +621,19 @@
       transform: translateX(-5px);
     }
 
-    /* Add this to your CARD PROTECTION section */
+    /* CARD PROTECTION */
     .dark-theme .card-title,
     .dark-theme .service-card h3 {
       color: var(--primary-color) !important;
       background-color: transparent !important;
     }
 
-    /* Also add this to ensure all card content is properly styled */
     .dark-theme .service-card,
     .dark-theme .service-card .card-body {
       background-color: var(--card-bg) !important;
       color: var(--card-text) !important;
     }
 
-    /* Specific protection for service card buttons */
     .dark-theme .btn-info {
       background-color: var(--primary-color) !important;
       border-color: var(--primary-color) !important;
@@ -549,85 +690,6 @@
       color: #e3f2fd;
       border-bottom-color: #e3f2fd;
       transform: translateY(-1px);
-    }
-
-    /* Responsive Design Enhancements */
-    @media (max-width: 768px) {
-      .contact-bar {
-        font-size: 12px;
-        padding: 8px 0;
-      }
-
-      .contact-bar .col-sm-6 {
-        padding: 5px;
-        font-size: 11px;
-      }
-
-      .navbar-brand img {
-        width: 70% !important;
-        height: auto !important;
-      }
-
-      .footer-content {
-        padding: 30px 0 20px 0;
-      }
-
-      .footer-content .row > [class^="col-"] {
-        margin-bottom: 16px;
-      }
-
-      .footer-section-title {
-        font-size: 16px;
-        margin-bottom: 20px;
-      }
-
-      .social-icon {
-        width: 40px;
-        height: 40px;
-        margin: 0 5px;
-      }
-
-      .social-icon i {
-        font-size: 16px;
-      }
-
-      .footer-social-text {
-        font-size: 14px;
-        margin-bottom: 15px;
-      }
-    }
-
-    @media (max-width: 576px) {
-      body {
-        padding-top: 130px;
-      }
-
-      .contact-bar .col-sm-6 {
-        text-align: center !important;
-        padding: 8px 5px;
-      }
-
-      .navbar-brand img {
-        width: 60% !important;
-      }
-
-      .footer-link {
-        font-size: 14px;
-        padding: 6px 0;
-      }
-
-      .contact-item {
-        font-size: 13px;
-      }
-
-      .footer-content .row > [class^="col-"] {
-        margin-bottom: 14px;
-      }
-
-      .navbar-nav .nav-link {
-        padding: 12px 14px !important;
-        font-size: 15px;
-      }
     }
 
     /* Smooth Scrolling */
@@ -711,144 +773,6 @@
       background-color: var(--primary-hover);
     }
 
-    /* Large devices */
-    @media screen and (max-width: 1500px) {
-      div.container {
-        flex-direction: column;
-      }
-      .navbar > .container,
-      .navbar > .container-fluid,
-      .navbar > .container-sm,
-      .navbar > .container-md,
-      .navbar > .container-lg,
-      .navbar > .container-xl,
-      .navbar > .container-xxl {
-        display: flex;
-        flex-wrap: nowrap;
-        justify-content: center;
-      }
-    }
-
-    /* Large devices */
-    @media screen and (max-width: 991px) {
-      div.container {
-        flex-direction: column;
-      }
-      .navbar > .container,
-      .navbar > .container-fluid,
-      .navbar > .container-sm,
-      .navbar > .container-md,
-      .navbar > .container-lg,
-      .navbar > .container-xl,
-      .navbar > .container-xxl {
-        display: flex;
-        flex-wrap: nowrap;
-        flex-direction: row;
-        justify-content: center;
-      }
-    }
-
-    /* Medium devices */
-    @media screen and (max-width: 990px) {
-      button.navbar-toggler.collapsed {
-        margin-left: auto;
-      }
-      .navbar > .container,
-      .navbar > .container-fluid,
-      .navbar > .container-sm,
-      .navbar > .container-md,
-      .navbar > .container-lg,
-      .navbar > .container-xl,
-      .navbar > .container-xxl {
-        display: flex;
-        flex-wrap: nowrap;
-        flex-direction: row;
-        justify-content: center;
-      }
-    }
-
-    /* Small devices */
-    @media screen and (max-width: 768px) {
-      .navbar-brand img {
-        height: 60px !important;
-        width: 100% !important;
-        object-fit: contain;
-      }
-      .navbar > .container,
-      .navbar > .container-fluid,
-      .navbar > .container-sm,
-      .navbar > .container-md,
-      .navbar > .container-lg,
-      .navbar > .container-xl,
-      .navbar > .container-xxl {
-        display: flex;
-        flex-wrap: nowrap;
-        flex-direction: row;
-        justify-content: center;
-      }
-    }
-
-    @media screen and (max-width: 600px) {
-      /* .col-sm-7{
-  padding-left: 20px;
-  padding-right: 20px;
-  } */
-    }
-
-    /* Extra small devices */
-    @media screen and (max-width: 576px) {
-      #topBtn {
-        bottom: 75px;
-        right: 22px;
-      }
-      .gallery div.row .col-sm-3 {
-        padding: 50px;
-      }
-      .navbar-brand img {
-        height: 60px !important;
-        width: 100% !important;
-        object-fit: contain;
-      }
-      .navbar {
-        display: flex;
-        flex-wrap: nowrap;
-      }
-      .navbar > .container,
-      .navbar > .container-fluid,
-      .navbar > .container-sm,
-      .navbar > .container-md,
-      .navbar > .container-lg,
-      .navbar > .container-xl,
-      .navbar > .container-xxl {
-        display: flex;
-        flex-wrap: nowrap;
-        flex-direction: row;
-        justify-content: center;
-      }
-    }
-
-    /* Theme Toggle Button */
-    #theme-toggle {
-      background: var(--primary-color);
-      color: white;
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      border: none;
-      cursor: pointer;
-      font-size: 20px;
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      z-index: 9999;
-      transition: var(--transition);
-    }
-
-    #theme-toggle:hover {
-      transform: scale(1.1);
-    }
-
-    /* CARD PROTECTION - Add these new rules */
     .dark-theme .card,
     .dark-theme .card *:not(.fas):not(.fa):not(.nav-link):not(.me-4 i),
     .dark-theme .card-header,
@@ -864,7 +788,6 @@
       border-color: #dee2e6 !important;
     }
 
-    /* Protect form headings specifically */
     .dark-theme .form-heading,
     .dark-theme .form-section h2,
     .dark-theme .form-section h3,
@@ -894,7 +817,6 @@
       color: var(--icon-color) !important;
     }
 
-    /* Heading rules (outside protected areas) */
     .dark-theme h1:not(.card-title):not(.form-heading),
     .dark-theme h2:not(.card-title):not(.form-heading),
     .dark-theme h3:not(.card-title):not(.form-heading),
@@ -911,7 +833,6 @@
       color: var(--heading-color) !important;
     }
 
-    /* Original styles... */
     .me-4 {
       text-decoration: none;
       margin-right: 1rem;
@@ -937,13 +858,11 @@
       color: var(--card-text) !important;
     }
 
-    /* Specific protection for registration form heading */
     .dark-theme #frmregistration h2 {
       color: var(--primary-color) !important;
       background-color: transparent !important;
     }
 
-    /* Specific protection for enquiry form heading */
     .dark-theme #frmcontactus h1 {
       color: var(--primary-color) !important;
       background-color: transparent !important;
@@ -954,45 +873,38 @@
       font-weight: 500;
     }
 
-    /* Success alert - Light */
     .alert-success {
       background-color: #d4edda;
       color: #155724;
       border-color: #c3e6cb;
     }
 
-    /* Dark Theme Alerts */
     .dark-theme .alert {
       border-radius: 6px;
       font-weight: 500;
       border: none;
     }
 
-    /* Success alert - Dark */
     .dark-theme .alert-success {
       background-color: #006400 !important;
       color: #ffffff !important;
     }
 
-    /* Warning alert - Dark */
     .dark-theme .alert-warning {
       background-color: #8b8000 !important;
       color: #ffffff !important;
     }
 
-    /* Error/Danger alert - Dark */
     .dark-theme .alert-danger {
       background-color: #8b0000 !important;
       color: #ffffff !important;
     }
 
-    /* Info alert - Dark */
     .dark-theme .alert-info {
       background-color: #0c5460 !important;
       color: #ffffff !important;
     }
 
-    /* Add this to your CSS to protect radio button labels in dark mode */
     .dark-theme .form-check-label {
       color: var(--card-text) !important;
       background-color: transparent !important;
@@ -1177,42 +1089,30 @@
   </style>
 
   <body>
-    <div style="position: fixed; top: 20px; right: 20px; z-index: 9999">
-      <button
-        id="theme-toggle"
-        style="
-          background: var(--primary-color);
-          color: white;
-          border-radius: 50%;
-          width: 40px;
-          height: 40px;
-          border: none;
-          cursor: pointer;
-          font-size: 20px;
-        "
-      >
-        <span id="theme-icon">🌙</span>
-      </button>
-    </div>
     <div class="container-fluid">
       <!-- Enhanced Sticky Navigation -->
       <div class="sticky-navigation">
-        <!-- Contact Bar -->
+        <!-- Professional Contact Bar -->
         <div class="contact-bar">
-          <div class="container">
-            <div class="row">
-              <div class="col-sm-6 text-center text-sm-start">
-                <a href="tel:+917080102007">
-                  <i class="fa-solid fa-phone"></i>
-                  <span>+91 7080102007</span>
-                </a>
+          <div class="contact-bar-container">
+            <div class="contact-left">
+              <a href="tel:+917080102007" class="contact-item-inline">
+                <i class="fa fa-phone"></i>
+                <span>+91 7080102007</span>
+              </a>
+              <a href="mailto:nouegyanhelp@gmail.com" class="contact-item-inline">
+                <i class="fa fa-envelope"></i>
+                <span>nouegyanhelp@gmail.com</span>
+              </a>
+            </div>
+            <div class="contact-right">
+              <div class="live-time-display">
+                <span class="clock-icon">🕐</span>
+                <span id="liveTime">00:00:00</span>
               </div>
-              <div class="col-sm-6 text-center text-sm-end">
-                <a href="mailto:nouegyanhelp@gmail.com">
-                  <i class="fa-solid fa-envelope"></i>
-                  <span>nouegyanhelp@gmail.com</span>
-                </a>
-              </div>
+              <button id="theme-toggle" title="Toggle Dark Mode">
+                <span id="theme-icon">🌙</span>
+              </button>
             </div>
           </div>
         </div>
@@ -1540,6 +1440,26 @@
           localStorage.setItem("theme", isDark ? "dark" : "light");
           themeIcon.textContent = isDark ? "☀️" : "🌙";
         });
+
+        // Live Time Update
+        function updateTime() {
+          const now = new Date();
+          let hours = now.getHours();
+          let minutes = now.getMinutes();
+          let seconds = now.getSeconds();
+          
+          hours = hours < 10 ? '0' + hours : hours;
+          minutes = minutes < 10 ? '0' + minutes : minutes;
+          seconds = seconds < 10 ? '0' + seconds : seconds;
+          
+          const timeElement = document.getElementById('liveTime');
+          if (timeElement) {
+            timeElement.textContent = hours + ':' + minutes + ':' + seconds;
+          }
+        }
+        
+        updateTime();
+        setInterval(updateTime, 1000);
       });
 
       // Navbar background change on scroll
@@ -1615,7 +1535,7 @@
     </div>
 
     <script>
-      const API_URL = "/chat/"; // URL to your chatbot API
+      const API_URL = "/chat/";
 
       function toggleChat() {
         const chatBox = document.getElementById("chat-box");
@@ -1631,7 +1551,6 @@
           toggleBtn.style.background =
             "linear-gradient(135deg, var(--chat-primary-hover), var(--chat-accent))";
           document.getElementById("user-input").focus();
-          // Initialize with welcome message if chat is empty
           if (document.getElementById("chat-messages").children.length === 0) {
             appendMessage(
               "Bot",
@@ -1654,7 +1573,6 @@
         messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
         document.getElementById("chat-messages").appendChild(messageDiv);
 
-        // Scroll to bottom
         const messageContainer = document.getElementById("chat-messages");
         messageContainer.scrollTop = messageContainer.scrollHeight;
       }
@@ -1665,7 +1583,7 @@
         if (message === "") return;
 
         appendMessage("You", message);
-        userInput.value = ""; // Clear input field
+        userInput.value = "";
         userInput.focus();
 
         try {
@@ -1699,7 +1617,6 @@
         }
       }
 
-      // Helper function to get CSRF token
       function getCookie(name) {
         let cookieValue = null;
         if (document.cookie && document.cookie !== "") {
@@ -1714,11 +1631,9 @@
             }
           }
         }
-
         return cookieValue;
       }
 
-      // Allow sending message with Enter key
       document
         .getElementById("user-input")
         .addEventListener("keypress", function (e) {
@@ -1727,12 +1642,10 @@
           }
         });
 
-      // Auto-open chat after a short delay
       setTimeout(() => {
         const chatBox = document.getElementById("chat-box");
         if (chatBox.style.display !== "block") {
           toggleChat();
-          // Auto-close after showing welcome message
           setTimeout(() => {
             if (
               document.getElementById("chat-messages").children.length === 1
