@@ -281,6 +281,18 @@
   <button class="tab-btn" onclick="showTab('diploma', event)">Diploma Courses</button>
 </div>
 
+
+<!-- dropdown for mobile  -->
+ <div class="course-dropdown">
+  <select id="courseSelect" onchange="showDropdownTab(this.value)">
+    <option value="all">All Courses</option>
+    <option value="ug">UG Courses</option>
+    <option value="pg">PG Courses</option>
+    <option value="diploma">Diploma Courses</option>
+  </select>
+</div>
+
+
 <!--
      COURSE SECTIONS
 -->
