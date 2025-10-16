@@ -3,7 +3,7 @@
 {% block body %}
 
 <style>
- /* hero section */
+  /* hero section */
   .hero {
     background: linear-gradient(rgba(10, 29, 105, 0.7), rgba(10, 29, 105, 0.7)),
     url("{% static 'images/bookslibrary.jpg' %}") center/cover no-repeat;
@@ -103,7 +103,7 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: default;
-   
+
   }
 
   .courses-info ul li:hover {
@@ -141,6 +141,53 @@
     background: #2a73cc;
     transform: scale(1.05);
   }
+
+  /* dropdown styling for mobile view  */
+  .course-dropdown {
+    display: none;
+    /* hidden by default */
+    text-align: center;
+    margin: 20px 0;
+  }
+
+ .course-dropdown select {
+  width: 90%;            
+  max-width: 250px;      
+  padding: 10px 15px;   
+  border-radius: 20px;   
+  border: 1px solid #0a1d69;
+  background: #fff;
+  color: #0a1d69;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box; /* ensure padding doesn’t overflow */
+}
+
+  .course-dropdown select:hover {
+    background: #fff;
+  }
+
+
+
+
+  /* for responsive mobile view  */
+  @media screen and (max-width: 768px) {
+  .tabs {
+    display: none; /* hide tabs */
+  }
+
+  .course-dropdown {
+    display: block; /* show dropdown */
+  }
+
+  .course-dropdown select {
+    width: 90%;
+    max-width: 300px;
+  }
+}
+
 
   /*
      COURSE GRID
@@ -256,7 +303,9 @@
  -->
 <section class="courses-info">
   <h3>Your Path to Knowledge Starts Here</h3>
-  <p>At Nalanda Open University, we offer a variety of UG, PG, and diploma courses to help you grow academically and professionally. Each program is designed to give you practical knowledge, develop your skills, and prepare you for real-world challenges.</p>
+  <p>At Nalanda Open University, we offer a variety of UG, PG, and diploma courses to help you grow academically and
+    professionally. Each program is designed to give you practical knowledge, develop your skills, and prepare you for
+    real-world challenges.</p>
   <ul>
     <li>Wide Range of Programs</li>
     <li>Guided Support</li>
@@ -267,7 +316,7 @@
 
 <!-- 
      COURSES HEADING
- --> 
+ -->
 <h2 style="text-align:center; font-weight: bold; margin-top: 40px; color:#0a1d69; font-size: 40px;">Our Courses</h2>
 <hr>
 
@@ -280,6 +329,18 @@
   <button class="tab-btn" onclick="showTab('pg', event)">PG Courses</button>
   <button class="tab-btn" onclick="showTab('diploma', event)">Diploma Courses</button>
 </div>
+
+
+<!-- dropdown for mobile  -->
+<div class="course-dropdown">
+  <select id="courseSelect" onchange="showDropdownTab(this.value)">
+    <option value="all">All Courses</option>
+    <option value="ug">UG Courses</option>
+    <option value="pg">PG Courses</option>
+    <option value="diploma">Diploma Courses</option>
+  </select>
+</div>
+
 
 <!--
      COURSE SECTIONS
@@ -529,6 +590,7 @@
      JAVASCRIPT
  -->
 <script>
+  
   function showTab(tabName, event) {
     document.querySelectorAll('.course-grid').forEach(div => {
       div.classList.remove('active');
@@ -542,6 +604,24 @@
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     event.target.classList.add('active');
   }
+
+  function showDropdownTab(tabName) {
+  document.querySelectorAll('.course-grid').forEach(div => {
+    div.classList.remove('active');
+    div.style.display = 'none';
+  });
+
+  const selectedDiv = document.getElementById(tabName);
+  selectedDiv.style.display = 'grid';
+  setTimeout(() => {
+    selectedDiv.classList.add('active');
+  }, 50);
+}
+
+// Initialize default view
+document.addEventListener('DOMContentLoaded', () => {
+  showTab('all', { target: document.querySelector('.tab-btn.active') });
+});
 
 </script>
 
