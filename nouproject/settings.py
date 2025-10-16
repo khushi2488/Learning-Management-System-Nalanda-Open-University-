@@ -76,16 +76,31 @@ WSGI_APPLICATION = "nouproject.wsgi.application"
 
 
 # Database
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
+# Database - AFTER (PostgreSQL)
+import dj_database_url
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'lms_nalanda_db',
-        'USER': 'lms_user',
-        'PASSWORD': 'NalandaLMS2024!',
-        'HOST': 'localhost',
-        'PORT': '1221',
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.getenv("DATABASE_NAME", "lms_nalanda_db"),
+        "USER": os.getenv("DATABASE_USER", "lms_user"),
+        "PASSWORD": os.getenv("DATABASE_PASSWORD", "NalandaLMS2024!"),
+        "HOST": os.getenv("DATABASE_HOST", "localhost"),
+        "PORT": os.getenv("DATABASE_PORT", "5432"),
+        "OPTIONS": {
+            "connect_timeout": 60,
+        }
     }
 }
+if os.getenv("DATABASE_URL"):
+    DATABASES["default"] = dj_database_url.parse(os.getenv("DATABASE_URL"))
+    DATABASES["default"]["CONN_MAX_AGE"] = 600
 
 
 # Password validation
