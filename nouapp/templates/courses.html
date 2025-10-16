@@ -150,22 +150,27 @@
     margin: 20px 0;
   }
 
-  .course-dropdown select {
-    padding: 10px 15px;
-    border-radius: 25px;
-    border: 1px solid #0a1d69;
-    background: #0a1d69;
-    color: white;
-    font-weight: 500;
-    cursor: pointer;
-    outline: none;
-    width: 200px;
-    transition: all 0.3s ease;
-  }
+ .course-dropdown select {
+  width: 90%;            
+  max-width: 250px;      
+  padding: 10px 15px;   
+  border-radius: 20px;   
+  border: 1px solid #0a1d69;
+  background: #fff;
+  color: #0a1d69;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.3s ease;
+  box-sizing: border-box; /* ensure padding doesn’t overflow */
+}
 
   .course-dropdown select:hover {
-    background: #2a73cc;
+    background: #fff;
   }
+
+
+
 
   /* for responsive mobile view  */
   @media screen and (max-width: 768px) {
