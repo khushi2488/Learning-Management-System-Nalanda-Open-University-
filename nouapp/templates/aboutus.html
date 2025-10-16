@@ -1,15 +1,9 @@
 {% extends 'parent.html' %} {% load static %} {% block body %}
 <style>
-  .container {
+  /* .container {
     width: 100%;
-  }
-  .container h1 {
-    text-align: center;
-    color: rgb(6, 6, 106);
-    font-weight: bold;
-    padding-top: 10vh;
-    font-family: poppins, sans-serif;
-  }
+  } */
+  
   .col-sm-5 {
     position: relative;
     padding-top: 30px;
@@ -94,6 +88,16 @@
     }
   }
 
+
+  hr{
+    width: 80px;
+    height: 3px;
+    background: #2a73cc;
+    border: none;
+    margin: 15px auto;
+    border-radius: 2px;
+  }
+
 </style>
 
 
@@ -107,10 +111,10 @@
 <!-- Header Image -->
 <section class="aboutus">
   <div class="container">
-    <div class="row">
-      <div class="about-title"><h1>ABOUT PORTAL</h1></div>
-      <hr />
-    </div>
+    
+     <h2 style="text-align:center; font-weight: bold; margin-top: 40px; color:#0a1d69; font-size: 40px;">About Us</h2>
+  <hr>
+    
     <div class="row">
       <div class="col-sm-5">
         <img
