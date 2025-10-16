@@ -3,7 +3,7 @@
 {% block body %}
 
 <style>
- /* hero section */
+  /* hero section */
   .hero {
     background: linear-gradient(rgba(10, 29, 105, 0.7), rgba(10, 29, 105, 0.7)),
     url("{% static 'images/bookslibrary.jpg' %}") center/cover no-repeat;
@@ -103,7 +103,7 @@
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: default;
-   
+
   }
 
   .courses-info ul li:hover {
@@ -141,6 +141,33 @@
     background: #2a73cc;
     transform: scale(1.05);
   }
+
+  /* dropdown styling for mobile view  */
+  .course-dropdown {
+    display: none;
+    /* hidden by default */
+    text-align: center;
+    margin: 20px 0;
+  }
+
+  .course-dropdown select {
+    padding: 10px 15px;
+    border-radius: 25px;
+    border: 1px solid #0a1d69;
+    background: #0a1d69;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    width: 200px;
+    transition: all 0.3s ease;
+  }
+
+  .course-dropdown select:hover {
+    background: #2a73cc;
+  }
+
+
 
   /*
      COURSE GRID
@@ -256,7 +283,9 @@
  -->
 <section class="courses-info">
   <h3>Your Path to Knowledge Starts Here</h3>
-  <p>At Nalanda Open University, we offer a variety of UG, PG, and diploma courses to help you grow academically and professionally. Each program is designed to give you practical knowledge, develop your skills, and prepare you for real-world challenges.</p>
+  <p>At Nalanda Open University, we offer a variety of UG, PG, and diploma courses to help you grow academically and
+    professionally. Each program is designed to give you practical knowledge, develop your skills, and prepare you for
+    real-world challenges.</p>
   <ul>
     <li>Wide Range of Programs</li>
     <li>Guided Support</li>
@@ -267,7 +296,7 @@
 
 <!-- 
      COURSES HEADING
- --> 
+ -->
 <h2 style="text-align:center; font-weight: bold; margin-top: 40px; color:#0a1d69; font-size: 40px;">Our Courses</h2>
 <hr>
 
@@ -283,7 +312,7 @@
 
 
 <!-- dropdown for mobile  -->
- <div class="course-dropdown">
+<div class="course-dropdown">
   <select id="courseSelect" onchange="showDropdownTab(this.value)">
     <option value="all">All Courses</option>
     <option value="ug">UG Courses</option>
