@@ -585,6 +585,7 @@
      JAVASCRIPT
  -->
 <script>
+  
   function showTab(tabName, event) {
     document.querySelectorAll('.course-grid').forEach(div => {
       div.classList.remove('active');
@@ -598,6 +599,24 @@
     document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
     event.target.classList.add('active');
   }
+
+  function showDropdownTab(tabName) {
+  document.querySelectorAll('.course-grid').forEach(div => {
+    div.classList.remove('active');
+    div.style.display = 'none';
+  });
+
+  const selectedDiv = document.getElementById(tabName);
+  selectedDiv.style.display = 'grid';
+  setTimeout(() => {
+    selectedDiv.classList.add('active');
+  }, 50);
+}
+
+// Initialize default view
+document.addEventListener('DOMContentLoaded', () => {
+  showTab('all', { target: document.querySelector('.tab-btn.active') });
+});
 
 </script>
 
