@@ -119,6 +119,7 @@
     margin: 0 auto;
   }
 
+  /* hover effect  */
   .service-card:hover {
     transform: translateY(-6px);
     box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.35);
@@ -133,8 +134,8 @@
 
   .service-card img {
     width: 100%;
-    height: 220px; /* Increased from 180px → better size */
-    object-fit: contain; /* Still prevents clipping */
+    height: 220px; 
+    object-fit: contain; 
     background-color: #f8f9fa;
     border-bottom: 2px solid #e0e0e0;
     padding: 10px;
@@ -165,6 +166,7 @@
     transition: background 0.3s ease;
   }
 
+  /* button changing color  */
   .service-card a:hover {
     background-color: #0b2db0;
   }
@@ -192,6 +194,7 @@
       </div>
 
       <!-- Card 2 -->
+
       <div class="service-card">
         <h3>Dashboard</h3>
         <img src="{% static 'images/dashboard_image.png' %}" alt="Dashboard">
