@@ -3,7 +3,7 @@
   /* .container {
     width: 100%;
   } */
-  
+
   .col-sm-5 {
     position: relative;
     padding-top: 30px;
@@ -11,16 +11,19 @@
     padding-left: 15px;
     padding-right: 15px;
   }
+
   .col-sm-7 {
     padding-top: 30px;
     font-size: 17.5px;
     font-family: open sans, sans-serif;
     padding-bottom: 10px;
   }
+
   .col-sm-5 img {
     width: 100%;
     height: 70%;
   }
+
   @media (max-width: 600px) {
     .col-sm-7 {
       flex-direction: column;
@@ -29,6 +32,7 @@
       padding-bottom: 0px;
       text-align: justify;
     }
+
     .col-sm-5 {
       padding-top: 5px;
       padding-bottom: 0px;
@@ -36,7 +40,7 @@
   }
 
 
- /* hero section */
+  /* hero section */
   .hero {
     background: linear-gradient(rgba(10, 29, 105, 0.7), rgba(10, 29, 105, 0.7)),
     url("{% static 'images/bookslibrary.jpg' %}") center/cover no-repeat;
@@ -89,7 +93,7 @@
   }
 
 
-  hr{
+  hr {
     width: 80px;
     height: 3px;
     background: #2a73cc;
@@ -98,11 +102,111 @@
     border-radius: 2px;
   }
 
+
+  /* about us info section  */
+  .about-info {
+    background: #f4f6fb;
+    border-radius: 12px;
+    padding: 30px 20px;
+    margin: 30px 5%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .about-info h3 {
+    color: #0a1d69;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  .about-info p {
+    color: #0a1d69;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  .about-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .about-info ul li {
+    background: #ffffff;
+    padding: 12px 18px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    color: #000;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+  }
+
+  .about-info ul li:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+  }
+
+  .about-info ul li span {
+    margin-right: 8px;
+    font-size: 1.2rem;
+  }
+
+
+  /* about us section styling  */
+
+  .about-section {
+  background: #f4f6fb;
+  border-radius: 12px;
+  padding: 40px 30px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-family: 'Poppins', sans-serif;
+}
+
+.about-text {
+  color: #0a1d69;
+  text-align: justify;
+}
+
+.about-heading {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #0a1d69;
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.about-text p {
+  font-size: 1rem;
+  line-height: 1.7;
+  font-weight: 500;
+  margin-bottom: 15px;
+}
+
+.about-section img {
+  max-width: 100%;
+  border-radius: 12px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-section img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
 </style>
 
 
 <!-- hero section  -->
- <section class="hero">
+<section class="hero">
   <h2>From Our Content For Distance Learning</h2>
   <p>NOU-e-Gyan PORTAL, CONCEPT BY NALANDA OPEN UNIVERSITY</p>
 </section>
@@ -111,40 +215,58 @@
 <!-- Header Image -->
 <section class="aboutus">
   <div class="container">
+
     
-     <h2 style="text-align:center; font-weight: bold; margin-top: 40px; color:#0a1d69; font-size: 40px;">About Us</h2>
-  <hr>
-    
-    <div class="row">
-      <div class="col-sm-5">
-        <img
-          src="{% static 'images/about.png' %}"
-          class="img-fluid"
-          height="50%"
-        />
-      </div>
-      <div class="col-sm-7" style="text-align: justify">
-        <p>
-          The objective to design the portal is to facilitate “E-learning System
-          to the students for the learning purpose from a remote location". The
-          Portal is a Secure, Robust Web Application for E-Learning.
-          <br /><br />
-          NOU-E-Gyan Portal is a Learning Management System (LMS) for the
-          colleges/ institutions / study centers for their unstoppable teaching
-          to their students in the current crisis situation & in future as well
-          since we all are now experiencing a paradigm shift. The portal is user
-          friendly & easy to access.
-          <br /><br />
-          The portal is accessible from any hook and corner of the world if the
-          system allows the permission of its users. It is fully secured and
-          accessible 24 x 7 to its authorised users. It will resolve the
-          academic issues such as E-content Distribution, Delivery, Tracking,
-          Assessment, Progress Monitoring & Controlling of all stakeholders of
-          the portal i.e. students, teachers, study centre administrators as
-          well as Nalanda Open University Admins when they are at a distance.
-        </p>
-      </div>
-    </div>
+
+    <!-- about us info section  -->
+    <section class="about-info">
+      <h3>Our Platform</h3>
+      <p>
+        NOU-E-Gyan Portal is a secure and user-friendly E-Learning System that enables students to learn remotely. It
+        serves as a Learning Management System (LMS) for colleges and study centers, ensuring continuous and accessible
+        education anytime, anywhere.
+      </p>
+      <ul>
+        <li>Secure & Robust Platform</li>
+        <li>24x7 Accessibility</li>
+        <li>Seamless E-Content Delivery</li>
+        <li>Progress Monitoring</li>
+      </ul>
+    </section>
+
+    <h2 style="text-align:center; font-weight: bold; margin-top: 40px; color:#0a1d69; font-size: 40px;">About Us</h2>
+    <hr>
+
+    <div class="row about-section align-items-center" style="margin: 40px 0;">
+  <div class="col-sm-5 text-center">
+    <img src="{% static 'images/about.png' %}" class="img-fluid rounded shadow" alt="About NOU-E-Gyan" />
+  </div>
+
+  <div class="col-sm-7 about-text">
+   
+    <p>
+      The <strong>NOU-E-Gyan Portal</strong> is designed to provide a seamless
+      <strong>E-Learning System</strong> that empowers students to learn
+      anytime, anywhere. It is a <strong>secure and robust web application</strong>
+      built to make education accessible from remote locations with ease.
+    </p>
+
+    <p>
+      Serving as a <strong>Learning Management System (LMS)</strong> for colleges,
+      institutions, and study centers, the portal supports continuous teaching and learning.
+      With its <strong>user-friendly interface</strong> and intuitive design, students
+      and teachers can connect and collaborate effectively even from a distance.
+    </p>
+
+    <p>
+      Accessible <strong>24×7</strong> from anywhere in the world, the portal ensures
+      secure login and personalized access for authorized users. It simplifies academic
+      processes such as <strong>E-content distribution</strong>, <strong>assessment</strong>,
+      <strong>progress tracking</strong>, and <strong>performance monitoring</strong>
+      for students, teachers, and administrators of <strong>Nalanda Open University</strong>.
+    </p>
+  </div>
+</div>
   </div>
 </section>
 
