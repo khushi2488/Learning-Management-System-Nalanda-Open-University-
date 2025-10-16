@@ -9,12 +9,12 @@
   /* Hero Section */
   .hero {
     background: linear-gradient(rgba(10, 29, 105, 0.7), rgba(10, 29, 105, 0.7)),
-    url("{% static 'images/bookslibrary.jpg' %}") center/cover no-repeat;
-    height: 45vh;
+      url("{% static 'images/bookslibrary.jpg' %}") center/cover no-repeat;
+    height: 40vh;
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding-bottom: 3.5rem;
+    padding-bottom: 3rem;
     align-items: center;
     color: white;
     text-align: center;
@@ -22,13 +22,13 @@
   }
 
   .hero h2 {
-    font-size: 2rem;
+    font-size: 1.8rem;
     font-weight: 700;
     animation: fadeInDown 1s ease;
   }
 
   .hero p {
-    font-size: 1rem;
+    font-size: 0.95rem;
     margin-top: 10px;
     font-weight: 500;
     animation: fadeInUp 1s ease;
@@ -39,7 +39,6 @@
       opacity: 0;
       transform: translateY(-20px);
     }
-
     to {
       opacity: 1;
       transform: translateY(0);
@@ -51,13 +50,11 @@
       opacity: 0;
       transform: translateY(20px);
     }
-
     to {
       opacity: 1;
       transform: translateY(0);
     }
   }
-
 
   hr {
     width: 80px;
@@ -67,7 +64,6 @@
     margin: 15px auto;
     border-radius: 2px;
   }
-
 
   /* Section Title */
   .service-title h1 {
@@ -83,7 +79,7 @@
   .services-grid {
     display: grid;
     gap: 2rem;
-    padding: 4rem 2rem;
+    padding: 3rem 2rem;
   }
 
   @media (min-width: 1024px) {
@@ -108,34 +104,40 @@
   .service-card {
     background-color: var(--card-bg);
     color: var(--card-text);
-    border-radius: 20px;
+    border-radius: 18px;
     overflow: hidden;
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.25);
     text-align: center;
     font-family: 'Poppins', sans-serif;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    gap: 1rem;
+    padding-bottom: 1rem;
+    max-width: 380px;
+    margin: 0 auto;
   }
 
   .service-card:hover {
-    transform: translateY(-8px);
-    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.4);
+    transform: translateY(-6px);
+    box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.35);
   }
 
   .service-card h3 {
     color: var(--primary-color);
     font-weight: 700;
-    margin: 1rem 0;
+    margin-top: 1rem;
+    font-size: 1.1rem;
   }
 
   .service-card img {
     width: 100%;
-    height: 200px;
-    object-fit: cover;
+    height: 220px; /* Increased from 180px → better size */
+    object-fit: contain; /* Still prevents clipping */
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #e0e0e0;
+    padding: 10px;
     transition: transform 0.4s ease;
   }
 
@@ -155,10 +157,11 @@
     color: white;
     border: none;
     border-radius: 25px;
-    padding: 10px 20px;
-    margin-bottom: 1.5rem;
+    padding: 10px 22px;
+    margin-bottom: 1rem;
     text-decoration: none;
     font-weight: 600;
+    font-size: 0.9rem;
     transition: background 0.3s ease;
   }
 
@@ -176,10 +179,8 @@
 <!-- Services Section -->
 <section class="service-section">
   <div class="container">
-
-    <h2 style="text-align:center; font-weight: bold; margin-top: 40px; color:#0a1d69; font-size: 40px;">Services</h2>
+    <h2 style="text-align:center; font-weight: bold; margin-top: 40px; color:#0a1d69; font-size: 36px;">Services</h2>
     <hr>
-
 
     <div class="services-grid">
       <!-- Card 1 -->
