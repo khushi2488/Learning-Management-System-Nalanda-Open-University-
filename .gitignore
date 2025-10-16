@@ -14,3 +14,7 @@ venv/
 # Misc files
 *.log
 *.DS_Store
+
+# PostgreSQL database (if any dumps are created)
+*.sql
+*.dump
