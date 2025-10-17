@@ -272,36 +272,179 @@
     margin-bottom: 1.5rem;
   }
 
-  /* Input Icons */
-  .input-wrapper {
-    position: relative;
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .registration-container {
+      max-width: 90%;
+      margin: 2.5rem auto 4rem auto;
+    }
   }
 
-  .input-icon {
-    position: absolute;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #94a3b8;
-    pointer-events: none;
-  }
-
-  .form-control.with-icon {
-    padding-left: 2.75rem;
-  }
-
-  /* Responsive */
   @media (max-width: 768px) {
-    .home h3 { font-size: 1.5rem; }
-    .home p { font-size: 0.9rem; }
-    .registration-container { margin: 2rem 1rem; }
-    .form-body { padding: 1.5rem; }
-    .form-section { padding: 1.5rem; }
-    .submit-section { padding: 1.5rem; }
-    .form-grid-2 { grid-template-columns: 1fr; }
-    .form-heading { font-size: 1.5rem; }
-    .gender-options { flex-direction: column; }
-    .form-check { min-width: 100%; }
+    .home {
+      min-height: 30vh;
+    }
+    
+    .home h3 { 
+      font-size: 1.5rem;
+      gap: 0.5rem;
+    }
+    
+    .home p { 
+      font-size: 0.85rem;
+    }
+    
+    .hero-content {
+      padding: 1rem;
+    }
+    
+    .registration-container { 
+      margin: 1.5rem 1rem 3rem 1rem;
+      border-radius: 16px;
+    }
+    
+    .form-header {
+      padding: 1.5rem 1rem;
+    }
+    
+    .form-heading { 
+      font-size: 1.4rem;
+    }
+    
+    .form-subheading {
+      font-size: 0.85rem;
+    }
+    
+    .form-body { 
+      padding: 1.25rem;
+    }
+    
+    .form-section { 
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      border-radius: 12px;
+    }
+    
+    .section-title {
+      font-size: 1rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.6rem;
+    }
+    
+    .section-icon {
+      font-size: 1.1rem;
+    }
+    
+    .submit-section { 
+      padding: 1.25rem;
+    }
+    
+    .form-grid-2 { 
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .form-grid {
+      gap: 1rem;
+    }
+    
+    .gender-options { 
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .form-check { 
+      min-width: 100%;
+    }
+    
+    .submit-btn {
+      padding: 0.85rem 2rem;
+      font-size: 0.95rem;
+    }
+    
+    .form-control, .form-select, textarea.form-control {
+      padding: 0.7rem 0.9rem;
+      font-size: 0.9rem;
+    }
+    
+    .form-label {
+      font-size: 0.85rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .home h3 { 
+      font-size: 1.25rem;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    
+    .home p { 
+      font-size: 0.75rem;
+    }
+    
+    .registration-container {
+      margin: 1rem 0.5rem 2rem 0.5rem;
+    }
+    
+    .form-header {
+      padding: 1.25rem 0.75rem;
+    }
+    
+    .form-heading {
+      font-size: 1.2rem;
+    }
+    
+    .form-subheading {
+      font-size: 0.8rem;
+    }
+    
+    .form-body {
+      padding: 1rem;
+    }
+    
+    .form-section {
+      padding: 1rem;
+      border-radius: 10px;
+    }
+    
+    .section-title {
+      font-size: 0.95rem;
+    }
+    
+    .submit-section {
+      padding: 1rem;
+    }
+    
+    .submit-btn {
+      padding: 0.75rem 1.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .form-control, .form-select, textarea.form-control {
+      padding: 0.65rem 0.85rem;
+      font-size: 0.85rem;
+      border-radius: 8px;
+    }
+    
+    .form-check {
+      padding: 0.65rem 1rem;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .form-heading {
+      font-size: 1.1rem;
+      letter-spacing: 0.3px;
+    }
+    
+    .form-body {
+      padding: 0.75rem;
+    }
+    
+    .form-section {
+      padding: 0.85rem;
+    }
   }
 </style>
 
@@ -512,18 +655,65 @@ function validate() {
   var year = document.getElementById("year");
   var gender = document.querySelector('input[name="gender"]:checked');
 
-  if (!rollno.value || isNaN(rollno.value)) { alert("Enter valid Roll No"); rollno.focus(); return false; }
-  if (!name.value) { alert("Enter Name"); name.focus(); return false; }
-  if (!fname.value) { alert("Enter Father Name"); fname.focus(); return false; }
-  if (!mname.value) { alert("Enter Mother Name"); mname.focus(); return false; }
-  if (!contactno.value || isNaN(contactno.value) || contactno.value.length != 10) { alert("Enter valid 10 digit Contact No"); contactno.focus(); return false; }
-  if (!emailaddress.value || !emailexp.test(emailaddress.value)) { alert("Enter valid Email"); emailaddress.focus(); return false; }
-  if (!password.value || password.value.length<8) { alert("Password must be min 8 chars"); password.focus(); return false; }
-  if (confirmpassword.value != password.value) { alert("Passwords do not match"); confirmpassword.focus(); return false; }
-  if (!gender) { alert("Select Gender"); return false; }
-  if (!program.value) { alert("Select Program"); program.focus(); return false; }
-  if (!branch.value) { alert("Select Branch"); branch.focus(); return false; }
-  if (!year.value) { alert("Select Year"); year.focus(); return false; }
+  if (!rollno.value || isNaN(rollno.value)) { 
+    alert("Enter valid Roll No"); 
+    rollno.focus(); 
+    return false; 
+  }
+  if (!name.value) { 
+    alert("Enter Name"); 
+    name.focus(); 
+    return false; 
+  }
+  if (!fname.value) { 
+    alert("Enter Father Name"); 
+    fname.focus(); 
+    return false; 
+  }
+  if (!mname.value) { 
+    alert("Enter Mother Name"); 
+    mname.focus(); 
+    return false; 
+  }
+  if (!contactno.value || isNaN(contactno.value) || contactno.value.length != 10) { 
+    alert("Enter valid 10 digit Contact No"); 
+    contactno.focus(); 
+    return false; 
+  }
+  if (!emailaddress.value || !emailexp.test(emailaddress.value)) { 
+    alert("Enter valid Email"); 
+    emailaddress.focus(); 
+    return false; 
+  }
+  if (!password.value || password.value.length < 8) { 
+    alert("Password must be min 8 chars"); 
+    password.focus(); 
+    return false; 
+  }
+  if (confirmpassword.value != password.value) { 
+    alert("Passwords do not match"); 
+    confirmpassword.focus(); 
+    return false; 
+  }
+  if (!gender) { 
+    alert("Select Gender"); 
+    return false; 
+  }
+  if (!program.value) { 
+    alert("Select Program"); 
+    program.focus(); 
+    return false; 
+  }
+  if (!branch.value) { 
+    alert("Select Branch"); 
+    branch.focus(); 
+    return false; 
+  }
+  if (!year.value) { 
+    alert("Select Year"); 
+    year.focus(); 
+    return false; 
+  }
 
   document.getElementById("frmregistration").submit();
   return true;
