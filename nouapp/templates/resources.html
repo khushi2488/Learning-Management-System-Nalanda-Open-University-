@@ -16,28 +16,102 @@
   }
 
   /* Hero Section */
-  .home {
+ .home {
     background-image: linear-gradient(rgba(30, 64, 175, 0.5), rgba(30, 58, 138, 0.6)),
-      url(../static/images/bookslibrary.jpg);
-    height: 45vh;
+                  url(../static/images/bookslibrary.jpg);
+    width: 100%;
+    min-height: 40vh;
+    background-size: cover;
+    background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 3rem 1rem;
+  }
+
+  .home::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.2), transparent);
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
     text-align: center;
     color: white;
-    font-family: 'Poppins', sans-serif;
+    padding: 1.5rem;
+    max-width: 1000px;
+    width: 100%;
   }
 
-  .home h3 {
+  .hero-content h3 {
     font-size: 2.5rem;
     font-weight: 700;
+    margin: 0 0 1.5rem 0;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    animation: fadeInDown 1s ease-out;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
   }
 
-  .home p {
-    font-size: 1.2rem;
-    margin-top: 10px;
+  .hero-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+    display: inline-block;
   }
 
+  .hero-text {
+    display: inline-block;
+  }
+
+  .hero-content p {
+    font-size: 1.25rem;
+    font-weight: 500;
+    opacity: 0.95;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 1s ease-out 0.3s both;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
   /* Info Section */
   .about-info {
     background: #f4f6fb;
@@ -284,12 +358,17 @@
 </style>
 
 <!-- Hero -->
-<section class="home">
-  <div>
-    <h3>📚 From Our Content For Distance Learning</h3>
-    <p>NOU-e-Gyan PORTAL | NALANDA OPEN UNIVERSITY</p>
-  </div>
-</section>
+<div class="row">
+  <section class="home">
+    <div class="hero-content">
+      <h3>
+        <span class="hero-icon">📚</span>
+        <span class="hero-text">From Our Content For Distance Learning</span>
+      </h3>
+      <p>NOU-e-Gyan PORTAL | NALANDA OPEN UNIVERSITY</p>
+    </div>
+  </section>
+</div>
 
 <!-- Info -->
 <section class="about-info">
