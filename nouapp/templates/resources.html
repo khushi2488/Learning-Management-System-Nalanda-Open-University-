@@ -3,7 +3,7 @@
 {% block body %}
 <style>
   /* hero section */
-  .hero {
+  /* .hero {
     background: linear-gradient(rgba(10, 29, 105, 0.7), rgba(10, 29, 105, 0.7)),
     url("{% static 'images/bookslibrary.jpg' %}") center/cover no-repeat;
     height: 45vh;
@@ -48,6 +48,116 @@
       transform: translateY(20px);
     }
 
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  } */
+
+    :root {
+    --primary-blue: #1e40af;
+    --secondary-blue: #3b82f6;
+    --accent-blue: #60a5fa;
+    --dark-blue: #1e3a8a;
+    --light-blue: #dbeafe;
+    --success-green: #10b981;
+    --text-dark: #1e293b;
+    --text-light: #64748b;
+    --bg-light: #f8fafc;
+  }
+
+  /* Header Image */
+  .home {
+    background-image: linear-gradient(rgba(30, 64, 175, 0.5), rgba(30, 58, 138, 0.6)),
+                  url(../static/images/bookslibrary.jpg);
+    width: 100%;
+    min-height: 40vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 3rem 1rem;
+  }
+
+  .home::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.2), transparent);
+    animation: pulse 4s ease-in-out infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    padding: 1.5rem;
+    max-width: 1000px;
+    width: 100%;
+  }
+
+  .hero-content h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem 0;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    animation: fadeInDown 1s ease-out;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .hero-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+    display: inline-block;
+  }
+
+  .hero-text {
+    display: inline-block;
+  }
+
+  .hero-content p {
+    font-size: 1.25rem;
+    font-weight: 500;
+    opacity: 0.95;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 1s ease-out 0.3s both;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
     to {
       opacity: 1;
       transform: translateY(0);
@@ -112,15 +222,38 @@
     margin-right: 8px;
     font-size: 1.2rem;
   }
+
+  hr {
+    width: 80px;
+    height: 3px;
+    background: #2a73cc;
+    border: none;
+    margin: 15px auto;
+    border-radius: 2px;
+  }
+  
 </style>
 
 <!-- 
      HERO SECTION
  -->
-<section class="hero">
+<!-- <section class="hero">
   <h2>From Our Content For Distance Learning</h2>
   <p>NOU-e-Gyan PORTAL, CONCEPT BY NALANDA OPEN UNIVERSITY</p>
-</section>
+</section> -->
+
+<div class="row">
+  <section class="home">
+    <div class="hero-content">
+      <h3>
+        <span class="hero-icon">📚</span>
+        <span class="hero-text">From Our Content For Distance Learning</span>
+      </h3>
+      <p>NOU-e-Gyan PORTAL | NALANDA OPEN UNIVERSITY</p>
+    </div>
+  </section>
+</div>
+
 
 <!-- info about the resources section  -->
  <section class="about-info">
@@ -138,5 +271,10 @@
   </ul>
 </section>
 
+<div class="container">
+  <h2 style="text-align:center; font-weight: bold; margin-top: 40px; color:#0a1d69; font-size: 36px;"> Distance Learning Resources Guide</h2>
+    <hr>
+
+</div>
 
 {% endblock %}
