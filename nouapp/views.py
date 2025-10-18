@@ -356,3 +356,8 @@ def ensure_dropdown_data():
 
 def custom_404_view(request, exception):
     return render(request, "404.html", status=404)
+
+# for resources file 
+def resources(request):
+    ns = News.objects.all()  # if you want to show news as in other pages
+    return render(request, "resources.html", locals())
