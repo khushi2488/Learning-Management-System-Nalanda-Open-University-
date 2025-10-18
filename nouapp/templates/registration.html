@@ -1,533 +1,722 @@
-{% extends 'parent.html' %} {% load static %} {% block body %}
+{% extends 'parent.html' %}
+{% load static %}
+{% block body %}
 <style>
-  /*Header Image*/
-  .home {
-    background-image: url(../static/images/bookslibrary.jpg);
-    width: 100%;
-    height: 38vh;
-    background-size: cover;
-    background-position: center;
+  :root {
+    --primary-color: #1e40af;
+    --accent-color: #3b82f6;
+    --card-bg: #ffffff;
+    --card-text: #1e293b;
+    --success-green: #10b981;
+    --danger-red: #ef4444;
+    --light-bg: #f8fafc;
+    --border-color: #e2e8f0;
   }
 
-  @media (max-width: 530px) and (min-width: 350px) {
-    .home h3 {
-      text-align: center;
-      font-size: 17px;
-    }
-    .home p {
-      text-align: center;
-      font-size: small;
-    }
+  /* Hero Section */
+  .home {
+    background-image: linear-gradient(rgba(30, 64, 175, 0.6), rgba(30, 58, 138, 0.6)), url(../static/images/bookslibrary.jpg);
+    width: 100%;
+    min-height: 37vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .home h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 0;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+    animation: fadeInDown 1s ease-out;
+  }
+
+  .home p {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 0.5rem;
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
+    animation: fadeInUp 1s ease-out 0.3s both;
+  }
+
+  @keyframes fadeInDown { from {opacity:0; transform:translateY(-20px);} to {opacity:1; transform:translateY(0);} }
+  @keyframes fadeInUp { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    padding: 1.5rem;
+    max-width: 1000px;
+    width: 100%;
+  }
+  
+  .hero-content h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem 0;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    animation: fadeInDown 1s ease-out;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  
+  .hero-text {
+    display: inline-block;
+    flex: 1;
+    min-width: 0;
+  }
+
+  /* Registration Form Container */
+  .registration-container {
+    background: var(--card-bg);
+    color: var(--card-text);
+    margin: 3rem auto 5rem auto;
+    border-radius: 24px;
+    box-shadow: 0 10px 40px rgba(30,64,175,0.12);
+    padding: 0;
+    max-width: 1000px;
+    font-family: 'Poppins', sans-serif;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+  }
+
+  /* Form Header */
+  .form-header {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    padding: 2rem;
+    text-align: center;
+    color: white;
+  }
+
+  .form-heading {
+    font-weight: 700;
+    margin: 0;
+    font-size: 1.85rem;
+    letter-spacing: 0.5px;
+  }
+
+  .form-subheading {
+    margin: 0.5rem 0 0 0;
+    font-size: 0.95rem;
+    opacity: 0.95;
+    font-weight: 400;
+  }
+
+  /* Form Body */
+  .form-body {
+    padding: 2.5rem;
+    background: var(--light-bg);
+  }
+
+  .form-section {
+    background: white;
+    padding: 2rem;
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border: 1px solid var(--border-color);
+  }
+
+  .section-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--accent-color);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .section-icon {
+    font-size: 1.3rem;
   }
 
   .required::after {
     content: " *";
-    color: red;
+    color: var(--danger-red);
+    font-weight: 700;
   }
 
-  /* Form styling for theme compatibility */
-  .registration-container {
-    background-color: var(--card-bg);
-    color: var(--card-text);
-    margin: 0 auto;
-    border-radius: 15px;
-    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
-    padding: 20px;
+  /* Form Inputs */
+  .form-control, .form-select, textarea.form-control {
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+    width: 100%;
+    font-size: 0.95rem;
+    background: white;
   }
 
-  .form-heading {
-    color: var(--primary-color) !important;
+  .form-control:focus, .form-select:focus {
+    border-color: var(--accent-color);
+    box-shadow: 0 0 0 4px rgba(59,130,246,0.08);
+    outline: none;
+    background: #fff;
   }
 
   .form-label {
-    color: var(--primary-color) !important;
-  }
-  @media (min-width: 260px) and (max-width: 530px) {
-    .dist {
-      font-size: 11px;
-      text-align: center;
-      margin-left: 0px;
-      padding-bottom: 15px;
-      justify-content: center;
-      align-content: center;
-    }
-    .dist1 {
-      font-size: 17px;
-      text-align: center;
-      margin-left: 0px;
-      /* padding-bottom: 15px; */
-      justify-content: center;
-      align-content: center;
-    }
+    font-weight: 500;
+    color: var(--card-text);
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
   }
 
-  /*Header Image*/
-</style>
+  /* Radio Buttons - Modern Style */
+  .gender-options {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
 
-<!-- Header Image -->
-<div class="row">
-  <section class="home">
-    <div
-      class="row"
-      style="
-        color: aliceblue;
-        font-weight: bolder;
-        font-family: poppins, sans-serif;
-        padding-top: 22vh;
-        text-align: center;
-      "
-    >
-      <h3 class="dist1"><b>From Our Content For Distance Learning</b></h3>
-      <p class="dist" style="font-family: poppins; font-weight: bolder">
-        NOU-e-Gyan PORTAL, CONCEPT BY NALANDA OPEN UNIVERSITY
-      </p>
-    </div>
-  </section>
-</div>
-<!-- Header Image -->
+  .form-check {
+    background: white;
+    border: 2px solid var(--border-color);
+    border-radius: 10px;
+    padding: 0.75rem 1.25rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    flex: 1;
+    min-width: 120px;
+  }
 
-<!-- Start Of Student Registration Form Section -->
-<div class="row mt-5" style="margin-bottom: 50px">
-  <div class="col-sm-12 col-md-10 col-lg-8 mx-auto">
-    <div class="registration-container">
-      <script>
-        function validate() {
-          var rollno = document.getElementById("rollno");
-          var name = document.getElementById("name");
-          var fname = document.getElementById("fatherName");
-          var mname = document.getElementById("motherName");
-          var contactno = document.getElementById("contactNo");
-          var emailaddress = document.getElementById("emailAddress");
-          var emailexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-          var password = document.getElementById("password");
-          var confirmpassword = document.getElementById("confirmPassword");
+  .form-check:hover {
+    border-color: var(--accent-color);
+    background: rgba(59,130,246,0.03);
+  }
 
-          if (rollno.value == "" || rollno.value == null) {
-            alert("Please enter your rollno");
-            rollno.focus();
-            return false;
-          } else if (isNaN(rollno.value)) {
-            alert("Please enter Number only");
-            rollno.focus();
-            return false;
-          } else if (name.value == "" || name.value == null) {
-            alert("Please enter your name");
-            name.focus();
-            return false;
-          } else if (fname.value == "" || fname.value == null) {
-            alert("Please enter father name");
-            fname.focus();
-            return false;
-          } else if (mname.value == "" || mname.value == null) {
-            alert("Please enter mother name");
-            mname.focus();
-            return false;
-          } else if (contactno.value == "" || contactno.value == null) {
-            alert("Please enter contactno");
-            contactno.focus();
-            return false;
-          } else if (isNaN(contactno.value)) {
-            alert("Please enter Number only");
-            contactno.focus();
-            return false;
-          } else if (contactno.value.length != 10) {
-            alert("Please enter 10 digit No");
-            contactno.focus();
-            return false;
-          } else if (emailaddress.value == "" || emailaddress.value == null) {
-            alert("Please enter emailaddress");
-            emailaddress.focus();
-            return false;
-          } else if (!emailexp.test(emailaddress.value)) {
-            alert("Please enter valid email address");
-            emailaddress.focus();
-            return false;
-          } else if (password.value == "" || password.value == null) {
-            alert("Please enter your password");
-            password.focus();
-            return false;
-          } else if (password.value.length < 8) {
-            alert("Please enter atleast 8 digit password");
-            password.focus();
-            return false;
-          } else if (
-            confirmpassword.value == "" ||
-            confirmpassword.value == null
-          ) {
-            alert("Please enter confirm password");
-            confirmpassword.focus();
-            return false;
-          } else if (confirmpassword.value != password.value) {
-            alert("Confirm password is not matched");
-            confirmpassword.focus();
-            return false;
-          } else {
-            // Check if any required field is empty
-            var program = document.getElementById("program");
-            var branch = document.getElementById("branch");
-            var year = document.getElementById("year");
-            var gender = document.querySelector('input[name="gender"]:checked');
+  .form-check-input {
+    margin-top: 0.25rem;
+    cursor: pointer;
+    width: 18px;
+    height: 18px;
+  }
 
-            if (!gender) {
-              alert("Please select your gender");
-              return false;
-            }
-            if (program.value === "") {
-              alert("Please select a program");
-              program.focus();
-              return false;
-            }
-            if (branch.value === "") {
-              alert("Please select a branch");
-              branch.focus();
-              return false;
-            }
-            if (year.value === "") {
-              alert("Please select a year");
-              year.focus();
-              return false;
-            }
+  .form-check-input:checked {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+  }
 
-            document.getElementById("frmregistration").submit();
-            return true;
-          }
-        }
-      </script>
+  .form-check-label {
+    cursor: pointer;
+    margin-left: 0.5rem;
+    font-weight: 500;
+  }
 
-      {% if messages %} {% for message in messages %}
-      <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>{{message}}</strong>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="alert"
-          aria-label="Close"
-        ></button>
-      </div>
-      {% endfor %} {% endif %}
+  /* Grid Layout for Form Fields */
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
 
-      <div class="container mt-4">
-        <h2 class="text-center mb-4 form-heading">STUDENT REGISTRATION FORM</h2>
-        <hr style="border-color: var(--primary-color); opacity: 0.3" />
+  .form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+  }
 
-        <form
-          class="p-3"
-          id="frmregistration"
-          method="post"
-          onsubmit="event.preventDefault(); return validate();"
-        >
-          {% csrf_token %}
+  /* Submit Button */
+  .submit-section {
+    padding: 2rem 2.5rem;
+    background: white;
+  }
 
-          <!-- Roll No -->
-          <div class="row mb-3">
-            <label class="col-sm-3 col-form-label required form-label">
-              Enter Roll No :
-            </label>
-            <div class="col-sm-9">
-              <input
-                type="text"
-                id="rollno"
-                name="rollno"
-                class="form-control"
-                placeholder="Enter Roll No"
-                required
-              />
-            </div>
-          </div>
+  .submit-btn {
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    border: none;
+    border-radius: 12px;
+    padding: 1rem 2.5rem;
+    font-weight: 600;
+    color: white;
+    width: 100%;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    box-shadow: 0 4px 15px rgba(30,64,175,0.3);
+  }
 
-          <!-- Name -->
-          <div class="row mb-3">
-            <label class="col-sm-3 col-form-label required form-label">
-              Enter Name :
-            </label>
-            <div class="col-sm-9">
-              <input
-                type="text"
-                class="form-control"
-                id="name"
-                name="name"
-                placeholder="Enter Name"
-                required
-              />
-            </div>
-          </div>
+  .submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(30,64,175,0.4);
+  }
 
-          <!-- Father Name -->
-          <div class="row mb-3">
-            <label class="col-sm-3 col-form-label required form-label">
-              Enter Father Name :
-            </label>
-            <div class="col-sm-9">
-              <input
-                type="text"
-                class="form-control"
-                id="fatherName"
-                name="fatherName"
-                placeholder="Enter Father Name"
-                required
-              />
-            </div>
-          </div>
+  .submit-btn:active {
+    transform: translateY(0);
+  }
 
-          <!-- Mother Name -->
-          <div class="row mb-3">
-            <label class="col-sm-3 col-form-label required form-label">
-              Enter Mother Name :
-            </label>
-            <div class="col-sm-9">
-              <input
-                type="text"
-                class="form-control"
-                id="motherName"
-                name="motherName"
-                placeholder="Enter Mother Name"
-                required
-              />
-            </div>
-          </div>
+  /* Alerts */
+  .alert-success {
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    font-weight: 500;
+    border: none;
+    background: var(--success-green);
+    color: white;
+    margin-bottom: 1.5rem;
+  }
 
-          <!-- Gender -->
-          <div class="row mb-3">
-            <label class="col-sm-3 col-form-label required form-label">
-              Select Gender :
-            </label>
-            <div class="col-sm-9 d-flex align-items-center">
-              <div class="form-check me-3">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="gender"
-                  id="genderMale"
-                  value="male"
-                  required
-                />
-                <label class="form-check-label" for="genderMale">Male</label>
-              </div>
-              <div class="form-check me-3">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="gender"
-                  id="genderFemale"
-                  value="female"
-                  required
-                />
-                <label class="form-check-label" for="genderFemale"
-                  >Female</label
-                >
-              </div>
-              <div class="form-check">
-                <input
-                  class="form-check-input"
-                  type="radio"
-                  name="gender"
-                  id="genderOther"
-                  value="other"
-                  required
-                />
-                <label class="form-check-label" for="genderOther">Other</label>
-              </div>
-            </div>
-          </div>
-
-          <!-- Address -->
-          <div class="row mb-3">
-            <label class="col-sm-3 col-form-label required form-label">
-              Enter Address :
-            </label>
-            <div class="col-sm-9">
-              <textarea
-                class="form-control"
-                id="address"
-                name="address"
-                rows="2"
-                placeholder="Enter Address"
-                required
-              ></textarea>
-            </div>
-          </div>
-
-          <!-- Program - UPDATED: Dynamic dropdown from database -->
-          <div class="row mb-3">
-            <label class="col-sm-3 col-form-label required form-label">
-              Select Program :
-            </label>
-            <div class="col-sm-9">
-              <select class="form-select" id="program" name="program" required>
-                <option value="">---Select Program---</option>
-                {% for prog in program %}
-                <option value="{{ prog.id }}">{{ prog.program }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-
-          <!-- Branch - UPDATED: Dynamic dropdown from database -->
-          <div class="row mb-3">
-            <label class="col-sm-3 col-form-label required form-label">
-              Select Branch :
-            </label>
-            <div class="col-sm-9">
-              <select class="form-select" id="branch" name="branch" required>
-                <option value="">---Select Branch---</option>
-                {% for br in branch %}
-                <option value="{{ br.id }}">{{ br.branch }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-
-          <!-- Year - UPDATED: Dynamic dropdown from database -->
-          <div class="row mb-3">
-            <label class="col-sm-3 col-form-label required form-label">
-              Select Year :
-            </label>
-            <div class="col-sm-9">
-              <select class="form-select" id="year" name="year" required>
-                <option value="">---Select Year---</option>
-                {% for yr in year %}
-                <option value="{{ yr.id }}">{{ yr.year }}</option>
-                {% endfor %}
-              </select>
-            </div>
-          </div>
-
-          <!-- Contact No -->
-          <div class="row mb-3">
-            <label class="col-sm-3 col-form-label required form-label">
-              Enter Contact No :
-            </label>
-            <div class="col-sm-9">
-              <input
-                type="tel"
-                class="form-control"
-                id="contactNo"
-                name="contactNo"
-                placeholder="Enter Contact No"
-                required
-              />
-            </div>
-          </div>
-
-          <!-- Email Address -->
-          <div class="row mb-3">
-            <label class="col-sm-3 col-form-label required form-label">
-              Enter Email Address :
-            </label>
-            <div class="col-sm-9">
-              <input
-                type="email"
-                class="form-control"
-                id="emailAddress"
-                name="emailAddress"
-                placeholder="example@example.com"
-                required
-              />
-            </div>
-          </div>
-
-          <!-- Password -->
-          <div class="row mb-3">
-            <label class="col-sm-3 col-form-label required form-label">
-              Enter Password :
-            </label>
-            <div class="col-sm-9">
-              <input
-                type="password"
-                class="form-control"
-                id="password"
-                name="password"
-                placeholder="Enter Password (min 8 characters)"
-                required
-              />
-            </div>
-          </div>
-
-          <!-- Confirm Password -->
-          <div class="row mb-3">
-            <label class="col-sm-3 col-form-label required form-label">
-              Confirm Password:
-            </label>
-            <div class="col-sm-9">
-              <input
-                type="password"
-                class="form-control"
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="Confirm Password"
-                required
-              />
-            </div>
-          </div>
-
-          <!-- Submit -->
-          <div class="row mt-4">
-            <div class="col-sm-12 text-center">
-              <button
-                type="submit"
-                class="btn btn-primary"
-                style="
-                  background: linear-gradient(
-                    135deg,
-                    var(--primary-color),
-                    var(--accent-color)
-                  );
-                  border: none;
-                  padding: 10px 30px;
-                  font-weight: bold;
-                "
-              >
-                Register
-              </button>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- End Of Student Registration Form Section -->
-
-<!-- Responsive styles -->
-<style>
-  @media (max-width: 768px) {
+  /* Responsive Design */
+  @media (max-width: 1024px) {
     .registration-container {
-      width: 95% !important;
-      margin: 20px auto !important;
-      padding: 15px !important;
+      max-width: 90%;
+      margin: 2.5rem auto 4rem auto;
     }
+  }
 
-    .form-label {
-      text-align: left !important;
-      margin-bottom: 5px;
+  @media (max-width: 768px) {
+    .home {
+      min-height: 30vh;
     }
-
-    .col-sm-3,
-    .col-sm-9 {
-      width: 100%;
-      max-width: 100%;
-      flex: 0 0 100%;
+    
+    .home h3 { 
+      font-size: 1.5rem;
+      gap: 0.5rem;
     }
-
-    .d-flex.align-items-center {
+    
+    .home p { 
+      font-size: 0.85rem;
+    }
+    
+    .hero-content {
+      padding: 1rem;
+    }
+    
+    .registration-container { 
+      margin: 1.5rem 1rem 3rem 1rem;
+      border-radius: 16px;
+    }
+    
+    .form-header {
+      padding: 1.5rem 1rem;
+    }
+    
+    .form-heading { 
+      font-size: 1.4rem;
+    }
+    
+    .form-subheading {
+      font-size: 0.85rem;
+    }
+    
+    .form-body { 
+      padding: 1.25rem;
+    }
+    
+    .form-section { 
+      padding: 1.25rem;
+      margin-bottom: 1rem;
+      border-radius: 12px;
+    }
+    
+    .section-title {
+      font-size: 1rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.6rem;
+    }
+    
+    .section-icon {
+      font-size: 1.1rem;
+    }
+    
+    .submit-section { 
+      padding: 1.25rem;
+    }
+    
+    .form-grid-2 { 
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+    
+    .form-grid {
+      gap: 1rem;
+    }
+    
+    .gender-options { 
       flex-direction: column;
-      align-items: flex-start !important;
+      gap: 0.75rem;
     }
-
-    .form-check {
-      margin-bottom: 8px;
+    
+    .form-check { 
+      min-width: 100%;
+    }
+    
+    .submit-btn {
+      padding: 0.85rem 2rem;
+      font-size: 0.95rem;
+    }
+    
+    .form-control, .form-select, textarea.form-control {
+      padding: 0.7rem 0.9rem;
+      font-size: 0.9rem;
+    }
+    
+    .form-label {
+      font-size: 0.85rem;
     }
   }
 
   @media (max-width: 480px) {
-    .registration-container {
-      margin-top: 20px !important;
-      padding: 10px !important;
+    .home h3 { 
+      font-size: 1.25rem;
+      flex-direction: column;
+      gap: 0.3rem;
     }
-
+    
+    .home p { 
+      font-size: 0.75rem;
+    }
+    
+    .registration-container {
+      margin: 1rem 0.5rem 2rem 0.5rem;
+    }
+    
+    .form-header {
+      padding: 1.25rem 0.75rem;
+    }
+    
     .form-heading {
-      font-size: 1.5rem !important;
+      font-size: 1.2rem;
+    }
+    
+    .form-subheading {
+      font-size: 0.8rem;
+    }
+    
+    .form-body {
+      padding: 1rem;
+    }
+    
+    .form-section {
+      padding: 1rem;
+      border-radius: 10px;
+    }
+    
+    .section-title {
+      font-size: 0.95rem;
+    }
+    
+    .submit-section {
+      padding: 1rem;
+    }
+    
+    .submit-btn {
+      padding: 0.75rem 1.5rem;
+      font-size: 0.9rem;
+    }
+    
+    .form-control, .form-select, textarea.form-control {
+      padding: 0.65rem 0.85rem;
+      font-size: 0.85rem;
+      border-radius: 8px;
+    }
+    
+    .form-check {
+      padding: 0.65rem 1rem;
+    }
+  }
+
+  @media (max-width: 360px) {
+    .form-heading {
+      font-size: 1.1rem;
+      letter-spacing: 0.3px;
+    }
+    
+    .form-body {
+      padding: 0.75rem;
+    }
+    
+    .form-section {
+      padding: 0.85rem;
     }
   }
 </style>
+
+<!-- Hero Section -->
+<section class="home">
+    <div class="hero-content">
+      <h3>
+        <span class="hero-icon">📚</span>
+        <span class="hero-text">From Our Content For Distance Learning</span>
+      </h3>
+      <p>NOU-e-Gyan PORTAL | NALANDA OPEN UNIVERSITY</p>
+    </div>
+</section>
+
+<!-- Registration Form -->
+<div class="registration-container">
+  <!-- Form Header -->
+  <div class="form-header">
+    <h2 class="form-heading">STUDENT REGISTRATION FORM</h2>
+    <p class="form-subheading">Fill in your details to create your account</p>
+  </div>
+
+  <!-- Form Body -->
+  <div class="form-body">
+    {% if messages %}
+      {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <form id="frmregistration" method="post" onsubmit="event.preventDefault(); return validate();">
+      {% csrf_token %}
+      
+      <!-- Personal Information Section -->
+      <div class="form-section">
+        <div class="section-title">
+          <span class="section-icon">👤</span>
+          Personal Information
+        </div>
+        
+        <div class="form-grid">
+          <!-- Roll No -->
+          <div class="mb-3">
+            <label class="form-label required">Roll Number</label>
+            <input type="text" id="rollno" name="rollno" class="form-control" placeholder="Enter your roll number" required>
+          </div>
+
+          <!-- Name -->
+          <div class="mb-3">
+            <label class="form-label required">Full Name</label>
+            <input type="text" id="name" name="name" class="form-control" placeholder="Enter your full name" required>
+          </div>
+        </div>
+
+        <div class="form-grid-2">
+          <!-- Father Name -->
+          <div class="mb-3">
+            <label class="form-label required">Father's Name</label>
+            <input type="text" id="fatherName" name="fatherName" class="form-control" placeholder="Enter father's name" required>
+          </div>
+
+          <!-- Mother Name -->
+          <div class="mb-3">
+            <label class="form-label required">Mother's Name</label>
+            <input type="text" id="motherName" name="motherName" class="form-control" placeholder="Enter mother's name" required>
+          </div>
+        </div>
+
+        <!-- Gender -->
+        <div class="mb-3">
+          <label class="form-label required">Gender</label>
+          <div class="gender-options">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="gender" id="genderMale" value="male" required>
+              <label class="form-check-label" for="genderMale">Male</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="gender" id="genderFemale" value="female" required>
+              <label class="form-check-label" for="genderFemale">Female</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="gender" id="genderOther" value="other" required>
+              <label class="form-check-label" for="genderOther">Other</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Address -->
+        <div class="mb-3">
+          <label class="form-label required">Address</label>
+          <textarea id="address" name="address" rows="3" class="form-control" placeholder="Enter your complete address" required></textarea>
+        </div>
+      </div>
+
+      <!-- Academic Information Section -->
+      <div class="form-section">
+        <div class="section-title">
+          <span class="section-icon">🎓</span>
+          Academic Information
+        </div>
+        
+        <div class="form-grid">
+          <!-- Program -->
+          <div class="mb-3">
+            <label class="form-label required">Program</label>
+            <select id="program" name="program" class="form-select" required>
+              <option value="">---Select Program---</option>
+              {% for prog in program %}
+                <option value="{{ prog.id }}">{{ prog.program }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- Branch -->
+          <div class="mb-3">
+            <label class="form-label required">Branch</label>
+            <select id="branch" name="branch" class="form-select" required>
+              <option value="">---Select Branch---</option>
+              {% for br in branch %}
+                <option value="{{ br.id }}">{{ br.branch }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <!-- Year -->
+          <div class="mb-3">
+            <label class="form-label required">Year</label>
+            <select id="year" name="year" class="form-select" required>
+              <option value="">---Select Year---</option>
+              {% for yr in year %}
+                <option value="{{ yr.id }}">{{ yr.year }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Information Section -->
+      <div class="form-section">
+        <div class="section-title">
+          <span class="section-icon">📞</span>
+          Contact Information
+        </div>
+        
+        <div class="form-grid-2">
+          <!-- Contact No -->
+          <div class="mb-3">
+            <label class="form-label required">Contact Number</label>
+            <input type="tel" id="contactNo" name="contactNo" class="form-control" placeholder="10-digit mobile number" required>
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label class="form-label required">Email Address</label>
+            <input type="email" id="emailAddress" name="emailAddress" class="form-control" placeholder="example@example.com" required>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account Security Section -->
+      <div class="form-section">
+        <div class="section-title">
+          <span class="section-icon">🔒</span>
+          Account Security
+        </div>
+        
+        <div class="form-grid-2">
+          <!-- Password -->
+          <div class="mb-3">
+            <label class="form-label required">Password</label>
+            <input type="password" id="password" name="password" class="form-control" placeholder="Minimum 8 characters" required>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="mb-3">
+            <label class="form-label required">Confirm Password</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control" placeholder="Re-enter password" required>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Submit Section -->
+  <div class="submit-section">
+    <button type="submit" class="submit-btn" onclick="validate()">Complete Registration</button>
+  </div>
+</div>
+
+<!-- Validation Script -->
+<script>
+function validate() {
+  var rollno = document.getElementById("rollno");
+  var name = document.getElementById("name");
+  var fname = document.getElementById("fatherName");
+  var mname = document.getElementById("motherName");
+  var contactno = document.getElementById("contactNo");
+  var emailaddress = document.getElementById("emailAddress");
+  var emailexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+  var password = document.getElementById("password");
+  var confirmpassword = document.getElementById("confirmPassword");
+  var program = document.getElementById("program");
+  var branch = document.getElementById("branch");
+  var year = document.getElementById("year");
+  var gender = document.querySelector('input[name="gender"]:checked');
+
+  if (!rollno.value || isNaN(rollno.value)) { 
+    alert("Enter valid Roll No"); 
+    rollno.focus(); 
+    return false; 
+  }
+  if (!name.value) { 
+    alert("Enter Name"); 
+    name.focus(); 
+    return false; 
+  }
+  if (!fname.value) { 
+    alert("Enter Father Name"); 
+    fname.focus(); 
+    return false; 
+  }
+  if (!mname.value) { 
+    alert("Enter Mother Name"); 
+    mname.focus(); 
+    return false; 
+  }
+  if (!contactno.value || isNaN(contactno.value) || contactno.value.length != 10) { 
+    alert("Enter valid 10 digit Contact No"); 
+    contactno.focus(); 
+    return false; 
+  }
+  if (!emailaddress.value || !emailexp.test(emailaddress.value)) { 
+    alert("Enter valid Email"); 
+    emailaddress.focus(); 
+    return false; 
+  }
+  if (!password.value || password.value.length < 8) { 
+    alert("Password must be min 8 chars"); 
+    password.focus(); 
+    return false; 
+  }
+  if (confirmpassword.value != password.value) { 
+    alert("Passwords do not match"); 
+    confirmpassword.focus(); 
+    return false; 
+  }
+  if (!gender) { 
+    alert("Select Gender"); 
+    return false; 
+  }
+  if (!program.value) { 
+    alert("Select Program"); 
+    program.focus(); 
+    return false; 
+  }
+  if (!branch.value) { 
+    alert("Select Branch"); 
+    branch.focus(); 
+    return false; 
+  }
+  if (!year.value) { 
+    alert("Select Year"); 
+    year.focus(); 
+    return false; 
+  }
+
+  document.getElementById("frmregistration").submit();
+  return true;
+}
+</script>
 {% endblock body %}
