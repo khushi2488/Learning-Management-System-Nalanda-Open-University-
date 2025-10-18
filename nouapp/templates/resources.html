@@ -53,6 +53,65 @@
       transform: translateY(0);
     }
   }
+
+  /* resources info section  */
+
+  .about-info {
+    background: #f4f6fb;
+    border-radius: 12px;
+    padding: 30px 20px;
+    margin: 30px 5%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .about-info h3 {
+    color: #0a1d69;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  .about-info p {
+    color: #0a1d69;
+    font-size: 1rem;
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  .about-info ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .about-info ul li {
+    background: #ffffff;
+    padding: 12px 18px;
+    border-radius: 25px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    color: #000;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: default;
+  }
+
+  .about-info ul li:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+  }
+
+  .about-info ul li span {
+    margin-right: 8px;
+    font-size: 1.2rem;
+  }
 </style>
 
 <!-- 
@@ -62,5 +121,22 @@
   <h2>From Our Content For Distance Learning</h2>
   <p>NOU-e-Gyan PORTAL, CONCEPT BY NALANDA OPEN UNIVERSITY</p>
 </section>
+
+<!-- info about the resources section  -->
+ <section class="about-info">
+  <h3>About Our Video Resources</h3>
+  <p>
+    The Distance Learning Video Resources section is designed to support students in navigating online education
+    effectively. It provides curated videos covering LMS usage, study strategies, productivity tips, and other
+    essential skills for successful remote learning.
+  </p>
+  <ul>
+    <li>Learn to Use Online Learning Platforms</li>
+    <li>Master Time Management</li>
+    <li>Enhance Productivity and Focus</li>
+    <li>Access Expert Tips for Exam Preparation</li>
+  </ul>
+</section>
+
 
 {% endblock %}
