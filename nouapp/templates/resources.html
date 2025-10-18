@@ -1,0 +1,66 @@
+{% extends 'parent.html' %}
+{% load static %}
+{% block body %}
+<style>
+  /* hero section */
+  .hero {
+    background: linear-gradient(rgba(10, 29, 105, 0.7), rgba(10, 29, 105, 0.7)),
+    url("{% static 'images/bookslibrary.jpg' %}") center/cover no-repeat;
+    height: 45vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 3.5rem;
+    align-items: center;
+    color: white;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .hero h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    animation: fadeInDown 1s ease;
+  }
+
+  .hero p {
+    font-size: 1rem;
+    margin-top: 10px;
+    font-weight: 500;
+    animation: fadeInUp 1s ease;
+  }
+
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
+
+<!-- 
+     HERO SECTION
+ -->
+<section class="hero">
+  <h2>From Our Content For Distance Learning</h2>
+  <p>NOU-e-Gyan PORTAL, CONCEPT BY NALANDA OPEN UNIVERSITY</p>
+</section>
+
+{% endblock %}
