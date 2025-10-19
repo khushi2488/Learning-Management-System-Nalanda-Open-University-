@@ -1,12 +1,11 @@
-
-
 <h1 align="center">Learning Management System 📚</h1>
 
 <p align="center">
   <strong>A comprehensive Django-based Learning Management System built for Nalanda Open University to streamline educational workflows.</strong>
   <br />
   <br />
-  .
+  <a href="https://learning-management-system-nalanda-open-l069.onrender.com/"><strong>🌐 Live Demo</strong></a>
+  ·
   <a href="https://github.com/ShailjaVerma18/Learning-Management-System-Nalanda-Open-University-/issues"><strong>🐛 Report a Bug</strong></a>
   ·
   <a href="https://github.com/ShailjaVerma18/Learning-Management-System-Nalanda-Open-University-/issues"><strong>✨ Request a Feature</strong></a>
@@ -17,6 +16,27 @@
   <a href="https://github.com/ShailjaVerma18/Learning-Management-System-Nalanda-Open-University-/blob/main/LICENSE"><img src="https://img.shields.io/github/license/ShailjaVerma18/Learning-Management-System-Nalanda-Open-University-?style=for-the-badge&color=00BFFF" alt="License"></a>
   <a href="https://github.com/ShailjaVerma18/Learning-Management-System-Nalanda-Open-University-/network/members"><img src="https://img.shields.io/github/forks/ShailjaVerma18/Learning-Management-System-Nalanda-Open-University-?style=for-the-badge&logo=github&color=90EE90" alt="Forks"></a>
 </p>
+
+---
+
+
+## 📸 Application Screenshots
+
+<div align="center">
+
+### Home Page
+![Home Page](https://github.com/Adez017/Learning-Management-System-Nalanda-Open-University-/blob/9eb71b41f607b53bd1bef35f64152c84dc747b42/staticfiles/images/home.png)
+
+### Courses Catalog
+![Courses Page](https://github.com/Adez017/Learning-Management-System-Nalanda-Open-University-/blob/9eb71b41f607b53bd1bef35f64152c84dc747b42/staticfiles/images/courses.png)
+
+### About Us
+![About Page](https://github.com/Adez017/Learning-Management-System-Nalanda-Open-University-/blob/9eb71b41f607b53bd1bef35f64152c84dc747b42/staticfiles/images/about.png)
+
+### Contact Us
+![Contact Page](https://github.com/Adez017/Learning-Management-System-Nalanda-Open-University-/blob/9eb71b41f607b53bd1bef35f64152c84dc747b42/staticfiles/images/contact_us.png)
+
+</div>
 
 ---
 
@@ -237,5 +257,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 </div>
 
 [⬆️ Back to Top](#readme)
-
-
