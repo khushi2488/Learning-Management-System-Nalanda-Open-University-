@@ -3,6 +3,12 @@
 {% block body %}
 
 <style>
+
+  :root{
+    --primary-color2: #1e40af;
+    --accent-color: #3b82f6;
+  }
+
   /* hero section */
   .home {
     background-image: linear-gradient(rgba(30, 64, 175, 0.5), rgba(30, 58, 138, 0.6)),
@@ -115,14 +121,14 @@
   }
 
   .courses-info h3 {
-    color: #0a1d69;
+    color: var(--primary-color2);
     font-size: 1.8rem;
     font-weight: 700;
     margin-bottom: 15px;
   }
 
   .courses-info p {
-    color: #0a1d69;
+    color: #000;
     font-size: 1rem;
     margin-bottom: 20px;
     font-weight: 500;
@@ -170,7 +176,7 @@
 }
 
 .tab-btn {
-  background: #0a1d69;
+  background: var(--primary-color2);
   color: white;
   border: none;
   padding: 10px 25px;
@@ -184,7 +190,7 @@
 
 .tab-btn:hover,
 .tab-btn.active {
-  background: #2a73cc;
+  background: var(--accent-color);
   transform: scale(1.05);
 }
 
@@ -200,8 +206,8 @@
 
 .course-dropdown .selected {
   background: white;
-  border: 1px solid #0a1d69;
-  color: #0a1d69;
+  border: 1px solid var(--primary-color2);
+  color: var(--primary-color2);
   padding: 10px 15px;
   border-radius: 20px;
   text-align: center;
@@ -216,7 +222,7 @@
   left: 0;
   width: 100%;
   background: white;
-  color:#0a1d69 !important;
+  color:var(--primary-color2) !important;
   border-radius: 0 0 12px 12px;
   overflow: hidden;
   z-index: 10;
@@ -224,13 +230,13 @@
 
 .course-dropdown .options div {
   padding: 10px 15px;
-  color: #0a1d69;
+  color: var(--primary-color2);
   text-align: center;
   cursor: pointer;
 }
 
 .course-dropdown .options div:hover {
-  background: #1944a3;
+  background: var(--accent-color);
 }
 
 /* COURSE GRID */
@@ -252,7 +258,7 @@
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
   overflow: hidden;
-  color: #0a1d69;
+  color: var(--primary-color2);
   font-family: 'Poppins', sans-serif;
   text-align: center;
   display: flex;
@@ -279,7 +285,7 @@
 
 .course-card h5 {
   margin: 10px 0 5px;
-  color: #2a73cc;
+  color: var(--primary-color2);
   font-weight: 600;
   font-size: 1.1rem;
 }
@@ -287,24 +293,12 @@
 .course-card p {
   font-size: 14px;
   margin: 4px 0;
+  color: #000;
 }
 
-.course-card button {
-  margin: 15px 0 15px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 25px;
-  background-color: #0a1d69;
-  color: white;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
 
-.course-card button:hover {
-  background-color: #2a73cc;
-  transform: scale(1.05);
-}
+
+
 
 hr {
   width: 80px;
@@ -405,7 +399,7 @@ hr {
 <!-- 
      COURSES HEADING
  -->
-<h2 style="text-align:center; font-weight: bold; margin-top: 40px; color:#0a1d69; font-size: 40px;">Our Courses</h2>
+<h2 style="text-align:center; font-weight: bold; margin-top: 40px; color:var(--primary-color2); font-size: 40px;">Our Courses</h2>
 <hr>
 
 <!--
