@@ -1,6 +1,8 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
 
+
+
 # Create your models here.
 
 class StuResponse(models.Model):
