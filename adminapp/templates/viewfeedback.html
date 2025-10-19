@@ -1,36 +1,682 @@
+feedback
 {% extends "adminparent.html" %}
 {% block body %}
-    <div class="row">
-        <h1 style="text-align:center; color: rgb(6,6,106)">Feedback</h1>   
-        <div class="col-sm-12" style="overflow-x:scroll">
-            <table class="table table-bordered text-light">
-                <tr style="color: rgb(6,6,106);">
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Program</th>
-                    <th>Branch</th>
-                    <th>Contact No</th>
-                    <th>Email Address</th>
-                    <th>Subject</th>
-                    <th>Feedback Text</th>
-                    <th>Posted Date</th>
-                </tr>
 
-                {% for f in feed %}
-                <tr style="color: steelblue;">
-                    <td>{{forloop.counter}}</td>
-                    <td>{{f.name}}</td>
-                    <td>{{f.program}}</td>
-                    <td>{{f.branch}}</td>
-                    <td>{{f.contactno}}</td>
-                    <td>{{f.emailaddress}}</td>
-                    <td>{{f.subject}}</td>
-                    <td>{{f.responsetext}}</td>
-                    <td>{{f.responsedate}}</td>
-                </tr>
-                {% endfor %}
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    .feedback-container {
+        padding: 30px;
+        background: #f5f7fa;
+        min-height: 100vh;
+    }
+
+    .header-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        padding: 40px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .header-section::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .header-section h1 {
+        color: white;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .header-section .icon {
+        font-size: 3rem;
+        margin-right: 15px;
+        vertical-align: middle;
+    }
+
+    .header-section p {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.1rem;
+        margin: 0;
+        position: relative;
+        z-index: 1;
+    }
+
+    .table-container {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+
+    .table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .table-header h2 {
+        color: #2d3748;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .search-box {
+        display: flex;
+        align-items: center;
+        background: #f7fafc;
+        border-radius: 10px;
+        padding: 10px 15px;
+        border: 2px solid #e2e8f0;
+        transition: all 0.3s ease;
+        flex: 1;
+        max-width: 350px;
+        min-width: 200px;
+    }
+
+    .search-box:focus-within {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .search-box input {
+        border: none;
+        background: transparent;
+        outline: none;
+        padding: 5px 10px;
+        font-size: 0.95rem;
+        width: 100%;
+    }
+
+    .search-box i {
+        color: #a0aec0;
+        margin-right: 5px;
+    }
+
+    .modern-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .modern-table thead {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .modern-table thead th {
+        color: white;
+        font-weight: 600;
+        padding: 18px 15px;
+        text-align: left;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border: none;
+        white-space: nowrap;
+    }
+
+    .modern-table thead th:first-child {
+        border-top-left-radius: 12px;
+    }
+
+    .modern-table thead th:last-child {
+        border-top-right-radius: 12px;
+    }
+
+    .modern-table tbody tr {
+        transition: all 0.3s ease;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .modern-table tbody tr:hover {
+        background: #f7fafc;
+        transform: scale(1.01);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .modern-table tbody td {
+        padding: 18px 15px;
+        color: #4a5568;
+        font-size: 0.9rem;
+        vertical-align: middle;
+    }
+
+    .modern-table tbody tr:last-child {
+        border-bottom: none;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    .badge-program {
+        background: #e0e7ff;
+        color: #5a67d8;
+    }
+
+    .badge-branch {
+        background: #c6f6d5;
+        color: #276749;
+    }
+
+    .feedback-text {
+        max-width: 300px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: block;
+    }
+
+    .feedback-text:hover {
+        color: #667eea;
+        font-weight: 500;
+    }
+
+    .date-badge {
+        background: #fed7d7;
+        color: #c53030;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 500;
+        white-space: nowrap;
+        display: inline-block;
+    }
+
+    .row-number {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+        flex-shrink: 0;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 60px 20px;
+        color: #a0aec0;
+    }
+
+    .no-data i {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        opacity: 0.3;
+    }
+
+    .no-data h3 {
+        color: #4a5568;
+        margin-bottom: 10px;
+    }
+
+    .scroll-container {
+        overflow-x: auto;
+        margin: 0 -30px;
+        padding: 0 30px;
+    }
+
+    .scroll-container::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .scroll-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    .scroll-container::-webkit-scrollbar-thumb {
+        background: #667eea;
+        border-radius: 10px;
+    }
+
+    .scroll-container::-webkit-scrollbar-thumb:hover {
+        background: #764ba2;
+    }
+
+    /* Card View for Mobile */
+    .card-view {
+        display: none;
+    }
+
+    .feedback-card {
+        background: white;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        border-left: 4px solid #667eea;
+        transition: all 0.3s ease;
+    }
+
+    .feedback-card:hover {
+        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+        transform: translateX(5px);
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 15px;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .card-header .row-number {
+        width: 35px;
+        height: 35px;
+        font-size: 0.9rem;
+    }
+
+    .card-title {
+        flex: 1;
+        min-width: 0;
+    }
+
+    .card-title h3 {
+        color: #2d3748;
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0 0 5px 0;
+        word-wrap: break-word;
+    }
+
+    .card-badges {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+    }
+
+    .card-info {
+        margin-bottom: 12px;
+    }
+
+    .card-info-label {
+        font-size: 0.75rem;
+        color: #a0aec0;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+        font-weight: 600;
+    }
+
+    .card-info-value {
+        color: #4a5568;
+        font-size: 0.9rem;
+        word-wrap: break-word;
+    }
+
+    .card-feedback {
+        background: #f7fafc;
+        padding: 12px;
+        border-radius: 8px;
+        margin-bottom: 12px;
+    }
+
+    .card-feedback .card-info-value {
+        cursor: pointer;
+        transition: color 0.3s ease;
+    }
+
+    .card-feedback .card-info-value:hover {
+        color: #667eea;
+    }
+
+    .card-footer {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 15px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+        .modern-table thead th,
+        .modern-table tbody td {
+            padding: 14px 10px;
+            font-size: 0.85rem;
+        }
+
+        .feedback-text {
+            max-width: 200px;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .feedback-container {
+            padding: 15px;
+        }
+
+        .header-section {
+            padding: 25px 20px;
+            border-radius: 15px;
+        }
+
+        .header-section h1 {
+            font-size: 1.8rem;
+        }
+
+        .header-section .icon {
+            font-size: 2rem;
+            display: block;
+            margin: 0 0 10px 0;
+        }
+
+        .header-section p {
+            font-size: 1rem;
+        }
+
+        .table-container {
+            padding: 20px 15px;
+            border-radius: 15px;
+        }
+
+        .table-header {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .table-header h2 {
+            font-size: 1.3rem;
+        }
+
+        .search-box {
+            max-width: 100%;
+        }
+
+        /* Hide table, show cards on mobile */
+        .scroll-container {
+            display: none;
+        }
+
+        .card-view {
+            display: block;
+        }
+
+        .date-badge {
+            font-size: 0.75rem;
+            padding: 5px 10px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .feedback-container {
+            padding: 10px;
+        }
+
+        .header-section {
+            padding: 20px 15px;
+            border-radius: 12px;
+        }
+
+        .header-section h1 {
+            font-size: 1.5rem;
+        }
+
+        .header-section .icon {
+            font-size: 1.8rem;
+        }
+
+        .header-section p {
+            font-size: 0.9rem;
+        }
+
+        .table-container {
+            padding: 15px 10px;
+        }
+
+        .table-header h2 {
+            font-size: 1.2rem;
+        }
+
+        .feedback-card {
+            padding: 15px;
+        }
+
+        .card-title h3 {
+            font-size: 1rem;
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            padding: 5px 10px;
+        }
+
+        .card-info-value {
+            font-size: 0.85rem;
+        }
+
+        .date-badge {
+            font-size: 0.7rem;
+            padding: 4px 8px;
+        }
+    }
+
+    @media (max-width: 360px) {
+        .header-section h1 {
+            font-size: 1.3rem;
+        }
+
+        .header-section .icon {
+            font-size: 1.5rem;
+        }
+    }
+</style>
+
+<div class="feedback-container">
+    <!-- Header Section -->
+    <div class="header-section">
+        <h1>
+            <span class="icon">💬</span>
+            Feedback Management
+        </h1>
+        <p>View and manage all student feedback across programs and branches</p>
+    </div>
+
+    <!-- Table Container -->
+    <div class="table-container">
+        <div class="table-header">
+            <h2>All Feedback</h2>
+            <div class="search-box">
+                <i class="fa fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search feedback..." onkeyup="searchFeedback()">
+            </div>
+        </div>
+
+        <!-- Desktop Table View -->
+        <div class="scroll-container">
+            {% if feed %}
+            <table class="modern-table" id="feedbackTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Program</th>
+                        <th>Branch</th>
+                        <th>Contact</th>
+                        <th>Email</th>
+                        <th>Subject</th>
+                        <th>Feedback</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for f in feed %}
+                    <tr>
+                        <td>
+                            <span class="row-number">{{ forloop.counter }}</span>
+                        </td>
+                        <td><strong>{{ f.name }}</strong></td>
+                        <td>
+                            <span class="badge badge-program">{{ f.program }}</span>
+                        </td>
+                        <td>
+                            <span class="badge badge-branch">{{ f.branch }}</span>
+                        </td>
+                        <td>{{ f.contactno }}</td>
+                        <td>{{ f.emailaddress }}</td>
+                        <td><strong>{{ f.subject }}</strong></td>
+                        <td>
+                            <span class="feedback-text" title="{{ f.responsetext }}">
+                                {{ f.responsetext }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="date-badge">{{ f.responsedate|date:"M d, Y" }}</span>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
             </table>
-              
+            {% else %}
+            <div class="no-data">
+                <i class="fa fa-inbox"></i>
+                <h3>No Feedback Found</h3>
+                <p>There is no feedback to display at the moment.</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Mobile Card View -->
+        <div class="card-view" id="cardView">
+            {% if feed %}
+                {% for f in feed %}
+                <div class="feedback-card" data-search-content="{{ f.name|lower }} {{ f.program|lower }} {{ f.branch|lower }} {{ f.contactno }} {{ f.emailaddress|lower }} {{ f.subject|lower }} {{ f.responsetext|lower }}">
+                    <div class="card-header">
+                        <span class="row-number">{{ forloop.counter }}</span>
+                        <div class="card-title">
+                            <h3>{{ f.name }}</h3>
+                        </div>
+                    </div>
+                    
+                    <div class="card-badges">
+                        <span class="badge badge-program">{{ f.program }}</span>
+                        <span class="badge badge-branch">{{ f.branch }}</span>
+                    </div>
+                    
+                    <div class="card-info">
+                        <div class="card-info-label">Subject</div>
+                        <div class="card-info-value"><strong>{{ f.subject }}</strong></div>
+                    </div>
+                    
+                    <div class="card-info">
+                        <div class="card-info-label">Contact</div>
+                        <div class="card-info-value">{{ f.contactno }}</div>
+                    </div>
+                    
+                    <div class="card-info">
+                        <div class="card-info-label">Email</div>
+                        <div class="card-info-value">{{ f.emailaddress }}</div>
+                    </div>
+                    
+                    <div class="card-feedback">
+                        <div class="card-info-label">Feedback</div>
+                        <div class="card-info-value" onclick="showFullFeedback('{{ f.responsetext|escapejs }}')">
+                            {{ f.responsetext|truncatewords:20 }}
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <span class="date-badge">{{ f.responsedate|date:"d M Y" }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-data">
+                    <i class="fa fa-inbox"></i>
+                    <h3>No Feedback Found</h3>
+                    <p>There is no feedback to display at the moment.</p>
+                </div>
+            {% endif %}
         </div>
     </div>
+</div>
+
+<script>
+    function searchFeedback() {
+        const input = document.getElementById("searchInput");
+        const filter = input.value.toLowerCase();
+        
+        // Search in table (desktop)
+        const table = document.getElementById("feedbackTable");
+        if (table) {
+            const tr = table.getElementsByTagName("tr");
+            for (let i = 1; i < tr.length; i++) {
+                const row = tr[i];
+                const cells = row.getElementsByTagName("td");
+                let found = false;
+
+                for (let j = 0; j < cells.length; j++) {
+                    const cell = cells[j];
+                    if (cell) {
+                        const textValue = cell.textContent || cell.innerText;
+                        if (textValue.toLowerCase().indexOf(filter) > -1) {
+                            found = true;
+                            break;
+                        }
+                    }
+                }
+
+                row.style.display = found ? "" : "none";
+            }
+        }
+        
+        // Search in cards (mobile)
+        const cards = document.querySelectorAll('.feedback-card');
+        cards.forEach(card => {
+            const searchContent = card.getAttribute('data-search-content') || '';
+            if (searchContent.indexOf(filter) > -1) {
+                card.style.display = "";
+            } else {
+                card.style.display = "none";
+            }
+        });
+    }
+
+    function showFullFeedback(feedback) {
+        alert(feedback);
+    }
+
+    // Add click event to feedback text for full view (desktop)
+    document.addEventListener('DOMContentLoaded', function() {
+        const feedbackTexts = document.querySelectorAll('.feedback-text');
+        feedbackTexts.forEach(text => {
+            text.addEventListener('click', function() {
+                alert(this.getAttribute('title'));
+            });
+        });
+    });
+</script>
+
 {% endblock body %}

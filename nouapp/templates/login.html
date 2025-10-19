@@ -32,26 +32,37 @@
       method="post"
     >
       {% csrf_token %}
-      <div
-        class="div"
-        style="
-          background-color: var(--card-bg);
-          width: 400px;
-          max-width: 90%;
-          box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.6);
-          border-radius: 10px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: flex-start;
-          padding: 30px 20px;
-        "
-      >
-        {% if messages %}
-          {% for message in messages %}
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>{{message}}</strong>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      
+      <div class="form-section">
+        <!-- User ID -->
+        <div>
+          <label class="form-label required">User ID</label>
+          <div class="input-group">
+            <i class="fa fa-user input-icon"></i>
+            <input
+              type="text"
+              name="userid"
+              id="userid"
+              class="form-control"
+              placeholder="Enter your user ID"
+              autocomplete="username"
+            />
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div>
+          <label class="form-label required">Password</label>
+          <div class="input-group">
+            <i class="fa fa-lock input-icon"></i>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              class="form-control"
+              placeholder="Enter your password"
+              autocomplete="current-password"
+            />
           </div>
           {% endfor %}
         {% endif %}
@@ -153,39 +164,70 @@
       </div>
     </form>
   </div>
+
+  <!-- Submit Section -->
+  <div class="submit-section">
+    <button type="submit" class="submit-btn" onclick="validate()">
+      <i class="fa fa-sign-in"></i> Login to Account
+    </button>
+
+    <div class="form-links">
+      <p>
+        <a href="{% url 'nouapp:forgot_password' %}">
+          <i class="fa fa-question-circle"></i> Forgot Password?
+        </a>
+      </p>
+      
+      <div class="divider">
+        <span>OR</span>
+      </div>
+      
+      <p>
+        Don't have an account?
+        <a href="{% url 'nouapp:registration' %}">
+          <i class="fa fa-user-plus"></i> Register here
+        </a>
+      </p>
+    </div>
+  </div>
 </div>
-<!-- End Of Login Form-->
 
-<!-- Responsive styles -->
-<style>
-  /* For tablets and below */
-  @media (max-width: 768px) {
-    .div {
-      width: 90% !important;
-      margin: 20px auto !important;
-      padding: 10px !important;
+<!-- Validation Script -->
+<script>
+  function validate() {
+    var userid = document.getElementById("userid");
+    var password = document.getElementById("password");
+    var usertype = document.getElementById("usertype");
+    
+    if (userid.value == "" || userid.value == null) {
+      alert("Please enter User ID");
+      userid.focus();
+      return false;
     }
-    .div input,
-    .div select,
-    .div button {
-      width: 100% !important;
-      display: block;
+    
+    if (password.value == "" || password.value == null) {
+      alert("Please enter Password");
+      password.focus();
+      return false;
     }
-    .div h1 {
-      text-align: center !important;
+    
+    if (usertype.value == "" || usertype.value == null) {
+      alert("Please select User Type");
+      usertype.focus();
+      return false;
     }
+    
+    document.getElementById("frmlogin").submit();
+    return true;
   }
 
-  /* For very small phones */
-  @media (max-width: 480px) {
-    .div {
-      margin-top: 20px !important;
-      padding: 10px !important;
+  // Add enter key support
+  document.getElementById("frmlogin").addEventListener("keypress", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      validate();
     }
-    .div h1 {
-      font-size: 1.5rem !important;
-    }
-  }
-</style>
+  });
+</script>
 
 {% endblock body %}
