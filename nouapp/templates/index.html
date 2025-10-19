@@ -191,6 +191,73 @@
   .icon-3 { top: 20%; right: 10%; animation-delay: 2s; }
   .icon-4 { bottom: 20%; right: 15%; animation-delay: 1.5s; }
 
+  /* Search Results Dropdown */
+  .search-results-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 15px;
+    margin-top: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: none;
+  }
+
+  .search-results-dropdown.active {
+    display: block;
+  }
+
+  .search-result-item {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .search-result-item:last-child {
+    border-bottom: none;
+  }
+
+  .search-result-item:hover {
+    background: #f8f9fa;
+  }
+
+  .search-result-title {
+    font-weight: 600;
+    color: #060666;
+    margin-bottom: 5px;
+  }
+
+  .search-result-desc {
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  .search-result-category {
+    display: inline-block;
+    padding: 3px 10px;
+    background: #e0e7ff;
+    color: #0056b3;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 5px;
+  }
+
+  .no-results {
+    padding: 30px;
+    text-align: center;
+    color: #999;
+  }
+
+  .search-wrapper-container {
+    position: relative;
+  }
+
   @keyframes fadeInUp {
     from {
       opacity: 0;
@@ -996,17 +1063,24 @@
         </p>
 
         <!-- Search Box -->
-        <div class="search-wrapper">
-          <div class="input-group">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Search courses, materials, or topics..."
-            />
-            <button class="btn btn-primary">
-              <i class="fa fa-search"></i> Search
-            </button>
+        <div class="search-wrapper-container">
+          <div class="search-wrapper">
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                id="searchInput"
+                placeholder="Search courses, materials, or topics..."
+                autocomplete="off"
+              />
+              <button class="btn btn-primary" onclick="performSearch()">
+                <i class="fa fa-search"></i> Search
+              </button>
+            </div>
           </div>
+          
+          <!-- Search Results Dropdown -->
+          <div class="search-results-dropdown" id="searchResults"></div>
         </div>
 
         <!-- Stats Box -->
@@ -1384,6 +1458,103 @@
     
     updateTime();
     setInterval(updateTime, 1000);
+  });
+
+  // Search Functionality
+  const searchData = [
+    { title: 'Login Portal', description: 'Secure access to your personalized learning dashboard', url: "{% url 'nouapp:login' %}", category: 'Service' },
+    { title: 'Student Dashboard', description: 'View your courses, progress, and academic updates', url: "{% url 'studentapp:studenthome' %}", category: 'Service' },
+    { title: 'Learning Materials', description: 'Access comprehensive self-learning study resources', url: "{% url 'studentapp:viewmat' %}", category: 'Resource' },
+    { title: 'e-Books Library', description: 'Browse our extensive digital book collection', url: '#', category: 'Resource' },
+    { title: 'Assessment Tools', description: 'Test your knowledge with interactive assessments', url: '#', category: 'Service' },
+    { title: 'Performance Tracking', description: 'Track your academic achievements and progress', url: "{% url 'studentapp:viewprofile' %}", category: 'Service' },
+    { title: 'Student Feedback', description: 'Share your experience and help us improve', url: "{% url 'studentapp:response' %}", category: 'Service' },
+    { title: 'Course Catalogue', description: 'Explore available courses and programs', url: "{% url 'nouapp:courses' %}", category: 'Course' },
+    { title: 'Distance Learning', description: 'Transform your future with flexible online education', url: '#', category: 'Course' },
+    { title: 'Help & Support', description: '24/7 assistance for all your queries', url: '#', category: 'Support' },
+    { title: 'Contact Us', description: 'Get in touch with our support team', url: "{% url 'nouapp:contactus' %}", category: 'Support' },
+    { title: 'Resources', description: 'Find all important links, study guides, and documents in one place', url: "{% url 'nouapp:resources' %}", category: 'Support' }
+
+    
+  ];
+
+  const searchInput = document.getElementById('searchInput');
+  const searchResults = document.getElementById('searchResults');
+
+  // Search on input
+  searchInput.addEventListener('input', function(e) {
+    const query = e.target.value.toLowerCase().trim();
+    
+    if (query.length === 0) {
+      searchResults.classList.remove('active');
+      return;
+    }
+
+    const filteredResults = searchData.filter(item => 
+      item.title.toLowerCase().includes(query) || 
+      item.description.toLowerCase().includes(query) ||
+      item.category.toLowerCase().includes(query)
+    );
+
+    displaySearchResults(filteredResults);
+  });
+
+  // Search on Enter key
+  searchInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      performSearch();
+    }
+  });
+
+  // Perform search function
+  function performSearch() {
+    const query = searchInput.value.toLowerCase().trim();
+    
+    if (query.length === 0) {
+      return;
+    }
+
+    const filteredResults = searchData.filter(item => 
+      item.title.toLowerCase().includes(query) || 
+      item.description.toLowerCase().includes(query) ||
+      item.category.toLowerCase().includes(query)
+    );
+
+    if (filteredResults.length > 0) {
+      window.location.href = filteredResults[0].url;
+    } else {
+      displaySearchResults([]);
+    }
+  }
+
+  // Display search results
+  function displaySearchResults(results) {
+    if (results.length === 0) {
+      searchResults.innerHTML = '<div class="no-results">No results found. Try different keywords.</div>';
+      searchResults.classList.add('active');
+      return;
+    }
+
+    let html = '';
+    results.forEach(result => {
+      html += `
+        <div class="search-result-item" onclick="window.location.href='${result.url}'">
+          <div class="search-result-title">${result.title}</div>
+          <div class="search-result-desc">${result.description}</div>
+          <span class="search-result-category">${result.category}</span>
+        </div>
+      `;
+    });
+
+    searchResults.innerHTML = html;
+    searchResults.classList.add('active');
+  }
+
+  // Close search results when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.search-wrapper-container')) {
+      searchResults.classList.remove('active');
+    }
   });
 
   // Testimonial Slider
