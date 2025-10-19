@@ -2,6 +2,12 @@
 {% load static %}
 {% block body %}
 <!-- Start Of Login Form-->
+ <style>
+  :root{
+    --primary-color2: #1e40af;
+    --accent-color: #3b82f6;
+  }
+ </style>
 <div class="row mt-2">
   <div class="col-12 d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 140px);">
     <script>
@@ -58,7 +64,7 @@
           text-align: center;
           width: 100%;
         ">
-          <b>LOG IN</b>
+          <b style="color: var(--primary-color2);">LOG IN</b>
         </h1>
         
         <hr style="width: 100%; border-color: var(--primary-color); opacity: 0.3; margin-bottom: 20px;" />
@@ -109,7 +115,7 @@
             margin-bottom: 15px;
             border: none;
             text-align: center;
-            color: var(--primary-color);
+            color: var(--primary-color2);
             padding: 6px 10px;
             background-color: var(--card-bg);
           "
@@ -126,10 +132,10 @@
             width: 100%; 
             height: 40px; 
             margin-bottom: 15px;
-            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            background: var(--primary-color2);
             border: none;
           "
-        >
+         onmouseover="this.style.backgroundColor='#1e40af'">
           Login
         </button>
        <p style="font-size: 14px; text-align: center; margin: 10px 0; color: var(--card-text);">
