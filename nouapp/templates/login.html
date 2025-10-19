@@ -1,491 +1,36 @@
 {% extends 'parent.html' %}
 {% load static %}
 {% block body %}
-<style>
-  :root {
-    --primary-color: #1e40af;
+<!-- Start Of Login Form-->
+ <style>
+  :root{
+    --primary-color2: #1e40af;
     --accent-color: #3b82f6;
-    --card-bg: #ffffff;
-    --card-text: #1e293b;
-    --success-green: #10b981;
-    --danger-red: #ef4444;
-    --light-bg: #f8fafc;
-    --border-color: #e2e8f0;
   }
-
-  * {
-    box-sizing: border-box;
-  }
-
-  /* Hero Section */
-  .home {
-    background-image: linear-gradient(rgba(30, 64, 175, 0.6), rgba(30, 58, 138, 0.6)), url(../static/images/bookslibrary.jpg);
-    width: 100%;
-    min-height: 37vh;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    text-align: center;
-    font-family: 'Poppins', sans-serif;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .home h3 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin: 0;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
-    animation: fadeInDown 1s ease-out;
-  }
-
-  .home p {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-top: 0.5rem;
-    text-shadow: 1px 1px 4px rgba(0,0,0,0.3);
-    animation: fadeInUp 1s ease-out 0.3s both;
-  }
-
-  @keyframes fadeInDown { from {opacity:0; transform:translateY(-20px);} to {opacity:1; transform:translateY(0);} }
-  @keyframes fadeInUp { from {opacity:0; transform:translateY(20px);} to {opacity:1; transform:translateY(0);} }
-
-  .hero-content {
-    position: relative;
-    z-index: 2;
-    text-align: center;
-    color: white;
-    padding: 1.5rem;
-    max-width: 1000px;
-    width: 100%;
-  }
-  
-  .hero-content h3 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin: 0 0 1.5rem 0;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-    animation: fadeInDown 1s ease-out;
-    line-height: 1.4;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-  }
-  
-  .hero-icon {
-    font-size: 3rem;
-    display: inline-block;
-  }
-
-  .hero-text {
-    display: inline-block;
-    flex: 1;
-    min-width: 0;
-  }
-
-  /* Login Form Container */
-  .login-container {
-    background: var(--card-bg);
-    color: var(--card-text);
-    margin: 3rem auto 5rem auto;
-    border-radius: 24px;
-    box-shadow: 0 10px 40px rgba(30,64,175,0.12);
-    padding: 0;
-    max-width: 500px;
-    font-family: 'Poppins', sans-serif;
-    overflow: hidden;
-    border: 1px solid var(--border-color);
-  }
-
-  /* Form Header */
-  .form-header {
-    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-    padding: 2rem;
-    text-align: center;
-    color: white;
-  }
-
-  .form-heading {
-    font-weight: 700;
-    margin: 0;
-    font-size: 1.85rem;
-    letter-spacing: 0.5px;
-  }
-
-  .form-subheading {
-    margin: 0.5rem 0 0 0;
-    font-size: 0.95rem;
-    opacity: 0.95;
-    font-weight: 400;
-  }
-
-  /* Form Body */
-  .form-body {
-    padding: 2.5rem;
-    background: var(--light-bg);
-  }
-
-  .form-section {
-    background: white;
-    padding: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    border: 1px solid var(--border-color);
-  }
-
-  /* Form Inputs */
-  .form-control, .form-select {
-    border: 2px solid var(--border-color);
-    border-radius: 10px;
-    padding: 0.75rem 1rem;
-    transition: all 0.3s ease;
-    width: 100%;
-    font-size: 0.95rem;
-    background: white;
-    margin-bottom: 1.25rem;
-  }
-
-  .form-control:focus, .form-select:focus {
-    border-color: var(--accent-color);
-    box-shadow: 0 0 0 4px rgba(59,130,246,0.08);
-    outline: none;
-    background: #fff;
-  }
-
-  .form-label {
-    font-weight: 500;
-    color: var(--card-text);
-    margin-bottom: 0.5rem;
-    font-size: 0.9rem;
-    display: block;
-  }
-
-  .required::after {
-    content: " *";
-    color: var(--danger-red);
-    font-weight: 700;
-  }
-
-  /* Input Icons */
-  .input-group {
-    position: relative;
-    margin-bottom: 1.25rem;
-  }
-
-  .input-icon {
-    position: absolute;
-    left: 1rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #94a3b8;
-    font-size: 1.1rem;
-    pointer-events: none;
-  }
-
-  .input-group input,
-  .input-group select {
-    padding-left: 2.75rem;
-    margin-bottom: 0;
-  }
-
-  /* Submit Button */
-  .submit-section {
-    padding: 2rem 2.5rem;
-    background: white;
-  }
-
-  .submit-btn {
-    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-    border: none;
-    border-radius: 12px;
-    padding: 1rem 2.5rem;
-    font-weight: 600;
-    color: white;
-    width: 100%;
-    transition: all 0.3s ease;
-    font-size: 1rem;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    box-shadow: 0 4px 15px rgba(30,64,175,0.3);
-    cursor: pointer;
-  }
-
-  .submit-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(30,64,175,0.4);
-  }
-
-  .submit-btn:active {
-    transform: translateY(0);
-  }
-
-  /* Links */
-  .form-links {
-    text-align: center;
-    margin-top: 1.5rem;
-  }
-
-  .form-links p {
-    margin: 0.75rem 0;
-    font-size: 0.9rem;
-    color: var(--card-text);
-  }
-
-  .form-links a {
-    color: var(--accent-color);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.3s ease;
-  }
-
-  .form-links a:hover {
-    color: var(--primary-color);
-    text-decoration: underline;
-  }
-
-  /* Alerts */
-  .alert-success {
-    border-radius: 12px;
-    padding: 1rem 1.5rem;
-    font-weight: 500;
-    border: none;
-    background: var(--success-green);
-    color: white;
-    margin-bottom: 1.5rem;
-  }
-
-  /* Divider */
-  .divider {
-    text-align: center;
-    margin: 1.5rem 0;
-    position: relative;
-  }
-
-  .divider::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 0;
-    right: 0;
-    height: 1px;
-    background: var(--border-color);
-  }
-
-  .divider span {
-    background: white;
-    padding: 0 1rem;
-    position: relative;
-    color: #64748b;
-    font-size: 0.85rem;
-    font-weight: 500;
-  }
-
-  /* Responsive Design */
-  @media (max-width: 1024px) {
-    .login-container {
-      max-width: 90%;
-      margin: 2.5rem auto 4rem auto;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .home {
-      min-height: 30vh;
-    }
-    
-    .home h3 { 
-      font-size: 1.5rem;
-      gap: 0.5rem;
-    }
-    
-    .home p { 
-      font-size: 0.85rem;
-    }
-    
-    .hero-content {
-      padding: 1rem;
-    }
-    
-    .hero-icon {
-      font-size: 2rem;
-    }
-    
-    .login-container { 
-      margin: 1.5rem 1rem 3rem 1rem;
-      border-radius: 16px;
-    }
-    
-    .form-header {
-      padding: 1.5rem 1rem;
-    }
-    
-    .form-heading { 
-      font-size: 1.4rem;
-    }
-    
-    .form-subheading {
-      font-size: 0.85rem;
-    }
-    
-    .form-body { 
-      padding: 1.25rem;
-    }
-    
-    .form-section { 
-      padding: 1.25rem;
-      border-radius: 12px;
-    }
-    
-    .submit-section { 
-      padding: 1.25rem;
-    }
-    
-    .submit-btn {
-      padding: 0.85rem 2rem;
-      font-size: 0.95rem;
-    }
-    
-    .form-control, .form-select {
-      padding: 0.7rem 0.9rem 0.7rem 2.5rem;
-      font-size: 0.9rem;
-      margin-bottom: 1rem;
-    }
-
-    .input-group {
-      margin-bottom: 1rem;
-    }
-
-    .input-icon {
-      font-size: 1rem;
-      left: 0.9rem;
-    }
-    
-    .form-label {
-      font-size: 0.85rem;
-    }
-
-    .form-links p {
-      font-size: 0.85rem;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .home h3 { 
-      font-size: 1.25rem;
-      flex-direction: column;
-      gap: 0.3rem;
-    }
-    
-    .hero-icon {
-      font-size: 1.5rem;
-    }
-    
-    .home p { 
-      font-size: 0.75rem;
-    }
-    
-    .login-container {
-      margin: 1rem 0.5rem 2rem 0.5rem;
-    }
-    
-    .form-header {
-      padding: 1.25rem 0.75rem;
-    }
-    
-    .form-heading {
-      font-size: 1.2rem;
-    }
-    
-    .form-subheading {
-      font-size: 0.8rem;
-    }
-    
-    .form-body {
-      padding: 1rem;
-    }
-    
-    .form-section {
-      padding: 1rem;
-      border-radius: 10px;
-    }
-    
-    .submit-section {
-      padding: 1rem;
-    }
-    
-    .submit-btn {
-      padding: 0.75rem 1.5rem;
-      font-size: 0.9rem;
-    }
-    
-    .form-control, .form-select {
-      padding: 0.65rem 0.85rem 0.65rem 2.4rem;
-      font-size: 0.85rem;
-      border-radius: 8px;
-    }
-
-    .input-icon {
-      font-size: 0.95rem;
-      left: 0.85rem;
-    }
-
-    .form-links p {
-      font-size: 0.8rem;
-    }
-  }
-
-  @media (max-width: 360px) {
-    .form-heading {
-      font-size: 1.1rem;
-      letter-spacing: 0.3px;
-    }
-    
-    .form-body {
-      padding: 0.75rem;
-    }
-    
-    .form-section {
-      padding: 0.85rem;
-    }
-  }
-</style>
-
-<!-- Hero Section -->
-<section class="home">
-    <div class="hero-content">
-      <h3>
-        <span class="hero-icon">📚</span>
-        <span class="hero-text">From Our Content For Distance Learning</span>
-      </h3>
-      <p>NOU-e-Gyan PORTAL | NALANDA OPEN UNIVERSITY</p>
-    </div>
-</section>
-
-<!-- Login Form -->
-<div class="login-container">
-  <!-- Form Header -->
-  <div class="form-header">
-    <h2 class="form-heading">LOG IN</h2>
-    <p class="form-subheading">Enter your credentials to access your account</p>
-  </div>
-
-  <!-- Form Body -->
-  <div class="form-body">
-    {% if messages %}
-      {% for message in messages %}
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-          {{ message }}
-          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-      {% endfor %}
-    {% endif %}
-
-    <form action="{% url 'nouapp:login' %}" id="frmlogin" method="post" onsubmit="event.preventDefault();validate();">
+ </style>
+<div class="row mt-2">
+  <div class="col-12 d-flex justify-content-center align-items-center" style="min-height: calc(100vh - 140px);">
+    <script>
+      function validate() {
+        var userid = document.getElementById("userid");
+        var password = document.getElementById("password");
+        if (userid.value == "" || userid.value == null) {
+          alert("Please enter userid");
+          userid.focus();
+        } else if (password.value == "" || password.value == null) {
+          alert("Please enter password");
+          password.focus();
+        } else {
+          document.getElementById("frmlogin").submit();
+        }
+      }
+    </script>
+    <form
+      action="{% url 'nouapp:login' %}"
+      id="frmlogin"
+      onsubmit="event.preventDefault();validate();"
+      method="post"
+    >
       {% csrf_token %}
       
       <div class="form-section">
@@ -519,20 +64,103 @@
               autocomplete="current-password"
             />
           </div>
-        </div>
+          {% endfor %}
+        {% endif %}
+        
+        <h1 class="form-heading" style="
+          color: var(--primary-color) !important;
+          font-family: Poppins, sans-serif;
+          font-weight: bold;
+          margin-bottom: 20px;
+          text-align: center;
+          width: 100%;
+        ">
+          <b style="color: var(--primary-color2);">LOG IN</b>
+        </h1>
+        
+        <hr style="width: 100%; border-color: var(--primary-color); opacity: 0.3; margin-bottom: 20px;" />
 
-        <!-- User Type -->
-        <div>
-          <label class="form-label required">User Type</label>
-          <div class="input-group">
-            <i class="fa fa-users input-icon"></i>
-            <select name="usertype" id="usertype" class="form-select">
-              <option value="">--Select User Type--</option>
-              <option value="student">Student</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
-        </div>
+        <input
+          type="text"
+          name="userid"
+          placeholder="Enter User Id"
+          id="userid"
+          style="
+            box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            height: 40px;
+            width: 100%;
+            margin-bottom: 15px;
+            border: none;
+            padding: 6px 10px;
+            background-color: var(--card-bg);
+            color: var(--card-text);
+          "
+        />
+
+        <input
+          type="password"
+          name="password"
+          placeholder="Enter Password"
+          id="password"
+          style="
+            box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            height: 40px;
+            width: 100%;
+            margin-bottom: 15px;
+            border: none;
+            padding: 6px 10px;
+            background-color: var(--card-bg);
+            color: var(--card-text);
+          "
+        />
+
+        <select
+          name="usertype"
+          style="
+            box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.2);
+            border-radius: 5px;
+            height: 40px;
+            width: 100%;
+            margin-bottom: 15px;
+            border: none;
+            text-align: center;
+            color: var(--primary-color2);
+            padding: 6px 10px;
+            background-color: var(--card-bg);
+          "
+        >
+          <option selected>--Select User Type--</option>
+          <option value="student">Student</option>
+          <option value="admin">Admin</option>
+        </select>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+          style="
+            width: 100%; 
+            height: 40px; 
+            margin-bottom: 15px;
+            background: var(--primary-color2);
+            border: none;
+          "
+         onmouseover="this.style.backgroundColor='#1e40af'">
+          Login
+        </button>
+       <p style="font-size: 14px; text-align: center; margin: 10px 0; color: var(--card-text);">
+  <a href="{% url 'nouapp:forgot_password' %}" style="color: var(--accent-color);">
+    <u>Forgot Password?</u>
+  </a>
+  </p>
+
+        <p style="font-size: 14px; text-align: center; margin: 0; color: var(--card-text);">
+          Don't have an account?
+          <a href="{% url 'nouapp:registration' %}" style="color: var(--accent-color);">
+            <u>Registration here</u>
+          </a>
+        </p>
       </div>
     </form>
   </div>

@@ -6,6 +6,11 @@
     width: 100%;
   }
 
+  :root{
+    --primary-color2: #0a1d69;
+    --accent-color: #3b82f6;
+  }
+
   /* Hero Section */
   .home {
     background-image: linear-gradient(rgba(30, 64, 175, 0.5), rgba(30, 58, 138, 0.6)),
@@ -174,7 +179,7 @@
   }
 
   .service-card h3 {
-    color: var(--primary-color);
+    color: var(--primary-color2);
     font-weight: 700;
     margin-top: 1rem;
     font-size: 1.1rem;
@@ -203,7 +208,7 @@
   }
 
   .service-card a {
-    background-color: var(--primary-color);
+    background-color: var(--primary-color2);
     color: white;
     border: none;
     border-radius: 25px;
@@ -217,7 +222,7 @@
 
   /* button changing color  */
   .service-card a:hover {
-    background-color: #0b2db0;
+    background-color: var(--accent-color);
   }
 </style>
 
@@ -237,7 +242,7 @@
 <!-- Services Section -->
 <section class="service-section">
   <div class="container">
-    <h2 style="text-align:center; font-weight: bold; margin-top: 40px; color:#0a1d69; font-size: 36px;">Services</h2>
+    <h2 style="text-align:center; font-weight: bold; margin-top: 40px; color:var(--primary-color2); font-size: 36px;">Services</h2>
     <hr>
 
     <div class="services-grid">

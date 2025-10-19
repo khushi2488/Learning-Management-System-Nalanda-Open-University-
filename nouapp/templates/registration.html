@@ -3,7 +3,7 @@
 {% block body %}
 <style>
   :root {
-    --primary-color: #1e40af;
+    --primary-color2: #1e40af;
     --accent-color: #3b82f6;
     --card-bg: #ffffff;
     --card-text: #1e293b;
@@ -11,6 +11,8 @@
     --danger-red: #ef4444;
     --light-bg: #f8fafc;
     --border-color: #e2e8f0;
+    --primary-blue: #1e40af;
+     --dark-blue: #1e3a8a;
   }
 
   /* Hero Section */
@@ -95,7 +97,7 @@
 
   /* Form Header */
   .form-header {
-    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--dark-blue) 100%);
     padding: 2rem;
     text-align: center;
     color: white;
@@ -133,7 +135,7 @@
   .section-title {
     font-size: 1.1rem;
     font-weight: 600;
-    color: var(--primary-color);
+    color: var(--primary-color2);
     margin-bottom: 1.5rem;
     padding-bottom: 0.75rem;
     border-bottom: 2px solid var(--accent-color);
@@ -238,7 +240,7 @@
   }
 
   .submit-btn {
-    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    background: linear-gradient(135deg, var(--primary-color2), var(--accent-color));
     border: none;
     border-radius: 12px;
     padding: 1rem 2.5rem;
