@@ -1,5 +1,5 @@
 from django import forms
-from .models import Material, MaterialCategory, Assignment, Course
+from .models import Material, MaterialCategory
 
 class MaterialForm(forms.ModelForm):
     class Meta:
@@ -57,41 +57,5 @@ class MaterialCategoryForm(forms.ModelForm):
                 'class': 'form-control',
                 'type': 'color',
                 'value': '#007bff'
-            }),
-        }
-
-class AssignmentForm(forms.ModelForm):
-    due_date = forms.DateTimeField(
-        widget=forms.DateTimeInput(attrs={
-            'class': 'form-control',
-            'type': 'datetime-local'
-        }),
-        input_formats=['%Y-%m-%dT%H:%M']
-    )
-
-    class Meta:
-        model = Assignment
-        fields = ['title', 'description', 'course', 'due_date', 'total_marks', 'file']
-        widgets = {
-            'title': forms.TextInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Enter assignment title'
-            }),
-            'description': forms.Textarea(attrs={
-                'class': 'form-control',
-                'rows': 4,
-                'placeholder': 'Enter assignment description'
-            }),
-            'course': forms.Select(attrs={
-                'class': 'form-control'
-            }),
-            'total_marks': forms.NumberInput(attrs={
-                'class': 'form-control',
-                'min': 1,
-                'placeholder': 'Total marks'
-            }),
-            'file': forms.FileInput(attrs={
-                'class': 'form-control',
-                'accept': '.pdf,.doc,.docx,.ppt,.pptx,.txt,.zip,.rar'
             }),
         }

@@ -7,6 +7,8 @@ from django.core.mail import send_mail
 from django.conf import settings
 from . import smssender
 from adminapp.models import News
+from django.db.models import Q
+from django.core.paginator import Paginator
 
 
 from django.http import JsonResponse
@@ -218,6 +220,81 @@ def reset_password(request, token):
             return render(request, 'reset_password.html', {'token': token})
 
     return render(request, "reset_password.html", {"token": token})
+# def search_view(request):
+#     query = request.GET.get('q', '').strip()
+#     results = []
+#     message = ''
+
+#     if query:
+#         # Check if query is a number for rollno search
+#         if query.isdigit():
+#             results = Student.objects.filter(
+#                 Q(rollno=query) |
+#                 Q(name__icontains=query) |
+#                 Q(program__icontains=query) |
+#                 Q(branch__icontains=query) |
+#                 Q(contactno__icontains=query)
+#             ).distinct()
+#         else:
+#             results = Student.objects.filter(
+#                 Q(name__icontains=query) |
+#                 Q(program__icontains=query) |
+#                 Q(branch__icontains=query) |
+#                 Q(contactno__icontains=query)
+#             ).distinct()
+
+#         if not results.exists():
+#             message = f"No results found for '{query}'."
+#     else:
+#         message = "Please enter a search term."
+
+#     return render(request, 'search_results.html', {
+#         'query': query,
+#         'results': results,
+#         'message': message
+#     })
+
+def search_view(request):
+    query = request.GET.get('q', '').strip()
+    results = []
+    message = ''
+
+    if query:
+        if query.isdigit():
+            results = Student.objects.filter(
+                Q(rollno=query) |
+                Q(name__icontains=query) |
+                Q(program__icontains=query) |
+                Q(branch__icontains=query) |
+                Q(contactno__icontains=query)
+            ).distinct()
+        else:
+            results = Student.objects.filter(
+                Q(name__icontains=query) |
+                Q(program__icontains=query) |
+                Q(branch__icontains=query) |
+                Q(contactno__icontains=query)
+            ).distinct()
+
+        if not results.exists():
+            message = f"No results found for '{query}'."
+    else:
+        message = "Please enter a search term."
+
+    # Debug print
+    print("Query:", query)
+    print("Results:", results)
+
+    # return render(request, 'search_results.html', {
+    #     'query': query,
+    #     'results': results,
+    #     'message': message
+    # })
+    return render(request, 'search_results.html', {
+        'query': query,
+        'results': results,
+        'message': message
+    })
 
 
 # ---------------------------
@@ -279,3 +356,8 @@ def ensure_dropdown_data():
 
 def custom_404_view(request, exception):
     return render(request, "404.html", status=404)
+
+# for resources file 
+def resources(request):
+    ns = News.objects.all()  # if you want to show news as in other pages
+    return render(request, "resources.html", locals())

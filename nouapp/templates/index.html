@@ -5,121 +5,267 @@
 <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
 <style>
-  /*Home*/
-  /* .home {
-    background-image: url(../static/images/bg4.jpg);
-    width: 100%;
-    height: 85vh;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-  } */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-  .hero {
-    background: url("../images/bg4.jpg") no-repeat center center;
-    background-size: cover;
-    min-height: 80vh;
+  /*Simple Live Time Display - Next to Email*/
+  .top-contact-bar {
     display: flex;
     align-items: center;
+    gap: 20px;
+  }
+
+  .live-time-simple {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: 500;
+    font-family: 'Courier New', monospace;
+  }
+
+  .live-time-simple .clock-icon {
+    font-size: 16px;
+  }
+
+  .live-time-simple #liveTime {
+    color: #ffd700;
+    font-weight: 600;
+    letter-spacing: 1px;
+  }
+
+  /*Home - Hero Section*/
+  .hero {
+    background: linear-gradient(135deg, #060666 0%, #0056b3 50%, #2c97c1 100%);
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.3;
+  }
+
+  .hero .container {
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero .row {
+    align-items: flex-end !important;
   }
 
   .hero h1 {
-    font-size: 2.5rem;
-    color: #1a1a1a;
+    font-size: 3rem;
+    color: #ffffff;
+    font-weight: 700;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    animation: fadeInUp 1s ease;
+  }
+
+  .hero h1 span {
+    color: #ffd700;
+    display: block;
+    font-size: 3.5rem;
   }
 
   .hero p {
-    font-size: 1.1rem;
-    color: #333;
+    font-size: 1.2rem;
+    color: #e0e0e0;
+    margin-bottom: 2rem;
+    animation: fadeInUp 1.2s ease;
+  }
+
+  .hero .search-wrapper {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 0.5rem;
+    border-radius: 50px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    max-width: 500px;
+    animation: fadeInUp 1.4s ease;
+  }
+
+  .hero .search-wrapper input {
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 50px;
+    font-size: 1rem;
+  }
+
+  .hero .search-wrapper input:focus {
+    outline: none;
+    box-shadow: none;
   }
 
   .hero .btn {
-    background-color: #007bff;
+    background: linear-gradient(135deg, #0056b3, #060666);
     border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    transition: all 0.3s ease;
   }
 
   .hero .btn:hover {
-    background-color: #0056b3;
+    background: linear-gradient(135deg, #060666, #0056b3);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 86, 179, 0.4);
+  }
+
+  .hero .hero-image-wrapper {
+    position: relative;
+    animation: fadeInRight 1.5s ease;
+    max-width: 450px;
+    margin: 0 auto;
   }
 
   .hero img {
-    transition: transform 0.4s ease, box-shadow 0.4s ease, border 0.4s ease;
-    border-radius: 10px;
-    border: 3px solid transparent;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    object-position: center;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    border-radius: 20px;
+    border: 5px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    margin-top: auto;
   }
 
   .hero img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 25px rgba(0, 86, 179, 0.6);
-    /* blue glow */
-    border: 3px solid #0056b3;
-    /* theme blue border */
+    transform: scale(1.05) rotate(2deg);
+    box-shadow: 0 25px 70px rgba(0, 86, 179, 0.6);
   }
 
-  /*Home end*/
-  /*headline*/
-  /*aboutsection*/
-  /* .about-section .row h3 {
-    color: rgb(6, 6, 106);
-    font-family: poppins, sans-serif;
-    font-weight: bold;
-    padding-left: 100px;
+  .hero .stats-box {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 1.5rem;
+    border-radius: 15px;
+    margin-top: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: fadeInUp 1.6s ease;
   }
 
-  .about-section .row .col-sm-7 {
-    padding-left: 75px;
-    padding-top: 25px;
+  .hero .stat-item {
+    text-align: center;
+    color: white;
   }
 
-  .about-section .row .col-sm-5 {
-    padding-left: 80px;
-    padding-top: 60px;
-    padding-bottom: 25px;
-    width: 30%;
-  } */
+  .hero .stat-item h3 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffd700;
+    margin-bottom: 0.5rem;
+  }
 
-  /* @media (max-width: 600px) { */
-  /* .about-section .row h3 {
-      text-align: center;
-      padding-left: 0px;
-      padding-top: 0px;
-      align-content: center;
-      justify-content: center;
-      padding-bottom: 25px;
-      padding-right: 0px;
-    }
+  .hero .stat-item p {
+    font-size: 0.9rem;
+    color: #e0e0e0;
+    margin: 0;
+  }
 
-    .about-section .row .col-sm-7 {
-      padding-top: 0px;
-      padding-left: 0px;
-      text-align: center;
-      align-content: center;
-      font-size: 16px;
-    }
+  .floating-icons {
+    position: absolute;
+    font-size: 3rem;
+    opacity: 0.1;
+    animation: float 6s ease-in-out infinite;
+  }
 
-    .about-section .row .col-sm-5 {
-      padding-left: 0px;
-      padding-top: 0px;
-      align-items: center;
-      padding-right: 0px;
-      width: 100%;
-    }
+  .icon-1 { top: 10%; left: 5%; animation-delay: 0s; }
+  .icon-2 { top: 60%; left: 10%; animation-delay: 1s; }
+  .icon-3 { top: 20%; right: 10%; animation-delay: 2s; }
+  .icon-4 { bottom: 20%; right: 15%; animation-delay: 1.5s; }
 
-    .about-section .row .col-sm-5 img {
-      width: 100%;
-    } */
-  /* } */
+  /* Search Results Dropdown */
+  .search-results-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: white;
+    border-radius: 15px;
+    margin-top: 10px;
+    max-height: 400px;
+    overflow-y: auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    display: none;
+  }
 
-  /* Animation Keyframes */
-  @keyframes fadeInLeft {
+  .search-results-dropdown.active {
+    display: block;
+  }
+
+  .search-result-item {
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f0f0;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .search-result-item:last-child {
+    border-bottom: none;
+  }
+
+  .search-result-item:hover {
+    background: #f8f9fa;
+  }
+
+  .search-result-title {
+    font-weight: 600;
+    color: #060666;
+    margin-bottom: 5px;
+  }
+
+  .search-result-desc {
+    font-size: 0.9rem;
+    color: #666;
+  }
+
+  .search-result-category {
+    display: inline-block;
+    padding: 3px 10px;
+    background: #e0e7ff;
+    color: #0056b3;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-top: 5px;
+  }
+
+  .no-results {
+    padding: 30px;
+    text-align: center;
+    color: #999;
+  }
+
+  .search-wrapper-container {
+    position: relative;
+  }
+
+  @keyframes fadeInUp {
     from {
       opacity: 0;
-      transform: translateX(-50px);
+      transform: translateY(30px);
     }
-
     to {
       opacity: 1;
-      transform: translateX(0);
+      transform: translateY(0);
     }
   }
 
@@ -128,882 +274,1328 @@
       opacity: 0;
       transform: translateX(50px);
     }
-
     to {
       opacity: 1;
       transform: translateX(0);
     }
   }
 
-  /* About Section */
-  .about-section {
-    padding: 60px 0;
+  @keyframes fadeInLeft {
+    from {
+      opacity: 0;
+      transform: translateX(-50px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 
-  .about-title {
-    font-size: 25px;
-    font-weight: bold;
-    margin-left: 45px;
-    color: rgb(6, 6, 106) !important;
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+  }
+
+  /* Headline Marquee */
+  .headline-section {
+    background: linear-gradient(135deg, #060666, #0056b3);
+    padding: 12px 0;
+    margin: 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .headline-section marquee p {
+    color: #ffffff;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0;
+    letter-spacing: 0.5px;
+  }
+
+  /* About Section - Modern Design */
+  .about-section {
+    padding: 80px 0;
+    background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-section::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(0, 86, 179, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+  }
+
+  .section-header h2 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #060666;
     margin-bottom: 15px;
     position: relative;
     display: inline-block;
-    animation: fadeInLeft 1s ease forwards;
   }
 
-  @media screen and (max-width: 991px) {
-    .about-title {
-      font-size: 22px;
-      margin: 0 auto;
-      text-align: center !important;
-      display: block;
-      padding-bottom: 15px;
-    }
-
-    .about-text {
-      font-size: 16px;
-      line-height: 1.6;
-      /* text-align: center !important; center paragraphs */
-      margin: 0 auto !important;
-      /* center block */
-      color: rgb(6, 6, 106);
-      margin-bottom: 15px;
-      animation: fadeInLeft 1.2s ease forwards;
-    }
-  }
-
-  /* Hover underline animation */
-  .about-title::after {
+  .section-header h2::after {
     content: "";
     position: absolute;
-    left: 0;
-    bottom: -5px;
-    width: 0;
-    height: 3px;
-    background: #0056b3;
-    /* theme blue */
-    transition: width 0.4s ease;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, #0056b3, #2c97c1);
+    border-radius: 2px;
   }
 
-  .about-title:hover::after {
-    width: 100%;
+  .section-header p {
+    font-size: 1.1rem;
+    color: #666;
+    max-width: 700px;
+    margin: 20px auto 0;
+    line-height: 1.8;
   }
 
-  .about-text {
-    font-size: 16px;
-    line-height: 1.6;
-    color: rgb(6, 6, 106);
-    margin-bottom: 15px;
-    animation: fadeInLeft 1.2s ease forwards;
-  }
-
-  .about-img {
-    border-radius: 10px;
-    opacity: 0;
-    margin-top: 38px !important;
-    /* height: auto; */
-    width: 85%;
-    animation: fadeInRight 1.2s ease forwards;
-    animation-delay: 0.3s;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .about-img:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 8px 20px rgba(0, 86, 179, 0.3);
-  }
-
-  /*gallery*/
-  .gallery .row h3 {
-    color: rgb(6, 6, 106);
-    font-family: poppins, sans-serif;
-    font-weight: bold;
-    padding-left: 100px;
-  }
-
-  .gallery .row .col-sm-3 {
-    padding-left: 40px;
-    margin-top: 10px;
-  }
-
-  .gallery .row .col-sm-3 .card {
-    width: 16rem;
-    margin-left: 20px;
-    border-color: green;
-    border-radius: 25px;
-  }
-
-  .custom-card {
-    margin-left: 10px;
-    width: 16rem;
-    /* border-radius: 10px; */
-    /* border: 1px solid black; */
-    border: 1px solid black !important;
-  }
-
-  .custom-card .card-body {
-    background-color: rgb(6, 6, 106);
-    color: white;
-    font-weight: bold;
-    font-family: open sans, sans-serif;
-    text-align: center;
-    border-radius: 20px;
-  }
-
-  .gallery .row .col-sm-3 .card-body {
-    background-color: rgb(6, 6, 106);
-    color: white;
-    font-weight: bold;
-    font-family: open sans, sans-serif;
-    text-align: center;
-  }
-
-  .gallery .card {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .gallery .card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  }
-
-  @media (max-width: 800px) {
-    .gallery .row h3 {
-      padding-left: 0px;
-      text-align: center;
-      align-items: center;
-      padding-top: 0px;
-      padding-bottom: 0px;
-      padding-right: 0px;
-    }
-
-    .gallery .row .col-sm-3 {
-      padding-left: 0px;
-      margin-top: 10px;
-      padding-bottom: 0px;
-      padding-right: 0px;
-      align-content: center;
-    }
-
-    .gallery .row .col-sm-3 .card {
-      width: auto;
-      margin-left: 0px;
-    }
-  }
-
-  /*administrative setup*/
-  .team .row h3 {
-    color: rgb(6, 6, 106);
-    font-family: poppins, sans-serif;
-    font-weight: bold;
-    padding-left: 100px;
-  }
-
-  .team .row .col-sm-3 .card {
-    width: 15rem;
-    height: 20rem;
-    margin-top: 30px;
-    margin-left: 40px;
-  }
-
-  .team .card {
-    transition: all 0.3s ease;
-    border-radius: 20px;
-  }
-
-  .team .card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-  }
-
-  @media (max-width: 600px) {
-    .team .row h3 {
-      color: rgb(6, 6, 106);
-      font-family: poppins, sans-serif;
-      font-weight: bold;
-      padding-left: 0px;
-      padding-right: 0px;
-      text-align: center;
-    }
-
-    .team .row .col-sm-3 .card {
-      width: auto;
-      height: auto;
-      margin-top: 30px;
-      margin-left: 0px;
-    }
-  }
-
-  /*contact section*/
-  .contact-section .row h3 {
-    color: rgb(6, 6, 106);
-    font-family: poppins, sans-serif;
-    font-weight: bold;
-    padding-left: 100px;
-  }
-
-  .contact-section .row .col-sm-5 {
+  .about-content {
+    display: flex;
+    align-items: center;
+    gap: 60px;
     position: relative;
-    padding-top: 30px;
-    padding-bottom: 10px;
-    padding-left: 150px;
   }
 
-  .contact-section .row .col-sm-5 img {
-    width: 100%;
-    height: 85%;
-    align-content: center;
+  .about-text-content {
+    flex: 1;
   }
 
-  .contact-section .row .col-sm-6 {
-    padding-top: 70px;
-    padding-bottom: 10px;
-    padding-right: 60px;
-    padding-left: 50px;
+  .about-text-content h3 {
+    font-size: 1.8rem;
+    color: #060666;
+    font-weight: 600;
+    margin-bottom: 20px;
   }
 
-  .contact-section .row .col-sm-6 p {
-    font-size: 17px;
-    padding: 10px;
-    color: white;
-    font-family: open sans, sans-serif;
+  .about-text-content p {
+    font-size: 1.05rem;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 15px;
+    text-align: justify;
   }
 
-  .contact-section .row .col-sm-6 h4 {
-    font-size: 18px;
-    padding: 8px;
-    border: 1px solid grey;
-    font-family: open sans, sans-serif;
+  .about-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 30px;
   }
 
-  @media screen and (max-width: 900px) {
-    .col-sm-9 .custom-card {
-      width: 100% !important;
-      /* take full width of column */
-      justify-content: center;
-      margin: auto;
-    }
+  .feature-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
   }
 
-  @media (max-width: 600px) {
-    .contact-section .row h3 {
-      color: rgb(6, 6, 106);
-      font-family: poppins, sans-serif;
-      font-weight: bold;
-      padding-left: 0px;
-      padding-right: 0px;
-      text-align: center;
-    }
-
-    .contact-section .row .col-sm-5 {
-      position: relative;
-      padding-top: 30px;
-      padding-bottom: 10px;
-      padding-left: 0px;
-    }
-
-    .contact-section .row .col-sm-6 {
-      padding-top: 10px;
-      padding-bottom: 10px;
-      padding-right: 5px;
-      padding-left: 5px;
-    }
-  }
-
-  .gallery .card {
-    border: none;
-    background: rgb(6, 6, 106);
-    color: white;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .gallery .card:hover {
+  .feature-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 25px rgba(0, 86, 179, 0.15);
   }
 
-  .gallery img {
-    max-height: 200px;
-    object-fit: cover;
+  .feature-icon {
+    font-size: 2rem;
+    color: #0056b3;
+    min-width: 50px;
   }
 
-  /* testimonial design  */
+  .feature-text h4 {
+    font-size: 1.1rem;
+    color: #060666;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
 
-.testimonial-section {
-  background-color: rgb(44, 151, 193);
-  padding: 50px 10px;
-  color: #0a1d69;
-  font-family: 'Arial', sans-serif;
-  width: 100%;
-}
+  .feature-text p {
+    font-size: 0.95rem;
+    color: #666;
+    margin: 0;
+    text-align: left;
+  }
 
-.testimonial-section h2 {
-  font-size: 2.2em;
-  margin-bottom: 30px;
-  font-weight: bold;
-  text-align: left;
-  color: #fff;
-}
+  .about-image-wrapper {
+    flex: 0 0 380px;
+    position: relative;
+    margin-right: 30px;
+  }
 
-.testimonial-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  position: relative;
-  width: 100%;
-  max-width: 1100px;
-  margin: auto;
-}
+  .about-image-wrapper img {
+    width: 100%;
+    max-width: 380px;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    transition: transform 0.4s ease;
+  }
 
-.arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  background-color: #f2f2f2;
-  color: #fff;
-  border: none;
-  padding: 12px 18px;
-  border-radius: 50%;
-  font-size: 22px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
+  .about-image-wrapper img:hover {
+    transform: scale(1.03);
+  }
 
-.arrow:hover:not(:disabled) {
-  transform: translateY(-50%) scale(1.1);
-}
+  /* Student Services - Card Grid */
+  .services-section {
+    padding: 80px 0;
+    background: #ffffff;
+  }
 
-.arrow.left { left: -15px; }
-.arrow.right { right: -15px; }
+  .service-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 30px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    transition: all 0.4s ease;
+    height: 100%;
+    border: 2px solid transparent;
+    position: relative;
+    overflow: hidden;
+  }
 
-.arrow:disabled {
-  opacity: 0.4;
-  cursor: not-allowed;
-}
+  .service-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background: linear-gradient(to right, #0056b3, #2c97c1);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+  }
 
-.testimonial-slider {
-  display: flex;
-  gap: 30px;
-  transition: transform 0.5s ease-in-out;
-  width: max-content;
-}
+  .service-card:hover::before {
+    transform: scaleX(1);
+  }
 
-.testimonial-card {
-  flex: 0 0 calc((100% / 3) - 20px);
-  background: #ffffff;
-  border-radius: 25px;
-  padding: 25px 20px;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-  cursor: pointer;
-  transition: transform 0.4s ease, box-shadow 0.4s ease, background 0.4s ease;
-}
+  .service-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 86, 179, 0.2);
+    border-color: #0056b3;
+  }
 
-.testimonial-card:hover {
-  transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 20px 40px rgba(0,0,0,0.25);
-  background: #d2eaff;
-}
+  .service-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, #0056b3, #2c97c1);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    color: white;
+    transition: all 0.4s ease;
+  }
 
-.testimonial-text {
-  font-style: italic;
-  line-height: 1.6;
-  margin-bottom: 20px;
-  color: #0a1d69;
-}
+  .service-card:hover .service-icon {
+    transform: rotateY(360deg);
+    background: linear-gradient(135deg, #060666, #0056b3);
+  }
 
-.testimonial-name {
-  font-weight: bold;
-  font-size: 1.1em;
-  margin-bottom: 5px;
-}
+  .service-card h4 {
+    font-size: 1.3rem;
+    color: #060666;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
 
-.testimonial-role {
-  font-size: 0.9em;
-  color: #555;
-}
+  .service-card p {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
 
-/* Responsive Cards */
-@media (max-width: 900px) {
-  .testimonial-card { flex: 0 0 calc((70% - 10px)/2); }
-  .arrow.left { left: 0; }
-  .arrow.right { right: 0; }
-}
+  .service-btn {
+    display: inline-block;
+    padding: 10px 30px;
+    background: linear-gradient(135deg, #0056b3, #060666);
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
 
-@media (max-width: 600px) {
-  .testimonial-card { flex: 0 0 27%; 
- }
-  .arrow.left { left: 5px; }
-  .arrow.right { right: 5px; }
-  .arrow { padding: 14px 20px; font-size: 24px; }
-}
+  .service-btn:hover {
+    background: linear-gradient(135deg, #060666, #0056b3);
+    transform: scale(1.05);
+    color: white;
+    text-decoration: none;
+  }
 
+  /* Testimonials Section */
+  .testimonials-section {
+    padding: 80px 0;
+    background: linear-gradient(to bottom, #f8f9fa 0%, #ffffff 100%);
+    position: relative;
+    overflow: hidden;
+  }
 
+  .testimonials-section::before {
+    content: "";
+    position: absolute;
+    top: -30%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(0, 86, 179, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+  }
 
+  .testimonial-slider {
+    position: relative;
+    overflow: hidden;
+    margin-top: 50px;
+  }
+
+  .testimonial-container {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+
+  .testimonial-card {
+    min-width: 100%;
+    padding: 40px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    margin: 0 15px;
+    position: relative;
+  }
+
+  .testimonial-card::before {
+    content: "❝";
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    font-size: 5rem;
+    color: rgba(0, 86, 179, 0.1);
+    font-family: Georgia, serif;
+  }
+
+  .testimonial-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .testimonial-text {
+    font-size: 1.1rem;
+    color: #555;
+    line-height: 1.8;
+    margin-bottom: 30px;
+    font-style: italic;
+    text-align: center;
+  }
+
+  .testimonial-author {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .author-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #0056b3, #2c97c1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 2rem;
+    font-weight: 600;
+    box-shadow: 0 5px 15px rgba(0, 86, 179, 0.3);
+  }
+
+  .author-info h4 {
+    color: #060666;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+
+  .author-info p {
+    color: #666;
+    font-size: 0.95rem;
+    margin: 0;
+  }
+
+  .rating {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 20px;
+  }
+
+  .rating i {
+    color: #ffd700;
+    font-size: 1.2rem;
+  }
+
+  .testimonial-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 40px;
+  }
+
+  .control-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid #0056b3;
+    color: #0056b3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1.2rem;
+  }
+
+  .control-btn:hover {
+    background: linear-gradient(135deg, #0056b3, #060666);
+    color: white;
+    transform: scale(1.1);
+  }
+
+  .testimonial-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+  }
+
+  .dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #ddd;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .dot.active {
+    background: linear-gradient(135deg, #0056b3, #2c97c1);
+    width: 30px;
+    border-radius: 6px;
+  }
+
+  /* Support Section */
+  .support-section {
+    padding: 80px 0;
+    background: linear-gradient(135deg, #060666 0%, #0056b3 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .support-section::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .support-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .support-section .section-header h2 {
+    color: white;
+  }
+
+  .support-section .section-header h2::after {
+    background: linear-gradient(to right, #ffd700, #ffffff);
+  }
+
+  .support-section .section-header p {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .support-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 50px;
+  }
+
+  .support-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 35px;
+    text-align: center;
+    transition: all 0.4s ease;
+  }
+
+  .support-card:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  }
+
+  .support-card-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px;
+    background: rgba(255, 215, 0, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    color: #ffd700;
+  }
+
+  .support-card h4 {
+    font-size: 1.3rem;
+    color: #ffd700;
+    font-weight: 600;
+    margin-bottom: 15px;
+  }
+
+  .support-card p, .support-card a {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin: 10px 0;
+    word-break: break-word;
+  }
+
+  .support-card a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+
+  .support-card a:hover {
+    color: #ffd700;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 1200px) {
+    .about-content {
+      gap: 40px;
+    }
+
+    .about-image-wrapper {
+      flex: 0 0 340px;
+      margin-right: 20px;
+    }
+
+    .about-image-wrapper img {
+      max-width: 340px;
+    }
+
+    .about-features {
+      gap: 15px;
+    }
+  }
+
+  @media (max-width: 992px) {
+    .section-header h2 {
+      font-size: 2rem;
+    }
+
+    .about-content {
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    .about-image-wrapper {
+      flex: 1;
+      margin-right: 0;
+      max-width: 100%;
+    }
+
+    .about-image-wrapper img {
+      max-width: 100%;
+    }
+
+    .about-features {
+      grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+    }
+
+    .hero h1 span {
+      font-size: 3rem;
+    }
+
+    .testimonial-card {
+      padding: 30px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .live-time-simple {
+      font-size: 12px;
+    }
+
+    .hero {
+      min-height: 70vh;
+    }
+
+    .hero h1 {
+      font-size: 2rem;
+    }
+
+    .hero h1 span {
+      font-size: 2.5rem;
+    }
+
+    .hero p {
+      font-size: 1rem;
+    }
+
+    .hero .stats-box {
+      margin-top: 1rem;
+      padding: 1rem;
+    }
+
+    .hero .stat-item h3 {
+      font-size: 1.5rem;
+    }
+
+    .floating-icons {
+      font-size: 2rem;
+    }
+
+    .about-section,
+    .services-section,
+    .testimonials-section,
+    .support-section {
+      padding: 50px 0;
+    }
+
+    .section-header {
+      margin-bottom: 40px;
+    }
+
+    .section-header h2 {
+      font-size: 1.8rem;
+    }
+
+    .section-header p {
+      font-size: 1rem;
+      padding: 0 15px;
+    }
+
+    .about-text-content h3 {
+      font-size: 1.5rem;
+    }
+
+    .about-text-content p {
+      font-size: 1rem;
+    }
+
+    .feature-item {
+      padding: 15px;
+    }
+
+    .support-grid {
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .headline-section marquee p {
+      font-size: 14px;
+    }
+
+    .service-card {
+      padding: 25px;
+    }
+
+    .testimonial-card {
+      padding: 25px;
+      margin: 0 10px;
+    }
+
+    .testimonial-text {
+      font-size: 1rem;
+    }
+
+    .author-image {
+      width: 60px;
+      height: 60px;
+      font-size: 1.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .live-time-simple {
+      font-size: 11px;
+      gap: 5px;
+    }
+
+    .top-contact-bar {
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .hero h1 {
+      font-size: 1.5rem;
+    }
+
+    .hero h1 span {
+      font-size: 2rem;
+    }
+
+    .hero p {
+      font-size: 0.9rem;
+    }
+
+    .section-header h2 {
+      font-size: 1.5rem;
+    }
+
+    .section-header p {
+      font-size: 0.95rem;
+    }
+
+    .service-card,
+    .support-card {
+      padding: 20px;
+    }
+
+    .service-icon,
+    .support-card-icon {
+      width: 60px;
+      height: 60px;
+      font-size: 1.8rem;
+    }
+
+    .service-card h4,
+    .support-card h4 {
+      font-size: 1.1rem;
+    }
+
+    .service-card p,
+    .support-card p {
+      font-size: 0.9rem;
+    }
+
+    .about-text-content h3 {
+      font-size: 1.3rem;
+    }
+
+    .about-text-content p {
+      font-size: 0.95rem;
+    }
+
+    .feature-icon {
+      font-size: 1.5rem;
+    }
+
+    .feature-text h4 {
+      font-size: 1rem;
+    }
+
+    .feature-text p {
+      font-size: 0.85rem;
+    }
+
+    .testimonial-card {
+      padding: 20px;
+    }
+
+    .testimonial-text {
+      font-size: 0.95rem;
+    }
+
+    .control-btn {
+      width: 40px;
+      height: 40px;
+      font-size: 1rem;
+    }
+  }
 </style>
-<!--Home-->
-<!-- <div class="row">
-  <section class="home">
-    <div class="row" style="
-        color: aliceblue;
-        padding-top: 45vh;
-        padding-left: 10px;
-        font-weight: bolder;
-        font-family: poppins, sans-serif;
-      ">
-      <h1><u>Get Started</u></h1>
-      <h2><b>From Our Content For Distance Learning</b></h2>
-      <p style="font-family: poppins">
-        <b>NOU-e-Gyan PORTAL, CONCEPT BY NALANDA OPEN UNIVERSITY</b>
-      </p>
-    </div>
-  </section>
-</div> -->
 
 <!-- Hero Section -->
 <section class="hero py-5">
+  <!-- Floating Icons -->
+  <div class="floating-icons icon-1">📚</div>
+  <div class="floating-icons icon-2">🎓</div>
+  <div class="floating-icons icon-3">💻</div>
+  <div class="floating-icons icon-4">📖</div>
+
   <div class="container">
     <div class="row align-items-center">
       <!-- Left Column -->
       <div class="col-lg-6 text-center text-lg-start">
         <h1 class="fw-bold mb-3">
-          Get Started <br />
-          From Our Content For Distance Learning
+          <span>Get Started</span>
+          Transform Your Future With Distance Learning
         </h1>
-        <p class="mb-4">NOU e-Gyan Portal Concept by Nalanda Open University</p>
+        <p class="mb-4">
+          <i class="fa fa-graduation-cap"></i> NOU e-Gyan Portal - Empowering Education by Nalanda Open University
+        </p>
 
         <!-- Search Box -->
-        <div class="input-group shadow-sm" style="max-width: 400px">
-          <input type="text" class="form-control" placeholder="Search courses here..." />
-          <button class="btn btn-primary">Search</button>
+        <div class="search-wrapper-container">
+          <div class="search-wrapper">
+            <div class="input-group">
+              <input
+                type="text"
+                class="form-control"
+                id="searchInput"
+                placeholder="Search courses, materials, or topics..."
+                autocomplete="off"
+              />
+              <button class="btn btn-primary" onclick="performSearch()">
+                <i class="fa fa-search"></i> Search
+              </button>
+            </div>
+          </div>
+          
+          <!-- Search Results Dropdown -->
+          <div class="search-results-dropdown" id="searchResults"></div>
+        </div>
+
+        <!-- Stats Box -->
+        <div class="stats-box">
+          <div class="row">
+            <div class="col-4 stat-item">
+              <h3>10K+</h3>
+              <p>Students</p>
+            </div>
+            <div class="col-4 stat-item">
+              <h3>50+</h3>
+              <p>Courses</p>
+            </div>
+            <div class="col-4 stat-item">
+              <h3>24/7</h3>
+              <p>Support</p>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- Right Column -->
       <div class="col-lg-6 text-center mt-4 mt-lg-0">
-        <img src="{% static 'images/bg4.jpg' %}" class="img-fluid rounded" alt="Hero Image" />
+        <div class="hero-image-wrapper">
+          <img
+            src="{% static 'images/bg4.jpg' %}"
+            class="img-fluid"
+            alt="Distance Learning"
+          />
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!--headline-->
-<div class="row" style="background-color: rgb(6, 6, 106); margin-top: 5px; margin-bottom: 5px">
+<!-- Headline -->
+<div class="headline-section">
   <marquee scrollamount="12" onmousemove="this.stop()" onmouseout="this.start()">
-    <p style="
-        color: white;
-        padding-top: 6px;
-        font-family: poppins, sans-serif;
-        font-weight: bold;
-      ">
-      The portal is easy to access & highly user friendly for the students &
-      study centres.
-    </p>
+    <p>The portal is easy to access & highly user friendly for the students & study centres.</p>
   </marquee>
 </div>
 
-<!--aboutsection-->
-<!-- <div class="row" style="padding-top: 10vh">
-  <section class="about-section">
-    <div class="row">
-      <h3>ABOUT NOU e-GYAN PORTAL</h3>
-    </div>
-    <div class="row">
-      <div class="col-sm-7" style="text-align: justify">
-        <p style="font-family: open sans, sans-serif; font-size: 17.5px">
-          <b>Nalanda Open University</b> welcomes all our students, faculties &
-          study centres to the very new & innovative online study portal
-          <b>NOU e-Gyan</b>. The portal is a unique initiative by Hon'ble
-          Vice-Chancellor <b>Prof. (Dr.) K C Sinha</b>, which aims at providing
-          online study material to the students of NOU.
-        </p>
-        <p style="font-family: open sans, sans-serif; font-size: 17.5px">
-          The portal is accessible from any hook and corner of the world if the
-          system allows the permission to its users. It is also fully secured
-          and accessible 24 x 7 to its authorised users. It will resolve the
-          academic issues such as E-content Distribution, Delivery, Tracking,
-          Assessment, Progress Monitoring & Controlling of all stakeholders of
-          the system i.e. students, teachers, study centre administrators as
-          well as Nalanda Open University Admins when they are at a distance.
-        </p>
-      </div>
-      <div class="col-sm-5">
-        <img src="{% static 'images/contactimg.jpeg' %}" class="img-fluid" />
-      </div>
-    </div>
-  </section>
-</div> -->
-
-<!-- aboutsection -->
-<section class="about-section container my-5">
-  <div class="row align-items-center">
-    <!-- Left Column (Text) -->
-    <div class="col-sm-7" style="text-align: justify">
-      <h3 class="about-title" style="color: rgb(6, 6, 106) !important">
-        ABOUT NOU e-GYAN PORTAL
-      </h3>
-      <br /><br />
-      <p class="about-text" style="margin-left: 15px">
-        Nalanda Open University welcomes all our students, faculties & study
-        centres to the very new & innovative online study portal
-        <strong>NOU e-Gyan</strong>. The portal is a unique initiative by
-        Hon’ble Vice-Chancellor Prof. (Dr.) K C Sinha, which is aimed at
-        providing online study material to the students of NOU.
-      </p>
-      <p class="about-text" style="margin-left: 15px">
-        The portal is accessible from any nook and corner of the world if the
-        system allows permission to its users. It is a web-based solution
-        assisting 24×7 to its authorized users. It will resolve the academic
-        issues such as
-        <em>e-Content Distribution, Delivery, Tracking, Assessment, Progress
-          Monitoring</em>
-        & <em>Controlling of all stakeholders</em> of the system i.e. students,
-        teachers, study centre administrators as well as Nalanda Open University
-        Admins when they are at a distance.
-      </p>
+<!-- About Section -->
+<section class="about-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>About NOU e-Gyan Portal</h2>
+      <p>A unique initiative by Hon'ble Vice-Chancellor Prof. (Dr.) K C Sinha, aimed at providing comprehensive online study resources to students worldwide.</p>
     </div>
 
-    <!-- Right Column (Image) -->
-    <div class="col-sm-5 text-center">
-      <img src="{% static 'images/contactimg.jpeg' %}" alt="NOU Campus" class="img-fluid about-img" />
+    <div class="about-content">
+      <div class="about-text-content">
+        <h3>Empowering Distance Learning</h3>
+        <p>
+          Nalanda Open University welcomes all students, faculties, and study centres to the innovative <strong>NOU e-Gyan</strong> portal. This web-based platform provides 24×7 access to comprehensive educational resources from anywhere in the world.
+        </p>
+        <p>
+          Our portal revolutionizes distance education by seamlessly integrating e-Content Distribution, Delivery, Tracking, Assessment, and Progress Monitoring for all stakeholders including students, teachers, and administrators.
+        </p>
+
+        <div class="about-features">
+          <div class="feature-item">
+            <div class="feature-icon">🌐</div>
+            <div class="feature-text">
+              <h4>Global Access</h4>
+              <p>Learn from anywhere, anytime with our 24/7 accessible platform</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📊</div>
+            <div class="feature-text">
+              <h4>Progress Tracking</h4>
+              <p>Monitor your academic journey with real-time performance analytics</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📚</div>
+            <div class="feature-text">
+              <h4>Rich Content</h4>
+              <p>Access comprehensive study materials and e-learning resources</p>
+            </div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">👥</div>
+            <div class="feature-text">
+              <h4>Collaborative Learning</h4>
+              <p>Connect with peers and educators in an interactive environment</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-image-wrapper">
+        <img src="{% static 'images/contactimg.jpeg' %}" alt="NOU Campus" class="img-fluid" />
+      </div>
     </div>
   </div>
 </section>
-<!-- gallery section -->
-<div class="row">
-  <section class="gallery">
-    <div class="row">
-      <h3 style="color: rgb(6, 6, 106)">STUDENT SERVICES</h3>
+
+<!-- Student Services Section -->
+<section class="services-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>Student Services</h2>
+      <p>Comprehensive tools and resources designed to enhance your learning experience</p>
     </div>
-    <!--gallery section one-->
-    <div class="container mt-4 check">
-      <div class="row justify-content-center g-4" style="padding-top: 25px">
-        <div class="col-lg-3 col-md-6 col-sm-9">
-          <div class="card h-100 custom-card" style="border-color: rgb(6, 6, 106)">
-            <img class="card-img-top" src="{% static 'images/registration.jpg' %}" alt="Card image cap" />
-            <div class="card-body">
-              <p class="card-text">
-                <a href="{% url 'nouapp:login' %}" style="color: white">Login</a>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-9">
-          <div class="card h-100 custom-card" style="border-color: rgb(6, 6, 106)">
-            <img class="card-img-top" src="{% static 'images/dashboard.jpg' %}" alt="Card image cap" />
-            <div class="card-body">
-              <p class="card-text">
-                <a href="{% url 'studentapp:studenthome' %}" style="color: white">Dashboard</a>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-9">
-          <div class="card h-100 custom-card" style="border-color: rgb(6, 6, 106)">
-            <img class="card-img-top" src="{% static 'images/online-courses.jpg' %}" alt="Card image cap" />
-            <div class="card-body">
-              <p class="card-text">
-                <a href="{% url 'studentapp:viewmat' %}" style="color: white">Self Learning Material</a>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-9">
-          <div class="card h-100 custom-card" style="border-color: rgb(6, 6, 106)">
-            <img class="card-img-top" src="{% static 'images/e-lectures.jpg' %}" alt="Card image cap" />
-            <div class="card-body">
-              <p class="card-text">
-                <a href="{% url 'studentapp:studenthome' %}" style="color: white">e-books</a>
-              </p>
-            </div>
-          </div>
+
+    <div class="row g-4">
+      <div class="col-lg-3 col-md-6">
+        <div class="service-card">
+          <div class="service-icon">🔐</div>
+          <h4>Login Portal</h4>
+          <p>Secure access to your personalized learning dashboard</p>
+          <a href="{% url 'nouapp:login' %}" class="service-btn">Access Now</a>
         </div>
       </div>
-    </div>
-    <!--gallery section two-->
-    <div class="container mt-4 check">
-      <div class="row justify-content-center g-4" style="padding-top: 40px">
-        <div class="col-lg-3 col-md-6 col-sm-9">
-          <div class="card h-100 custom-card" style="border-color: rgb(6, 6, 106)">
-            <img class="card-img-top p-4 bg-white" src="{% static 'images/self-assessment.svg' %}"
-              alt="Card image cap" />
-            <div class="card-body">
-              <p class="card-text">
-                <a href="{% url 'studentapp:studenthome' %}" style="color: white">Self Assessment Tools</a>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-9">
-          <div class="card h-100 custom-card" style="border-color: rgb(6, 6, 106)">
-            <img class="card-img-top" src="{% static 'images/performance.jpg' %}" alt="Card image cap" />
-            <div class="card-body">
-              <p class="card-text">
-                <a href="{% url 'studentapp:viewprofile' %}" style="color: white">Performance</a>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-6 col-sm-9">
-          <div class="card h-100 custom-card" style="border-color: rgb(6, 6, 106)">
-            <img class="card-img-top" src="{% static 'images/feedback.jpg' %}" alt="Card image cap" />
-            <div class="card-body">
-              <p class="card-text">
-                <a href="{% url 'studentapp:response' %}" style="color: white">Feedback</a>
-              </p>
-            </div>
-          </div>
-        </div>
 
-        <div class="col-lg-3 col-md-6 col-sm-9">
-          <div class="card h-100 custom-card" style="border-color: rgb(6, 6, 106)">
-            <img class="card-img-top" src="{% static 'images/course-catlog.jpg' %}" alt="Card image cap" />
-            <div class="card-body">
-              <p class="card-text">
-                <a href="{% url 'nouapp:courses' %}" style="color: white">Course-Catalogue</a>
-              </p>
-            </div>
-          </div>
+      <div class="col-lg-3 col-md-6">
+        <div class="service-card">
+          <div class="service-icon">📊</div>
+          <h4>Dashboard</h4>
+          <p>View your courses, progress, and academic updates</p>
+          <a href="{% url 'studentapp:studenthome' %}" class="service-btn">View Dashboard</a>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="service-card">
+          <div class="service-icon">📖</div>
+          <h4>Learning Materials</h4>
+          <p>Access comprehensive self-learning study resources</p>
+          <a href="{% url 'studentapp:viewmat' %}" class="service-btn">Explore Materials</a>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="service-card">
+          <div class="service-icon">📚</div>
+          <h4>e-Books Library</h4>
+          <p>Browse our extensive digital book collection</p>
+          <a href="#" class="service-btn">Browse Library</a>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="service-card">
+          <div class="service-icon">✍️</div>
+          <h4>Assessment Tools</h4>
+          <p>Test your knowledge with interactive assessments</p>
+          <a href="#" class="service-btn">Start Assessment</a>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="service-card">
+          <div class="service-icon">📈</div>
+          <h4>Performance</h4>
+          <p>Track your academic achievements and progress</p>
+          <a href="{% url 'studentapp:viewprofile' %}" class="service-btn">View Performance</a>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="service-card">
+          <div class="service-icon">💬</div>
+          <h4>Feedback</h4>
+          <p>Share your experience and help us improve</p>
+          <a href="{% url 'studentapp:response' %}" class="service-btn">Give Feedback</a>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-md-6">
+        <div class="service-card">
+          <div class="service-icon">🎓</div>
+          <h4>Course Catalogue</h4>
+          <p>Explore available courses and programs</p>
+          <a href="{% url 'nouapp:courses' %}" class="service-btn">View Courses</a>
         </div>
       </div>
     </div>
-  </section>
-</div>
-
-<!-- administrative setup  -->
-
-<div class="row" style="padding-top: 10vh">
-  <div class="container p-5" style="background-color: rgb(44, 151, 193)">
-    <section class="team">
-      <div class="row mb-4">
-        <h3 class="text-sm-center text-lg-start" style="color: rgb(6, 6, 106)">
-          ADMINISTRATIVE SETUP
-        </h3>
-      </div>
-      <div class="row g-4">
-        <div class="col-lg-3 col-md-6 col-sm-12">
-          <div class="card h-100 text-center">
-            <img class="card-img-top p-4 mx-auto" src="{% static 'images/vc.jpg' %}" alt="Vice Chancellor"
-              style="border-radius: 50%; max-width: 200px; height: auto" />
-            <div class="card-body">
-              <h6 class="card-text fw-bold" style="color: rgb(6, 6, 106)">
-                Prof. (Dr.) K. C. Sinha
-              </h6>
-              <p class="card-text">VICE CHANCELLOR</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-12">
-          <div class="card h-100 text-center">
-            <img class="card-img-top p-4 mx-auto" src="{% static 'images/pvc.jpg' %}" alt="Pro Vice Chancellor"
-              style="border-radius: 50%; max-width: 200px; height: auto" />
-            <div class="card-body">
-              <h6 class="card-text fw-bold" style="color: rgb(6, 6, 106)">
-                Prof. (Dr.) Sanjoy Kumar
-              </h6>
-              <p class="card-text">PRO VICE CHANCELLOR</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-12">
-          <div class="card h-100 text-center">
-            <img class="card-img-top p-4 mx-auto" src="{% static 'images/registrar1.jpeg' %}" alt="Registrar"
-              style="border-radius: 50%; max-width: 200px; height: auto" />
-            <div class="card-body">
-              <h6 class="card-text fw-bold" style="color: rgb(6, 6, 106)">
-                Dr. Md. Habibur Rahman
-              </h6>
-              <p class="card-text">REGISTRAR</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-lg-3 col-md-6 col-sm-12">
-          <div class="card h-100 text-center">
-            <img class="card-img-top p-4 mx-auto" src="{% static 'images/examreg.jpg' %}" alt="Registrar Exam"
-              style="border-radius: 50%; max-width: 200px; height: auto" />
-            <div class="card-body">
-              <h6 class="card-text fw-bold" style="color: rgb(6, 6, 106)">
-                Dr. Neelam Kumari
-              </h6>
-              <p class="card-text">REGISTRAR (Exam)</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
   </div>
-</div>
+</section>
 
-<!-- testimonial section  -->
-<div class="row" style="margin-top: 5rem;">
-  <div class="testimonial-section container">
+<!-- Testimonials Section -->
+<section class="testimonials-section">
+  <div class="container">
+    <div class="section-header">
+      <h2>What Our Students Say</h2>
+      <p>Real experiences from students who have transformed their lives through NOU e-Gyan Portal</p>
+    </div>
+
+    <div class="testimonial-slider">
+      <div class="testimonial-container" id="testimonialContainer">
+        <!-- Testimonial 1 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="rating">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+            </div>
+            <p class="testimonial-text">
+              The NOU e-Gyan Portal has transformed my learning experience. The 24/7 access to study materials and the interactive platform make distance learning truly effective. I can study at my own pace and track my progress easily.
+            </p>
+            <div class="testimonial-author">
+              <div class="author-image">RS</div>
+              <div class="author-info">
+                <h4>Rahul Sharma</h4>
+                <p>B.Tech Computer Science | 2023 Batch</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 2 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="rating">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+            </div>
+            <p class="testimonial-text">
+              As a working professional, this portal has been a blessing. The flexibility to access course materials anytime and the comprehensive content library have helped me balance my work and studies perfectly.
+            </p>
+            <div class="testimonial-author">
+              <div class="author-image">PK</div>
+              <div class="author-info">
+                <h4>Priya Kumari</h4>
+                <p>MBA | 2024 Batch</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 3 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="rating">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+            </div>
+            <p class="testimonial-text">
+              Excellent platform with user-friendly interface. The support team is very responsive and the quality of study materials is outstanding. Highly recommend NOU e-Gyan to all distance learning students.
+            </p>
+            <div class="testimonial-author">
+              <div class="author-image">AK</div>
+              <div class="author-info">
+                <h4>Amit Kumar</h4>
+                <p>MA English | 2023 Batch</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Testimonial 4 -->
+        <div class="testimonial-card">
+          <div class="testimonial-content">
+            <div class="rating">
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star"></i>
+              <i class="fa fa-star-half-o"></i>
+            </div>
+            <p class="testimonial-text">
+              The interactive learning experience and practical assignments have truly enhanced my understanding. The mentors are supportive and always ready to clarify doubts. This platform makes distance education feel personal and engaging.
+            </p>
+            <div class="testimonial-author">
+              <div class="author-image">SG</div>
+              <div class="author-info">
+                <h4>Sneha Gupta</h4>
+                <p>B.Sc IT | 2025 Batch</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls -->
+      <div class="testimonial-controls">
+        <button class="control-btn" onclick="previousTestimonial()">
+          <i class="fa fa-chevron-left"></i>
+        </button>
+        <button class="control-btn" onclick="nextTestimonial()">
+          <i class="fa fa-chevron-right"></i>
+        </button>
+      </div>
+
+      <!-- Dots -->
+      <div class="testimonial-dots">
+        <span class="dot active" onclick="currentTestimonial(0)"></span>
+        <span class="dot" onclick="currentTestimonial(1)"></span>
+        <span class="dot" onclick="currentTestimonial(2)"></span>
+        <span class="dot" onclick="currentTestimonial(3)"></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Support Section -->
+<section class="support-section">
+  <div class="support-content">
     <div class="container">
-      <h2>What Our Users Say</h2>
+      <div class="section-header">
+        <h2>Always Here to Support You</h2>
+        <p>Our dedicated help desk is available 24/7 to assist you with any queries or technical issues</p>
+      </div>
 
-      <div class="testimonial-wrapper">
-        <!-- Left Arrow -->
-        <button class="arrow left" id="prevBtn">&#10094;</button>
-
-        <!-- Cards Slider -->
-        <div class="testimonial-slider" id="testimonialcards">
-          <div class="testimonial-card">
-            <p class="testimonial-text">"NOU e-Gyan has completely transformed the way I study. The online materials are
-              well-organized and easy to access anytime."</p>
-            <h3 class="testimonial-name">Priya Sharma</h3>
-            <h3 class="testimonial-role">Student</h3>
+      <div class="support-grid">
+        <div class="support-card">
+          <div class="support-card-icon">
+            <i class="fa fa-headphones"></i>
           </div>
-
-          <div class="testimonial-card">
-            <p class="testimonial-text">"The portal is very user-friendly and provides everything I need for my courses.
-              It has made learning so convenient and flexible."</p>
-            <h3 class="testimonial-name">Rohit Verma</h3>
-            <h3 class="testimonial-role">Student</h3>
-          </div>
-
-          <div class="testimonial-card">
-            <p class="testimonial-text">"As a working student, I found NOU e-Gyan to be a lifesaver. The support from
-              teachers and admins is also excellent."</p>
-            <h3 class="testimonial-name">Anjali Kumar</h3>
-            <h3 class="testimonial-role">Student</h3>
-          </div>
-
-          <div class="testimonial-card">
-            <p class="testimonial-text">"Earlier, managing assignments was difficult, but with NOU e-Gyan, everything is
-              just a click away."</p>
-            <h3 class="testimonial-name">Arjun Mehata</h3>
-            <h3 class="testimonial-role">Student</h3>
-          </div>
-
-          <div class="testimonial-card">
-            <p class="testimonial-text">"I really appreciate how well-structured the NOU e-Gyan platform is. The content
-              quality is excellent and always available."</p>
-            <h3 class="testimonial-name">Sneha Singh</h3>
-            <h3 class="testimonial-role">Student</h3>
-          </div>
-
-          <div class="testimonial-card">
-            <p class="testimonial-text">"The NOU e-Gyan portal has made distance learning truly interactive and easy to
-              use."</p>
-            <h3 class="testimonial-name">Neha Ranjan</h3>
-            <h3 class="testimonial-role">Student</h3>
-          </div>
+          <h4>Help Desk</h4>
+          <p>Get assistance navigating the portal and resolving any issues you encounter</p>
         </div>
 
-        <!-- Right Arrow -->
-        <button class="arrow right" id="nextBtn">&#10095;</button>
+        <div class="support-card">
+          <div class="support-card-icon">
+            <i class="fa fa-phone"></i>
+          </div>
+          <h4>Call Us</h4>
+          <p><a href="tel:+917080102007">+91 7080102007</a></p>
+          <p style="font-size: 0.9rem;">Available Monday - Saturday<br>9:00 AM - 6:00 PM</p>
+        </div>
+
+        <div class="support-card">
+          <div class="support-card-icon">
+            <i class="fa fa-envelope"></i>
+          </div>
+          <h4>Email Support</h4>
+          <p><a href="mailto:nouegyanhelp@gmail.com">nouegyanhelp@gmail.com</a></p>
+          <p style="font-size: 0.9rem;">We respond within 24 hours</p>
+        </div>
+
+        <div class="support-card">
+          <div class="support-card-icon">
+            <i class="fa fa-question-circle"></i>
+          </div>
+          <h4>FAQs</h4>
+          <p>Find quick answers to commonly asked questions and troubleshooting guides</p>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-
-
-<!--contact section-->
-<div class="row" style="padding-top: 10vh">
-  <section class="contact-section">
-    <div class="row">
-      <h3>ALWAYS HERE TO SUPPORT YOU!</h3>
-    </div>
-    <div class="row">
-      <div class="col-sm-5">
-        <img src="{% static 'images/helpline.svg' %}" class="img-fluid" />
-      </div>
-      <div class="col-sm-6">
-        <p style="background-color: rgb(6, 6, 106)">
-          The help desk provides user assistance to navigate and understand the
-          aspects of the portal. This also provides a simple interface for
-          maintenance of student information and issues faced.
-        </p>
-        <br />
-        <a>
-          <h4>
-            <i class="fa fa-phone" style="color: rgb(6, 6, 106)"></i> +91
-            7080102007
-          </h4>
-        </a><br />
-        <a>
-          <h4>
-            <i class="fa fa-envelope" style="color: rgb(6, 6, 106)"></i>
-            nouegyanhelp@gmail.com
-          </h4>
-        </a><br />
-      </div>
-    </div>
-  </section>
-</div>
+<!-- JavaScript -->
 <script>
-const slider = document.querySelector('.testimonial-slider');
-const cards = document.querySelectorAll('.testimonial-card');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
+  // Live Time Update
+  document.addEventListener('DOMContentLoaded', function() {
+    function updateTime() {
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      let seconds = now.getSeconds();
+      
+      hours = hours < 10 ? '0' + hours : hours;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      seconds = seconds < 10 ? '0' + seconds : seconds;
+      
+      const timeElement = document.getElementById('liveTime');
+      if (timeElement) {
+        timeElement.textContent = hours + ':' + minutes + ':' + seconds;
+      }
+    }
+    
+    updateTime();
+    setInterval(updateTime, 1000);
+  });
 
-let visibleCards = 3;
-let index = 0;
+  // Search Functionality
+  const searchData = [
+    { title: 'Login Portal', description: 'Secure access to your personalized learning dashboard', url: "{% url 'nouapp:login' %}", category: 'Service' },
+    { title: 'Student Dashboard', description: 'View your courses, progress, and academic updates', url: "{% url 'studentapp:studenthome' %}", category: 'Service' },
+    { title: 'Learning Materials', description: 'Access comprehensive self-learning study resources', url: "{% url 'studentapp:viewmat' %}", category: 'Resource' },
+    { title: 'e-Books Library', description: 'Browse our extensive digital book collection', url: '#', category: 'Resource' },
+    { title: 'Assessment Tools', description: 'Test your knowledge with interactive assessments', url: '#', category: 'Service' },
+    { title: 'Performance Tracking', description: 'Track your academic achievements and progress', url: "{% url 'studentapp:viewprofile' %}", category: 'Service' },
+    { title: 'Student Feedback', description: 'Share your experience and help us improve', url: "{% url 'studentapp:response' %}", category: 'Service' },
+    { title: 'Course Catalogue', description: 'Explore available courses and programs', url: "{% url 'nouapp:courses' %}", category: 'Course' },
+    { title: 'Distance Learning', description: 'Transform your future with flexible online education', url: '#', category: 'Course' },
+    { title: 'Help & Support', description: '24/7 assistance for all your queries', url: '#', category: 'Support' },
+    { title: 'Contact Us', description: 'Get in touch with our support team', url: "{% url 'nouapp:contactus' %}", category: 'Support' },
+    { title: 'Resources', description: 'Find all important links, study guides, and documents in one place', url: "{% url 'nouapp:resources' %}", category: 'Support' }
 
-function updateVisibleCards() {
-  if (window.innerWidth <= 600) visibleCards = 1;
-  else if (window.innerWidth <= 900) visibleCards = 2;
-  else visibleCards = 3;
+    
+  ];
 
-  if (index > cards.length - visibleCards) {
-    index = Math.max(cards.length - visibleCards, 0);
+  const searchInput = document.getElementById('searchInput');
+  const searchResults = document.getElementById('searchResults');
+
+  // Search on input
+  searchInput.addEventListener('input', function(e) {
+    const query = e.target.value.toLowerCase().trim();
+    
+    if (query.length === 0) {
+      searchResults.classList.remove('active');
+      return;
+    }
+
+    const filteredResults = searchData.filter(item => 
+      item.title.toLowerCase().includes(query) || 
+      item.description.toLowerCase().includes(query) ||
+      item.category.toLowerCase().includes(query)
+    );
+
+    displaySearchResults(filteredResults);
+  });
+
+  // Search on Enter key
+  searchInput.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      performSearch();
+    }
+  });
+
+  // Perform search function
+  function performSearch() {
+    const query = searchInput.value.toLowerCase().trim();
+    
+    if (query.length === 0) {
+      return;
+    }
+
+    const filteredResults = searchData.filter(item => 
+      item.title.toLowerCase().includes(query) || 
+      item.description.toLowerCase().includes(query) ||
+      item.category.toLowerCase().includes(query)
+    );
+
+    if (filteredResults.length > 0) {
+      window.location.href = filteredResults[0].url;
+    } else {
+      displaySearchResults([]);
+    }
   }
-  updateSlider();
-  updateArrowPosition();
-}
 
-function getCardWidth() {
-  let gap = 30;
-  if(window.innerWidth<=600) gap=0;
-  else if(window.innerWidth<=900) gap=10;
-  return cards[0].offsetWidth + gap;
-}
+  // Display search results
+  function displaySearchResults(results) {
+    if (results.length === 0) {
+      searchResults.innerHTML = '<div class="no-results">No results found. Try different keywords.</div>';
+      searchResults.classList.add('active');
+      return;
+    }
 
-function updateSlider() {
-  slider.style.transform = `translateX(-${index * getCardWidth()}px)`;
-  prevBtn.disabled = index === 0;
-  nextBtn.disabled = index >= cards.length - visibleCards;
-}
+    let html = '';
+    results.forEach(result => {
+      html += `
+        <div class="search-result-item" onclick="window.location.href='${result.url}'">
+          <div class="search-result-title">${result.title}</div>
+          <div class="search-result-desc">${result.description}</div>
+          <span class="search-result-category">${result.category}</span>
+        </div>
+      `;
+    });
 
-// Dynamic arrow placement
-function updateArrowPosition() {
-  if (visibleCards === 1) {
-    prevBtn.style.left = "5px";
-    nextBtn.style.right = "5px";
-  } else if (visibleCards === 2) {
-    prevBtn.style.left = "0";
-    nextBtn.style.right = "0";
-  } else {
-    prevBtn.style.left = "-15px";
-    nextBtn.style.right = "-15px";
+    searchResults.innerHTML = html;
+    searchResults.classList.add('active');
   }
-}
 
-// Next button
-nextBtn.addEventListener('click', () => {
-  index += visibleCards;
-  if (index > cards.length - visibleCards) index = cards.length - visibleCards;
-  updateSlider();
-});
+  // Close search results when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.search-wrapper-container')) {
+      searchResults.classList.remove('active');
+    }
+  });
 
-// Prev button
-prevBtn.addEventListener('click', () => {
-  index -= visibleCards;
-  if (index < 0) index = 0;
-  updateSlider();
-});
+  // Testimonial Slider
+  let currentIndex = 0;
+  const totalTestimonials = 4;
 
-window.addEventListener('resize', updateVisibleCards);
+  function showTestimonial(index) {
+    const container = document.getElementById('testimonialContainer');
+    const dots = document.querySelectorAll('.dot');
+    
+    if (index >= totalTestimonials) {
+      currentIndex = 0;
+    } else if (index < 0) {
+      currentIndex = totalTestimonials - 1;
+    } else {
+      currentIndex = index;
+    }
+    
+    container.style.transform = `translateX(-${currentIndex * 100}%)`;
+    
+    dots.forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentIndex);
+    });
+  }
 
-// Initialize
-updateVisibleCards();
+  function nextTestimonial() {
+    showTestimonial(currentIndex + 1);
+  }
 
+  function previousTestimonial() {
+    showTestimonial(currentIndex - 1);
+  }
 
+  function currentTestimonial(index) {
+    showTestimonial(index);
+  }
 
+  // Auto-play testimonials
+  setInterval(() => {
+    nextTestimonial();
+  }, 5000);
 </script>
+
 {% endblock %}
