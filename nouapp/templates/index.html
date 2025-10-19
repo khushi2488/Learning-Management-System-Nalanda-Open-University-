@@ -5,6 +5,11 @@
 <link rel="stylesheet" href="{% static 'css/style.css' %}" />
 
 <style>
+  :root{
+    --primary-color2: #1e40af;
+    --accent-color: #3b82f6;
+  }
+   
   * {
     margin: 0;
     padding: 0;
@@ -274,7 +279,7 @@
   .section-header h2 {
     font-size: 2.5rem;
     font-weight: 700;
-    color: #060666;
+    color: var(--primary-color2) !important;
     margin-bottom: 15px;
     position: relative;
     display: inline-block;
@@ -313,7 +318,7 @@
 
   .about-text-content h3 {
     font-size: 1.8rem;
-    color: #060666;
+    color: var(--primary-color2) !important;
     font-weight: 600;
     margin-bottom: 20px;
   }
@@ -357,7 +362,7 @@
 
   .feature-text h4 {
     font-size: 1.1rem;
-    color: #060666;
+    color: var(--primary-color2);
     font-weight: 600;
     margin-bottom: 5px;
   }
@@ -449,7 +454,7 @@
 
   .service-card h4 {
     font-size: 1.3rem;
-    color: #060666;
+    color:var(--primary-color2);
     font-weight: 600;
     margin-bottom: 15px;
   }
@@ -464,7 +469,7 @@
   .service-btn {
     display: inline-block;
     padding: 10px 30px;
-    background: linear-gradient(135deg, #0056b3, #060666);
+    background: var(--primary-color2);
     color: white;
     text-decoration: none;
     border-radius: 25px;
@@ -473,7 +478,7 @@
   }
 
   .service-btn:hover {
-    background: linear-gradient(135deg, #060666, #0056b3);
+    background: var(--accent-color);
     transform: scale(1.05);
     color: white;
     text-decoration: none;
