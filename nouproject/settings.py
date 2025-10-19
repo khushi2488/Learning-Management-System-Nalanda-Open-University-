@@ -86,16 +86,13 @@ WSGI_APPLICATION = "nouproject.wsgi.application"
 import dj_database_url
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DATABASE_NAME", "lms_nalanda_db"),
-        "USER": os.getenv("DATABASE_USER", "lms_user"),
-        "PASSWORD": os.getenv("DATABASE_PASSWORD", "NalandaLMS2024!"),
-        "HOST": os.getenv("DATABASE_HOST", "localhost"),
-        "PORT": os.getenv("DATABASE_PORT", "5432"),
-        "OPTIONS": {
-            "connect_timeout": 60,
-        }
+      'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'lms_db',
+        'USER': 'lms_user',
+        'PASSWORD': 'lms_password',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 if os.getenv("DATABASE_URL"):

@@ -131,7 +131,7 @@
   }
 
   .form-section {
-    background: white;
+    background: var(--card-bg);
     padding: 2rem;
     border-radius: 16px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.04);
@@ -146,7 +146,8 @@
     transition: all 0.3s ease;
     width: 100%;
     font-size: 0.95rem;
-    background: white;
+    background: var(--card-bg);
+    color: var(--card-text);
     margin-bottom: 1.25rem;
   }
 
@@ -154,7 +155,7 @@
     border-color: var(--accent-color);
     box-shadow: 0 0 0 4px rgba(59,130,246,0.08);
     outline: none;
-    background: #fff;
+    background: var(--card-bg);
   }
 
   .form-label {
@@ -196,7 +197,7 @@
   /* Submit Button */
   .submit-section {
     padding: 2rem 2.5rem;
-    background: white;
+    background: var(--card-bg);
   }
 
   .submit-btn {
@@ -277,12 +278,96 @@
   }
 
   .divider span {
-    background: white;
+    background: var(--card-bg);
     padding: 0 1rem;
     position: relative;
-    color: #64748b;
+    color: var(--card-text);
     font-size: 0.85rem;
     font-weight: 500;
+  }
+
+  /* ================= Dark Theme Fixes ================= */
+  [data-bs-theme="dark"] .login-container,
+  .dark-theme .login-container {
+    background: #2d2d2d !important;
+    border: 1px solid #444 !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  [data-bs-theme="dark"] .form-body,
+  .dark-theme .form-body {
+    background: #1e1e1e !important;
+  }
+
+  [data-bs-theme="dark"] .form-section,
+  .dark-theme .form-section {
+    background: #2d2d2d !important;
+    border: 1px solid #444 !important;
+  }
+
+  [data-bs-theme="dark"] .submit-section,
+  .dark-theme .submit-section {
+    background: #2d2d2d !important;
+  }
+
+  [data-bs-theme="dark"] .form-control,
+  [data-bs-theme="dark"] .form-select,
+  .dark-theme .form-control,
+  .dark-theme .form-select {
+    background: #3d3d3d !important;
+    color: #e0e0e0 !important;
+    border: 1px solid #555 !important;
+  }
+
+  [data-bs-theme="dark"] .form-control:focus,
+  [data-bs-theme="dark"] .form-select:focus,
+  .dark-theme .form-control:focus,
+  .dark-theme .form-select:focus {
+    background: #3d3d3d !important;
+    color: #e0e0e0 !important;
+    border-color: #64b5f6 !important;
+    box-shadow: 0 0 0 4px rgba(100, 181, 246, 0.2) !important;
+  }
+
+  [data-bs-theme="dark"] .form-label,
+  .dark-theme .form-label {
+    color: #e0e0e0 !important;
+  }
+
+  [data-bs-theme="dark"] .form-links p,
+  .dark-theme .form-links p {
+    color: #b0b0b0 !important;
+  }
+
+  [data-bs-theme="dark"] .form-links a,
+  .dark-theme .form-links a {
+    color: #64b5f6 !important;
+  }
+
+  [data-bs-theme="dark"] .form-links a:hover,
+  .dark-theme .form-links a:hover {
+    color: #90caf9 !important;
+  }
+
+  [data-bs-theme="dark"] .divider span,
+  .dark-theme .divider span {
+    background: #2d2d2d !important;
+    color: #b0b0b0 !important;
+  }
+
+  [data-bs-theme="dark"] .divider::before,
+  .dark-theme .divider::before {
+    background: #444 !important;
+  }
+
+  [data-bs-theme="dark"] .input-icon,
+  .dark-theme .input-icon {
+    color: #94a3b8 !important;
+  }
+
+  [data-bs-theme="dark"] .home,
+  .dark-theme .home {
+    background-image: linear-gradient(rgba(30, 64, 175, 0.7), rgba(30, 58, 138, 0.8)), url(../static/images/bookslibrary.jpg) !important;
   }
 
   /* Responsive Design */

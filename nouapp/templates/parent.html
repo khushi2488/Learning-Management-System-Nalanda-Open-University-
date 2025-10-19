@@ -463,6 +463,39 @@
     font-weight: 600;
     font-size: 16px;
   }
+  /* Enhanced Dark Theme for All Sections */
+.dark-theme .about-section,
+.dark-theme .services-section,
+.dark-theme .testimonials-section,
+.dark-theme .support-section {
+  background: var(--bg-color) !important;
+  color: var(--text-color) !important;
+}
+
+.dark-theme .section-header h2 {
+  color: var(--heading-color) !important;
+}
+
+.dark-theme .section-header p {
+  color: var(--text-color) !important;
+}
+
+.dark-theme .service-card,
+.dark-theme .testimonial-card,
+.dark-theme .support-card {
+  background: var(--card-bg) !important;
+  color: var(--card-text) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+}
+
+.dark-theme .service-card h4,
+.dark-theme .service-card p,
+.dark-theme .testimonial-card h4,
+.dark-theme .testimonial-card p,
+.dark-theme .support-card h4,
+.dark-theme .support-card p {
+  color: var(--card-text) !important;
+}
 
   /* Enhanced Social Media Icons */
   .social-icon {
@@ -1431,129 +1464,281 @@
     </div>
     <button id="chat-toggle" onclick="toggleChat()">💬</button>
   </div>
-
-  <script>
-    const API_URL = "/chat/";
-
-    function toggleChat() {
-      const chatBox = document.getElementById("chat-box");
-      const toggleBtn = document.getElementById("chat-toggle");
-      if (chatBox.style.display === "block") {
-        chatBox.style.display = "none";
-        toggleBtn.innerHTML = "💬";
-        toggleBtn.style.background =
-          "linear-gradient(135deg, var(--chat-primary), var(--chat-primary-hover))";
-      } else {
-        chatBox.style.display = "block";
-        toggleBtn.innerHTML = "✕";
-        toggleBtn.style.background =
-          "linear-gradient(135deg, var(--chat-primary-hover), var(--chat-accent))";
-        document.getElementById("user-input").focus();
-        if (document.getElementById("chat-messages").children.length === 0) {
-          appendMessage(
-            "Bot",
-            "Hello! Welcome to Nalanda Open University. I'm here to help you with information about courses, admissions, and more. How can I assist you today?"
+<!-- JavaScript for Enhanced Functionality -->
+<script>
+  $(document).ready(function () {
+    // Smooth scrolling for anchor links
+    $('a[href^="#"]').on("click", function (event) {
+      var target = $(this.getAttribute("href"));
+      if (target.length) {
+        event.preventDefault();
+        $("html, body")
+          .stop()
+          .animate(
+            {
+              scrollTop: target.offset().top - 120,
+            },
+            1000
           );
-        }
       }
-    }
+    });
 
-    function appendMessage(sender, message) {
-      const messageDiv = document.createElement("div");
-      messageDiv.classList.add("chat-message");
+    // Mobile menu close on link click
+    $(".navbar-nav .nav-link").on("click", function () {
+      if ($(window).width() < 992) {
+        $(".navbar-collapse").collapse("hide");
+      }
+    });
 
-      if (sender === "You") {
-        messageDiv.classList.add("user-message");
+    // Add hover effect to navbar brand
+    $(".navbar-brand").hover(
+      function () {
+        $(this).find("img").css("transform", "scale(1.05)");
+      },
+      function () {
+        $(this).find("img").css("transform", "scale(1)");
+      }
+    );
+
+    // Enhanced Theme Toggle Functionality
+    const themeToggle = document.getElementById("theme-toggle");
+    const themeIcon = document.getElementById("theme-icon");
+
+    // Function to apply theme consistently
+    function applyTheme(theme) {
+      if (theme === "dark") {
+        document.body.classList.add("dark-theme");
+        document.documentElement.setAttribute('data-bs-theme', 'dark');
+        themeIcon.textContent = "☀️";
       } else {
-        messageDiv.classList.add("bot-message");
+        document.body.classList.remove("dark-theme");
+        document.documentElement.setAttribute('data-bs-theme', 'light');
+        themeIcon.textContent = "🌙";
       }
-
-      messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
-      document.getElementById("chat-messages").appendChild(messageDiv);
-
-      const messageContainer = document.getElementById("chat-messages");
-      messageContainer.scrollTop = messageContainer.scrollHeight;
+      localStorage.setItem("theme", theme);
     }
 
-    async function sendMessage() {
-      const userInput = document.getElementById("user-input");
-      const message = userInput.value.trim();
-      if (message === "") return;
+    // Check for saved theme preference
+    const savedTheme = localStorage.getItem("theme") || "light";
+    applyTheme(savedTheme);
 
-      appendMessage("You", message);
-      userInput.value = "";
-      userInput.focus();
+    // Toggle theme on button click
+    themeToggle.addEventListener("click", function () {
+      const isDark = !document.body.classList.contains("dark-theme");
+      applyTheme(isDark ? "dark" : "light");
+    });
 
-      try {
-        const response = await fetch(API_URL, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            "X-CSRFToken": getCookie("csrftoken"),
-          },
-          body: JSON.stringify({ message: message }),
-        });
+    // Live Time Update
+    function updateTime() {
+      const now = new Date();
+      let hours = now.getHours();
+      let minutes = now.getMinutes();
+      let seconds = now.getSeconds();
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+      hours = hours < 10 ? '0' + hours : hours;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      seconds = seconds < 10 ? '0' + seconds : seconds;
 
-        const data = await response.json();
-        if (data.response) {
-          appendMessage("Bot", data.response);
-        } else if (data.error) {
-          appendMessage("Bot", `Sorry, there was an error: ${data.error}`);
-        } else {
-          appendMessage("Bot", "Sorry, I encountered an unexpected error.");
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        appendMessage(
-          "Bot",
-          "Oops! Something went wrong. Please try again in a moment."
-        );
+      const timeElement = document.getElementById('liveTime');
+      if (timeElement) {
+        timeElement.textContent = hours + ':' + minutes + ':' + seconds;
       }
     }
 
-    function getCookie(name) {
-      let cookieValue = null;
-      if (document.cookie && document.cookie !== "") {
-        const cookies = document.cookie.split(";");
-        for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i].trim();
-          if (cookie.substring(0, name.length + 1) === name + "=") {
-            cookieValue = decodeURIComponent(
-              cookie.substring(name.length + 1)
-            );
-            break;
-          }
-        }
+    updateTime();
+    setInterval(updateTime, 1000);
+  });
+
+  // Navbar background change on scroll
+  $(window).scroll(function () {
+    if ($(this).scrollTop() > 50) {
+      $(".main-navbar").css({
+        background: "rgba(240, 248, 255, 0.95)",
+        "backdrop-filter": "blur(15px)",
+      });
+    } else {
+      $(".main-navbar").css({
+        background: "var(--nav-bg)",
+        "backdrop-filter": "blur(10px)",
+      });
+    }
+  });
+
+  // Get the button
+  let topBtn = document.getElementById("topBtn");
+
+  // Show button when scrolled 100px
+  window.onscroll = function () {
+    if (
+      document.body.scrollTop > 100 ||
+      document.documentElement.scrollTop > 100
+    ) {
+      topBtn.style.display = "block";
+    } else {
+      topBtn.style.display = "none";
+    }
+  };
+
+  // Scroll to top smoothly
+  function scrollToTop() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+</script>
+
+<!-- Chatbot Widget -->
+<div id="chat-container">
+  <div id="chat-box">
+    <div id="chat-header">
+      <span>NOU Assistant 🤖</span>
+      <button onclick="toggleChat()" style="
+            background: transparent;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 18px;
+          ">
+        ×
+      </button>
+    </div>
+    <div id="chat-messages"></div>
+    <div style="
+          padding: 12px;
+          border-top: 1px solid #eee;
+          background: var(--card-bg);
+          border-bottom-left-radius: 15px;
+          border-bottom-right-radius: 15px;
+          display: flex;
+        ">
+      <input type="text" id="user-input" placeholder="Ask about NOU..." />
+      <button id="send-button" onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+  <button id="chat-toggle" onclick="toggleChat()">💬</button>
+</div>
+
+<!-- Chatbot JavaScript -->
+<script>
+  const API_URL = "/chat/";
+
+  // Chatbot toggle function
+  function toggleChat() {
+    const chatBox = document.getElementById("chat-box");
+    const toggleBtn = document.getElementById("chat-toggle");
+    
+    if (chatBox.style.display === "block") {
+      chatBox.style.display = "none";
+      toggleBtn.innerHTML = "💬";
+      toggleBtn.style.background = "linear-gradient(135deg, var(--chat-primary), var(--chat-primary-hover))";
+    } else {
+      chatBox.style.display = "block";
+      toggleBtn.innerHTML = "✕";
+      toggleBtn.style.background = "linear-gradient(135deg, var(--chat-primary-hover), var(--chat-accent))";
+      document.getElementById("user-input").focus();
+      
+      // Add welcome message if chat is empty
+      if (document.getElementById("chat-messages").children.length === 0) {
+        appendMessage("Bot", "Hello! Welcome to Nalanda Open University. I'm here to help you with information about courses, admissions, and more. How can I assist you today?");
       }
-      return cookieValue;
+    }
+  }
+
+  // Append message to chat
+  function appendMessage(sender, message) {
+    const messageDiv = document.createElement("div");
+    messageDiv.classList.add("chat-message");
+
+    if (sender === "You") {
+      messageDiv.classList.add("user-message");
+    } else {
+      messageDiv.classList.add("bot-message");
     }
 
-    document
-      .getElementById("user-input")
-      .addEventListener("keypress", function (e) {
-        if (e.key === "Enter") {
-          sendMessage();
-        }
+    messageDiv.innerHTML = `<strong>${sender}:</strong> ${message}`;
+    document.getElementById("chat-messages").appendChild(messageDiv);
+
+    // Scroll to bottom
+    const messageContainer = document.getElementById("chat-messages");
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+  }
+
+  // Send message function
+  async function sendMessage() {
+    const userInput = document.getElementById("user-input");
+    const message = userInput.value.trim();
+    
+    if (message === "") return;
+
+    // Add user message to chat
+    appendMessage("You", message);
+    userInput.value = "";
+    userInput.focus();
+
+    try {
+      // Send message to backend
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRFToken": getCookie("csrftoken"),
+        },
+        body: JSON.stringify({ message: message }),
       });
 
-    setTimeout(() => {
-      const chatBox = document.getElementById("chat-box");
-      if (chatBox.style.display !== "block") {
-        toggleChat();
-        setTimeout(() => {
-          if (
-            document.getElementById("chat-messages").children.length === 1
-          ) {
-            toggleChat();
-          }
-        }, 5000);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
       }
-    }, 3000);
-  </script>
+
+      const data = await response.json();
+      if (data.response) {
+        appendMessage("Bot", data.response);
+      } else if (data.error) {
+        appendMessage("Bot", `Sorry, there was an error: ${data.error}`);
+      } else {
+        appendMessage("Bot", "Sorry, I encountered an unexpected error.");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      appendMessage("Bot", "Oops! Something went wrong. Please try again in a moment.");
+    }
+  }
+
+  // Get CSRF token
+  function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== "") {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.substring(0, name.length + 1) === name + "=") {
+          cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+          break;
+        }
+      }
+    }
+    return cookieValue;
+  }
+
+  // Enter key to send message
+  document.getElementById("user-input").addEventListener("keypress", function (e) {
+    if (e.key === "Enter") {
+      sendMessage();
+    }
+  });
+
+  // Auto-open chat after 3 seconds
+  setTimeout(() => {
+    const chatBox = document.getElementById("chat-box");
+    if (chatBox.style.display !== "block") {
+      toggleChat();
+      setTimeout(() => {
+        if (document.getElementById("chat-messages").children.length === 1) {
+          toggleChat();
+        }
+      }, 5000);
+    }
+  }, 3000);
+</script>
+   
 </body>
 
 </html>
