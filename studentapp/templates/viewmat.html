@@ -1,107 +1,666 @@
-
 {% extends "studentparent.html" %}
 {% block body %}
-<div class="container-fluid mt-4">
-    <div class="row">
-        <div class="col-12">
-            <h2 class="text-center mb-4" style="color: rgb(6,6,106)">Study Materials</h2>
-        </div>
+
+<style>
+    .materials-container {
+        padding: 30px;
+        background: #f5f7fa;
+        min-height: 100vh;
+    }
+
+    .header-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 20px;
+        padding: 40px;
+        margin-bottom: 30px;
+        box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .header-section::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        right: -50%;
+        width: 200%;
+        height: 200%;
+        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .header-section h1 {
+        color: white;
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 10px;
+        position: relative;
+        z-index: 1;
+    }
+
+    .header-section .icon {
+        font-size: 3rem;
+        margin-right: 15px;
+        vertical-align: middle;
+    }
+
+    .header-section p {
+        color: rgba(255, 255, 255, 0.9);
+        font-size: 1.1rem;
+        margin: 0;
+        position: relative;
+        z-index: 1;
+    }
+
+    {% if debug_mode %}
+    .debug-alert {
+        background: linear-gradient(135deg, #ffd93d 0%, #f6a20a 100%);
+        border: none;
+        border-radius: 15px;
+        padding: 20px;
+        margin-bottom: 25px;
+        color: #2d3748;
+        box-shadow: 0 5px 15px rgba(246, 162, 10, 0.3);
+        position: relative;
+        z-index: 1;
+    }
+
+    .debug-alert strong {
+        font-size: 1.1rem;
+        display: block;
+        margin-bottom: 5px;
+    }
+    {% endif %}
+
+    .stats-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .stat-card {
+        background: white;
+        border-radius: 15px;
+        padding: 25px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+        border-left: 4px solid #667eea;
+        text-align: center;
+    }
+
+    .stat-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 25px rgba(102, 126, 234, 0.2);
+    }
+
+    .stat-card:nth-child(2) {
+        border-left-color: #48bb78;
+    }
+
+    .stat-card:nth-child(3) {
+        border-left-color: #ed8936;
+    }
+
+    .stat-card .stat-icon {
+        font-size: 2.5rem;
+        margin-bottom: 10px;
+        display: block;
+    }
+
+    .stat-card h3 {
+        font-size: 2rem;
+        color: #667eea;
+        font-weight: 700;
+        margin-bottom: 5px;
+    }
+
+    .stat-card:nth-child(2) h3 {
+        color: #48bb78;
+    }
+
+    .stat-card:nth-child(3) h3 {
+        color: #ed8936;
+    }
+
+    .stat-card p {
+        color: #666;
+        font-size: 0.95rem;
+        margin: 0;
+    }
+
+    .table-container {
+        background: white;
+        border-radius: 20px;
+        padding: 30px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        overflow: hidden;
+    }
+
+    .table-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+
+    .table-header h2 {
+        color: #2d3748;
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 0;
+    }
+
+    .search-box {
+        display: flex;
+        align-items: center;
+        background: #f7fafc;
+        border-radius: 10px;
+        padding: 10px 15px;
+        border: 2px solid #e2e8f0;
+        transition: all 0.3s ease;
+    }
+
+    .search-box:focus-within {
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    .search-box input {
+        border: none;
+        background: transparent;
+        outline: none;
+        padding: 5px 10px;
+        font-size: 0.95rem;
+        width: 250px;
+    }
+
+    .search-box i {
+        color: #a0aec0;
+    }
+
+    .modern-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+
+    .modern-table thead {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+
+    .modern-table thead th {
+        color: white;
+        font-weight: 600;
+        padding: 18px 15px;
+        text-align: left;
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border: none;
+    }
+
+    .modern-table thead th:first-child {
+        border-top-left-radius: 12px;
+    }
+
+    .modern-table thead th:last-child {
+        border-top-right-radius: 12px;
+    }
+
+    .modern-table tbody tr {
+        transition: all 0.3s ease;
+        border-bottom: 1px solid #e2e8f0;
+    }
+
+    .modern-table tbody tr:hover {
+        background: #f7fafc;
+        transform: scale(1.005);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .modern-table tbody td {
+        padding: 18px 15px;
+        color: #4a5568;
+        font-size: 0.9rem;
+        vertical-align: middle;
+    }
+
+    .modern-table tbody tr:last-child {
+        border-bottom: none;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
+    .badge-course {
+        background: #e0e7ff;
+        color: #5a67d8;
+    }
+
+    .badge-category {
+        background: #c6f6d5;
+        color: #276749;
+    }
+
+    .badge-version {
+        background: #fed7d7;
+        color: #c53030;
+    }
+
+    .action-buttons {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+    }
+
+    .btn-modern {
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        text-decoration: none;
+        white-space: nowrap;
+    }
+
+    .btn-download {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+    }
+
+    .btn-download:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        color: white;
+    }
+
+    .btn-preview {
+        background: linear-gradient(135deg, #38b2ac 0%, #2c7a7b 100%);
+        color: white;
+    }
+
+    .btn-preview:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(56, 178, 172, 0.4);
+        color: white;
+    }
+
+    .row-number {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 600;
+    }
+
+    .file-size-badge {
+        background: #edf2f7;
+        color: #4a5568;
+        padding: 5px 10px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .date-badge {
+        background: #feebc8;
+        color: #c05621;
+        padding: 5px 10px;
+        border-radius: 8px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .no-data {
+        text-align: center;
+        padding: 60px 20px;
+        color: #a0aec0;
+    }
+
+    .no-data i {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        opacity: 0.3;
+    }
+
+    .no-data h3 {
+        color: #4a5568;
+        margin-bottom: 10px;
+    }
+
+    .no-data p {
+        color: #718096;
+        margin-bottom: 5px;
+    }
+
+    .scroll-container {
+        overflow-x: auto;
+        margin: 0 -30px;
+        padding: 0 30px;
+    }
+
+    .scroll-container::-webkit-scrollbar {
+        height: 8px;
+    }
+
+    .scroll-container::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    .scroll-container::-webkit-scrollbar-thumb {
+        background: #667eea;
+        border-radius: 10px;
+    }
+
+    .scroll-container::-webkit-scrollbar-thumb:hover {
+        background: #764ba2;
+    }
+
+    .truncate-text {
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        cursor: pointer;
+    }
+
+    .truncate-text:hover {
+        color: #667eea;
+        font-weight: 500;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 968px) {
+        .materials-container {
+            padding: 20px;
+        }
+
+        .stats-row {
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        }
+    }
+
+    @media (max-width: 768px) {
+        .materials-container {
+            padding: 15px;
+        }
+
+        .header-section {
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        .header-section h1 {
+            font-size: 1.8rem;
+        }
+
+        .header-section .icon {
+            font-size: 2rem;
+        }
+
+        .table-container {
+            padding: 20px 15px;
+            border-radius: 15px;
+        }
+
+        .table-header {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .search-box {
+            width: 100%;
+        }
+
+        .search-box input {
+            width: 100%;
+        }
+
+        .modern-table thead th,
+        .modern-table tbody td {
+            padding: 12px 8px;
+            font-size: 0.85rem;
+        }
+
+        .stat-card {
+            padding: 20px;
+        }
+
+        .action-buttons {
+            flex-direction: column;
+        }
+
+        .btn-modern {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .truncate-text {
+            max-width: 120px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .header-section h1 {
+            font-size: 1.5rem;
+        }
+
+        .header-section .icon {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .modern-table {
+            font-size: 0.8rem;
+        }
+
+        .row-number {
+            width: 35px;
+            height: 35px;
+            font-size: 0.85rem;
+        }
+
+        .stat-card h3 {
+            font-size: 1.5rem;
+        }
+
+        .stats-row {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+
+<div class="materials-container">
+    <!-- Header Section -->
+    <div class="header-section">
+        <h1>
+            <span class="icon">📚</span>
+            Study Materials
+        </h1>
+        <p>Access all your course materials, notes, and resources in one place</p>
     </div>
 
     {% if debug_mode %}
-    <div class="alert alert-info">
-        <strong>Debug Mode:</strong> Showing all materials as no exact match found for your program/branch/year combination.
+    <div class="debug-alert">
+        <strong>⚠️ Debug Mode Active</strong>
+        Showing all materials as no exact match found for your program/branch/year combination.
     </div>
     {% endif %}
-
-    <div class="row">
-        <div class="col-sm-12">
-            {% if mat %}
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <thead style="background-color: #06066A; color: white;">
-                            <tr>
-                                <th>#</th>
-                                <th>Course</th>
-                                <th>Title</th>
-                                <th>Description</th>
-                                <th>Category</th>
-                                <th>Upload Date</th>
-                                <th>File Size</th>
-                                <th>Created By</th>
-                                <th>Version</th>
-                                <th>Download</th>
-                                <th>Preview</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for material in mat %}
-                            <tr style="color: #495057;">
-                                <td>{{ forloop.counter }}</td>
-                                <td>{{ material.course.title|default:"N/A" }}</td>
-                                <td>{{ material.title|truncatechars:30 }}</td>
-                                <td>{{ material.description|truncatechars:50|default:"-" }}</td>
-                                <td>{{ material.category.name|default:"-" }}</td>
-                                <td>{{ material.created_at|date:"M d, Y" }}</td>
-                                <td>{{ material.get_formatted_size }}</td>
-                                <td>{{ material.created_by.username|default:"Unknown" }}</td>
-                                <td>v{{ material.version }}</td>
-                                <td>
-                                    <a href="{% url 'studentapp:download_material' material.id %}" 
-                                       class="btn btn-sm btn-primary">
-                                        <i class="fas fa-download"></i> Download
-                                    </a>
-                                </td>
-                                <td>
-                                    {% if material.is_previewable %}
-                                    <a href="{{ material.file.url }}" target="_blank" class="btn btn-sm btn-info">
-                                        <i class="fas fa-eye"></i> Preview
-                                    </a>
-                                    {% else %}
-                                    <span class="text-muted">N/A</span>
-                                    {% endif %}
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            {% else %}
-                <div class="alert alert-warning text-center">
-                    <h4><i class="fas fa-exclamation-triangle"></i> No Materials Found</h4>
-                    <p>No study materials are currently available for your program, branch, and year combination.</p>
-                    <p class="mb-0">Please contact your administrator if you believe this is an error.</p>
-                </div>
-            {% endif %}
-        </div>
-    </div>
 
     <!-- Statistics Section -->
     {% if mat %}
-    <div class="row mt-4">
-        <div class="col-12">
-            <div class="card bg-light">
-                <div class="card-body text-center">
-                    <h6>Material Statistics</h6>
-                    <div class="row">
-                        <div class="col-md-4">
-                            <strong>{{ mat|length }}</strong><br>
-                            <small>Total Materials</small>
-                        </div>
-                        <div class="col-md-4">
-                            <strong>{{ stu.program }}</strong><br>
-                            <small>Your Program</small>
-                        </div>
-                        <div class="col-md-4">
-                            <strong>{{ stu.branch }}</strong><br>
-                            <small>Your Branch</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
+    <div class="stats-row">
+        <div class="stat-card">
+            <span class="stat-icon">📖</span>
+            <h3>{{ mat|length }}</h3>
+            <p>Total Materials</p>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon">🎓</span>
+            <h3>{{ stu.program }}</h3>
+            <p>Your Program</p>
+        </div>
+        <div class="stat-card">
+            <span class="stat-icon">🌿</span>
+            <h3>{{ stu.branch }}</h3>
+            <p>Your Branch</p>
         </div>
     </div>
     {% endif %}
 
+    <!-- Table Container -->
+    <div class="table-container">
+        <div class="table-header">
+            <h2>Available Materials</h2>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search materials..." onkeyup="searchTable()">
+            </div>
+        </div>
+
+        <div class="scroll-container">
+            {% if mat %}
+            <table class="modern-table" id="materialsTable">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Course</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Category</th>
+                        <th>Upload Date</th>
+                        <th>File Size</th>
+                        <th>Created By</th>
+                        <th>Version</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for material in mat %}
+                    <tr>
+                        <td>
+                            <span class="row-number">{{ forloop.counter }}</span>
+                        </td>
+                        <td>
+                            <span class="badge badge-course">{{ material.course.title|default:"N/A" }}</span>
+                        </td>
+                        <td>
+                            <strong class="truncate-text" title="{{ material.title }}">{{ material.title }}</strong>
+                        </td>
+                        <td>
+                            <span class="truncate-text" title="{{ material.description }}">
+                                {{ material.description|default:"-" }}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="badge badge-category">{{ material.category.name|default:"-" }}</span>
+                        </td>
+                        <td>
+                            <span class="date-badge">{{ material.created_at|date:"M d, Y" }}</span>
+                        </td>
+                        <td>
+                            <span class="file-size-badge">{{ material.get_formatted_size }}</span>
+                        </td>
+                        <td>{{ material.created_by.username|default:"Unknown" }}</td>
+                        <td>
+                            <span class="badge badge-version">v{{ material.version }}</span>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <a href="{% url 'studentapp:download_material' material.id %}" 
+                                   class="btn-modern btn-download">
+                                    <i class="fas fa-download"></i> Download
+                                </a>
+                                {% comment %} {% if material.is_previewable %}
+                                <a href="{{ material.file.url }}" target="_blank" 
+                                   class="btn-modern btn-preview">
+                                    <i class="fas fa-eye"></i> Preview
+                                </a>
+                                {% else %}
+                                <span style="color: #a0aec0; font-size: 0.85rem;">No preview</span>
+                                {% endif %} {% endcomment %}
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="no-data">
+                <i class="fas fa-folder-open"></i>
+                <h3>No Materials Found</h3>
+                <p>No study materials are currently available for your program, branch, and year combination.</p>
+                <p>Please contact your administrator if you believe this is an error.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
 </div>
+
+<script>
+    function searchTable() {
+        const input = document.getElementById("searchInput");
+        const filter = input.value.toLowerCase();
+        const table = document.getElementById("materialsTable");
+        
+        if (!table) return;
+        
+        const tr = table.getElementsByTagName("tr");
+
+        for (let i = 1; i < tr.length; i++) {
+            const row = tr[i];
+            const cells = row.getElementsByTagName("td");
+            let found = false;
+
+            for (let j = 0; j < cells.length; j++) {
+                const cell = cells[j];
+                if (cell) {
+                    const textValue = cell.textContent || cell.innerText;
+                    if (textValue.toLowerCase().indexOf(filter) > -1) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+
+            if (found) {
+                row.style.display = "";
+            } else {
+                row.style.display = "none";
+            }
+        }
+    }
+
+    // Show full text on click for truncated content
+    document.addEventListener('DOMContentLoaded', function() {
+        const truncatedTexts = document.querySelectorAll('.truncate-text');
+        truncatedTexts.forEach(text => {
+            text.addEventListener('click', function() {
+                const fullText = this.getAttribute('title');
+                if (fullText && fullText !== this.textContent) {
+                    alert(fullText);
+                }
+            });
+        });
+    });
+</script>
+
 {% endblock body %}
