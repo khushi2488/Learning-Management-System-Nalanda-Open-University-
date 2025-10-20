@@ -106,6 +106,7 @@
     margin: 0;
     font-size: 1.85rem;
     letter-spacing: 0.5px;
+    color: white !important;
   }
 
   .form-subheading {
@@ -113,6 +114,7 @@
     font-size: 0.95rem;
     opacity: 0.95;
     font-weight: 400;
+    color: white !important;
   }
 
   /* Form Body */
@@ -122,7 +124,7 @@
   }
 
   .form-section {
-    background: white;
+    background: var(--card-bg);
     padding: 2rem;
     border-radius: 16px;
     margin-bottom: 1.5rem;
@@ -160,21 +162,22 @@
     transition: all 0.3s ease;
     width: 100%;
     font-size: 0.95rem;
-    background: white;
+    background: var(--card-bg);
+    color: var(--card-text);
   }
 
   .form-control:focus, .form-select:focus {
     border-color: var(--accent-color);
     box-shadow: 0 0 0 4px rgba(59,130,246,0.08);
     outline: none;
-    background: #fff;
+    background: var(--card-bg);
   }
 
   .form-label {
-    font-weight: 500;
+    font-weight: 600;
     color: var(--card-text);
     margin-bottom: 0.5rem;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
   }
 
   /* Radio Buttons - Modern Style */
@@ -185,7 +188,7 @@
   }
 
   .form-check {
-    background: white;
+    background: var(--card-bg);
     border: 2px solid var(--border-color);
     border-radius: 10px;
     padding: 0.75rem 1.25rem;
@@ -215,7 +218,8 @@
   .form-check-label {
     cursor: pointer;
     margin-left: 0.5rem;
-    font-weight: 500;
+    font-weight: 600;
+    color: var(--card-text);
   }
 
   /* Grid Layout for Form Fields */
@@ -234,7 +238,7 @@
   /* Submit Button */
   .submit-section {
     padding: 2rem 2.5rem;
-    background: white;
+    background: var(--card-bg);
   }
 
   .submit-btn {
@@ -250,6 +254,7 @@
     letter-spacing: 0.5px;
     text-transform: uppercase;
     box-shadow: 0 4px 15px rgba(30,64,175,0.3);
+    cursor: pointer;
   }
 
   .submit-btn:hover {
@@ -271,6 +276,156 @@
     color: white;
     margin-bottom: 1.5rem;
   }
+
+  /* ================= Fixed Dark Theme - Blue Color Scheme ================= */
+  [data-bs-theme="dark"] .registration-container,
+  .dark-theme .registration-container {
+    background: linear-gradient(135deg, #0a1a32 0%, #071024 100%) !important;
+    border: 1px solid rgba(14, 165, 233, 0.3) !important;
+    box-shadow: 0 10px 40px rgba(14, 165, 233, 0.15) !important;
+  }
+
+  [data-bs-theme="dark"] .form-body,
+  .dark-theme .form-body {
+    background: linear-gradient(135deg, #081426 0%, #061021 100%) !important;
+  }
+
+  [data-bs-theme="dark"] .form-section,
+  .dark-theme .form-section {
+    background: linear-gradient(135deg, #0c1e3e 0%, #091830 100%) !important;
+    border: 1px solid rgba(14, 165, 233, 0.2) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  [data-bs-theme="dark"] .submit-section,
+  .dark-theme .submit-section {
+    background: linear-gradient(135deg, #0a1a32 0%, #071024 100%) !important;
+  }
+
+  /* Form Labels - White in dark theme */
+  [data-bs-theme="dark"] .form-label,
+  .dark-theme .form-label {
+    color: #ffffff !important;
+    font-weight: 600;
+  }
+
+  /* Section Titles - Blue in dark theme */
+  [data-bs-theme="dark"] .section-title,
+  .dark-theme .section-title {
+    color: #0ea5e9 !important;
+    border-bottom-color: #0ea5e9 !important;
+  }
+
+  /* Form Inputs */
+  [data-bs-theme="dark"] .form-control,
+  [data-bs-theme="dark"] .form-select,
+  [data-bs-theme="dark"] textarea.form-control,
+  .dark-theme .form-control,
+  .dark-theme .form-select,
+  .dark-theme textarea.form-control {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(14, 165, 233, 0.4) !important;
+  }
+
+  [data-bs-theme="dark"] .form-control:focus,
+  [data-bs-theme="dark"] .form-select:focus,
+  .dark-theme .form-control:focus,
+  .dark-theme .form-select:focus {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.25) !important;
+  }
+
+  [data-bs-theme="dark"] .form-control::placeholder,
+  .dark-theme .form-control::placeholder {
+    color: #94a3b8 !important;
+  }
+
+  /* Radio Buttons in Dark Theme */
+  [data-bs-theme="dark"] .form-check,
+  .dark-theme .form-check {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(14, 165, 233, 0.3) !important;
+  }
+
+  [data-bs-theme="dark"] .form-check:hover,
+  .dark-theme .form-check:hover {
+    border-color: #0ea5e9 !important;
+    background: rgba(14, 165, 233, 0.15) !important;
+  }
+
+  [data-bs-theme="dark"] .form-check-label,
+  .dark-theme .form-check-label {
+    color: #ffffff !important;
+    font-weight: 600;
+  }
+
+  [data-bs-theme="dark"] .form-check-input:checked,
+  .dark-theme .form-check-input:checked {
+    background-color: #0ea5e9 !important;
+    border-color: #0ea5e9 !important;
+  }
+
+  /* Hero Section in Dark Theme */
+  [data-bs-theme="dark"] .home,
+  .dark-theme .home {
+    background-image: linear-gradient(rgba(6, 6, 102, 0.8), rgba(0, 86, 179, 0.7)), url(../static/images/bookslibrary.jpg) !important;
+  }
+
+  /* Buttons - Blue in dark theme */
+  [data-bs-theme="dark"] .submit-btn,
+  .dark-theme .submit-btn {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3) !important;
+  }
+
+  [data-bs-theme="dark"] .submit-btn:hover,
+  .dark-theme .submit-btn:hover {
+    background: linear-gradient(135deg, #0284c7, #075985) !important;
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4) !important;
+  }
+
+  /* Form Header - Blue in dark theme */
+  [data-bs-theme="dark"] .form-header,
+  .dark-theme .form-header {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+  }
+
+  [data-bs-theme="dark"] .form-heading,
+  .dark-theme .form-heading {
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] .form-subheading,
+  .dark-theme .form-subheading {
+    color: #e6eef8 !important;
+  }
+
+  /* Alerts in Dark Theme */
+  [data-bs-theme="dark"] .alert-success,
+  .dark-theme .alert-success {
+    background: linear-gradient(135deg, #059669, #047857) !important;
+    color: #ffffff !important;
+  }
+
+  /* Select dropdown options in dark theme */
+  [data-bs-theme="dark"] .form-select option,
+  .dark-theme .form-select option {
+    background: #0a1a32 !important;
+    color: #ffffff !important;
+  }
+  /* FIX FOR DARK THEME TEXT COLORS */
+[data-bs-theme="dark"] .form-label,
+.dark-theme .form-label {
+    color: #ffffff !important;
+}
+
+[data-bs-theme="dark"] .section-title,
+.dark-theme .section-title {
+    color: #0ea5e9 !important;
+}
 
   /* Responsive Design */
   @media (max-width: 1024px) {
@@ -368,7 +523,7 @@
     }
     
     .form-label {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
     }
   }
 
@@ -446,6 +601,28 @@
       padding: 0.85rem;
     }
   }
+  /* Fix for dark theme form labels - Override parent styles */
+[data-bs-theme="dark"] .form-label,
+.dark-theme .form-label {
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+[data-bs-theme="dark"] .section-title,
+.dark-theme .section-title {
+    color: #0ea5e9 !important;
+    border-bottom-color: #0ea5e9 !important;
+}
+
+[data-bs-theme="dark"] .form-heading,
+.dark-theme .form-heading {
+    color: #ffffff !important;
+}
+
+[data-bs-theme="dark"] .form-subheading,
+.dark-theme .form-subheading {
+    color: #e6eef8 !important;
+}
 </style>
 
 <!-- Hero Section -->

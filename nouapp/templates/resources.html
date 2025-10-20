@@ -3,10 +3,10 @@
 {% block body %}
 <style>
   :root {
-    --primary-blue: #1e40af;
-    --secondary-blue: #3b82f6;
-    --accent-blue: #60a5fa;
-    --dark-blue: #1e3a8a;
+    --primary-blue: #0a1d69;
+    --secondary-blue: #2a73cc;
+    --accent-blue: #0ea5e9;
+    --dark-blue: #071024;
     --light-blue: #dbeafe;
     --text-dark: #1e293b;
     --text-light: #64748b;
@@ -16,7 +16,7 @@
   }
 
   /* Hero Section */
- .home {
+  .home {
     background-image: linear-gradient(rgba(30, 64, 175, 0.5), rgba(30, 58, 138, 0.6)),
                   url(../static/images/bookslibrary.jpg);
     width: 100%;
@@ -90,8 +90,8 @@
     line-height: 1.6;
     margin: 0;
   }
-  /* fade in and out animation  */
 
+  /* fade in and out animation  */
   @keyframes fadeInDown {
     from {
       opacity: 0;
@@ -113,28 +113,37 @@
       transform: translateY(0);
     }
   }
+
   /* Info Section */
   .about-info {
     background: #f4f6fb;
-    border-radius: 12px;
-    padding: 2rem 1rem;
-    margin: 2rem 5%;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    padding: 40px 30px;
+    margin: 40px 5%;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
     text-align: center;
     font-family: 'Poppins', sans-serif;
+    color: #0a1d69;
+    transition: all 0.3s ease;
   }
 
   .about-info h3 {
     color: #0a1d69;
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.3;
   }
 
   .about-info p {
-    color:#0a1d69;
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
+    color: #0a1d69;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    font-weight: 500;
+    line-height: 1.7;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .about-info ul {
@@ -142,220 +151,457 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 15px;
+    gap: 20px;
     padding: 0;
+    margin: 0;
   }
 
   .about-info ul li {
-    background: white;
-    padding: 10px 18px;
-    border-radius: 25px;
-    font-weight: 500;
-    color: var(--text-dark);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s, box-shadow 0.3s;
+    background: #ffffff;
+    padding: 15px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    color: #0a1d69;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
   }
 
   .about-info ul li:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(42, 115, 204, 0.2);
+    border-color: #2a73cc;
   }
 
   /* Resource Cards */
   .resource-section {
     max-width: 1200px;
     margin: 3rem auto;
-    padding: 0 1rem;
+    padding: 0 2rem;
   }
 
   .resource-section h2 {
-    color: var(--primary-blue);
-    font-size: 2rem;
+    color: #0a1d69;
+    font-size: 2.5rem;
     font-weight: 700;
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 3rem;
+    margin-top: 2rem;
   }
 
   /* Grid */
   .resource-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    row-gap: 5rem;
-    column-gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 4rem;
   }
 
   /* Vertical Card Styling */
   .resource-card {
     display: flex;
     flex-direction: column;
-    border-radius: 16px;
-    justify-content: center;
+    border-radius: 20px;
+    justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    background: #fff;
+    padding: 30px 25px;
+    background: #ffffff;
     color: #0a1d69;
     text-align: center;
     font-family: 'Poppins', sans-serif;
-    min-height: 250px;
-    box-shadow: 0 8px 25px var(--card-shadow);
+    min-height: 320px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
     text-decoration: none;
-    transition: transform 0.3s, box-shadow 0.3s;
+    transition: all 0.4s ease;
     position: relative;
     overflow: hidden;
-    min-height: 300px;
-    width: 100%;
+    border: 2px solid transparent;
+  }
+
+  .resource-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #2a73cc, #0ea5e9);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  .resource-card:hover::before {
+    transform: scaleX(1);
   }
 
   .resource-card:hover {
-    transform: translateY(-5px) scale(1.02);
-    box-shadow: 0 12px 30px var(--card-shadow);
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(42, 115, 204, 0.25);
+    border-color: #2a73cc;
   }
 
   .resource-card .thumbnail {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 80px;
-    border-radius: 12px;
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    background: rgba(255, 255, 255, 0.2);
-    color: white;
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(14, 165, 233, 0.1));
+    color: #2a73cc;
     font-weight: bold;
+    transition: all 0.3s ease;
+  }
+
+  .resource-card:hover .thumbnail {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #2a73cc, #0ea5e9);
+    color: white;
   }
 
   .resource-card h3 {
-    font-size: 1.1rem;
-    font-weight: 600;
-    margin-bottom: 0.5rem;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #0a1d69;
+    line-height: 1.4;
   }
 
   .resource-card p {
-    font-size: 0.9rem;
+    font-size: 1rem;
     flex-grow: 1;
-    margin-bottom: 1rem;
-    line-height: 1.3;
-  }
-
-  .resource-section h2 {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    color: #555;
+    font-weight: 500;
   }
 
   .resource-card button {
-    background: #0a1d69;
+    background: linear-gradient(135deg, #0a1d69, #2a73cc);
     color: #fff;
     font-weight: 600;
     border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
+    padding: 12px 30px;
+    border-radius: 30px;
     cursor: pointer;
-    transition: background 0.3s, color 0.3s;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(10, 29, 105, 0.2);
+    min-width: 160px;
   }
 
   .resource-card button:hover {
-    background: var(--accent-blue);
+    background: linear-gradient(135deg, #2a73cc, #0ea5e9);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(42, 115, 204, 0.3);
     color: white;
   }
 
-  /* Responsive */
-  @media(max-width:768px) {
-    .resource-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-  }
-
-  @media(max-width:480px) {
-    .resource-grid {
-      grid-template-columns: 1fr;
-    }
-  }
-
   hr {
-    width: 80px;
-    height: 3px;
-    background: #2a73cc;
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(135deg, #2a73cc, #0ea5e9);
     border: none;
-    margin: 15px auto;
+    margin: 25px auto;
     border-radius: 2px;
   }
 
-
   .tabs {
-  text-align: center;
-  margin: 30px 0;
-}
-
-.tab-btn {
-  background: #0a1d69;
-  color: white;
-  border: none;
-  padding: 10px 25px;
-  margin: 0 8px;
-  border-radius: 25px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.tab-btn:hover,
-.tab-btn.active {
-  background: #2a73cc;
-  transform: scale(1.05);
-}
-
-/* DROPDOWN FOR MOBILE */
-.course-dropdown {
-  display: none;
-  width: 250px;
-  margin: 20px auto;
-  position: relative;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
-}
-
-.course-dropdown .selected {
-  background: white;
-  border: 1px solid #0a1d69;
-  color: #0a1d69;
-  padding: 10px 15px;
-  border-radius: 25px;
-  text-align: center;
-}
-
-.course-dropdown .options {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background: white;
-  border: 1px solid #0a1d69;
-  border-radius: 0 0 12px 12px;
-  overflow: hidden;
-  z-index: 10;
-}
-
-.course-dropdown .options div {
-  padding: 10px 15px;
-  color: #0a1d69;
-}
-
-.course-dropdown .options div:hover {
-  background: #1944a3;
-  color: white;
-}
-
-@media screen and (max-width: 768px) {
-  .tabs {
-    display: none;
+    text-align: center;
+    margin: 40px 0 30px;
+    padding: 0 20px;
   }
+
+  .tab-btn {
+    background: #0a1d69;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    margin: 0 8px 15px;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(10, 29, 105, 0.2);
+    font-size: 1rem;
+  }
+
+  .tab-btn:hover,
+  .tab-btn.active {
+    background: linear-gradient(135deg, #2a73cc, #0ea5e9);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(42, 115, 204, 0.3);
+  }
+
+  /* DROPDOWN FOR MOBILE */
   .course-dropdown {
-    display: block;
+    display: none;
+    width: 280px;
+    margin: 25px auto;
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
   }
-}
 
+  .course-dropdown .selected {
+    background: white;
+    border: 2px solid #0a1d69;
+    color: #0a1d69;
+    padding: 12px 20px;
+    border-radius: 30px;
+    text-align: center;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
 
+  .course-dropdown .options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 2px solid #0a1d69;
+    border-radius: 15px;
+    overflow: hidden;
+    z-index: 10;
+    margin-top: 5px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .course-dropdown .options div {
+    padding: 12px 20px;
+    color: #0a1d69;
+    background: white;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .course-dropdown .options div:last-child {
+    border-bottom: none;
+  }
+
+  .course-dropdown .options div:hover {
+    background: linear-gradient(135deg, #2a73cc, #0ea5e9);
+    color: white;
+  }
+
+  /* Page Heading */
+  h2 {
+    color: #0a1d69;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 40px;
+    font-size: 3rem;
+    margin-bottom: 10px;
+  }
+
+  /* Responsive */
+  @media(max-width: 1024px) {
+    .resource-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+  }
+
+  @media(max-width: 768px) {
+    .resource-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    .tabs {
+      display: none;
+    }
+    
+    .course-dropdown {
+      display: block;
+    }
+    
+    .resource-section {
+      padding: 0 1rem;
+    }
+    
+    .resource-section h2 {
+      font-size: 2rem;
+    }
+    
+    h2 {
+      font-size: 2.2rem;
+    }
+  }
+
+  @media(max-width: 480px) {
+    .resource-card {
+      padding: 25px 20px;
+      min-height: 280px;
+    }
+    
+    .resource-card h3 {
+      font-size: 1.2rem;
+    }
+    
+    .resource-card p {
+      font-size: 0.95rem;
+    }
+    
+    .hero-content h3 {
+      font-size: 2rem;
+    }
+    
+    h2 {
+      font-size: 1.8rem;
+    }
+  }
+
+  /* ================= Updated Dark Theme - Blue Color Scheme ================= */
+  [data-bs-theme="dark"] .about-info,
+  .dark-theme .about-info {
+    background: linear-gradient(135deg, #071024 0%, #081426 100%) !important;
+    border: 1px solid rgba(14, 165, 233, 0.2) !important;
+    color: #e6eef8 !important;
+  }
+
+  [data-bs-theme="dark"] .about-info h3,
+  .dark-theme .about-info h3 {
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] .about-info p,
+  .dark-theme .about-info p {
+    color: #bcd6f5 !important;
+  }
+
+  [data-bs-theme="dark"] .about-info ul li,
+  .dark-theme .about-info ul li {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(14, 165, 233, 0.3) !important;
+    color: #e6eef8 !important;
+  }
+
+  [data-bs-theme="dark"] .about-info ul li:hover,
+  .dark-theme .about-info ul li:hover {
+    background: rgba(14, 165, 233, 0.2) !important;
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.3) !important;
+  }
+
+  [data-bs-theme="dark"] .resource-card,
+  .dark-theme .resource-card {
+    background: linear-gradient(135deg, #071024 0%, #0a1a32 100%) !important;
+    border: 1px solid rgba(14, 165, 233, 0.2) !important;
+    color: #e6eef8 !important;
+  }
+
+  [data-bs-theme="dark"] .resource-card:hover,
+  .dark-theme .resource-card:hover {
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 15px 40px rgba(14, 165, 233, 0.25) !important;
+  }
+
+  [data-bs-theme="dark"] .resource-card h3,
+  .dark-theme .resource-card h3 {
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] .resource-card p,
+  .dark-theme .resource-card p {
+    color: #bcd6f5 !important;
+  }
+
+  [data-bs-theme="dark"] .resource-card .thumbnail,
+  .dark-theme .resource-card .thumbnail {
+    background: rgba(14, 165, 233, 0.15) !important;
+    color: #0ea5e9 !important;
+  }
+
+  [data-bs-theme="dark"] .resource-card:hover .thumbnail,
+  .dark-theme .resource-card:hover .thumbnail {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] .tab-btn,
+  .dark-theme .tab-btn {
+    background: rgba(14, 165, 233, 0.2) !important;
+    border: 1px solid rgba(14, 165, 233, 0.3) !important;
+    color: #e6eef8 !important;
+  }
+
+  [data-bs-theme="dark"] .tab-btn:hover,
+  .dark-theme .tab-btn:hover,
+  [data-bs-theme="dark"] .tab-btn.active,
+  .dark-theme .tab-btn.active {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+    border-color: #0ea5e9 !important;
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] .course-dropdown .selected,
+  .dark-theme .course-dropdown .selected {
+    background: rgba(14, 165, 233, 0.1) !important;
+    border: 1px solid rgba(14, 165, 233, 0.3) !important;
+    color: #e6eef8 !important;
+  }
+
+  [data-bs-theme="dark"] .course-dropdown .options,
+  .dark-theme .course-dropdown .options {
+    background: linear-gradient(135deg, #071024 0%, #0a1a32 100%) !important;
+    border: 1px solid rgba(14, 165, 233, 0.3) !important;
+  }
+
+  [data-bs-theme="dark"] .course-dropdown .options div,
+  .dark-theme .course-dropdown .options div {
+    background: transparent !important;
+    color: #e6eef8 !important;
+    border-bottom: 1px solid rgba(14, 165, 233, 0.1) !important;
+  }
+
+  [data-bs-theme="dark"] .course-dropdown .options div:hover,
+  .dark-theme .course-dropdown .options div:hover {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] .home,
+  .dark-theme .home {
+    background-image: linear-gradient(rgba(6, 6, 102, 0.8), rgba(0, 86, 179, 0.7)),
+                    url(../static/images/bookslibrary.jpg) !important;
+  }
+
+  [data-bs-theme="dark"] h2,
+  .dark-theme h2 {
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] hr,
+  .dark-theme hr {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+  }
+
+  /* Dark theme button styles - Blue gradient */
+  [data-bs-theme="dark"] .resource-card button,
+  .dark-theme .resource-card button {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3) !important;
+  }
+
+  [data-bs-theme="dark"] .resource-card button:hover,
+  .dark-theme .resource-card button:hover {
+    background: linear-gradient(135deg, #0284c7, #075985) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4) !important;
+  }
+
+  [data-bs-theme="dark"] .resource-section h2,
+  .dark-theme .resource-section h2 {
+    color: #ffffff !important;
+  }
 </style>
 
 <!-- Hero -->
@@ -387,14 +633,12 @@
   </ul>
 </section>
 
-<h2 style="text-align:center; font-weight: bold; margin-top: 40px; color:#0a1d69; font-size: 40px;">Distance Learning
-  Resources Guide
-</h2>
+<h2>Distance Learning Resources Guide</h2>
 <hr>
 
 <!-- tabs  -->
- <div class="tabs">
-  <button class="tab-btn active" onclick="showCategory('all', event)">All</button>
+<div class="tabs">
+  <button class="tab-btn active" onclick="showCategory('all', event)">All Resources</button>
   <button class="tab-btn" onclick="showCategory('lms', event)">LMS & Platforms</button>
   <button class="tab-btn" onclick="showCategory('study', event)">Study Skills</button>
   <button class="tab-btn" onclick="showCategory('productivity', event)">Productivity</button>
@@ -406,9 +650,9 @@
 
 <!-- DROPDOWN (for mobile) -->
 <div class="course-dropdown">
-  <div class="selected">All ▼</div>
+  <div class="selected">All Resources ▼</div>
   <div class="options">
-    <div data-tab="all">All</div>
+    <div data-tab="all">All Resources</div>
     <div data-tab="lms">LMS & Platforms</div>
     <div data-tab="study">Study Skills</div>
     <div data-tab="productivity">Productivity</div>
@@ -420,9 +664,8 @@
 </div>
 
 <!-- Resources -->
-<!-- Resources -->
 <div class="resource-section">
-
+  <!-- All categories will be shown by default -->
   <!-- LMS & Platforms -->
   <div id="lms" class="category-section">
     <h2>LMS & Platforms</h2>
@@ -491,6 +734,7 @@
     </div>
   </div>
 
+  <!-- Other categories remain the same but with improved styling -->
   <!-- Productivity -->
   <div id="productivity" class="category-section">
     <h2>Productivity</h2>
@@ -504,7 +748,7 @@
 
       <div class="resource-card">
         <div class="thumbnail">🚀</div>
-        <h3>Matt D’Avella – Stop Procrastinating</h3>
+        <h3>Matt D'Avella – Stop Procrastinating</h3>
         <p>Learn practical tips to overcome procrastination and stay focused.</p>
         <a href="https://www.youtube.com/watch?v=km4pOGd_lHw" target="_blank"><button>View Resource</button></a>
       </div>
@@ -660,9 +904,7 @@
       </div>
     </div>
   </div>
-
 </div>
-
 
 <script>
 // Function to show category
@@ -731,4 +973,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-  {% endblock %}
+{% endblock %}

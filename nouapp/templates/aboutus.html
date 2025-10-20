@@ -1,8 +1,147 @@
-{% extends 'parent.html' %} {% load static %} {% block body %}
+{% extends 'parent.html' %} 
+{% load static %} 
+{% block body %}
 <style>
-  /* .container {
+  .container {
     width: 100%;
-  } */
+  }
+
+  /* ================= Updated Dark Theme for About Us Page ================= */
+  [data-bs-theme="dark"] .about-info,
+  .dark-theme .about-info {
+    background: linear-gradient(135deg, #071024 0%, #081426 100%) !important;
+    color: #e6eef8 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  [data-bs-theme="dark"] .about-info h3,
+  .dark-theme .about-info h3 {
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] .about-info p,
+  .dark-theme .about-info p {
+    color: #bcd6f5 !important;
+  }
+
+  [data-bs-theme="dark"] .about-info ul li,
+  .dark-theme .about-info ul li {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: #e6eef8 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  [data-bs-theme="dark"] .about-info ul li:hover,
+  .dark-theme .about-info ul li:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    box-shadow: 0 6px 15px rgba(0, 86, 179, 0.3) !important;
+    transform: translateY(-4px);
+  }
+
+  /* About Section Dark Theme - Matching Index Page */
+  [data-bs-theme="dark"] .about-section,
+  .dark-theme .about-section {
+    background: linear-gradient(to bottom, #071024 0%, #081426 100%) !important;
+    color: #e6eef8 !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+
+  [data-bs-theme="dark"] .about-text,
+  .dark-theme .about-text {
+    color: #e6eef8 !important;
+  }
+
+  [data-bs-theme="dark"] .about-heading,
+  .dark-theme .about-heading {
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] .about-text p,
+  .dark-theme .about-text p {
+    color: #bcd6f5 !important;
+  }
+
+  [data-bs-theme="dark"] .about-text strong,
+  .dark-theme .about-text strong {
+    color: #64b5f6 !important;
+  }
+
+  /* Hero Section Dark Theme */
+  [data-bs-theme="dark"] .home,
+  .dark-theme .home {
+    background-image: linear-gradient(rgba(6, 6, 102, 0.8), rgba(0, 86, 179, 0.7)),
+                    url(../static/images/bookslibrary.jpg) !important;
+  }
+
+  /* Heading Color Fix */
+  [data-bs-theme="dark"] h2,
+  .dark-theme h2 {
+    color: #ffffff !important;
+  }
+
+  /* ================= Updated Button Styles - Matching Index Page ================= */
+  [data-bs-theme="dark"] .btn,
+  .dark-theme .btn {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3) !important;
+    transition: all 0.3s ease !important;
+  }
+
+  [data-bs-theme="dark"] .btn:hover,
+  .dark-theme .btn:hover {
+    background: linear-gradient(135deg, #0284c7, #075985) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4) !important;
+  }
+
+  [data-bs-theme="dark"] .btn-primary,
+  .dark-theme .btn-primary {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+    border: none !important;
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] .btn-outline-primary,
+  .dark-theme .btn-outline-primary {
+    background: transparent !important;
+    color: #0ea5e9 !important;
+    border: 2px solid #0ea5e9 !important;
+  }
+
+  [data-bs-theme="dark"] .btn-outline-primary:hover,
+  .dark-theme .btn-outline-primary:hover {
+    background: #0ea5e9 !important;
+    color: #ffffff !important;
+    transform: translateY(-2px);
+  }
+
+  /* Light theme button styles remain the same */
+  .btn {
+    background: #2a73cc !important;
+    color: #ffffff !important;
+    border-color: #2a73cc !important;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15) !important;
+  }
+
+  .btn:hover {
+    background: #245fa9 !important;
+    border-color: #245fa9 !important;
+    transform: translateY(-1px);
+  }
+
+  .btn-primary {
+    background: #2a73cc !important;
+    border-color: #2a73cc !important;
+    color: #ffffff !important;
+  }
+
+  .btn-outline-primary {
+    color: #2a73cc !important;
+    border-color: #2a73cc !important;
+    background: transparent !important;
+  }
 
   .col-sm-5 {
     position: relative;
@@ -39,9 +178,8 @@
     }
   }
 
-
   /* hero section */
-   .home {
+  .home {
     background-image: linear-gradient(rgba(30, 64, 175, 0.5), rgba(30, 58, 138, 0.6)),
                   url(../static/images/bookslibrary.jpg);
     width: 100%;
@@ -138,7 +276,6 @@
     }
   }
 
-
   hr {
     width: 80px;
     height: 3px;
@@ -148,6 +285,11 @@
     border-radius: 2px;
   }
 
+  /* Dark theme HR */
+  [data-bs-theme="dark"] hr,
+  .dark-theme hr {
+    background: linear-gradient(to right, #0ea5e9, #0369a1) !important;
+  }
 
   /* about us info section  */
   .about-info {
@@ -207,49 +349,46 @@
     font-size: 1.2rem;
   }
 
-
   /* about us section styling  */
-
   .about-section {
-  background: #f4f6fb;
-  border-radius: 12px;
-  padding: 40px 30px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  font-family: 'Poppins', sans-serif;
-}
+    background: #f4f6fb;
+    border-radius: 12px;
+    padding: 40px 30px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    font-family: 'Poppins', sans-serif;
+  }
 
-.about-text {
-  color: #0a1d69;
-  text-align: justify;
-}
+  .about-text {
+    color: #0a1d69;
+    text-align: justify;
+  }
 
-.about-heading {
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: #0a1d69;
-  margin-bottom: 15px;
-  text-align: left;
-}
+  .about-heading {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #0a1d69;
+    margin-bottom: 15px;
+    text-align: left;
+  }
 
-.about-text p {
-  font-size: 1rem;
-  line-height: 1.7;
-  font-weight: 500;
-  margin-bottom: 15px;
-}
+  .about-text p {
+    font-size: 1rem;
+    line-height: 1.7;
+    font-weight: 500;
+    margin-bottom: 15px;
+  }
 
-.about-section img {
-  max-width: 100%;
-  border-radius: 12px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
+  .about-section img {
+    max-width: 100%;
+    border-radius: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
 
-.about-section img:hover {
-  transform: scale(1.03);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
-}
+  .about-section img:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+  }
 </style>
-
 
 <!-- hero section  -->
 <div class="row">
@@ -264,13 +403,9 @@
   </section>
 </div>
 
-
 <!-- Header Image -->
 <section class="aboutus">
   <div class="container">
-
-    
-
     <!-- about us info section  -->
     <section class="about-info">
       <h3>Our Platform</h3>
@@ -291,35 +426,34 @@
     <hr>
 
     <div class="row about-section align-items-center" style="margin: 40px 0;">
-  <div class="col-sm-5 text-center">
-    <img src="{% static 'images/about.png' %}" class="img-fluid rounded shadow" alt="About NOU-E-Gyan" />
-  </div>
+      <div class="col-sm-5 text-center">
+        <img src="{% static 'images/about.png' %}" class="img-fluid rounded shadow" alt="About NOU-E-Gyan" />
+      </div>
 
-  <div class="col-sm-7 about-text">
-   
-    <p>
-      The <strong>NOU-E-Gyan Portal</strong> is designed to provide a seamless
-      <strong>E-Learning System</strong> that empowers students to learn
-      anytime, anywhere. It is a <strong>secure and robust web application</strong>
-      built to make education accessible from remote locations with ease.
-    </p>
+      <div class="col-sm-7 about-text">
+        <p>
+          The <strong>NOU-E-Gyan Portal</strong> is designed to provide a seamless
+          <strong>E-Learning System</strong> that empowers students to learn
+          anytime, anywhere. It is a <strong>secure and robust web application</strong>
+          built to make education accessible from remote locations with ease.
+        </p>
 
-    <p>
-      Serving as a <strong>Learning Management System (LMS)</strong> for colleges,
-      institutions, and study centers, the portal supports continuous teaching and learning.
-      With its <strong>user-friendly interface</strong> and intuitive design, students
-      and teachers can connect and collaborate effectively even from a distance.
-    </p>
+        <p>
+          Serving as a <strong>Learning Management System (LMS)</strong> for colleges,
+          institutions, and study centers, the portal supports continuous teaching and learning.
+          With its <strong>user-friendly interface</strong> and intuitive design, students
+          and teachers can connect and collaborate effectively even from a distance.
+        </p>
 
-    <p>
-      Accessible <strong>24×7</strong> from anywhere in the world, the portal ensures
-      secure login and personalized access for authorized users. It simplifies academic
-      processes such as <strong>E-content distribution</strong>, <strong>assessment</strong>,
-      <strong>progress tracking</strong>, and <strong>performance monitoring</strong>
-      for students, teachers, and administrators of <strong>Nalanda Open University</strong>.
-    </p>
-  </div>
-</div>
+        <p>
+          Accessible <strong>24×7</strong> from anywhere in the world, the portal ensures
+          secure login and personalized access for authorized users. It simplifies academic
+          processes such as <strong>E-content distribution</strong>, <strong>assessment</strong>,
+          <strong>progress tracking</strong>, and <strong>performance monitoring</strong>
+          for students, teachers, and administrators of <strong>Nalanda Open University</strong>.
+        </p>
+      </div>
+    </div>
   </div>
 </section>
 
