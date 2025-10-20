@@ -25,16 +25,22 @@
 <div align="center">
 
 ### Home Page
-![Home Page](https://github.com/Adez017/Learning-Management-System-Nalanda-Open-University-/blob/9eb71b41f607b53bd1bef35f64152c84dc747b42/staticfiles/images/home.png)
+![Home Page](staticfiles/images/updated_imgs/Homepage.png)
 
 ### Courses Catalog
-![Courses Page](https://github.com/Adez017/Learning-Management-System-Nalanda-Open-University-/blob/9eb71b41f607b53bd1bef35f64152c84dc747b42/staticfiles/images/courses.png)
+![Courses Page](staticfiles/images/updated_imgs/Courses.png)
+
+### Admin App
+![Admin App](staticfiles/images/updated_imgs/admin.png)
+
+### Student App
+![Student App](staticfiles/images/updated_imgs/student.png)
 
 ### About Us
-![About Page](https://github.com/Adez017/Learning-Management-System-Nalanda-Open-University-/blob/9eb71b41f607b53bd1bef35f64152c84dc747b42/staticfiles/images/about.png)
+![About Page](staticfiles/images/updated_imgs/About.png)
 
-### Contact Us
-![Contact Page](https://github.com/Adez017/Learning-Management-System-Nalanda-Open-University-/blob/9eb71b41f607b53bd1bef35f64152c84dc747b42/staticfiles/images/contact_us.png)
+### Services
+![Services](staticfiles/images/updated_imgs/Services.png)
 
 </div>
 
@@ -53,7 +59,12 @@ Built specifically for Nalanda Open University, this platform provides a complet
 *   **👥 Multi-Role Management:** Separate dashboards and permissions for students, faculty, and administrators
 *   **📖 Course Management:** Create, organize, and manage courses with multimedia content support
 *   **🎯 Assignment System:** Comprehensive assignment creation, submission, and grading workflows
-*   **📊 Progress Tracking:** Real-time analytics and progress monitoring for students and instructors
+*   **📊 Advanced Analytics Dashboard:** Real-time insights into platform activities, user engagement, and academic performance
+*   **🤖 AI-Powered Chatbot:** Intelligent assistant for instant student support and query resolution
+*   **💬 Discussion Forums:** Interactive platform for collaborative learning and peer discussions
+*   **📢 News & Events Management:** Centralized system for announcements and institutional updates
+*   **📋 Feedback & Complaints System:** Structured channels for student feedback and grievance management
+*   **🔍 Smart Search:** Advanced search functionality for quick resource discovery
 *   **🔐 Secure Authentication:** Robust user registration, login, and session management
 *   **📱 Responsive Design:** Mobile-first approach ensuring accessibility across all devices
 *   **⚡ Performance Optimized:** Built with Django's best practices for speed and reliability
@@ -62,12 +73,12 @@ Built specifically for Nalanda Open University, this platform provides a complet
 
 ## 🏗️ System Architecture
 
-The platform follows Django's MVT (Model-View-Template) architecture with a clean separation of concerns:
+The platform follows Django's MVT (Model-View-Template) architecture with a clean separation of concerns and enterprise-grade PostgreSQL database:
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
 │   Frontend      │────│   Django App    │────│   Database      │
-│   (Templates)   │    │   (Views/URLs)  │    │   (SQLite)      │
+│   (Templates)   │    │   (Views/URLs)  │    │   (PostgreSQL)  │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
@@ -80,8 +91,10 @@ The platform follows Django's MVT (Model-View-Template) architecture with a clea
   2. **Role-Based Routing:** The system routes users to appropriate dashboards based on their roles (Student/Faculty/Admin)
   3. **Course Management:** Faculty can create courses, upload materials, and manage enrollments
   4. **Student Learning Path:** Students can enroll in courses, access materials, submit assignments, and track progress
-  5. **Assessment & Feedback:** Integrated grading system with feedback mechanisms
-  6. **Analytics Dashboard:** Real-time insights into learning metrics and system usage
+  5. **Interactive Learning:** Students participate in discussion forums and engage with AI-powered support
+  6. **Feedback Loop:** Integrated feedback, complaints, and enquiry management system
+  7. **Assessment & Feedback:** Comprehensive grading system with feedback mechanisms
+  8. **Analytics Dashboard:** Real-time insights into learning metrics, system usage, and institutional performance
 
 </details>
 
@@ -95,9 +108,9 @@ Every technology choice prioritizes developer experience, performance, and educa
 | ----------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------------- |
 | **Backend**       | **Python & Django**          | **Rapid Development.** Django's "batteries included" philosophy accelerates development while maintaining security and scalability. |
 | **Frontend**      | **HTML5, CSS3 & JavaScript** | **Universal Compatibility.** Clean, semantic markup with progressive enhancement ensures accessibility across all devices and browsers. |
-| **Database**      | **SQLite**                    | **Simplicity & Portability.** Perfect for development and small to medium deployments. Easy migration to PostgreSQL for scale. |
-| **Authentication**| **Django Auth**               | **Security First.** Built-in user management, password hashing, and session handling with CSRF protection. |
+| **Database**      | **PostgreSQL**                | **Enterprise-Grade Reliability.** Robust, scalable RDBMS with advanced features for handling complex academic data and concurrent users. |
 | **UI Framework**  | **Bootstrap/Custom CSS**      | **Responsive Design.** Mobile-first approach with consistent, professional styling across the platform. |
+| **AI Integration**| **Custom AI Chatbot**         | **Intelligent Support.** Automated student assistance for enhanced user experience and reduced support workload. |
 
 <details>
   <summary><strong>Explore the Project Directory Structure</strong></summary>
@@ -110,20 +123,29 @@ Every technology choice prioritizes developer experience, performance, and educa
   │   └── wsgi.py              # WSGI configuration
   ├── apps/                    # Django applications
   │   ├── accounts/            # User management & authentication
+  │   ├── admin_app/           # Admin dashboard & analytics
+  │   │   ├── views.py         # Analytics, student management
+  │   │   ├── models.py        # Study materials, news & events
+  │   │   └── templates/       # Admin interface templates
+  │   ├── student_app/         # Student portal
+  │   │   ├── views.py         # Dashboard, discussions, feedback
+  │   │   ├── models.py        # Complaints, enquiries, profile
+  │   │   └── templates/       # Student interface templates
   │   ├── courses/             # Course management system
   │   ├── assignments/         # Assignment & submission handling
   │   ├── grades/              # Grading & assessment system
-  │   └── dashboard/           # User dashboards
+  │   └── chatbot/             # AI chatbot integration
   ├── static/                  # Static files (CSS, JS, images)
   │   ├── css/
   │   ├── js/
   │   └── images/
   ├── templates/               # HTML templates
   │   ├── base.html            # Base template
+  │   ├── home.html            # Home page with search & AI bot
   │   ├── accounts/
   │   ├── courses/
   │   └── dashboard/
-  ├── media/                   # User uploaded files
+  ├── media/                   # User uploaded files & study materials
   ├── requirements.txt         # Python dependencies
   └── manage.py               # Django management script
   ```
@@ -139,8 +161,9 @@ Simple setup process to get your LMS running locally in minutes.
 ### Prerequisites
 
 1. **Python 3.8+:** [Download Python](https://www.python.org/downloads/)
-2. **Git:** [Install Git](https://git-scm.com/downloads)
-3. **Virtual Environment:** (Recommended for dependency isolation)
+2. **PostgreSQL 12+:** [Download PostgreSQL](https://www.postgresql.org/download/)
+3. **Git:** [Install Git](https://git-scm.com/downloads)
+4. **Virtual Environment:** (Recommended for dependency isolation)
 
 ### Installation & Setup
 
@@ -167,22 +190,55 @@ Simple setup process to get your LMS running locally in minutes.
    ```
 
 4. **Database Setup:**
+   
+   **Create PostgreSQL Database:**
+   ```bash
+   # Access PostgreSQL
+   psql -U postgres
+   
+   # Create database
+   CREATE DATABASE lms_nalanda;
+   CREATE USER lms_user WITH PASSWORD 'your_password';
+   GRANT ALL PRIVILEGES ON DATABASE lms_nalanda TO lms_user;
+   \q
+   ```
+   
+   **Configure Database in settings.py:**
+   ```python
+   DATABASES = {
+       'default': {
+           'ENGINE': 'django.db.backends.postgresql',
+           'NAME': 'lms_nalanda',
+           'USER': 'lms_user',
+           'PASSWORD': 'your_password',
+           'HOST': 'localhost',
+           'PORT': '5432',
+       }
+   }
+   ```
+
+5. **Run Migrations:**
    ```bash
    python manage.py makemigrations
    python manage.py migrate
    ```
 
-5. **Create Superuser (Optional):**
+6. **Create Superuser:**
    ```bash
    python manage.py createsuperuser
    ```
 
-6. **Run the Development Server:**
+7. **Collect Static Files:**
+   ```bash
+   python manage.py collectstatic
+   ```
+
+8. **Run the Development Server:**
    ```bash
    python manage.py runserver
    ```
 
-7. **🎉 Access Your LMS:**
+9. **🎉 Access Your LMS:**
    - **Main Application:** `http://127.0.0.1:8000`
    - **Admin Panel:** `http://127.0.0.1:8000/admin`
 
@@ -190,12 +246,27 @@ Simple setup process to get your LMS running locally in minutes.
 
 ## 📋 Key Features Breakdown
 
+### 🏠 Home Page Features
+- **Advanced Search Bar:** Quick search across courses, materials, and resources
+- **AI Chatbot:** Intelligent virtual assistant for instant help and guidance
+- **About Section:** Comprehensive information about Nalanda Open University
+- **Courses Catalog:** Browse and explore available courses
+- **Services Overview:** Detailed information about platform capabilities
+- **Resources Library:** Access to educational materials and documentation
+- **User Authentication:** Secure login and registration system
+- **Contact Us:** Multiple channels for communication and support
+
 ### 👨‍🎓 Student Module
+- **Personalized Dashboard:** Overview of enrolled courses, assignments, and progress
+- **Discussion Forums:** Engage in course-specific and general academic discussions
+- **Feedback & Complaints:** Submit feedback and raise complaints with tracking system
+- **News & Announcements:** Stay updated with latest institutional news and events
+- **My Enquiries:** Track and manage submitted enquiries and their responses
+- **Profile Management:** View and update personal information and academic details
 - **Course Enrollment:** Browse and enroll in available courses
-- **Learning Dashboard:** Track progress and upcoming assignments
 - **Assignment Submission:** Upload and manage assignment submissions
 - **Grade Tracking:** View grades and feedback from instructors
-- **Resource Access:** Download course materials and resources
+- **Resource Access:** Download course materials and study resources
 
 ### 👩‍🏫 Faculty Module
 - **Course Creation:** Build comprehensive course structures
@@ -203,13 +274,75 @@ Simple setup process to get your LMS running locally in minutes.
 - **Assignment Management:** Create, distribute, and grade assignments
 - **Student Monitoring:** Track student progress and engagement
 - **Grade Management:** Record and manage student assessments
+- **Discussion Moderation:** Monitor and participate in course discussions
 
 ### 🔧 Admin Module
-- **User Management:** Manage student and faculty accounts
+
+#### Analytics Dashboard
+- **Activity Monitoring:** Real-time tracking of platform usage and user activities
+- **Performance Metrics:** Comprehensive analytics on academic performance and engagement
+- **System Health:** Monitor platform performance and resource utilization
+- **User Statistics:** Detailed insights into student and faculty activities
+
+#### Management Features
+- **Student Management:** Complete CRUD operations for student records
+  - Add, edit, view, and delete student accounts
+  - Manage student enrollments and academic data
+  - Track student performance and engagement
 - **Course Administration:** Oversee all courses and enrollments
-- **System Analytics:** Monitor platform usage and performance
+  - Create, modify, and delete courses
+  - Manage course content and materials
+  - Handle course assignments and faculty allocation
+- **Study Material Management:** Upload, organize, and manage educational resources
+  - Upload documents, videos, and multimedia content
+  - Categorize materials by subject and course
+  - Control access permissions and availability
+- **Academic Data Management:** Maintain and update institutional academic information
+  - Manage semester schedules and academic calendars
+  - Handle examination data and results
+  - Maintain academic policies and guidelines
+
+#### Communication & Content
+- **News & Events Management:** Full CRUD functionality for institutional updates
+  - Create and publish news articles and announcements
+  - Schedule and manage upcoming events
+  - Edit and delete outdated information
+  - Categorize content by importance and audience
+- **Feedback Management:** View and respond to student feedback
+- **Complaints Handling:** Monitor and resolve student complaints
+- **Enquiry Management:** Review and respond to student enquiries
+
+#### System Administration
+- **User Management:** Manage student and faculty accounts
 - **Content Moderation:** Review and approve course content
 - **System Configuration:** Manage platform settings and features
+- **Access Control:** Configure role-based permissions and privileges
+
+---
+
+## 🌐 Platform Highlights
+
+### Advanced Analytics
+The admin dashboard provides comprehensive analytics covering:
+- User engagement metrics and activity logs
+- Course completion rates and student performance trends
+- System usage patterns and resource utilization
+- Real-time monitoring of platform activities
+- Customizable reports for institutional decision-making
+
+### Communication Ecosystem
+- **Announcements System:** Broadcast important updates to all users
+- **Discussion Forums:** Foster collaborative learning environment
+- **Feedback Loop:** Continuous improvement through structured feedback
+- **Enquiry Management:** Streamlined query resolution system
+- **Complaint Tracking:** Transparent grievance redressal mechanism
+
+### Content Management
+- **Study Materials:** Centralized repository for all educational resources
+- **Course Resources:** Organized materials by course and subject
+- **Multimedia Support:** Handle documents, videos, presentations, and more
+- **Version Control:** Track and manage content updates
+- **Access Management:** Role-based content visibility and permissions
 
 ---
 
