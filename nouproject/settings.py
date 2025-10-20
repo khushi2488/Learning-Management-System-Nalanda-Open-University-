@@ -97,6 +97,14 @@ DATABASES = {
             "connect_timeout": 60,
         }
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql',
+    #     'NAME': 'lms_db',
+    #     'USER': 'lms_user',
+    #     'PASSWORD': 'lms_password',
+    #     'HOST': 'localhost',
+    #     'PORT': '5432',
+    # }
 }
 if os.getenv("DATABASE_URL"):
     DATABASES["default"] = dj_database_url.parse(os.getenv("DATABASE_URL"))

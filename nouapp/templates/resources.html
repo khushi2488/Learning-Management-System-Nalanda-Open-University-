@@ -3,449 +3,605 @@
 {% block body %}
 <style>
   :root {
-  --primary-blue: #1e40af;
-  --secondary-blue: #3b82f6;
-  --accent-blue: #60a5fa;
-  --dark-blue: #1e3a8a;
-  --light-blue: #dbeafe;
-  --text-dark: #1e293b;
-  --text-light: #64748b;
-  --bg-light: #f8fafc;
-  --card-shadow: rgba(0, 0, 0, 0.15);
-  --spacing: 4rem;
-}
-
-/* Hero Section */
-.home {
-  background-image: linear-gradient(rgba(30, 64, 175, 0.5), rgba(30, 58, 138, 0.6)),
-                url(../static/images/bookslibrary.jpg);
-  width: 100%;
-  min-height: 40vh;
-  background-size: cover;
-  background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  overflow: hidden;
-  padding: 3rem 1rem;
-}
-
-.home::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.2), transparent);
-  animation: pulse 4s ease-in-out infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
-}
-
-.hero-content {
-  position: relative;
-  z-index: 2;
-  text-align: center;
-  color: white;
-  padding: 1.5rem;
-  max-width: 1000px;
-  width: 100%;
-}
-
-.hero-content h3 {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin: 0 0 1.5rem 0;
-  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
-  animation: fadeInDown 1s ease-out;
-  line-height: 1.4;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-}
-
-.hero-icon {
-  font-size: 2.5rem;
-  flex-shrink: 0;
-  display: inline-block;
-}
-
-.hero-text {
-  display: inline-block;
-}
-
-.hero-content p {
-  font-size: 1.25rem;
-  font-weight: 500;
-  opacity: 0.95;
-  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
-  animation: fadeInUp 1s ease-out 0.3s both;
-  line-height: 1.6;
-  margin: 0;
-}
-
-/* fade in and out animation  */
-@keyframes fadeInDown {
-  from {
-    opacity: 0;
-    transform: translateY(-30px);
+    --primary-blue: #0a1d69;
+    --secondary-blue: #2a73cc;
+    --accent-blue: #0ea5e9;
+    --dark-blue: #071024;
+    --light-blue: #dbeafe;
+    --text-dark: #1e293b;
+    --text-light: #64748b;
+    --bg-light: #f8fafc;
+    --card-shadow: rgba(0, 0, 0, 0.15);
+    --spacing: 4rem;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  /* Hero Section */
+  .home {
+    background-image: linear-gradient(rgba(30, 64, 175, 0.5), rgba(30, 58, 138, 0.6)),
+                  url(../static/images/bookslibrary.jpg);
+    width: 100%;
+    min-height: 40vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 3rem 1rem;
   }
-}
 
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
+  .home::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(96, 165, 250, 0.2), transparent);
+    animation: pulse 4s ease-in-out infinite;
   }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
   }
-}
 
-/* Info Section */
-.about-info {
-  background: var(--card-bg, #f4f6fb);
-  border-radius: 12px;
-  padding: 2rem 1rem;
-  margin: 2rem 5%;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
-  color: var(--text-color, #0a1d69);
-  transition: var(--transition, all 0.3s ease);
-  border: 1px solid var(--border-color, transparent);
-}
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    color: white;
+    padding: 1.5rem;
+    max-width: 1000px;
+    width: 100%;
+  }
 
-.about-info h3 {
-  color: var(--heading-color, #0a1d69);
-  font-size: 2rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
-}
+  .hero-content h3 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0 0 1.5rem 0;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+    animation: fadeInDown 1s ease-out;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
 
-.about-info p {
-  color: var(--text-color, #0a1d69);
-  font-size: 1rem;
-  margin-bottom: 1.5rem;
-}
+  .hero-icon {
+    font-size: 2.5rem;
+    flex-shrink: 0;
+    display: inline-block;
+  }
 
-.about-info ul {
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-  padding: 0;
-}
+  .hero-text {
+    display: inline-block;
+  }
 
-.about-info ul li {
-  background: var(--bg-color, white);
-  padding: 10px 18px;
-  border-radius: 25px;
-  font-weight: 500;
-  color: var(--card-text, var(--text-dark));
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-  transition: transform 0.3s, box-shadow 0.3s;
-  border: 1px solid var(--border-color, transparent);
-}
+  .hero-content p {
+    font-size: 1.25rem;
+    font-weight: 500;
+    opacity: 0.95;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 1s ease-out 0.3s both;
+    line-height: 1.6;
+    margin: 0;
+  }
 
-.about-info ul li:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
-}
+  /* fade in and out animation  */
+  @keyframes fadeInDown {
+    from {
+      opacity: 0;
+      transform: translateY(-30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
-/* Resource Cards */
-.resource-section {
-  max-width: 1200px;
-  margin: 3rem auto;
-  padding: 0 1rem;
-}
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
-.resource-section h2 {
-  color: var(--heading-color, var(--primary-blue));
-  font-size: 2rem;
-  font-weight: 700;
-  text-align: center;
-  margin-bottom: 1.5rem;
-}
+  /* Info Section */
+  .about-info {
+    background: #f4f6fb;
+    border-radius: 16px;
+    padding: 40px 30px;
+    margin: 40px 5%;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    color: #0a1d69;
+    transition: all 0.3s ease;
+  }
 
-/* Grid */
-.resource-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  row-gap: 5rem;
-  column-gap: 2rem;
-}
+  .about-info h3 {
+    color: #0a1d69;
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    line-height: 1.3;
+  }
 
-/* Vertical Card Styling */
-.resource-card {
-  display: flex;
-  flex-direction: column;
-  border-radius: 16px;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  background: var(--card-bg, #fff);
-  color: var(--text-color, #0a1d69);
-  text-align: center;
-  font-family: 'Poppins', sans-serif;
-  min-height: 250px;
-  box-shadow: 0 8px 25px var(--card-shadow);
-  text-decoration: none;
-  transition: transform 0.3s, box-shadow 0.3s;
-  position: relative;
-  overflow: hidden;
-  min-height: 300px;
-  width: 100%;
-  border: 1px solid var(--border-color, transparent);
-}
+  .about-info p {
+    color: #0a1d69;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    font-weight: 500;
+    line-height: 1.7;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+  }
 
-.resource-card:hover {
-  transform: translateY(-5px) scale(1.02);
-  box-shadow: 0 12px 30px var(--card-shadow);
-}
+  .about-info ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 0;
+    margin: 0;
+  }
 
-.resource-card .thumbnail {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 80px;
-  border-radius: 12px;
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  background: rgba(96, 165, 250, 0.2);
-  color: var(--accent-color, var(--accent-blue));
-  font-weight: bold;
-}
+  .about-info ul li {
+    background: #ffffff;
+    padding: 15px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    color: #0a1d69;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+  }
 
-.resource-card h3 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: var(--accent-color, var(--accent-blue));
-}
+  .about-info ul li:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(42, 115, 204, 0.2);
+    border-color: #2a73cc;
+  }
 
-.resource-card p {
-  font-size: 0.9rem;
-  flex-grow: 1;
-  margin-bottom: 1rem;
-  line-height: 1.3;
-  color: var(--text-color, #0a1d69);
-}
+  /* Resource Cards */
+  .resource-section {
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 0 2rem;
+  }
 
-.resource-section h2 {
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
+  .resource-section h2 {
+    color: #0a1d69;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 3rem;
+    margin-top: 2rem;
+  }
 
-.resource-card button {
-  background: var(--primary-color, #0a1d69);
-  color: #fff;
-  font-weight: 600;
-  border: none;
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s, color 0.3s;
-}
-
-.resource-card button:hover {
-  background: var(--accent-color, var(--accent-blue));
-  color: white;
-}
-
-/* Responsive */
-@media(max-width:768px) {
+  /* Grid */
   .resource-grid {
-    grid-template-columns: 1fr 1fr;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2.5rem;
+    margin-bottom: 4rem;
   }
-}
 
-@media(max-width:480px) {
-  .resource-grid {
-    grid-template-columns: 1fr;
+  /* Vertical Card Styling */
+  .resource-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 25px;
+    background: #ffffff;
+    color: #0a1d69;
+    text-align: center;
+    font-family: 'Poppins', sans-serif;
+    min-height: 320px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+    text-decoration: none;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    border: 2px solid transparent;
   }
-}
 
-hr {
-  width: 80px;
-  height: 3px;
-  background: var(--accent-color, #2a73cc);
-  border: none;
-  margin: 15px auto;
-  border-radius: 2px;
-}
+  .resource-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #2a73cc, #0ea5e9);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
 
-.tabs {
-  text-align: center;
-  margin: 30px 0;
-}
+  .resource-card:hover::before {
+    transform: scaleX(1);
+  }
 
-.tab-btn {
-  background: var(--primary-color, #0a1d69);
-  color: white;
-  border: none;
-  padding: 10px 25px;
-  margin: 0 8px;
-  border-radius: 25px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  cursor: pointer;
-  border: 1px solid var(--border-color, transparent);
-}
+  .resource-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 40px rgba(42, 115, 204, 0.25);
+    border-color: #2a73cc;
+  }
 
-.tab-btn:hover,
-.tab-btn.active {
-  background: var(--accent-color, #2a73cc);
-  transform: scale(1.05);
-}
+  .resource-card .thumbnail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 90px;
+    width: 90px;
+    border-radius: 50%;
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, rgba(96, 165, 250, 0.2), rgba(14, 165, 233, 0.1));
+    color: #2a73cc;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
 
-/* DROPDOWN FOR MOBILE */
-.course-dropdown {
-  display: none;
-  width: 250px;
-  margin: 20px auto;
-  position: relative;
-  font-family: 'Poppins', sans-serif;
-  cursor: pointer;
-}
+  .resource-card:hover .thumbnail {
+    transform: scale(1.1);
+    background: linear-gradient(135deg, #2a73cc, #0ea5e9);
+    color: white;
+  }
 
-.course-dropdown .selected {
-  background: var(--bg-color, white);
-  border: 1px solid var(--primary-color, #0a1d69);
-  color: var(--primary-color, #0a1d69);
-  padding: 10px 15px;
-  border-radius: 25px;
-  text-align: center;
-}
+  .resource-card h3 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #0a1d69;
+    line-height: 1.4;
+  }
 
-.course-dropdown .options {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background: var(--bg-color, white);
-  border: 1px solid var(--primary-color, #0a1d69);
-  border-radius: 0 0 12px 12px;
-  overflow: hidden;
-  z-index: 10;
-}
+  .resource-card p {
+    font-size: 1rem;
+    flex-grow: 1;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+    color: #555;
+    font-weight: 500;
+  }
 
-.course-dropdown .options div {
-  padding: 10px 15px;
-  color: var(--primary-color, #0a1d69);
-  background: var(--bg-color, white);
-}
+  .resource-card button {
+    background: linear-gradient(135deg, #0a1d69, #2a73cc);
+    color: #fff;
+    font-weight: 600;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(10, 29, 105, 0.2);
+    min-width: 160px;
+  }
 
-.course-dropdown .options div:hover {
-  background: var(--accent-color, #1944a3);
-  color: white;
-}
+  .resource-card button:hover {
+    background: linear-gradient(135deg, #2a73cc, #0ea5e9);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(42, 115, 204, 0.3);
+    color: white;
+  }
 
-@media screen and (max-width: 768px) {
+  hr {
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(135deg, #2a73cc, #0ea5e9);
+    border: none;
+    margin: 25px auto;
+    border-radius: 2px;
+  }
+
   .tabs {
-    display: none;
+    text-align: center;
+    margin: 40px 0 30px;
+    padding: 0 20px;
   }
+
+  .tab-btn {
+    background: #0a1d69;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    margin: 0 8px 15px;
+    border-radius: 30px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(10, 29, 105, 0.2);
+    font-size: 1rem;
+  }
+
+  .tab-btn:hover,
+  .tab-btn.active {
+    background: linear-gradient(135deg, #2a73cc, #0ea5e9);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(42, 115, 204, 0.3);
+  }
+
+  /* DROPDOWN FOR MOBILE */
   .course-dropdown {
-    display: block;
+    display: none;
+    width: 280px;
+    margin: 25px auto;
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
   }
-}
 
-/* Page Heading */
-h2 {
-  color: var(--heading-color, #0a1d69);
-}
+  .course-dropdown .selected {
+    background: white;
+    border: 2px solid #0a1d69;
+    color: #0a1d69;
+    padding: 12px 20px;
+    border-radius: 30px;
+    text-align: center;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
 
-/* ================= Dark Theme Overrides ================= */
-[data-bs-theme="dark"] .about-info,
-.dark-theme .about-info {
-  background: #2d2d2d !important;
-  border: 1px solid #444 !important;
-}
+  .course-dropdown .options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 2px solid #0a1d69;
+    border-radius: 15px;
+    overflow: hidden;
+    z-index: 10;
+    margin-top: 5px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
 
-[data-bs-theme="dark"] .about-info ul li,
-.dark-theme .about-info ul li {
-  background: #3d3d3d !important;
-  border: 1px solid #555 !important;
-}
+  .course-dropdown .options div {
+    padding: 12px 20px;
+    color: #0a1d69;
+    background: white;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #f0f0f0;
+  }
 
-[data-bs-theme="dark"] .about-info ul li:hover,
-.dark-theme .about-info ul li:hover {
-  background: #4d4d4d !important;
-}
+  .course-dropdown .options div:last-child {
+    border-bottom: none;
+  }
 
-[data-bs-theme="dark"] .resource-card,
-.dark-theme .resource-card {
-  background: #2d2d2d !important;
-  border: 1px solid #444 !important;
-}
+  .course-dropdown .options div:hover {
+    background: linear-gradient(135deg, #2a73cc, #0ea5e9);
+    color: white;
+  }
 
-[data-bs-theme="dark"] .resource-card:hover,
-.dark-theme .resource-card:hover {
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4) !important;
-}
+  /* Page Heading */
+  h2 {
+    color: #0a1d69;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 40px;
+    font-size: 3rem;
+    margin-bottom: 10px;
+  }
 
-[data-bs-theme="dark"] .resource-card .thumbnail,
-.dark-theme .resource-card .thumbnail {
-  background: rgba(100, 181, 246, 0.2) !important;
-  color: #64b5f6 !important;
-}
+  /* Responsive */
+  @media(max-width: 1024px) {
+    .resource-grid {
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+  }
 
-[data-bs-theme="dark"] .tab-btn,
-.dark-theme .tab-btn {
-  background: #3d3d3d !important;
-  border: 1px solid #555 !important;
-}
+  @media(max-width: 768px) {
+    .resource-grid {
+      grid-template-columns: 1fr;
+      gap: 2rem;
+    }
+    
+    .tabs {
+      display: none;
+    }
+    
+    .course-dropdown {
+      display: block;
+    }
+    
+    .resource-section {
+      padding: 0 1rem;
+    }
+    
+    .resource-section h2 {
+      font-size: 2rem;
+    }
+    
+    h2 {
+      font-size: 2.2rem;
+    }
+  }
 
-[data-bs-theme="dark"] .tab-btn:hover,
-.dark-theme .tab-btn:hover,
-[data-bs-theme="dark"] .tab-btn.active,
-.dark-theme .tab-btn.active {
-  background: #64b5f6 !important;
-}
+  @media(max-width: 480px) {
+    .resource-card {
+      padding: 25px 20px;
+      min-height: 280px;
+    }
+    
+    .resource-card h3 {
+      font-size: 1.2rem;
+    }
+    
+    .resource-card p {
+      font-size: 0.95rem;
+    }
+    
+    .hero-content h3 {
+      font-size: 2rem;
+    }
+    
+    h2 {
+      font-size: 1.8rem;
+    }
+  }
 
-[data-bs-theme="dark"] .course-dropdown .selected,
-.dark-theme .course-dropdown .selected {
-  background: #3d3d3d !important;
-  border: 1px solid #555 !important;
-}
+  /* ================= Updated Dark Theme - Blue Color Scheme ================= */
+  [data-bs-theme="dark"] .about-info,
+  .dark-theme .about-info {
+    background: linear-gradient(135deg, #071024 0%, #081426 100%) !important;
+    border: 1px solid rgba(14, 165, 233, 0.2) !important;
+    color: #e6eef8 !important;
+  }
 
-[data-bs-theme="dark"] .course-dropdown .options,
-.dark-theme .course-dropdown .options {
-  background: #3d3d3d !important;
-  border: 1px solid #555 !important;
-}
+  [data-bs-theme="dark"] .about-info h3,
+  .dark-theme .about-info h3 {
+    color: #ffffff !important;
+  }
 
-[data-bs-theme="dark"] .course-dropdown .options div,
-.dark-theme .course-dropdown .options div {
-  background: #3d3d3d !important;
-}
+  [data-bs-theme="dark"] .about-info p,
+  .dark-theme .about-info p {
+    color: #bcd6f5 !important;
+  }
 
-[data-bs-theme="dark"] .course-dropdown .options div:hover,
-.dark-theme .course-dropdown .options div:hover {
-  background: #64b5f6 !important;
-}
+  [data-bs-theme="dark"] .about-info ul li,
+  .dark-theme .about-info ul li {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(14, 165, 233, 0.3) !important;
+    color: #e6eef8 !important;
+  }
 
-[data-bs-theme="dark"] .home,
-.dark-theme .home {
-  background-image: linear-gradient(rgba(30, 64, 175, 0.7), rgba(30, 58, 138, 0.8)),
-                  url(../static/images/bookslibrary.jpg) !important;
-}
+  [data-bs-theme="dark"] .about-info ul li:hover,
+  .dark-theme .about-info ul li:hover {
+    background: rgba(14, 165, 233, 0.2) !important;
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.3) !important;
+  }
 
+  [data-bs-theme="dark"] .resource-card,
+  .dark-theme .resource-card {
+    background: linear-gradient(135deg, #071024 0%, #0a1a32 100%) !important;
+    border: 1px solid rgba(14, 165, 233, 0.2) !important;
+    color: #e6eef8 !important;
+  }
 
+  [data-bs-theme="dark"] .resource-card:hover,
+  .dark-theme .resource-card:hover {
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 15px 40px rgba(14, 165, 233, 0.25) !important;
+  }
+
+  [data-bs-theme="dark"] .resource-card h3,
+  .dark-theme .resource-card h3 {
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] .resource-card p,
+  .dark-theme .resource-card p {
+    color: #bcd6f5 !important;
+  }
+
+  [data-bs-theme="dark"] .resource-card .thumbnail,
+  .dark-theme .resource-card .thumbnail {
+    background: rgba(14, 165, 233, 0.15) !important;
+    color: #0ea5e9 !important;
+  }
+
+  [data-bs-theme="dark"] .resource-card:hover .thumbnail,
+  .dark-theme .resource-card:hover .thumbnail {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] .tab-btn,
+  .dark-theme .tab-btn {
+    background: rgba(14, 165, 233, 0.2) !important;
+    border: 1px solid rgba(14, 165, 233, 0.3) !important;
+    color: #e6eef8 !important;
+  }
+
+  [data-bs-theme="dark"] .tab-btn:hover,
+  .dark-theme .tab-btn:hover,
+  [data-bs-theme="dark"] .tab-btn.active,
+  .dark-theme .tab-btn.active {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+    border-color: #0ea5e9 !important;
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] .course-dropdown .selected,
+  .dark-theme .course-dropdown .selected {
+    background: rgba(14, 165, 233, 0.1) !important;
+    border: 1px solid rgba(14, 165, 233, 0.3) !important;
+    color: #e6eef8 !important;
+  }
+
+  [data-bs-theme="dark"] .course-dropdown .options,
+  .dark-theme .course-dropdown .options {
+    background: linear-gradient(135deg, #071024 0%, #0a1a32 100%) !important;
+    border: 1px solid rgba(14, 165, 233, 0.3) !important;
+  }
+
+  [data-bs-theme="dark"] .course-dropdown .options div,
+  .dark-theme .course-dropdown .options div {
+    background: transparent !important;
+    color: #e6eef8 !important;
+    border-bottom: 1px solid rgba(14, 165, 233, 0.1) !important;
+  }
+
+  [data-bs-theme="dark"] .course-dropdown .options div:hover,
+  .dark-theme .course-dropdown .options div:hover {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] .home,
+  .dark-theme .home {
+    background-image: linear-gradient(rgba(6, 6, 102, 0.8), rgba(0, 86, 179, 0.7)),
+                    url(../static/images/bookslibrary.jpg) !important;
+  }
+
+  [data-bs-theme="dark"] h2,
+  .dark-theme h2 {
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] hr,
+  .dark-theme hr {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+  }
+
+  /* Dark theme button styles - Blue gradient */
+  [data-bs-theme="dark"] .resource-card button,
+  .dark-theme .resource-card button {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3) !important;
+  }
+
+  [data-bs-theme="dark"] .resource-card button:hover,
+  .dark-theme .resource-card button:hover {
+    background: linear-gradient(135deg, #0284c7, #075985) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4) !important;
+  }
+
+  [data-bs-theme="dark"] .resource-section h2,
+  .dark-theme .resource-section h2 {
+    color: #ffffff !important;
+  }
 </style>
 
 <!-- Hero -->
@@ -477,14 +633,12 @@ h2 {
   </ul>
 </section>
 
-<h2 style="text-align:center; font-weight: bold; margin-top: 40px; color:#0a1d69; font-size: 40px;">Distance Learning
-  Resources Guide
-</h2>
+<h2>Distance Learning Resources Guide</h2>
 <hr>
 
 <!-- tabs  -->
- <div class="tabs">
-  <button class="tab-btn active" onclick="showCategory('all', event)">All</button>
+<div class="tabs">
+  <button class="tab-btn active" onclick="showCategory('all', event)">All Resources</button>
   <button class="tab-btn" onclick="showCategory('lms', event)">LMS & Platforms</button>
   <button class="tab-btn" onclick="showCategory('study', event)">Study Skills</button>
   <button class="tab-btn" onclick="showCategory('productivity', event)">Productivity</button>
@@ -496,9 +650,9 @@ h2 {
 
 <!-- DROPDOWN (for mobile) -->
 <div class="course-dropdown">
-  <div class="selected">All ▼</div>
+  <div class="selected">All Resources ▼</div>
   <div class="options">
-    <div data-tab="all">All</div>
+    <div data-tab="all">All Resources</div>
     <div data-tab="lms">LMS & Platforms</div>
     <div data-tab="study">Study Skills</div>
     <div data-tab="productivity">Productivity</div>
@@ -510,9 +664,8 @@ h2 {
 </div>
 
 <!-- Resources -->
-<!-- Resources -->
 <div class="resource-section">
-
+  <!-- All categories will be shown by default -->
   <!-- LMS & Platforms -->
   <div id="lms" class="category-section">
     <h2>LMS & Platforms</h2>
@@ -581,6 +734,7 @@ h2 {
     </div>
   </div>
 
+  <!-- Other categories remain the same but with improved styling -->
   <!-- Productivity -->
   <div id="productivity" class="category-section">
     <h2>Productivity</h2>
@@ -594,7 +748,7 @@ h2 {
 
       <div class="resource-card">
         <div class="thumbnail">🚀</div>
-        <h3>Matt D’Avella – Stop Procrastinating</h3>
+        <h3>Matt D'Avella – Stop Procrastinating</h3>
         <p>Learn practical tips to overcome procrastination and stay focused.</p>
         <a href="https://www.youtube.com/watch?v=km4pOGd_lHw" target="_blank"><button>View Resource</button></a>
       </div>
@@ -750,9 +904,7 @@ h2 {
       </div>
     </div>
   </div>
-
 </div>
-
 
 <script>
 // Function to show category
@@ -821,4 +973,4 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-  {% endblock %}
+{% endblock %}
