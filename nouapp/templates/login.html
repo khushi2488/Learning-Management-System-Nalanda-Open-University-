@@ -143,6 +143,7 @@
     margin: 0;
     font-size: 1.85rem;
     letter-spacing: 0.5px;
+    color: white !important;
   }
 
   .form-subheading {
@@ -150,22 +151,23 @@
     font-size: 0.95rem;
     opacity: 0.95;
     font-weight: 400;
+    color: white !important;
   }
 
   /* Form Body */
   .form-body {
     padding: 2.5rem;
-    background: var(--light-bg);
+    background: transparent;
   }
-
+  
   .form-section {
-    background: white;
+    background: transparent;
     padding: 2rem;
     border-radius: 16px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
-    border: 1px solid var(--border-color);
+    box-shadow: none;
+    border: 1px solid rgba(30,64,175,0.06);
   }
-
+  
   /* Form Inputs */
   .form-control, .form-select {
     border: 2px solid var(--border-color);
@@ -174,7 +176,8 @@
     transition: all 0.3s ease;
     width: 100%;
     font-size: 0.95rem;
-    background: white;
+    background: var(--card-bg);
+    color: var(--card-text);
     margin-bottom: 1.25rem;
   }
 
@@ -182,14 +185,14 @@
     border-color: var(--accent-color);
     box-shadow: 0 0 0 4px rgba(59,130,246,0.08);
     outline: none;
-    background: #fff;
+    background: var(--card-bg);
   }
 
   .form-label {
-    font-weight: 500;
+    font-weight: 600;
     color: var(--card-text);
     margin-bottom: 0.5rem;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     display: block;
   }
 
@@ -210,7 +213,7 @@
     left: 1rem;
     top: 50%;
     transform: translateY(-50%);
-    color: #94a3b8;
+    color: #64748b;
     font-size: 1.1rem;
     pointer-events: none;
   }
@@ -224,7 +227,7 @@
   /* Submit Button */
   .submit-section {
     padding: 2rem 2.5rem;
-    background: white;
+    background: var(--card-bg);
   }
 
   .submit-btn {
@@ -260,14 +263,15 @@
 
   .form-links p {
     margin: 0.75rem 0;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: var(--card-text);
+    font-weight: 500;
   }
 
   .form-links a {
     color: var(--accent-color);
     text-decoration: none;
-    font-weight: 500;
+    font-weight: 600;
     transition: color 0.3s ease;
   }
 
@@ -305,12 +309,155 @@
   }
 
   .divider span {
-    background: white;
+    background: var(--card-bg);
     padding: 0 1rem;
     position: relative;
-    color: #64748b;
-    font-size: 0.85rem;
+    color: var(--card-text);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  /* ================= Fixed Dark Theme - No Grey Text ================= */
+  [data-bs-theme="dark"] .login-container,
+  .dark-theme .login-container {
+    background: linear-gradient(135deg, #0a1a32 0%, #071024 100%) !important;
+    border: 1px solid rgba(14, 165, 233, 0.3) !important;
+    box-shadow: 0 10px 40px rgba(14, 165, 233, 0.15) !important;
+  }
+
+  [data-bs-theme="dark"] .form-body,
+  .dark-theme .form-body {
+    background: linear-gradient(135deg, #081426 0%, #061021 100%) !important;
+  }
+
+  [data-bs-theme="dark"] .form-section,
+  .dark-theme .form-section {
+    background: linear-gradient(135deg, #0c1e3e 0%, #091830 100%) !important;
+    border: 1px solid rgba(14, 165, 233, 0.2) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  [data-bs-theme="dark"] .submit-section,
+  .dark-theme .submit-section {
+    background: linear-gradient(135deg, #0a1a32 0%, #071024 100%) !important;
+  }
+
+  /* Form Labels - White in dark theme */
+  [data-bs-theme="dark"] .form-label,
+  .dark-theme .form-label {
+    color: #ffffff !important;
+    font-weight: 600;
+  }
+
+  /* Form Inputs */
+  [data-bs-theme="dark"] .form-control,
+  [data-bs-theme="dark"] .form-select,
+  .dark-theme .form-control,
+  .dark-theme .form-select {
+    background: rgba(255, 255, 255, 0.1) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(14, 165, 233, 0.4) !important;
+  }
+
+  [data-bs-theme="dark"] .form-control:focus,
+  [data-bs-theme="dark"] .form-select:focus,
+  .dark-theme .form-control:focus,
+  .dark-theme .form-select:focus {
+    background: rgba(255, 255, 255, 0.15) !important;
+    color: #ffffff !important;
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.25) !important;
+  }
+
+  [data-bs-theme="dark"] .form-control::placeholder,
+  .dark-theme .form-control::placeholder {
+    color: #94a3b8 !important;
+  }
+
+  /* Links and Text - White in dark theme */
+  [data-bs-theme="dark"] .form-links p,
+  .dark-theme .form-links p {
+    color: #ffffff !important;
     font-weight: 500;
+  }
+
+  [data-bs-theme="dark"] .form-links a,
+  .dark-theme .form-links a {
+    color: #0ea5e9 !important;
+    font-weight: 600;
+  }
+
+  [data-bs-theme="dark"] .form-links a:hover,
+  .dark-theme .form-links a:hover {
+    color: #64b5f6 !important;
+  }
+
+  /* Divider - White in dark theme */
+  [data-bs-theme="dark"] .divider span,
+  .dark-theme .divider span {
+    background: linear-gradient(135deg, #0a1a32 0%, #071024 100%) !important;
+    color: #ffffff !important;
+    font-weight: 600;
+  }
+
+  [data-bs-theme="dark"] .divider::before,
+  .dark-theme .divider::before {
+    background: rgba(14, 165, 233, 0.4) !important;
+  }
+
+  /* Icons - Blue in dark theme */
+  [data-bs-theme="dark"] .input-icon,
+  .dark-theme .input-icon {
+    color: #0ea5e9 !important;
+  }
+
+  /* Hero Section in Dark Theme */
+  [data-bs-theme="dark"] .home,
+  .dark-theme .home {
+    background-image: linear-gradient(rgba(6, 6, 102, 0.8), rgba(0, 86, 179, 0.7)), url(../static/images/bookslibrary.jpg) !important;
+  }
+
+  /* Buttons - Blue in dark theme */
+  [data-bs-theme="dark"] .submit-btn,
+  .dark-theme .submit-btn {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3) !important;
+  }
+
+  [data-bs-theme="dark"] .submit-btn:hover,
+  .dark-theme .submit-btn:hover {
+    background: linear-gradient(135deg, #0284c7, #075985) !important;
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.4) !important;
+  }
+
+  /* Form Header - Blue in dark theme */
+  [data-bs-theme="dark"] .form-header,
+  .dark-theme .form-header {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+  }
+
+  [data-bs-theme="dark"] .form-heading,
+  .dark-theme .form-heading {
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] .form-subheading,
+  .dark-theme .form-subheading {
+    color: #e6eef8 !important;
+  }
+
+  /* Alerts in Dark Theme */
+  [data-bs-theme="dark"] .alert-success,
+  .dark-theme .alert-success {
+    background: linear-gradient(135deg, #059669, #047857) !important;
+    color: #ffffff !important;
+  }
+
+  /* Select dropdown options in dark theme */
+  [data-bs-theme="dark"] .form-select option,
+  .dark-theme .form-select option {
+    background: #0a1a32 !important;
+    color: #ffffff !important;
   }
 
   /* Responsive Design */
@@ -320,235 +467,241 @@
       margin: 2.5rem auto 4rem auto;
     }
   }
+
   @media (max-width: 992px) {
-  .home {
-    min-height: 35vh;
-    padding: 2.5rem 1rem;
-  }
+    .home {
+      min-height: 35vh;
+      padding: 2.5rem 1rem;
+    }
 
-  .hero-content h3 {
-    font-size: 2rem;
-  }
+    .hero-content h3 {
+      font-size: 2rem;
+    }
 
-  .hero-icon {
-    font-size: 2rem;
-  }
+    .hero-icon {
+      font-size: 2rem;
+    }
 
-  .hero-content p {
-    font-size: 1.125rem;
-  }
+    .hero-content p {
+      font-size: 1.125rem;
+    }
 
-  .login-container {
-    max-width: 90%;
-    margin: 2.5rem auto 4rem auto;
+    .login-container {
+      max-width: 90%;
+      margin: 2.5rem auto 4rem auto;
+    }
   }
-}
 
   @media (max-width: 768px) {
     .home {
-    min-height: 35vh;
-    padding: 2rem 1rem;
-  }
-  
-  .hero-content h3 { 
-    font-size: 1.75rem;
-    gap: 0.5rem;
-  }
-  
-  .hero-icon {
-    font-size: 1.75rem;
-  }
-  
-  .hero-content p { 
-    font-size: 1rem;
-  }
-  .login-container {
-    margin: 1.5rem 1rem 3rem 1rem;
-    border-radius: 16px;
-  }
-
-  .form-header {
-    padding: 1.75rem 1.25rem;
-  }
-
-  .form-heading {
-    font-size: 1.5rem;
-  }
-
-  .form-subheading {
-    font-size: 0.9rem;
-  }
-
-  .form-body {
-    padding: 1.5rem 1.25rem;
-  }
-
-  .form-section {
-    padding: 1.5rem;
-    border-radius: 12px;
-  }
-
-  .submit-section {
-    padding: 1.5rem 1.25rem;
-  }
-
-  .submit-btn {
-    padding: 0.9rem 2rem;
-    font-size: 0.95rem;
-  }
-
-  .form-control, .form-select {
-    padding: 0.75rem 0.9rem 0.75rem 2.6rem;
-    font-size: 0.9rem;
-    margin-bottom: 1rem;
-  }
-
-  .input-group {
-    margin-bottom: 1rem;
-  }
-
-  .input-icon {
-    font-size: 1rem;
-    left: 0.9rem;
-  }
-
-  .form-label {
-    font-size: 0.875rem;
-    margin-bottom: 0.4rem;
-  }
-
-  .form-links p {
-    font-size: 0.875rem;
-    margin: 0.65rem 0;
-  }
-
-  .divider {
-    margin: 1.25rem 0;
-  }
-  }
-
-@media (max-width: 576px) {
-  .home {
-    min-height: 28vh;
-    padding: 1.5rem 0.75rem;
-  }
-
-  .hero-content {
-    padding: 0.75rem 0.5rem;
-  }
-
-  .hero-content h3 {
-    font-size: 1.25rem;
-    gap: 0.4rem;
-    line-height: 1.3;
-    margin-bottom: 0.875rem;
-    flex-wrap:nowrap;
-  }
-
-  .hero-icon {
-    font-size: 1.25rem;
-  }
-
-  .hero-text {
-  display: inline-block;
-  flex: 1;
-  min-width: 0;
-}
-
-  .hero-content p {
-    font-size: 0.813rem;
-    line-height: 1.4;
-  }
-
-  .login-container {
-    margin: 1rem 0.75rem 2rem 0.75rem;
-    border-radius: 14px;
-  }
-
-  .form-header {
-    padding: 1.5rem 1rem;
-  }
-
-  .form-heading {
-    font-size: 1.35rem;
-  }
-
-  .form-subheading {
-    font-size: 0.85rem;
-  }
-
-  .form-body {
-    padding: 1.25rem 1rem;
-  }
-
-  .form-section {
-    padding: 1.25rem;
-    border-radius: 10px;
-  }
-
-  .submit-section {
-    padding: 1.25rem 1rem;
-  }
-
-  .submit-btn {
-    padding: 0.8rem 1.75rem;
-    font-size: 0.9rem;
-  }
-
-  .form-control, .form-select {
-    padding: 0.7rem 0.85rem 0.7rem 2.5rem;
-    font-size: 0.875rem;
-    border-radius: 9px;
-    margin-bottom: 0.9rem;
-  }
-
-  .input-icon {
-    font-size: 0.95rem;
-    left: 0.85rem;
-  }
-
-  .form-label {
-    font-size: 0.85rem;
-    margin-bottom: 0.35rem;
-  }
-
-  .form-links p {
-    font-size: 0.813rem;
-    margin: 0.6rem 0;
-  }
-
-  .form-links a {
-    font-size: 0.813rem;
-  }
-
-  .divider {
-    margin: 1rem 0;
-  }
-
-  .divider span {
-    font-size: 0.8rem;
-    padding: 0 0.75rem;
-  }
-}
-  @media (max-width: 480px) {
-     .home {
-    min-height: 30vh;
-    padding: 1.5rem 0.75rem;
-  }
-  
-  .hero-content h3 { 
-    font-size: 1.35rem;
-    gap: 0.4rem;
-  }
-  
-  .hero-icon {
-    font-size: 1.35rem;
-  }
-  
-  .hero-content p { 
-    font-size: 0.85rem;
-  }
+      min-height: 30vh;
+      padding: 2rem 1rem;
+    }
     
+    .hero-content {
+      padding: 1rem;
+    }
+    
+    .hero-content h3 { 
+      font-size: 1.5rem;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    
+    .hero-icon {
+      font-size: 1.5rem;
+    }
+    
+    .hero-content p { 
+      font-size: 0.938rem;
+      line-height: 1.5;
+    }
+
+    .login-container {
+      margin: 1.5rem 1rem 3rem 1rem;
+      border-radius: 16px;
+    }
+
+    .form-header {
+      padding: 1.75rem 1.25rem;
+    }
+
+    .form-heading {
+      font-size: 1.5rem;
+    }
+
+    .form-subheading {
+      font-size: 0.9rem;
+    }
+
+    .form-body {
+      padding: 1.5rem 1.25rem;
+    }
+
+    .form-section {
+      padding: 1.5rem;
+      border-radius: 12px;
+    }
+
+    .submit-section {
+      padding: 1.5rem 1.25rem;
+    }
+
+    .submit-btn {
+      padding: 0.9rem 2rem;
+      font-size: 0.95rem;
+    }
+
+    .form-control, .form-select {
+      padding: 0.75rem 0.9rem 0.75rem 2.6rem;
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+    }
+
+    .input-group {
+      margin-bottom: 1rem;
+    }
+
+    .input-icon {
+      font-size: 1rem;
+      left: 0.9rem;
+    }
+
+    .form-label {
+      font-size: 0.875rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .form-links p {
+      font-size: 0.875rem;
+      margin: 0.65rem 0;
+    }
+
+    .divider {
+      margin: 1.25rem 0;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .home {
+      min-height: 28vh;
+      padding: 1.5rem 0.75rem;
+    }
+
+    .hero-content {
+      padding: 0.75rem 0.5rem;
+    }
+
+    .hero-content h3 {
+      font-size: 1.25rem;
+      gap: 0.4rem;
+      line-height: 1.3;
+      margin-bottom: 0.875rem;
+    }
+
+    .hero-icon {
+      font-size: 1.25rem;
+    }
+
+    .hero-text {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .hero-content p {
+      font-size: 0.813rem;
+      line-height: 1.4;
+    }
+
+    .login-container {
+      margin: 1rem 0.75rem 2rem 0.75rem;
+      border-radius: 14px;
+    }
+
+    .form-header {
+      padding: 1.5rem 1rem;
+    }
+
+    .form-heading {
+      font-size: 1.35rem;
+    }
+
+    .form-subheading {
+      font-size: 0.85rem;
+    }
+
+    .form-body {
+      padding: 1.25rem 1rem;
+    }
+
+    .form-section {
+      padding: 1.25rem;
+      border-radius: 10px;
+    }
+
+    .submit-section {
+      padding: 1.25rem 1rem;
+    }
+
+    .submit-btn {
+      padding: 0.8rem 1.75rem;
+      font-size: 0.9rem;
+    }
+
+    .form-control, .form-select {
+      padding: 0.7rem 0.85rem 0.7rem 2.5rem;
+      font-size: 0.875rem;
+      border-radius: 9px;
+      margin-bottom: 0.9rem;
+    }
+
+    .input-icon {
+      font-size: 0.95rem;
+      left: 0.85rem;
+    }
+
+    .form-label {
+      font-size: 0.85rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .form-links p {
+      font-size: 0.813rem;
+      margin: 0.6rem 0;
+    }
+
+    .form-links a {
+      font-size: 0.813rem;
+    }
+
+    .divider {
+      margin: 1rem 0;
+    }
+
+    .divider span {
+      font-size: 0.8rem;
+      padding: 0 0.75rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .home {
+      min-height: 26vh;
+      padding: 1.25rem 0.5rem;
+    }
+    
+    .hero-content h3 { 
+      font-size: 1.125rem;
+      gap: 0.35rem;
+    }
+    
+    .hero-icon {
+      font-size: 1.125rem;
+    }
+    
+    .hero-content p { 
+      font-size: 0.75rem;
+    }
     
     .login-container {
       margin: 1rem 0.5rem 2rem 0.5rem;
@@ -596,81 +749,19 @@
     }
 
     .form-links p {
-      font-size: 0.8rem;
+      font-size: 0.85rem;
     }
   }
-@media (max-width: 400px) {
-  .home {
-    min-height: 26vh;
-    padding: 1.25rem 0.5rem;
-  }
 
-  .hero-content h3 {
-    font-size: 1.125rem;
-    gap: 0.35rem;
-  }
+  @media (max-width: 400px) {
+    .home {
+      min-height: 26vh;
+      padding: 1.25rem 0.5rem;
+    }
 
-  .hero-icon {
-    font-size: 1.125rem;
-  }
-
-  .hero-content p {
-    font-size: 0.75rem;
-  }
-
-  .login-container {
-    margin: 0.75rem 0.5rem 1.75rem 0.5rem;
-    border-radius: 12px;
-  }
-
-  .form-header {
-    padding: 1.25rem 0.85rem;
-  }
-
-  .form-heading {
-    font-size: 1.2rem;
-    letter-spacing: 0.3px;
-  }
-
-  .form-subheading {
-    font-size: 0.8rem;
-  }
-
-  .form-body {
-    padding: 1rem 0.85rem;
-  }
-
-  .form-section {
-    padding: 1rem 0.9rem;
-  }
-
-  .submit-section {
-    padding: 1rem 0.85rem;
-  }
-
-  .submit-btn {
-    padding: 0.75rem 1.5rem;
-    font-size: 0.875rem;
-  }
-
-  .form-control, .form-select {
-    padding: 0.65rem 0.8rem 0.65rem 2.4rem;
-    font-size: 0.85rem;
-  }
-
-  .input-icon {
-    font-size: 0.9rem;
-    left: 0.8rem;
-  }
-
-  .form-label {
-    font-size: 0.813rem;
-  }
-}
- 
-  @media (max-width: 360px) {
- .hero-content h3 {
+    .hero-content h3 {
       font-size: 1rem;
+      gap: 0.35rem;
     }
 
     .hero-icon {
@@ -681,31 +772,94 @@
       font-size: 0.688rem;
     }
 
-  .login-container {
-    margin: 0.5rem 0.25rem 1.5rem 0.25rem;
-  }
+    .login-container {
+      margin: 0.75rem 0.5rem 1.75rem 0.5rem;
+      border-radius: 12px;
+    }
 
-  .form-heading {
-    font-size: 1.1rem;
-  }
+    .form-header {
+      padding: 1.25rem 0.85rem;
+    }
 
-  .form-body {
-    padding: 0.85rem 0.7rem;
-  }
+    .form-heading {
+      font-size: 1.2rem;
+      letter-spacing: 0.3px;
+    }
 
-  .form-section {
-    padding: 0.85rem 0.75rem;
-  }
+    .form-subheading {
+      font-size: 0.8rem;
+    }
 
-  .submit-section {
-    padding: 0.85rem 0.7rem;
-  }
+    .form-body {
+      padding: 1rem 0.85rem;
+    }
 
-  .form-control, .form-select {
-    padding: 0.6rem 0.75rem 0.6rem 2.3rem;
-    font-size: 0.813rem;
+    .form-section {
+      padding: 1rem 0.9rem;
+    }
+
+    .submit-section {
+      padding: 1rem 0.85rem;
+    }
+
+    .submit-btn {
+      padding: 0.75rem 1.5rem;
+      font-size: 0.875rem;
+    }
+
+    .form-control, .form-select {
+      padding: 0.65rem 0.8rem 0.65rem 2.4rem;
+      font-size: 0.85rem;
+    }
+
+    .input-icon {
+      font-size: 0.9rem;
+      left: 0.8rem;
+    }
+
+    .form-label {
+      font-size: 0.813rem;
+    }
   }
-}
+ 
+  @media (max-width: 360px) {
+    .hero-content h3 {
+      font-size: 0.938rem;
+    }
+
+    .hero-icon {
+      font-size: 0.938rem;
+    }
+
+    .hero-content p {
+      font-size: 0.625rem;
+    }
+
+    .login-container {
+      margin: 0.5rem 0.25rem 1.5rem 0.25rem;
+    }
+
+    .form-heading {
+      font-size: 1.1rem;
+    }
+
+    .form-body {
+      padding: 0.85rem 0.7rem;
+    }
+
+    .form-section {
+      padding: 0.85rem 0.75rem;
+    }
+
+    .submit-section {
+      padding: 0.85rem 0.7rem;
+    }
+
+    .form-control, .form-select {
+      padding: 0.6rem 0.75rem 0.6rem 2.3rem;
+      font-size: 0.813rem;
+    }
+  }
 
 </style>
 

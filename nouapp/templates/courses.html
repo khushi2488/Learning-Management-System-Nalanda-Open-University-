@@ -105,26 +105,32 @@
   */
   .courses-info {
     background: #f4f6fb;
-    border-radius: 12px;
-    padding: 30px 20px;
-    margin: 30px 5%;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-radius: 16px;
+    padding: 40px 30px;
+    margin: 40px 5%;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
     text-align: center;
     font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
   }
 
   .courses-info h3 {
     color: #0a1d69;
-    font-size: 1.8rem;
+    font-size: 2.2rem;
     font-weight: 700;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    line-height: 1.3;
   }
 
   .courses-info p {
     color: #0a1d69;
-    font-size: 1rem;
-    margin-bottom: 20px;
+    font-size: 1.1rem;
+    margin-bottom: 25px;
     font-weight: 500;
+    line-height: 1.7;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
   }
 
   .courses-info ul {
@@ -138,238 +144,261 @@
   }
 
   .courses-info ul li {
-    background: #fff;
-    padding: 12px 18px;
-    border-radius: 25px;
-    
-    font-weight: 500;
-    color: #000;
+    background: #ffffff;
+    padding: 15px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    color: #0a1d69;
     text-align: center;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
     cursor: default;
-
+    border: 2px solid transparent;
   }
 
   .courses-info ul li:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(42, 115, 204, 0.2);
+    border-color: #2a73cc;
   }
 
   .courses-info ul li span {
-    margin-right: 8px;
-    font-size: 1.2rem;
+    margin-right: 10px;
+    font-size: 1.3rem;
   }
 
   /* 
-     TABS SECTION*/
+     TABS SECTION
+  */
   .tabs {
-  text-align: center;
-  margin: 10px 0 10px;
-}
-
-.tab-btn {
-  background: #0a1d69;
-  color: white;
-  border: none;
-  padding: 10px 25px;
-  margin: 0 15px; /* adjusted margin for better spacing */
-  border-radius: 25px;
-  font-weight: 500;
-  letter-spacing: 0.5px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
-
-.tab-btn:hover,
-.tab-btn.active {
-  background: #2a73cc;
-  transform: scale(1.05);
-}
-
-/*  DROPDOWN FOR MOBILE */
-.course-dropdown {
-  display: none; /* hidden on desktop */
-  width: 250px;
-  margin: 20px auto;
-  position: relative;
-  font-family: sans-serif;
-  cursor: pointer;
-}
-
-.course-dropdown .selected {
-  background: white;
-  border: 1px solid #0a1d69;
-  color: #0a1d69;
-  padding: 10px 15px;
-  border-radius: 20px;
-  text-align: center;
-  position: relative;
-  user-select: none;
-}
-
-.course-dropdown .options {
-  display: none;
-  position: absolute;
-  top: 100%; /* exactly below selected */
-  left: 0;
-  width: 100%;
-  background: white;
-  color:#0a1d69 !important;
-  border-radius: 0 0 12px 12px;
-  overflow: hidden;
-  z-index: 10;
-}
-
-.course-dropdown .options div {
-  padding: 10px 15px;
-  color: #0a1d69;
-  text-align: center;
-  cursor: pointer;
-}
-
-.course-dropdown .options div:hover {
-  background: #1944a3;
-}
-
-/* COURSE GRID */
-.course-section {
-  padding: 30px 5% 60px;
-}
-
-.course-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 25px;
-  margin-top: 30px;
-}
-
-/* COURSE CARD DESIGN */
-.course-card {
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  overflow: hidden;
-  color: #0a1d69;
-  font-family: 'Poppins', sans-serif;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.course-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-}
-
-.course-card img {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-}
-
-.course-card-content {
-  padding: 15px 20px;
-}
-
-.course-card h5 {
-  margin: 10px 0 5px;
-  color: #2a73cc;
-  font-weight: 600;
-  font-size: 1.1rem;
-}
-
-.course-card p {
-  font-size: 14px;
-  margin: 4px 0;
-}
-
-.course-card button {
-  margin: 15px 0 15px;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 25px;
-  background-color: #0a1d69;
-  color: white;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.course-card button:hover {
-  background-color: #2a73cc;
-  transform: scale(1.05);
-}
-
-hr {
-  width: 80px;
-  height: 3px;
-  background: #2a73cc;
-  border: none;
-  margin: 15px auto;
-  border-radius: 2px;
-}
-
-/* HERO & INFO */
-.hero h2 {
-  font-size: 2rem;
-}
-
-.hero p {
-  font-size: 1rem;
-}
-
-.courses-info ul {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 15px;
-  padding: 0;
-  list-style: none;
-}
-
-.courses-info ul li {
-  background: #fff;
-  color: #000;
-  padding: 10px 15px;
-  border-radius: 12px;
-  font-size: 14px;
-}
-
-/* MOBILE RESPONSIVE */
-@media screen and (max-width: 768px) {
-  .tabs {
-    display: none; /* hide tabs on mobile */
+    text-align: center;
+    margin: 40px 0 30px;
+    padding: 0 20px;
   }
 
+  .tab-btn {
+    background: #0a1d69;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    margin: 0 10px;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(10, 29, 105, 0.2);
+  }
+
+  .tab-btn:hover {
+    background: #2a73cc;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(42, 115, 204, 0.3);
+  }
+
+  .tab-btn.active {
+    background: linear-gradient(135deg, #2a73cc, #0ea5e9);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(42, 115, 204, 0.4);
+  }
+
+  /* DROPDOWN FOR MOBILE */
   .course-dropdown {
-    display: block; /* show dropdown */
+    display: none;
+    width: 280px;
+    margin: 25px auto;
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+  }
+
+  .course-dropdown .selected {
+    background: white;
+    border: 2px solid #0a1d69;
+    color: #0a1d69;
+    padding: 12px 20px;
+    border-radius: 30px;
+    text-align: center;
+    position: relative;
+    user-select: none;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .course-dropdown .options {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    color: #0a1d69;
+    border-radius: 15px;
+    overflow: hidden;
+    z-index: 10;
+    border: 2px solid #0a1d69;
+    margin-top: 5px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  }
+
+  .course-dropdown .options div {
+    padding: 12px 20px;
+    color: #0a1d69;
+    text-align: center;
+    cursor: pointer;
+    background: white;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-bottom: 1px solid #f0f0f0;
+  }
+
+  .course-dropdown .options div:last-child {
+    border-bottom: none;
+  }
+
+  .course-dropdown .options div:hover {
+    background: linear-gradient(135deg, #2a73cc, #0ea5e9);
+    color: white;
+  }
+
+  /* COURSE GRID */
+  .course-section {
+    padding: 30px 5% 80px;
+  }
+
+  .course-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+  }
+
+  /* COURSE CARD DESIGN */
+  .course-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    transition: all 0.4s ease;
+    overflow: hidden;
+    color: #0a1d69;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 2px solid transparent;
+    position: relative;
+  }
+
+  .course-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(42, 115, 204, 0.25);
+    border-color: #2a73cc;
+  }
+
+  .course-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(135deg, #2a73cc, #0ea5e9);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  .course-card:hover::before {
+    transform: scaleX(1);
   }
 
   .course-card img {
-    height: 150px;
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    transition: transform 0.3s ease;
   }
 
-  .hero h2 {
-    font-size: 1.6rem;
+  .course-card:hover img {
+    transform: scale(1.05);
   }
 
-  .hero p {
-    font-size: 0.9rem;
-  }
-
-  .courses-info ul {
+  .course-card-content {
+    padding: 25px 20px;
+    flex-grow: 1;
+    display: flex;
     flex-direction: column;
-    gap: 10px;
+    justify-content: space-between;
   }
-  
-}
 
-@media (max-width: 992px) {
+  .course-card h5 {
+    margin: 0 0 12px 0;
+    color: #0a1d69;
+    font-weight: 700;
+    font-size: 1.2rem;
+    line-height: 1.4;
+    min-height: 3.2em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .course-card p {
+    font-size: 15px;
+    margin: 6px 0;
+    color: #555;
+    font-weight: 500;
+  }
+
+  .course-card .duration {
+    color: #2a73cc;
+    font-weight: 600;
+  }
+
+  .course-card button {
+    margin: 20px 0 0 0;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(135deg, #0a1d69, #2a73cc);
+    color: white;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    box-shadow: 0 4px 15px rgba(10, 29, 105, 0.2);
+  }
+
+  .course-card button:hover {
+    background: linear-gradient(135deg, #2a73cc, #0ea5e9);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(42, 115, 204, 0.3);
+  }
+
+  hr {
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(135deg, #2a73cc, #0ea5e9);
+    border: none;
+    margin: 25px auto;
+    border-radius: 2px;
+  }
+
+  /* Page Heading */
+  h2 {
+    color: #0a1d69;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 40px;
+    font-size: 3rem;
+    margin-bottom: 10px;
+  }
+
+  /* MOBILE RESPONSIVE */
+  @media screen and (max-width: 992px) {
     .home {
       min-height: 35vh;
       padding: 2.5rem 1rem;
@@ -387,7 +416,20 @@ hr {
       font-size: 1.125rem;
     }
   }
- @media (max-width: 768px) {
+
+  @media screen and (max-width: 768px) {
+    .tabs {
+      display: none;
+    }
+
+    .course-dropdown {
+      display: block;
+    }
+
+    .course-card img {
+      height: 180px;
+    }
+
     .home {
       min-height: 30vh;
       padding: 2rem 1rem;
@@ -411,8 +453,36 @@ hr {
       font-size: 0.938rem;
       line-height: 1.5;
     }
+
+    .courses-info {
+      margin: 30px 3%;
+      padding: 30px 20px;
+    }
+
+    .courses-info h3 {
+      font-size: 1.8rem;
+    }
+
+    .courses-info ul {
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .courses-info ul li {
+      padding: 12px 20px;
+    }
+
+    h2 {
+      font-size: 2.2rem;
+    }
+
+    .course-grid {
+      grid-template-columns: 1fr;
+      gap: 25px;
+    }
   }
-  @media (max-width: 576px) {
+
+  @media screen and (max-width: 576px) {
     .home {
       min-height: 28vh;
       padding: 1.5rem 0.75rem;
@@ -443,15 +513,10 @@ hr {
       line-height: 1.4;
     }
   }
-   @media (max-width: 400px) {
-    .home {
-      min-height: 26vh;
-      padding: 1.25rem 0.5rem;
-    }
 
+  @media screen and (max-width: 480px) {
     .hero-content h3 {
       font-size: 1.125rem;
-      gap: 0.35rem;
     }
 
     .hero-icon {
@@ -461,10 +526,33 @@ hr {
     .hero-content p {
       font-size: 0.75rem;
     }
+
+    .courses-info h3 {
+      font-size: 1.5rem;
+    }
+
+    h2 {
+      font-size: 1.8rem;
+    }
+
+    .course-card-content {
+      padding: 20px 15px;
+    }
+
+    .course-card h5 {
+      font-size: 1.1rem;
+    }
   }
-   @media (max-width: 360px) {
+
+  @media screen and (max-width: 400px) {
+    .home {
+      min-height: 26vh;
+      padding: 1.25rem 0.5rem;
+    }
+
     .hero-content h3 {
       font-size: 1rem;
+      gap: 0.35rem;
     }
 
     .hero-icon {
@@ -475,11 +563,157 @@ hr {
       font-size: 0.688rem;
     }
   }
+
+  @media screen and (max-width: 360px) {
+    .hero-content h3 {
+      font-size: 0.938rem;
+    }
+
+    .hero-icon {
+      font-size: 0.938rem;
+    }
+
+    .hero-content p {
+      font-size: 0.625rem;
+    }
+  }
+
+  /* ================= Updated Dark Theme - Blue Color Scheme ================= */
+  [data-bs-theme="dark"] .courses-info,
+  .dark-theme .courses-info {
+    background: linear-gradient(135deg, #071024 0%, #081426 100%) !important;
+    border: 1px solid rgba(14, 165, 233, 0.2) !important;
+    color: #e6eef8 !important;
+  }
+
+  [data-bs-theme="dark"] .courses-info h3,
+  .dark-theme .courses-info h3 {
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] .courses-info p,
+  .dark-theme .courses-info p {
+    color: #bcd6f5 !important;
+  }
+
+  [data-bs-theme="dark"] .courses-info ul li,
+  .dark-theme .courses-info ul li {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid rgba(14, 165, 233, 0.3) !important;
+    color: #e6eef8 !important;
+  }
+
+  [data-bs-theme="dark"] .courses-info ul li:hover,
+  .dark-theme .courses-info ul li:hover {
+    background: rgba(14, 165, 233, 0.2) !important;
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.3) !important;
+  }
+
+  [data-bs-theme="dark"] .course-card,
+  .dark-theme .course-card {
+    background: linear-gradient(135deg, #071024 0%, #0a1a32 100%) !important;
+    border: 1px solid rgba(14, 165, 233, 0.2) !important;
+    color: #e6eef8 !important;
+  }
+
+  [data-bs-theme="dark"] .course-card:hover,
+  .dark-theme .course-card:hover {
+    border-color: #0ea5e9 !important;
+    box-shadow: 0 15px 40px rgba(14, 165, 233, 0.25) !important;
+  }
+
+  [data-bs-theme="dark"] .course-card h5,
+  .dark-theme .course-card h5 {
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] .course-card p,
+  .dark-theme .course-card p {
+    color: #bcd6f5 !important;
+  }
+
+  [data-bs-theme="dark"] .course-card .duration,
+  .dark-theme .course-card .duration {
+    color: #0ea5e9 !important;
+  }
+
+  [data-bs-theme="dark"] .tab-btn,
+  .dark-theme .tab-btn {
+    background: rgba(14, 165, 233, 0.2) !important;
+    border: 1px solid rgba(14, 165, 233, 0.3) !important;
+    color: #e6eef8 !important;
+  }
+
+  [data-bs-theme="dark"] .tab-btn:hover,
+  .dark-theme .tab-btn:hover,
+  [data-bs-theme="dark"] .tab-btn.active,
+  .dark-theme .tab-btn.active {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+    border-color: #0ea5e9 !important;
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] .course-dropdown .selected,
+  .dark-theme .course-dropdown .selected {
+    background: rgba(14, 165, 233, 0.1) !important;
+    border: 1px solid rgba(14, 165, 233, 0.3) !important;
+    color: #e6eef8 !important;
+  }
+
+  [data-bs-theme="dark"] .course-dropdown .options,
+  .dark-theme .course-dropdown .options {
+    background: linear-gradient(135deg, #071024 0%, #0a1a32 100%) !important;
+    border: 1px solid rgba(14, 165, 233, 0.3) !important;
+  }
+
+  [data-bs-theme="dark"] .course-dropdown .options div,
+  .dark-theme .course-dropdown .options div {
+    background: transparent !important;
+    color: #e6eef8 !important;
+    border-bottom: 1px solid rgba(14, 165, 233, 0.1) !important;
+  }
+
+  [data-bs-theme="dark"] .course-dropdown .options div:hover,
+  .dark-theme .course-dropdown .options div:hover {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] .home,
+  .dark-theme .home {
+    background-image: linear-gradient(rgba(6, 6, 102, 0.8), rgba(0, 86, 179, 0.7)),
+                    url(../static/images/bookslibrary.jpg) !important;
+  }
+
+  [data-bs-theme="dark"] h2,
+  .dark-theme h2 {
+    color: #ffffff !important;
+  }
+
+  [data-bs-theme="dark"] hr,
+  .dark-theme hr {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+  }
+
+  /* Dark theme button styles - Blue gradient like index page */
+  [data-bs-theme="dark"] .course-card button,
+  .dark-theme .course-card button {
+    background: linear-gradient(135deg, #0ea5e9, #0369a1) !important;
+    color: #ffffff !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3) !important;
+  }
+
+  [data-bs-theme="dark"] .course-card button:hover,
+  .dark-theme .course-card button:hover {
+    background: linear-gradient(135deg, #0284c7, #075985) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px rgba(14, 165, 233, 0.4) !important;
+  }
 </style>
 
-<!-- 
-     HERO SECTION
- -->
+<!-- HERO SECTION -->
 <div class="row">
   <section class="home">
     <div class="hero-content">
@@ -492,14 +726,10 @@ hr {
   </section>
 </div>
 
-<!--
-     COURSES INFO SECTION
- -->
+<!-- COURSES INFO SECTION -->
 <section class="courses-info">
   <h3>Your Path to Knowledge Starts Here</h3>
-  <p>At Nalanda Open University, we offer a variety of UG, PG, and diploma courses to help you grow academically and
-    professionally. Each program is designed to give you practical knowledge, develop your skills, and prepare you for
-    real-world challenges.</p>
+  <p>At Nalanda Open University, we offer a variety of UG, PG, and diploma courses to help you grow academically and professionally. Each program is designed to give you practical knowledge, develop your skills, and prepare you for real-world challenges.</p>
   <ul>
     <li>Wide Range of Programs</li>
     <li>Guided Support</li>
@@ -508,15 +738,11 @@ hr {
   </ul>
 </section>
 
-<!-- 
-     COURSES HEADING
- -->
-<h2 style="text-align:center; font-weight: bold; margin-top: 40px; color:#0a1d69; font-size: 40px;">Our Courses</h2>
+<!-- COURSES HEADING -->
+<h2>Our Courses</h2>
 <hr>
 
-<!--
-     COURSE TABS
- -->
+<!-- COURSE TABS -->
 <div class="tabs">
   <button class="tab-btn active" onclick="showTab('all', event)">All Courses</button>
   <button class="tab-btn" onclick="showTab('ug', event)">UG Courses</button>
@@ -524,8 +750,7 @@ hr {
   <button class="tab-btn" onclick="showTab('diploma', event)">Diploma Courses</button>
 </div>
 
-
-<!-- dropdown for mobile  -->
+<!-- DROPDOWN FOR MOBILE -->
 <div class="course-dropdown">
   <div class="selected">All Courses ▼</div>
   <div class="options">
@@ -536,304 +761,295 @@ hr {
   </div>
 </div>
 
-
-<!--
-     COURSE SECTIONS
--->
+<!-- COURSE SECTIONS -->
 <section class="course-section">
-
   <!-- ALL COURSES -->
   <div id="all" class="course-grid">
-    <!-- UG -->
+    <!-- UG Courses -->
     <div class="course-card">
-      <img src="{% static 'images/bba.png' %}" alt="">
+      <img src="{% static 'images/bba.png' %}" alt="BBA Course">
       <div class="course-card-content">
         <h5>Bachelor in Business Administration</h5>
         <p>Under Graduation Course</p>
-        <p>Duration: 3 years</p>
-
+        <p class="duration">Duration: 3 years</p>
+        <button>View Details</button>
       </div>
     </div>
     <div class="course-card">
-      <img src="{% static 'images/bca.png' %}" alt="">
+      <img src="{% static 'images/bca.png' %}" alt="BCA Course">
       <div class="course-card-content">
         <h5>Bachelor in Computer Application</h5>
         <p>Under Graduation Course</p>
-        <p>Duration: 3 years</p>
-
+        <p class="duration">Duration: 3 years</p>
+        <button>View Details</button>
       </div>
     </div>
     <div class="course-card">
-      <img src="{% static 'images/bag.png' %}" alt="">
+      <img src="{% static 'images/bag.png' %}" alt="BA Geography Course">
       <div class="course-card-content">
         <h5>Bachelor of Arts (Geography)</h5>
         <p>Under Graduation Course</p>
-        <p>Duration: 3 years</p>
-
+        <p class="duration">Duration: 3 years</p>
+        <button>View Details</button>
       </div>
     </div>
     <div class="course-card">
-      <img src="{% static 'images/bcom.png' %}" alt="">
+      <img src="{% static 'images/bcom.png' %}" alt="B.Com Course">
       <div class="course-card-content">
         <h5>Bachelor of Commerce</h5>
         <p>Under Graduation Course</p>
-        <p>Duration: 3 years</p>
-
+        <p class="duration">Duration: 3 years</p>
+        <button>View Details</button>
       </div>
     </div>
 
-    <!-- PG -->
+    <!-- PG Courses -->
     <div class="course-card">
-      <img src="{% static 'images/ma(environmental).png' %}" alt="">
+      <img src="{% static 'images/ma(environmental).png' %}" alt="MA Environmental Science">
       <div class="course-card-content">
         <h5>Master of Arts (Environmental Sci.)</h5>
         <p>Post Graduation Course</p>
-        <p>Duration: 2 years</p>
-
+        <p class="duration">Duration: 2 years</p>
+        <button>View Details</button>
       </div>
     </div>
     <div class="course-card">
-      <img src="{% static 'images/ma(sanskrit).png' %}" alt="">
+      <img src="{% static 'images/ma(sanskrit).png' %}" alt="MA Sanskrit">
       <div class="course-card-content">
         <h5>Master of Arts (Sanskrit)</h5>
         <p>Post Graduation Course</p>
-        <p>Duration: 2 years</p>
-
+        <p class="duration">Duration: 2 years</p>
+        <button>View Details</button>
       </div>
     </div>
     <div class="course-card">
-      <img src="{% static 'images/mca.png' %}" alt="">
+      <img src="{% static 'images/mca.png' %}" alt="MCA Course">
       <div class="course-card-content">
         <h5>Master in Computer Application</h5>
         <p>Post Graduation Course</p>
-        <p>Duration: 2 years</p>
-
+        <p class="duration">Duration: 2 years</p>
+        <button>View Details</button>
       </div>
     </div>
     <div class="course-card">
-      <img src="{% static 'images/mcom.png' %}" alt="">
+      <img src="{% static 'images/mcom.png' %}" alt="M.Com Course">
       <div class="course-card-content">
         <h5>Master of Commerce</h5>
         <p>Post Graduation Course</p>
-        <p>Duration: 2 years</p>
-
+        <p class="duration">Duration: 2 years</p>
+        <button>View Details</button>
       </div>
     </div>
 
-    <!-- Diploma -->
+    <!-- Diploma Courses -->
     <div class="course-card">
-      <img src="{% static 'images/pgdfm.png' %}" alt="">
+      <img src="{% static 'images/pgdfm.png' %}" alt="PG Diploma Financial Management">
       <div class="course-card-content">
         <h5>PG Diploma in Financial Management</h5>
         <p>Diploma Course</p>
-        <p>Duration: 2 years</p>
-
+        <p class="duration">Duration: 2 years</p>
+        <button>View Details</button>
       </div>
     </div>
     <div class="course-card">
-      <img src="{% static 'images/pgdhet.png' %}" alt="">
+      <img src="{% static 'images/pgdhet.png' %}" alt="PG Diploma Hindi-English Translation">
       <div class="course-card-content">
-        <h5>Post Graduation Diploma (Hindi-English Translate)</h5>
+        <h5>PG Diploma (Hindi-English Translate)</h5>
         <p>Diploma Course</p>
-        <p>Duration: 2 years</p>
-
+        <p class="duration">Duration: 2 years</p>
+        <button>View Details</button>
       </div>
     </div>
     <div class="course-card">
-      <img src="{% static 'images/pgdmm.png' %}" alt="">
+      <img src="{% static 'images/pgdmm.png' %}" alt="PG Diploma Marketing Management">
       <div class="course-card-content">
-        <h5>Post Graduation Diploma (Marketing Management)</h5>
+        <h5>PG Diploma (Marketing Management)</h5>
         <p>Diploma Course</p>
-        <p>Duration: 2 years</p>
-
+        <p class="duration">Duration: 2 years</p>
+        <button>View Details</button>
       </div>
     </div>
     <div class="course-card">
-      <img src="{% static 'images/pgdys.png' %}" alt="">
+      <img src="{% static 'images/pgdys.png' %}" alt="PG Diploma Yogic Studies">
       <div class="course-card-content">
-        <h5>Post Graduation Diploma (Yogic Studies)</h5>
+        <h5>PG Diploma (Yogic Studies)</h5>
         <p>Diploma Course</p>
-        <p>Duration: 2 years</p>
-
+        <p class="duration">Duration: 2 years</p>
+        <button>View Details</button>
       </div>
     </div>
   </div>
 
-  <!-- UG -->
+  <!-- UG COURSES -->
   <div id="ug" class="course-grid" style="display:none;">
+    <!-- Same UG courses as above -->
     <div class="course-card">
-      <img src="{% static 'images/bba.png' %}" alt="">
+      <img src="{% static 'images/bba.png' %}" alt="BBA Course">
       <div class="course-card-content">
         <h5>Bachelor in Business Administration</h5>
         <p>Under Graduation Course</p>
-        <p>Duration: 3 years</p>
-
+        <p class="duration">Duration: 3 years</p>
+        <button>View Details</button>
       </div>
     </div>
     <div class="course-card">
-      <img src="{% static 'images/bca.png' %}" alt="">
+      <img src="{% static 'images/bca.png' %}" alt="BCA Course">
       <div class="course-card-content">
         <h5>Bachelor in Computer Application</h5>
         <p>Under Graduation Course</p>
-        <p>Duration: 3 years</p>
-
+        <p class="duration">Duration: 3 years</p>
+        <button>View Details</button>
       </div>
     </div>
     <div class="course-card">
-      <img src="{% static 'images/bag.png' %}" alt="">
+      <img src="{% static 'images/bag.png' %}" alt="BA Geography Course">
       <div class="course-card-content">
         <h5>Bachelor of Arts (Geography)</h5>
         <p>Under Graduation Course</p>
-        <p>Duration: 3 years</p>
-
+        <p class="duration">Duration: 3 years</p>
+        <button>View Details</button>
       </div>
     </div>
     <div class="course-card">
-      <img src="{% static 'images/bcom.png' %}" alt="">
+      <img src="{% static 'images/bcom.png' %}" alt="B.Com Course">
       <div class="course-card-content">
         <h5>Bachelor of Commerce</h5>
         <p>Under Graduation Course</p>
-        <p>Duration: 3 years</p>
-
+        <p class="duration">Duration: 3 years</p>
+        <button>View Details</button>
       </div>
     </div>
   </div>
 
-  <!-- PG -->
+  <!-- PG COURSES -->
   <div id="pg" class="course-grid" style="display:none;">
+    <!-- Same PG courses as above -->
     <div class="course-card">
-      <img src="{% static 'images/ma(environmental).png' %}" alt="">
+      <img src="{% static 'images/ma(environmental).png' %}" alt="MA Environmental Science">
       <div class="course-card-content">
         <h5>Master of Arts (Environmental Sci.)</h5>
         <p>Post Graduation Course</p>
-        <p>Duration: 2 years</p>
-
+        <p class="duration">Duration: 2 years</p>
+        <button>View Details</button>
       </div>
     </div>
     <div class="course-card">
-      <img src="{% static 'images/ma(sanskrit).png' %}" alt="">
+      <img src="{% static 'images/ma(sanskrit).png' %}" alt="MA Sanskrit">
       <div class="course-card-content">
         <h5>Master of Arts (Sanskrit)</h5>
         <p>Post Graduation Course</p>
-        <p>Duration: 2 years</p>
-
+        <p class="duration">Duration: 2 years</p>
+        <button>View Details</button>
       </div>
     </div>
     <div class="course-card">
-      <img src="{% static 'images/mca.png' %}" alt="">
+      <img src="{% static 'images/mca.png' %}" alt="MCA Course">
       <div class="course-card-content">
         <h5>Master in Computer Application</h5>
         <p>Post Graduation Course</p>
-        <p>Duration: 2 years</p>
-
+        <p class="duration">Duration: 2 years</p>
+        <button>View Details</button>
       </div>
     </div>
     <div class="course-card">
-      <img src="{% static 'images/mcom.png' %}" alt="">
+      <img src="{% static 'images/mcom.png' %}" alt="M.Com Course">
       <div class="course-card-content">
         <h5>Master of Commerce</h5>
         <p>Post Graduation Course</p>
-        <p>Duration: 2 years</p>
-
+        <p class="duration">Duration: 2 years</p>
+        <button>View Details</button>
       </div>
     </div>
   </div>
 
-  <!-- DIPLOMA -->
+  <!-- DIPLOMA COURSES -->
   <div id="diploma" class="course-grid" style="display:none;">
+    <!-- Same Diploma courses as above -->
     <div class="course-card">
-      <img src="{% static 'images/pgdfm.png' %}" alt="">
+      <img src="{% static 'images/pgdfm.png' %}" alt="PG Diploma Financial Management">
       <div class="course-card-content">
         <h5>PG Diploma in Financial Management</h5>
         <p>Diploma Course</p>
-        <p>Duration: 2 years</p>
-
+        <p class="duration">Duration: 2 years</p>
+        <button>View Details</button>
       </div>
     </div>
     <div class="course-card">
-      <img src="{% static 'images/pgdhet.png' %}" alt="">
+      <img src="{% static 'images/pgdhet.png' %}" alt="PG Diploma Hindi-English Translation">
       <div class="course-card-content">
-        <h5>Post Graduation Diploma (Hindi-English Translate)</h5>
+        <h5>PG Diploma (Hindi-English Translate)</h5>
         <p>Diploma Course</p>
-        <p>Duration: 2 years</p>
-
+        <p class="duration">Duration: 2 years</p>
+        <button>View Details</button>
       </div>
     </div>
     <div class="course-card">
-      <img src="{% static 'images/pgdmm.png' %}" alt="">
+      <img src="{% static 'images/pgdmm.png' %}" alt="PG Diploma Marketing Management">
       <div class="course-card-content">
-        <h5>Post Graduation Diploma (Marketing Management)</h5>
+        <h5>PG Diploma (Marketing Management)</h5>
         <p>Diploma Course</p>
-        <p>Duration: 2 years</p>
-
+        <p class="duration">Duration: 2 years</p>
+        <button>View Details</button>
       </div>
     </div>
     <div class="course-card">
-      <img src="{% static 'images/pgdys.png' %}" alt="">
+      <img src="{% static 'images/pgdys.png' %}" alt="PG Diploma Yogic Studies">
       <div class="course-card-content">
-        <h5>Post Graduation Diploma (Yogic Studies)</h5>
+        <h5>PG Diploma (Yogic Studies)</h5>
         <p>Diploma Course</p>
-        <p>Duration: 2 years</p>
-
+        <p class="duration">Duration: 2 years</p>
+        <button>View Details</button>
       </div>
     </div>
   </div>
-
 </section>
 
-<!--
-     JAVASCRIPT
- -->
+<!-- JAVASCRIPT -->
 <script>
+  // TAB FUNCTIONALITY
+  function showTab(tabName, event) {
+    document.querySelectorAll('.course-grid').forEach(div => {
+      div.style.display = 'none';
+    });
+    document.getElementById(tabName).style.display = 'grid';
 
-// TAB FUNCTIONALITY
-function showTab(tabName, event) {
-  document.querySelectorAll('.course-grid').forEach(div => {
-    div.style.display = 'none';
-  });
-  document.getElementById(tabName).style.display = 'grid';
-
-  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-  if(event) event.target.classList.add('active');
-}
-
-function showDropdownTab(tabName) {
-  document.querySelectorAll('.course-grid').forEach(div => div.style.display = 'none');
-  document.getElementById(tabName).style.display = 'grid';
-}
-
-// CUSTOM DROPDOWN FUNCTIONALITY
-const dropdown = document.querySelector('.course-dropdown');
-const selected = dropdown.querySelector('.selected');
-const optionsContainer = dropdown.querySelector('.options');
-const options = optionsContainer.querySelectorAll('div');
-
-selected.addEventListener('click', () => {
-  optionsContainer.style.display = optionsContainer.style.display === 'block' ? 'none' : 'block';
-});
-
-options.forEach(option => {
-  option.addEventListener('click', () => {
-    selected.textContent = option.textContent + " ▼";
-    optionsContainer.style.display = 'none';
-    showDropdownTab(option.getAttribute('data-tab'));
-  });
-});
-
-document.addEventListener('click', e => {
-  if (!dropdown.contains(e.target)) {
-    optionsContainer.style.display = 'none';
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    if(event) event.target.classList.add('active');
   }
-});
 
-// INITIAL VIEW
-document.addEventListener('DOMContentLoaded', () => {
-  showTab('all', { target: document.querySelector('.tab-btn.active') });
-});
+  function showDropdownTab(tabName) {
+    document.querySelectorAll('.course-grid').forEach(div => div.style.display = 'none');
+    document.getElementById(tabName).style.display = 'grid';
+  }
 
+  // CUSTOM DROPDOWN FUNCTIONALITY
+  const dropdown = document.querySelector('.course-dropdown');
+  const selected = dropdown.querySelector('.selected');
+  const optionsContainer = dropdown.querySelector('.options');
+  const options = optionsContainer.querySelectorAll('div');
 
+  selected.addEventListener('click', () => {
+    optionsContainer.style.display = optionsContainer.style.display === 'block' ? 'none' : 'block';
+  });
 
+  options.forEach(option => {
+    option.addEventListener('click', () => {
+      selected.textContent = option.textContent + " ▼";
+      optionsContainer.style.display = 'none';
+      showDropdownTab(option.getAttribute('data-tab'));
+    });
+  });
 
+  document.addEventListener('click', e => {
+    if (!dropdown.contains(e.target)) {
+      optionsContainer.style.display = 'none';
+    }
+  });
+
+  // INITIAL VIEW
+  document.addEventListener('DOMContentLoaded', () => {
+    showTab('all', { target: document.querySelector('.tab-btn.active') });
+  });
 </script>
 
 {% endblock body %}
